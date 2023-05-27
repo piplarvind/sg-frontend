@@ -1,0 +1,30 @@
+<div class="m-container">
+  <mat-card class="m-title">
+    <h3>MAIL DETAILS</h3>
+  </mat-card>
+
+  <mat-card>
+    <h2>{{mail.subject}}</h2>
+    <div class="mailReciever">
+      <!-- <p> -->
+        <span class="recepHeading">TO</span>
+        <span class="recepName" *ngFor="let name of mail.names">{{name ? name : 'NA'}}</span>
+        <span style="float:right;">{{mail.createdAt.split("T")[0]}}</span>
+      <!-- </p> -->
+    </div> 
+    
+    
+    <div class="mailContent" [innerHTML]="mail.content">
+        
+    </div>
+    
+    
+  
+      <div fxLayout="row" fxLayoutAlign="center center" style="margin: 5px">
+       
+        
+        <button mat-raised-button class="m-jumbo-button m-pointer" routerLink="/mail">Back</button>
+      </div>
+  
+  </mat-card>
+</div>

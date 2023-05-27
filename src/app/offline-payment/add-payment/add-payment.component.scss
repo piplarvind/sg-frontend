@@ -1,0 +1,36 @@
+mat-form-field {
+  // mat input container
+}
+// .field-container {
+//   margin-left: 10%;
+//   width: 70% !important;
+// }
+.input-container .field-container {
+  width: 70%;
+  padding-left: 3%;
+  display: inline-block;
+}
+.display_container{
+  padding: 20px 2px;
+}
+.box_layout{
+  position: relative !important;
+  top: 40px !important;
+}
+.btns_save{
+  float: right;
+}
+.btn_layout{
+  position: absolute;
+  right: 15px;
+}
+.btn_save{
+  padding: 10px 50px !important;
+  margin: 10px !important;
+  background: #184489 !important;
+  color: #FFF !important;
+  border: 1px solid #184489;
+  font-size: 18px;
+  position: absolute;
+  right: 15px;
+}

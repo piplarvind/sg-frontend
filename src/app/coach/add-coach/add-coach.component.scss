@@ -1,0 +1,17 @@
+.dateInput {
+  display: inline-block;
+  width: 23%;
+  background: none;
+  border: 1px solid grey;
+  border-radius: 5px;
+  padding: 5px 2px;
+  text-transform: uppercase;
+}
+.error1 {
+  color: red;
+}
+textarea.mat-input-element {
+  padding: 2px 0;
+  margin: -2px 0;
+  height: 5rem;
+}

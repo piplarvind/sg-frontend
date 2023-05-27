@@ -1,0 +1,351 @@
+<div class="m-container">
+  <mat-card class="m-title">
+    <h3>LEADERBOARD</h3>
+  </mat-card>
+
+  <mat-card style="min-height: 77vh">
+
+    <mat-card style="padding: 0px 20px;">
+      <div fxLayout="row" fxLayoutAlign="space-between">
+        <div class="input-container">
+          <div class="label-container">
+            <span class="label-icon">
+              <!-- <i class="far fa-list-alt"></i> -->
+            </span>
+            <span class="label">EVENT NAME</span>
+          </div>
+          <div class="field-container">
+            <mat-form-field [floatLabel]="'never'" style="height: 40px;">
+              <mat-select (change)="setEvent($event.value)">
+                <mat-option [value]="event" *ngFor="let event of eventList">{{event.eventName}}</mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+        </div>
+
+        <div class="input-container">
+          <div class="label-container">
+            <span class="label-icon">
+              <!-- <i class="far fa-list-alt"></i> -->
+            </span>
+            <span class="label">DATE</span>
+          </div>
+          <div class="field-container">
+            <mat-form-field [floatLabel]="'never'">
+              <input matInput disabled [(ngModel)]="eventDate">
+            </mat-form-field>
+          </div>
+        </div>
+
+        <div class="input-container">
+          <div class="label-container">
+            <span class="label-icon">
+              <!-- <i class="far fa-list-alt"></i> -->
+            </span>
+            <span class="label">WINNER</span>
+          </div>
+          <div class="field-container">
+            <mat-form-field [floatLabel]="'never'">
+              <mat-select>
+                <mat-option value="team1">Team 1</mat-option>
+                <mat-option value="team2">Team 2</mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+        </div>
+
+      </div>
+    </mat-card>
+
+    <mat-card style="height: 75%;">
+      <mat-card-title fxLayout="row">
+        <div fxFlex="40">
+          <mat-icon class="headingIcon">location_on</mat-icon>
+          <span class="text">{{eventLocation}}</span>
+        </div>
+        <div fxFlex="40">
+          <mat-icon class="headingIcon">access_time</mat-icon>
+          <span class="text">{{eventTime}}</span>
+        </div>
+      </mat-card-title>
+
+      <mat-card-content fxLayout="row" fxFlexFill fxLayoutAlign="space-between" class="m-body">
+
+        <mat-card fxFlex="21" style="height: 90%">
+
+          <table *ngIf="tableData.length > 0">
+            <tr style="text-align: left">
+              <th>
+              </th>
+              <th>{{tableData[0].teamDetails.name}}
+              </th>
+              <th>{{tableData[1].teamDetails.name}}
+              </th>
+            </tr>
+
+            <tr style="color:black" *ngFor="let x of [0,1,2,3,4]; let i  = index">
+              <td>
+                {{ 'Set ' + (i + 1) }}
+              </td>
+              <td>
+                <input type="text" class="table-input">
+              </td>
+              <td>
+                <input type="text" class="table-input">
+              </td>
+            </tr>
+          </table>
+
+        </mat-card>
+
+        <mat-card fxFlex="21" style="height: 90%">
+          <mat-card-title>
+            <span class="text"> Athletes</span>
+            <mat-icon class="search-icon">search</mat-icon>
+          </mat-card-title>
+          <mat-divider></mat-divider>
+          <br/>
+          <mat-card-content>
+            <mat-radio-group>
+
+              <mat-radio-button style="color: black" (click)="selectAthlete(athlete, i)" class="athlete-radio-button" style="display: block;padding: 7px;"
+                *ngFor="let athlete of athletesList; let i = index" [value]="athlete._id">
+                {{athlete.name}}
+                <br/>
+              </mat-radio-button>
+
+            </mat-radio-group>
+          </mat-card-content>
+        </mat-card>
+
+        <mat-card fxFlex="55" style="height: 90%">
+          <mat-card-title>
+            <span class="text"> Player</span>
+          </mat-card-title>
+          <mat-divider></mat-divider>
+          <br/>
+          <mat-card-content>
+            <div class="card-row" fxLayout="row" fxLayoutAlign="space-between">
+
+              <mat-card class="small-cards" fxFlex="33">
+                <mat-card-title>
+                  Serving
+                </mat-card-title>
+                <mat-card-content>
+                  <div class="field-container">
+                    <div class="label">
+                      Serving Attempts :-
+                    </div>
+                    <div class="input-field">
+                      <mat-form-field class="m-form-input" [floatLabel]="'never'">
+                        <input matInput [(ngModel)]="stats.serving.attempts">
+                      </mat-form-field>
+                    </div>
+                  </div>
+
+                  <div class="field-container">
+                    <div class="label">
+                      Serving Aces :-
+                    </div>
+                    <div class="input-field">
+                      <mat-form-field class="m-form-input" [floatLabel]="'never'">
+                        <input matInput [(ngModel)]="stats.serving.success">
+                      </mat-form-field>
+                    </div>
+                  </div>
+
+                  <div class="field-container">
+                    <div class="label">
+                      Serving Errors :-
+                    </div>
+                    <div class="input-field">
+                      <mat-form-field class="m-form-input" [floatLabel]="'never'">
+                        <input matInput [(ngModel)]="stats.serving.error">
+                      </mat-form-field>
+                    </div>
+                  </div>
+
+                </mat-card-content>
+              </mat-card>
+
+              <mat-card class="small-cards" fxFlex="33">
+                <mat-card-title>
+                  Serve Receive
+                </mat-card-title>
+                <mat-card-content>
+                  <div class="field-container">
+                    <div class="label">
+                      Attempts :-
+                    </div>
+                    <div class="input-field">
+                      <mat-form-field class="m-form-input" [floatLabel]="'never'">
+                        <input matInput [(ngModel)]="stats.serveRecieve.attempts">
+                      </mat-form-field>
+                    </div>
+                  </div>
+                  <div class="field-container">
+                    <div class="label">
+                      Average :-
+                    </div>
+                    <div class="input-field">
+                      <mat-form-field class="m-form-input" [floatLabel]="'never'">
+                        <input matInput [(ngModel)]="stats.serveRecieve.average">
+                      </mat-form-field>
+                    </div>
+                  </div>
+
+                </mat-card-content>
+              </mat-card>
+
+              <mat-card class="small-cards" fxFlex="33">
+                <mat-card-title>
+                  Setting
+                </mat-card-title>
+                <mat-card-content>
+                  <div class="field-container">
+                    <div class="label">
+                      Assists :-
+                    </div>
+                    <div class="input-field">
+                      <mat-form-field class="m-form-input" [floatLabel]="'never'">
+                        <input matInput [(ngModel)]="stats.setting.assists">
+                      </mat-form-field>
+                    </div>
+                  </div>
+                  <div class="field-container">
+                    <div class="label">
+                      Assists per set :-
+                    </div>
+                    <div class="input-field">
+                      <mat-form-field class="m-form-input" [floatLabel]="'never'">
+                        <input matInput [(ngModel)]="stats.setting.setAssist">
+                      </mat-form-field>
+                    </div>
+                  </div>
+
+                </mat-card-content>
+              </mat-card>
+
+            </div>
+            <div class="card-row" fxLayout="row" fxLayoutAlign="space-between">
+              <mat-card class="small-cards" fxFlex="33">
+                <mat-card-title>
+                  Attacking
+                </mat-card-title>
+                <mat-card-content>
+                  <div class="field-container">
+                    <div class="label">
+                      Attempts :-
+                    </div>
+                    <div class="input-field">
+                      <mat-form-field class="m-form-input" [floatLabel]="'never'">
+                        <input matInput [(ngModel)]="stats.attacking.attempts">
+                      </mat-form-field>
+                    </div>
+                  </div>
+                  <div class="field-container">
+                    <div class="label">
+                      Kills :-
+                    </div>
+                    <div class="input-field">
+                      <mat-form-field class="m-form-input" [floatLabel]="'never'">
+                        <input matInput [(ngModel)]="stats.attacking.kills">
+                      </mat-form-field>
+                    </div>
+                  </div>
+                  <div class="field-container">
+                    <div class="label">
+                      Errors :-
+                    </div>
+                    <div class="input-field">
+                      <mat-form-field class="m-form-input" [floatLabel]="'never'">
+                        <input matInput [(ngModel)]="stats.attacking.errors">
+                      </mat-form-field>
+                    </div>
+                  </div>
+                  <div class="field-container">
+                    <div class="label">
+                      Blocks :-
+                    </div>
+                    <div class="input-field">
+                      <mat-form-field class="m-form-input" [floatLabel]="'never'">
+                        <input matInput [(ngModel)]="stats.attacking.blocks">
+                      </mat-form-field>
+                    </div>
+                  </div>
+
+                </mat-card-content>
+              </mat-card>
+
+              <mat-card class="small-cards" fxFlex="33">
+                <mat-card-title>
+                  Blocking
+                </mat-card-title>
+                <mat-card-content>
+                  <div class="field-container">
+                    <div class="label">
+                      Blocks :-
+                    </div>
+                    <div class="input-field">
+                      <mat-form-field class="m-form-input" [floatLabel]="'never'">
+                        <input matInput [(ngModel)]="stats.blocking.blocks">
+                      </mat-form-field>
+                    </div>
+                  </div>
+                  <div class="field-container">
+                    <div class="label">
+                      Errors :-
+                    </div>
+                    <div class="input-field">
+                      <mat-form-field class="m-form-input" [floatLabel]="'never'">
+                        <input matInput [(ngModel)]="stats.blocking.errors">
+                      </mat-form-field>
+                    </div>
+                  </div>
+
+                </mat-card-content>
+              </mat-card>
+
+              <mat-card class="small-cards" fxFlex="33">
+                <mat-card-title>
+                  Digging
+                </mat-card-title>
+                <mat-card-content>
+                  <div class="field-container">
+                    <div class="label">
+                      Digs :-
+                    </div>
+                    <div class="input-field">
+                      <mat-form-field class="m-form-input" [floatLabel]="'never'">
+                        <input matInput [(ngModel)]="stats.digging.diggs">
+                      </mat-form-field>
+                    </div>
+                  </div>
+                  <div class="field-container">
+                    <div class="label">
+                      Errors :-
+                    </div>
+                    <div class="input-field">
+                      <mat-form-field class="m-form-input" [floatLabel]="'never'">
+                        <input matInput [(ngModel)]="stats.digging.errors">
+                      </mat-form-field>
+                    </div>
+                  </div>
+
+                </mat-card-content>
+              </mat-card>
+
+            </div>
+          </mat-card-content>
+        </mat-card>
+      </mat-card-content>
+
+    </mat-card>
+
+    <div class="m-row" fxLayout="row" fxLayoutAlign="center">
+      <button mat-raised-button class="m-jumbo-button m-pointer" (click)="updateEvent()">Save</button>
+      <button mat-raised-button class="m-jumbo-button m-pointer">Cancel</button>
+    </div>
+  </mat-card>
+
+</div>

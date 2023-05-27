@@ -1,0 +1,18 @@
+mat-cell,
+.mat-cell {
+  display: block; // flex prevents padding from working
+  min-height: auto; // overrides the 'inherit' that set the min height of the row
+  margin-left: auto !important;
+}
+
+.mat-paginator-range-label {
+  margin: 0 32px 0 24px;
+  display: none;
+}
+
+.withoutsort {
+  text-align: center;
+}
+.placeholder::after {
+  content: attr('Please Prss Enter ');
+}

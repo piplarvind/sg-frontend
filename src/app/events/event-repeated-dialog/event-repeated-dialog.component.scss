@@ -1,0 +1,49 @@
+.input-container {
+  display: inline;
+  width: 95%;
+}
+.field-container {
+  padding-left: 10%;
+}
+
+.dialodinput {
+  display: inline-block;
+  width: 50%;
+}
+
+p {
+  font-family: Lato;
+}
+.mat-chip:not(.mat-basic-chip):focus + .mat-chip-selected:not {
+  box-shadow: none;
+}
+.mat-chip {
+  background-color: #e0e0e0 !important;
+  // color: black;
+
+  /* background: #184489 !important; */
+  /* color: #FFF !important; */
+  cursor: pointer !important;
+}
+.mat-chip.mat-standard-chip {
+  background-color: #e0e0e0;
+  color: rgba(0, 0, 0, 0.87);
+}
+.mat-chip.mat-standard-chip.mat-chip-selected.mat-primary {
+  background-color: #2196f3 !important;
+  /* color: white; */
+}
+.mat-chip-selected {
+  box-shadow: 0 3px 3px -2px rgba(0, 0, 0, 0.2), 0 3px 4px 0 rgba(0, 0, 0, 0.14),
+    0 1px 8px 0 rgba(0, 0, 0, 0.12);
+  outline: 0;
+}
+
+.unselectable {
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}

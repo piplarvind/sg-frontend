@@ -1,0 +1,11 @@
+.mat-sort-header-button{
+    margin:auto !important;
+    width: 100% !important;
+    text-align: center !important;
+}
+
+mat-header-cell, mat-cell, .mat-cell {
+    display:block; // flex prevents padding from working
+    min-height:auto; // overrides the 'inherit' that set the min height of the row
+    margin:auto !important;
+  }

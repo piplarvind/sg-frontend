@@ -1,0 +1,25 @@
+<h2 mat-dialog-title>{{ popupHeader }}</h2>
+<!-- <img id="checkImg" (update)="handleUpdate($event)" style="display:block !important;"/> -->
+<image-cropper
+  style="height:400px;width:450px"
+  id="checkImg"
+  [aspectRatio]="this.ratio ? this.ratio : 16 / 9"
+  [imageChangedEvent]="imageChangedEvent"
+  format="png"
+  (imageCropped)="imageCropped($event)"
+  style="display:block !important;"
+></image-cropper>
+
+<mat-dialog-actions>
+  <button
+    mat-raised-button
+    style="margin:auto;"
+    (click)="uploading()"
+    cdkFocusInitial
+  >
+    Crop
+  </button>
+  <button mat-raised-button style="margin:auto;" (click)="onCancel()">
+    Cancel
+  </button>
+</mat-dialog-actions>

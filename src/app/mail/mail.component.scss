@@ -1,0 +1,25 @@
+.headerTable {
+  flex: 0 0 100px;
+}
+
+.mat-column-sentTo {
+  max-width: 15vw !important;
+  // text-align: left;
+}
+
+.mat-column-sendDate {
+  max-width: 15vw !important;
+}
+
+.mat-column-subject {
+  min-width: 15vw !important;
+  text-align: left !important;
+  padding-left: 10px !important;
+}
+
+.mailContent {
+  // min-width: 40px;
+  width: 15vw;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}

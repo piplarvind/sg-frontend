@@ -1,0 +1,388 @@
+<div class="m-container" *ngIf="isdata">
+  <mat-card class="m-title">
+    <h3>Edit Register User</h3>
+  </mat-card>
+  <mat-card>
+    <!-- <div *ngIf="isLoading">Loading</div> -->
+    <mat-card-content>
+      <form #form="ngForm" (ngSubmit)="form.form.valid && OnUpdateRegister()" name="form">
+        <div fxLayout="row" fxLayoutAlign="space-between">
+          <!-- left card -->
+          <div fxFlex="49">
+            <title>Player Info</title>
+            <mat-card class="childContainer">
+              <div fxLayout="row" fxLayoutAlign="space-between">
+                <div fxFlex="49">
+                  <mat-form-field>
+                    <input matInput class="form-control" [(ngModel)]="user.athlete.first_name" required
+                      name="player_firstname" placeholder="First Name" #player_firstname="ngModel" [ngClass]="{
+                        'is-invalid': form.submitted && player_firstname.invalid
+                      }" />
+                  </mat-form-field>
+                  <mat-form-field>
+                    <mat-select class="form-control" [(ngModel)]="user.athlete.age" type="number" min="10" max="18"
+                      name="player_age" placeholder="Age">
+                      <mat-option *ngFor="let o of ageList" [value]="o._id">
+                        {{ o.name + ' (' + o.label + ')' }}
+                      </mat-option>
+                    </mat-select>
+                  </mat-form-field>
+                  <mat-form-field>
+                    <input matInput [(ngModel)]="athletemoblie" type="tel"
+                      (keyup)="PayerformatMobile($event.target.value)" [maxLength]="14" required
+                      pattern="^(\([0-9]{3}\) |[0-9]{3}-)[0-9]{3}-[0-9]{4}$" class="form-control" name="player_mobile"
+                      #player_mobile="ngModel" placeholder="Mobile" [ngClass]="{
+                        'is-invalid': form.submitted && player_mobile.invalid
+                      }" />
+                  </mat-form-field>
+
+                  <mat-form-field>
+                    <input matInput class="form-control" [(ngModel)]="user.athlete.address_line_1" minlength="3"
+                      maxlength="120" name="player_address_line_1" #player_address_line_1="ngModel"
+                      placeholder="Address 1" [ngClass]="{
+                        'is-invalid':
+                          form.submitted && player_address_line_1.invalid
+                      }" />
+                    <div *ngIf="form.submitted && player_address_line_1.invalid" class="invalid-feedback">
+                      <div>Address needs to be min 3 characters long</div>
+                    </div>
+                  </mat-form-field>
+
+                  <mat-form-field>
+                    <input matInput class="form-control" [(ngModel)]="user.athlete.city" name="player_city"
+                      placeholder="City" />
+                  </mat-form-field>
+                  <mat-form-field>
+                    <input matInput class="form-control" [(ngModel)]="user.athlete.zip" name="player_zip"
+                      placeholder="Zip" />
+                  </mat-form-field>
+
+                  <mat-form-field>
+                    <mat-select class="form-control" [(ngModel)]="user.athlete.position" name="position"
+                      placeholder="Position">
+                      <mat-option *ngFor="let p of positionlist" [value]="p._id">
+                        {{ p.name }}
+                      </mat-option>
+                    </mat-select>
+                  </mat-form-field>
+                </div>
+                <div fxFlex="49">
+
+                  <mat-form-field>
+                    <input matInput [(ngModel)]="user.athlete.last_name" required class="form-control"
+                      name="player_lastname" #player_lastname="ngModel" placeholder="Last Name" [ngClass]="{
+                          'is-invalid':
+                            form.submitted && player_lastname.invalid
+                        }" />
+                  </mat-form-field>
+                  <mat-form-field><input matInput [matDatepicker]="parentpicker" class="form-control" placeholder="DoB"
+                      name="dp" #dp="ngModel" [(ngModel)]="user.athlete.dob" />
+                    <mat-datepicker-toggle matSuffix [for]="parentpicker"></mat-datepicker-toggle>
+                    <mat-datepicker #parentpicker></mat-datepicker>
+
+                  </mat-form-field>
+                  <mat-form-field>
+                    <input matInput class="form-control" [(ngModel)]="user.athlete.email" required type="email"
+                      pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$" name="player_email" #player_email="ngModel"
+                      placeholder="Email" [ngClass]="{
+                          'is-invalid': form.submitted && player_email.invalid
+                        }" />
+                    <div *ngIf="form.submitted && player_email.invalid" class="invalid-feedback">
+                      <div>invalid Email</div>
+                    </div>
+                  </mat-form-field>
+
+                  <mat-form-field>
+                    <input matInput class="form-control" [(ngModel)]="user.athlete.address_line_2"
+                      name="player_address_line_2" #player_address_line_2="ngModel" placeholder="Address 2" />
+                  </mat-form-field>
+                  <mat-form-field>
+                    <mat-select class="form-control" [(ngModel)]="user.athlete.state" name="player_state"
+                      placeholder="State">
+                      <mat-option value="AL">Alabama</mat-option>
+                      <mat-option value="AK">Alaska</mat-option>
+                      <mat-option value="AZ">Arizona</mat-option>
+                      <mat-option value="AR">Arkansas</mat-option>
+                      <mat-option value="CA">California</mat-option>
+                      <mat-option value="CO">Colorado</mat-option>
+                      <mat-option value="CT">Connecticut</mat-option>
+                      <mat-option value="DE">Delaware</mat-option>
+                      <mat-option value="DC">District Of Columbia</mat-option>
+                      <mat-option value="FL">Florida</mat-option>
+                      <mat-option value="GA">Georgia</mat-option>
+                      <mat-option value="HI">Hawaii</mat-option>
+                      <mat-option value="ID">Idaho</mat-option>
+                      <mat-option value="IL">Illinois</mat-option>
+                      <mat-option value="IN">Indiana</mat-option>
+                      <mat-option value="IA">Iowa</mat-option>
+                      <mat-option value="KS">Kansas</mat-option>
+                      <mat-option value="KY">Kentucky</mat-option>
+                      <mat-option value="LA">Louisiana</mat-option>
+                      <mat-option value="ME">Maine</mat-option>
+                      <mat-option value="MD">Maryland</mat-option>
+                      <mat-option value="MA">Massachusetts</mat-option>
+                      <mat-option value="MI">Michigan</mat-option>
+                      <mat-option value="MN">Minnesota</mat-option>
+                      <mat-option value="MS">Mississippi</mat-option>
+                      <mat-option value="MO">Missouri</mat-option>
+                      <mat-option value="MT">Montana</mat-option>
+                      <mat-option value="NE">Nebraska</mat-option>
+                      <mat-option value="NV">Nevada</mat-option>
+                      <mat-option value="NH">New Hampshire</mat-option>
+                      <mat-option value="NJ">New Jersey</mat-option>
+                      <mat-option value="NM">New Mexico</mat-option>
+                      <mat-option value="NY">New York</mat-option>
+                      <mat-option value="NC">North Carolina</mat-option>
+                      <mat-option value="ND">North Dakota</mat-option>
+                      <mat-option value="OH">Ohio</mat-option>
+                      <mat-option value="OK">Oklahoma</mat-option>
+                      <mat-option value="OR">Oregon</mat-option>
+                      <mat-option value="PA">Pennsylvania</mat-option>
+                      <mat-option value="RI">Rhode Island</mat-option>
+                      <mat-option value="SC">South Carolina</mat-option>
+                      <mat-option value="SD">South Dakota</mat-option>
+                      <mat-option value="TN">Tennessee</mat-option>
+                      <mat-option value="TX">Texas</mat-option>
+                      <mat-option value="UT">Utah</mat-option>
+                      <mat-option value="VT">Vermont</mat-option>
+                      <mat-option value="VA">Virginia</mat-option>
+                      <mat-option value="WA">Washington</mat-option>
+                      <mat-option value="WV">West Virginia</mat-option>
+                      <mat-option value="WI">Wisconsin</mat-option>
+                      <mat-option value="WY">Wyoming</mat-option>
+                    </mat-select>
+                  </mat-form-field>
+                  <mat-form-field>
+                    <input matInput class="form-control" [(ngModel)]="user.athlete.country" value="United States"
+                      readonly name="player_country" placeholder="Country" />
+                  </mat-form-field>
+
+                </div>
+              </div>
+            </mat-card>
+          </div>
+          <div fxFlex="49">
+            <mat-card class="childContainer">
+              <h3>Parent Info</h3>
+              <div fxLayout="row" fxLayoutAlign="space-between">
+                <div fxFlex="49">
+                  <mat-form-field>
+                    <input matInput class="form-control" [(ngModel)]="user.parent.first_name" required
+                      name="parent_firstname" placeholder="First Name" #parent_firstname="ngModel" [ngClass]="{
+                                      'is-invalid': form.submitted && parent_firstname.invalid
+                                    }" />
+                  </mat-form-field>
+
+                  <mat-form-field>
+                    <input matInput [(ngModel)]="parentmobile" type="tel"
+                      (keyup)="parentformatMobile($event.target.value)" [maxLength]="14" required
+                      pattern="^(\([0-9]{3}\) |[0-9]{3}-)[0-9]{3}-[0-9]{4}$" class="form-control" name="parent_mobile"
+                      #parent_mobile="ngModel" placeholder="Mobile" [ngClass]="{
+                                      'is-invalid': form.submitted && parent_mobile.invalid
+                                    }" />
+                  </mat-form-field>
+
+                  <mat-form-field>
+                    <input matInput class="form-control" [(ngModel)]="user.parent.address_line_1" minlength="3"
+                      maxlength="120" name="parent_address_line_1" #parent_address_line_1="ngModel"
+                      placeholder="Address 1" [ngClass]="{
+                                      'is-invalid':
+                                        form.submitted && parent_address_line_1.invalid
+                                    }" />
+                    <div *ngIf="form.submitted && parent_address_line_1.invalid" class="invalid-feedback">
+                      <div>Address needs to be min 3 characters long</div>
+                    </div>
+                  </mat-form-field>
+
+                  <mat-form-field>
+                    <input matInput class="form-control" [(ngModel)]="user.parent.city" name="parent city"
+                      placeholder="City" />
+                  </mat-form-field>
+                  <mat-form-field>
+                    <input matInput class="form-control" [(ngModel)]="user.parent.zip" name="parent zip"
+                      placeholder="Zip" />
+                  </mat-form-field>
+
+                  <!-- <mat-form-field>
+                    <mat-select class="form-control" [(ngModel)]="user.parent.position" name="position" placeholder="Position">
+                      <mat-option *ngFor="let p of positionlist" [value]="p._id">
+                        {{ p.name }}
+                      </mat-option>
+                    </mat-select>
+                  </mat-form-field> -->
+                  <mat-form-field><input matInput [matDatepicker]="picker" class="form-control" placeholder="DoB"
+                      name="dp" #dp="ngModel" [(ngModel)]="user.parent.dob" />
+                    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                    <mat-datepicker #picker></mat-datepicker>
+                  </mat-form-field>
+                </div>
+                <div fxFlex="49">
+
+                  <mat-form-field>
+                    <input matInput [(ngModel)]="user.parent.last_name" required class="form-control"
+                      name="parent_lastname" #parent_lastname="ngModel" placeholder="Last Name" [ngClass]="{
+                                        'is-invalid':
+                                          form.submitted && parent_lastname.invalid
+                                      }" />
+                  </mat-form-field>
+
+                  <mat-form-field>
+                    <input matInput class="form-control" [(ngModel)]="user.parent.email" required type="email"
+                      pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$" name="parent_email" #parent_email="ngModel"
+                      placeholder="Email" [ngClass]="{
+                                        'is-invalid': form.submitted && parent_email.invalid
+                                      }" />
+                    <div *ngIf="form.submitted && parent_email.invalid" class="invalid-feedback">
+                      <div>invalid Email</div>
+                    </div>
+                  </mat-form-field>
+
+                  <mat-form-field>
+                    <input matInput class="form-control" [(ngModel)]="user.parent.address_line_2"
+                      name="parent_address_line_2" #parent_address_line_2="ngModel" placeholder="Address 2" />
+                  </mat-form-field>
+                  <mat-form-field>
+                    <mat-select class="form-control" [(ngModel)]="user.parent.state" name="parent_state"
+                      placeholder="State">
+                      <mat-option value="AL">Alabama</mat-option>
+                      <mat-option value="AK">Alaska</mat-option>
+                      <mat-option value="AZ">Arizona</mat-option>
+                      <mat-option value="AR">Arkansas</mat-option>
+                      <mat-option value="CA">California</mat-option>
+                      <mat-option value="CO">Colorado</mat-option>
+                      <mat-option value="CT">Connecticut</mat-option>
+                      <mat-option value="DE">Delaware</mat-option>
+                      <mat-option value="DC">District Of Columbia</mat-option>
+                      <mat-option value="FL">Florida</mat-option>
+                      <mat-option value="GA">Georgia</mat-option>
+                      <mat-option value="HI">Hawaii</mat-option>
+                      <mat-option value="ID">Idaho</mat-option>
+                      <mat-option value="IL">Illinois</mat-option>
+                      <mat-option value="IN">Indiana</mat-option>
+                      <mat-option value="IA">Iowa</mat-option>
+                      <mat-option value="KS">Kansas</mat-option>
+                      <mat-option value="KY">Kentucky</mat-option>
+                      <mat-option value="LA">Louisiana</mat-option>
+                      <mat-option value="ME">Maine</mat-option>
+                      <mat-option value="MD">Maryland</mat-option>
+                      <mat-option value="MA">Massachusetts</mat-option>
+                      <mat-option value="MI">Michigan</mat-option>
+                      <mat-option value="MN">Minnesota</mat-option>
+                      <mat-option value="MS">Mississippi</mat-option>
+                      <mat-option value="MO">Missouri</mat-option>
+                      <mat-option value="MT">Montana</mat-option>
+                      <mat-option value="NE">Nebraska</mat-option>
+                      <mat-option value="NV">Nevada</mat-option>
+                      <mat-option value="NH">New Hampshire</mat-option>
+                      <mat-option value="NJ">New Jersey</mat-option>
+                      <mat-option value="NM">New Mexico</mat-option>
+                      <mat-option value="NY">New York</mat-option>
+                      <mat-option value="NC">North Carolina</mat-option>
+                      <mat-option value="ND">North Dakota</mat-option>
+                      <mat-option value="OH">Ohio</mat-option>
+                      <mat-option value="OK">Oklahoma</mat-option>
+                      <mat-option value="OR">Oregon</mat-option>
+                      <mat-option value="PA">Pennsylvania</mat-option>
+                      <mat-option value="RI">Rhode Island</mat-option>
+                      <mat-option value="SC">South Carolina</mat-option>
+                      <mat-option value="SD">South Dakota</mat-option>
+                      <mat-option value="TN">Tennessee</mat-option>
+                      <mat-option value="TX">Texas</mat-option>
+                      <mat-option value="UT">Utah</mat-option>
+                      <mat-option value="VT">Vermont</mat-option>
+                      <mat-option value="VA">Virginia</mat-option>
+                      <mat-option value="WA">Washington</mat-option>
+                      <mat-option value="WV">West Virginia</mat-option>
+                      <mat-option value="WI">Wisconsin</mat-option>
+                      <mat-option value="WY">Wyoming</mat-option>
+                    </mat-select>
+                  </mat-form-field>
+                  <mat-form-field>
+                    <input matInput class="form-control" [(ngModel)]="user.parent.country" value="United States"
+                      readonly name="parent country" placeholder="Country" />
+                  </mat-form-field>
+
+                </div>
+              </div>
+            </mat-card>
+
+          </div>
+        </div>
+        <mat-card>
+          <div fxLayout="row" fxLayoutAlign="center center" style="margin: 5px">
+
+
+            <button mat-raised-button class="m-jumbo-button m-pointer" type="submit">Update</button>
+
+
+            <button mat-raised-button class="m-jumbo-button m-pointer" (click)="cancelEvents()">Cancel</button>
+          </div>
+        </mat-card>
+      </form>
+    </mat-card-content>
+  </mat-card>
+</div>
+<div class="m-container" *ngIf="islink">
+  <mat-card class="m-title">
+    <h3>Link Register User</h3>
+  </mat-card>
+  <mat-card>
+    <!-- <div *ngIf="isLoading">Loading</div> -->
+    <form name="linkform" #linkform="ngForm" (ngSubmit)="linkform.form.valid && selectedteam && OnUpdateLink()">
+      <mat-card-content>
+       
+      <div >
+        <div class="field-container" *ngIf="radiobutgr">
+          <mat-radio-group aria-label="Select an option"  [(ngModel)]="selecttype" name="selectlink" #selectedlink="ngModel" required>
+            <mat-radio-button value="1">Map to Existing User </mat-radio-button>
+            <mat-radio-button value="2">Add to Team</mat-radio-button>
+          </mat-radio-group>
+            <div *ngIf="linkform.submitted && selectedlink.invalid" class="invalid-feedback">
+              <div>select one option</div>
+            </div>
+          </div>
+    <div class="field-container">
+      <app-search-select [isDefault]="true"   [isRequired]="true"[dropdownList]="teamlist" placeHolder="Select  Team" 
+        [alreadySel]="selectedteam" (valueUpdated)="getTeam($event)">
+      </app-search-select>
+    
+    </div>
+ 
+        <div class="field-container" *ngIf="selecttype=='1'">
+          <app-search-select [isDefault]="true" [isRequired]="true" [dropdownList]="athletelist" placeHolder="Select  Athlete" required
+            [alreadySel]="selectedathlete" (valueUpdated)="getathlete($event)">
+          </app-search-select>
+        
+        </div>
+            <div class="field-container" *ngIf="alreadyathlete">
+          <mat-form-field>
+            <mat-select class="form-control" [(ngModel)]="selectedathlete" name="athlete" placeholder="athlete" readonly>
+              <mat-option *ngFor="let p of athletelist" [value]="p._id">
+                {{ p.name }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+            
+            </div>
+
+         
+        
+          
+
+
+        </div>
+
+
+
+        <div fxLayout="row" fxLayoutAlign="center center">
+  <button mat-raised-button class="m-jumbo-button m-pointer" type="submit">ok</button>
+  
+  
+  <button mat-raised-button class="m-jumbo-button m-pointer" (click)="cancelEvents()">Cancel</button>
+
+     
+        </div>
+      </mat-card-content>
+    </form>
+  </mat-card>
+</div>

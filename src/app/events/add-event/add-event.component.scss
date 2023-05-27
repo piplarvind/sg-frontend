@@ -1,0 +1,52 @@
+.label {
+  margin: auto;
+}
+
+.radio-button {
+  margin-left: 10px !important;
+}
+
+.radio {
+  margin: 20px 0px;
+}
+
+mat-option {
+  text-transform: capitalize;
+}
+
+.label-container {
+  width: 30%;
+}
+
+#a {
+  cursor: pointer;
+}
+.red-text {
+  color: red;
+}
+.green-text {
+  color: green;
+}
+.mat-sort-header-button {
+  // margin:auto !important;
+  width: 100% !important;
+  margin-left: 40 !important;
+}
+
+mat-header-cell,
+mat-cell,
+.mat-cell {
+  display: block; // flex prevents padding from working
+  min-height: auto; // overrides the 'inherit' that set the min height of the row
+  margin: auto !important;
+}
+
+.linkhref {
+  color: blue;
+}
+
+.disabled {
+  pointer-events: none;
+  cursor: default;
+  opacity: 0.6;
+}

@@ -1,0 +1,177 @@
+<div class="m-container">
+  <mat-card class="m-title" fxLayout="row" fxLayoutAlign="space-between">
+    <h3>TEAM</h3>
+    <button
+      mat-raised-button
+      class="m-button m-pointer"
+      routerLink="/teams/add"
+    >
+      Create Team&nbsp;&nbsp;+
+    </button>
+  </mat-card>
+  <mat-card style="min-height: 77vh">
+    <div class="m-table-container" fxLayout="row" fxLayoutAlign="space-between">
+      <div>
+        Team Details
+      </div>
+      <div>
+        <button
+          mat-raised-button
+          ng-init="buttontext='Show All'"
+          (click)="ShowAll($event)"
+        >
+          {{ buttontext }}
+        </button>
+      </div>
+      <div>
+        <mat-form-field>
+          <input
+            matInput
+            type="text"
+            (keyup)="doFilter($event)"
+            [placeholder]="keyup ? 'Please Press Enter key' : 'Search by Name'"
+          />
+        </mat-form-field>
+      </div>
+
+      <div></div>
+      <div>
+        <mat-paginator
+          #paginator
+          [length]="totalLength"
+          [pageSize]="limit"
+          [pageSizeOptions]="pageLimit"
+          (page)="changePage($event)"
+        >
+        </mat-paginator>
+      </div>
+    </div>
+
+    <mat-card-content>
+      <mat-divider class="m-divider"></mat-divider>
+
+      <br />
+
+      <div class="m-table-container">
+        <mat-table
+          #table
+          [dataSource]="dataSource"
+          matSort
+          (matSortChange)="namesort($event)"
+        >
+          <ng-container matColumnDef="name">
+            <mat-header-cell *matHeaderCellDef mat-sort-header>
+              <span class="m-table-header"> Team Name </span>
+            </mat-header-cell>
+            <mat-cell
+              *matCellDef="let element"
+              class="light-red m-pointer "
+              (click)="editTeam(element)"
+              style="margin-left: 2% !important"
+            >
+              {{ element.name }}
+            </mat-cell>
+          </ng-container>
+          <ng-container matColumnDef="age">
+            <mat-header-cell *matHeaderCellDef mat-sort-header>
+              <span class="m-table-header"> Age Group </span>
+            </mat-header-cell>
+            <mat-cell *matCellDef="let element" (click)="editTeam(element)">
+              {{ element.age ? element.age.label : '' }}
+            </mat-cell>
+          </ng-container>
+          <ng-container matColumnDef="createdAt">
+            <mat-header-cell *matHeaderCellDef mat-sort-header>
+              <span class="m-table-header">Created On </span>
+            </mat-header-cell>
+            <mat-cell *matCellDef="let element">
+              {{ element.createdAt.split('T')[0] | date: 'MM/dd/yyyy' }}
+            </mat-cell>
+          </ng-container>
+          <ng-container matColumnDef="head_coach">
+            <mat-header-cell *matHeaderCellDef mat-sort-header>
+              <span class="m-table-header"> Head Coach </span>
+            </mat-header-cell>
+            <mat-cell *matCellDef="let element">
+              <!-- {{element.head_coach ? element.head_coach.first_name : 'NA'}}
+              {{element.head_coach ? element.head_coach.last_name : ''}}  -->
+              {{ element.head_coach }}
+            </mat-cell>
+          </ng-container>
+          <ng-container matColumnDef="assistant_coach">
+            <mat-header-cell *matHeaderCellDef mat-sort-header>
+              <span class="m-table-header"> Assistant Coach </span>
+            </mat-header-cell>
+            <mat-cell *matCellDef="let element">
+              {{ element.assistant_coach ? element.assistant_coach : ' ' }}
+            </mat-cell>
+          </ng-container>
+          <ng-container matColumnDef="team_rep">
+            <mat-header-cell *matHeaderCellDef mat-sort-header>
+              <span class="m-table-header"> Team Rep </span>
+            </mat-header-cell>
+            <mat-cell *matCellDef="let element">
+              {{ element.team_rep ? element.team_rep : ' ' }}</mat-cell
+            >
+          </ng-container>
+          <ng-container matColumnDef="order">
+            <mat-header-cell *matHeaderCellDef mat-sort-header>
+              <span class="m-table-header"> Club Rank </span>
+            </mat-header-cell>
+            <mat-cell *matCellDef="let element"> {{ element.order }}</mat-cell>
+          </ng-container>
+          <!-- <ng-container matColumnDef="status">
+            <mat-header-cell *matHeaderCellDef mat-sort-header>
+              <span class="m-table-header"> Status </span>
+            </mat-header-cell>
+            <mat-cell *matCellDef="let element" >
+              <button
+                (click)="deleteTeam(element)"
+                [class]="element.active ? 'inactive' : 'active'"
+                ng-hide="element.active=false"
+              >
+                <div ng-hide="element.active">
+                  {{ getStatus(element.active) }}
+                </div>
+              </button>
+            </mat-cell>
+          </ng-container> -->
+          <ng-container matColumnDef="active">
+            <mat-header-cell *matHeaderCellDef mat-sort-header>
+              <span class="m-table-header"> Status </span>
+            </mat-header-cell>
+            <mat-cell *matCellDef="let element">
+              <button
+                (click)="deleteTeam(element)"
+                [class]="element.active ? 'inactive' : 'active'"
+                ng-hide="element.active=false"
+              >
+                <div ng-hide="element.active">
+                  {{ element.status }}
+                </div>
+              </button>
+            </mat-cell>
+          </ng-container>
+          <ng-container matColumnDef="Actions">
+            <mat-header-cell *matHeaderCellDef>
+              Actions
+            </mat-header-cell>
+            <mat-cell *matCellDef="let element">
+              <span
+                class="table-icon m-pointer"
+                (click)="editTeam(element)"
+                title="Edit Team"
+              >
+                <i class="fas fa-pencil-alt"></i>
+              </span>
+            </mat-cell>
+          </ng-container>
+          <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+          <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
+        </mat-table>
+        <!-- <mat-paginator [length]="100" [pageSize]="100" [pageSizeOptions]="[25, 50, 75, 100]">
+        </mat-paginator> -->
+      </div>
+    </mat-card-content>
+  </mat-card>
+</div>

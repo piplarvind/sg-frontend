@@ -1,0 +1,51 @@
+@import "src/variables";
+.question-container {
+    .question-box {
+        position: relative;
+        width: 100%;
+        border: 1px solid $primary;
+        background: rgb(240, 240, 240);
+        padding: 24px 50px;
+        color: black;
+        .question-mark {
+            position: absolute;
+            top: calc(50% - 20px);
+            left: -20px;
+        }
+    }
+    .show-answer {
+        cursor: pointer;
+        width: 100%;
+        border: 1px solid $primary;
+        border-top: none;
+        color: black;
+        padding: 3px 70px;
+        background: rgb(240, 240, 240);
+    }
+    .answer-box {
+        position: relative;
+        width: 92%;
+        margin-top: 20px;
+        border: 1px solid $primary;
+        color: black;
+        padding: 24px 50px;
+        background: rgb(204, 214, 232);
+        .answer-icon {
+            position: absolute;
+            top: calc(50% - 20px);
+            left: -20px;
+        }
+    }
+}
+
+.fab-button {
+    height: 40px;
+    width: 40px;
+    display: inline-block;
+    background: $primary;
+    border-radius: 50%;
+    padding: 10px;
+    color: white;
+    border: none;
+    cursor: pointer;
+}

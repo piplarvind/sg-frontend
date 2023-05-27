@@ -1,0 +1,902 @@
+<div class="m-container">
+  <mat-card class="m-title">
+    <h3>{{ title }}</h3>
+  </mat-card>
+
+
+  <mat-card>
+    <form *ngIf="isEdit" [formGroup]="form" name="form" class="form-horizontal">
+      <mat-card-content>
+        <!-- <div *ngIf="isLoading">Loading</div> -->
+
+        <!-- -->
+        <div fxLayout="row" fxLayoutAlign="space-between">
+          <div fxFlex="49">
+            <mat-card class="childContainer">
+              <div *ngFor="let field of fields | slice:0:this.length/2">
+                <div class="input-container">
+                  <div class="label-container">
+                    <span class="label" [attr.for]="field.field.name">
+                      {{ field.field.label }}</span>
+                  </div>
+
+                  <div class="field-container" [ngSwitch]="field.field.type">
+                    <mat-form-field [floatLabel]="'never'" *ngSwitchCase="'text'">
+                      <div *ngIf="field.field.name === 'email'">
+                        <input matInput type="email" pattern="^[^\s@]+@[^\s@]+\.[^\s@]{2,}$" [id]="field.field.name"
+                          [placeholder]="field.field.label" class="form-control"
+                          [required]="field.field.validation.required?true:false"
+                          [formControlName]="field.field.name" />
+                      </div>
+                      <div *ngIf="field.field.name === 'user_name'">
+                        <input matInput type="text" name="user" [id]="field.field.name"
+                          (keydown.space)="$event.preventDefault();" [placeholder]="field.label" class="form-control"
+                          [required]="field.field.validation.required?true:false"
+                          [formControlName]="field.field.name" />
+
+                      </div>
+                      <div
+                        *ngIf="field.field.name !='email' && field.field.name !== 'mobile_phone' && field.field.name !== 'home_phone' && field.field.name !== 'user_name' && field.field.name !== 'grad_year'">
+                        <input matInput type="text" [placeholder]="field.label" [id]="field.field.name"
+                          class="form-control" [required]="field.field.validation.required?true:false"
+                          [formControlName]="field.field.name" />
+                      </div>
+                      <div *ngIf="field.field.name === 'grad_year'">
+                        <input matInput type="text" [placeholder]="field.label" [id]="field.field.name"
+                          class="form-control" pattern="\d{4}" [required]="field.field.validation.required?true:false"
+                          [formControlName]="field.field.name" />
+                      </div>
+                      <div *ngIf="field.field.name === 'mobile_phone'">
+                        <input matInput [value]="mobile" (keyup)="formatMobile($event.target.value)"
+                          [placeholder]="field.field.label " pattern="^(\([0-9]{3}\) |[0-9]{3}-)[0-9]{3}-[0-9]{4}$"
+                          type="tel" [required]="field.field.validation.required?true:false" maxlength="14"
+                          [formControlName]="field.field.name">
+                      </div>
+                      <div *ngIf="field.field.name === 'home_phone'">
+                        <input matInput [value]="home" [placeholder]="field.field.label" type="tel"
+                          pattern="^(\([0-9]{3}\) |[0-9]{3}-)[0-9]{3}-[0-9]{4}$"
+                          (change)="formatHome($event.target.value)" [required]="field.field.validation.required"
+                          maxlength="14" [formControlName]="field.field.name">
+                      </div>
+
+
+                    </mat-form-field>
+
+                    <mat-form-field [floatLabel]="'never'" *ngSwitchCase="'number'">
+                      <input matInput type="Number" min="0" class="form-control" [formControlName]="field.field.name"
+                        [required]="field.field.validation.required?true:false" />
+                    </mat-form-field>
+
+
+                    <div *ngSwitchCase="'file'">
+                      <div *ngIf="field.field.name === 'profile_image'">
+                        <input type="file" style="display: none" #logoInput (change)="getClubImage($event)"
+                          #logoprofileInput />
+                        <mat-form-field [floatLabel]="'never'" (click)="logoInput.click()">
+                          <input matInput placeholder="Upload the Image" class="m-pointer" [value]="logo" disabled />
+
+                          <img *ngIf="logo" [src]="
+                        _DomSanitizationService.bypassSecurityTrustUrl(club_img)
+                      " height="100" />
+                          <span matSuffix class="m-pointer">
+                            <i class="fas fa-upload"></i>
+                          </span>
+                        </mat-form-field>
+                      </div>
+
+                      <div *ngIf="field.field.name === 'school_logo'">
+                        <input type="file" style="display: none" #logoschoolInput (change)="school_image($event)" />
+                        <mat-form-field [floatLabel]="'never'" (click)="logoschoolInput.click()">
+                          <input matInput placeholder="Upload the Image" class="m-pointer" [value]="school_image_logo"
+                            disabled />
+
+                          <img *ngIf="school_image_logo" [src]="
+                        _DomSanitizationService.bypassSecurityTrustUrl(
+                          school_img
+                        )
+                      " height="100" />
+                          <span matSuffix class="m-pointer">
+                            <i class="fas fa-upload"></i>
+                          </span>
+                        </mat-form-field>
+                      </div>
+                      <div *ngIf="field.field.name === 'college_logo'">
+                        <input type="file" style="display: none" #colloge_logoInput
+                          (change)="getcollegeImage($event)" />
+                        <mat-form-field [floatLabel]="'never'" (click)="colloge_logoInput.click()">
+                          <input matInput placeholder="Upload the Image" class="m-pointer" [value]="college_image"
+                            disabled />
+
+                          <img *ngIf="college_image" [src]="
+                        _DomSanitizationService.bypassSecurityTrustUrl(
+                          college_img
+                        )
+                      " height="100" />
+                          <span matSuffix class="m-pointer">
+                            <i class="fas fa-upload"></i>
+                          </span>
+                        </mat-form-field>
+                      </div>
+                    </div>
+
+                    <div *ngSwitchCase="'boolean'">
+                      <div class="field-container custom-input-padding">
+                        <mat-checkbox (change)="checkbox1($event)" [checked]="marked" name="isCaptain"></mat-checkbox>
+                        <!-- <input type="checkbox" data-md-icheck (change)="checkbox1($event)" /> -->
+                      </div>
+                      <br>
+                    </div>
+                    <mat-form-field [floatLabel]="'never'" *ngSwitchCase="'date'">
+                      <input matInput [matDatepicker]="endpicker" class="form-control"
+                        [formControlName]="field.field.name" style="width:inherit" />
+                      <mat-datepicker-toggle matSuffix [for]="endpicker"></mat-datepicker-toggle>
+                      <mat-datepicker #endpicker></mat-datepicker>
+                    </mat-form-field>
+
+
+                    <div *ngSwitchCase="'dropdown2'">
+                      <div class="field-container" *ngIf="field.field.name === 'reach'">
+                        <select class="dateInput" name="reachFeets" [value]="reach_feets"
+                          (click)="getreachFeets($event)" placeholder="Feet">
+                          <option value="5">5'</option>
+                          <option value="6">6'</option>
+                          <option value="7">7'</option>
+                          <option value="8">8'</option>
+                          <option value="9">9'</option>
+                          <option value="10">10'</option>
+                          <option value="11">11'</option>
+                          <option value="12">12'</option>
+                          <option value="13">13'</option>
+                          <option value="14">14'</option>
+                        </select>
+                        <select class="dateInput" name="reachInches" [value]="reach_inch"
+                          (click)="getreachInches($event)" placeholder="Inch">
+                          <option value="0">0''</option>
+                          <option value="1">1''</option>
+                          <option value="2">2''</option>
+                          <option value="3">3''</option>
+                          <option value="4">4''</option>
+                          <option value="5">5''</option>
+                          <option value="6">6''</option>
+                          <option value="7">7''</option>
+                          <option value="8">8''</option>
+                          <option value="9">9''</option>
+                          <option value="10">10''</option>
+                          <option value="11">11''</option>
+                        </select>
+                      </div>
+                      <div class="field-container " *ngIf="field.field.name === 'approach_touch'">
+                        <select class="dateInput" name="approachFeets" [value]="approch_feets"
+                          (click)="getapproachFeets($event)" placeholder="Feet">
+                          <option value="6">6'</option>
+                          <option value="7">7'</option>
+                          <option value="8">8'</option>
+                          <option value="9">9'</option>
+                          <option value="10">10'</option>
+                          <option value="11">11'</option>
+                          <option value="12">12'</option>
+                          <option value="13">13'</option>
+                          <option value="14">14'</option>
+                          <option value="15">15'</option>
+                          <option value="16">16'</option>
+                          <option value="17">17'</option>
+                        </select>
+                        <select class="dateInput" name="approachInches" [value]="approch_inch"
+                          (click)="getapproachInches($event)" placeholder="Inch">
+                          <option value="0">0''</option>
+                          <option value="1">1''</option>
+                          <option value="2">2''</option>
+                          <option value="3">3''</option>
+                          <option value="4">4''</option>
+                          <option value="5">5''</option>
+                          <option value="6">6''</option>
+                          <option value="7">7''</option>
+                          <option value="8">8''</option>
+                          <option value="9">9''</option>
+                          <option value="10">10''</option>
+                          <option value="11">11''</option>
+                        </select>
+                      </div>
+
+                      <div class="field-container   " *ngIf="field.field.name === 'height'">
+                        <select class="dateInput" (click)="getheightFeets($event)" [value]="height_feets"
+                          name="heightFeets" placeholder="Feet">
+                          <option value="4">4'</option>
+                          <option value="5">5'</option>
+                          <option value="6">6'</option>
+                          <option value="7">7'</option>
+                        </select>
+                        <select class="dateInput" (click)="getheightInches($event)" [value]="height_inch"
+                          name="heightInches" placeholder="Inch">
+                          <option value="0">0''</option>
+                          <option value="1">1''</option>
+                          <option value="2">2''</option>
+                          <option value="3">3''</option>
+                          <option value="4">4''</option>
+                          <option value="5">5''</option>
+                          <option value="6">6''</option>
+                          <option value="7">7''</option>
+                          <option value="8">8''</option>
+                          <option value="9">9''</option>
+                          <option value="10">10''</option>
+                          <option value="11">11''</option>
+                        </select>
+                      </div>
+
+                    </div>
+                    <div *ngSwitchCase="'age'">
+                      <mat-form-field [floatLabel]="'never'">
+                        <mat-select matInput class="form-control" [formControlName]="field.field.name"
+                          [required]="field.field.validation.required?true:false">
+                          <div *ngIf="field.field.name === 'age'">
+                            <mat-option *ngFor="let age of ageList" [value]="age._id">{{
+                            age.label
+                            }}</mat-option>
+                          </div>
+                        </mat-select>
+                      </mat-form-field>
+                    </div>
+                    <div *ngSwitchCase="'dropdown'">
+                      <div *ngIf="field.field.name === 'position'">
+                        <mat-form-field>
+                          <mat-select matInput [(ngModel)]="selectedAthletePosition"
+                            [required]="field.field.validation.required?true:false"
+                            (selectionChange)="multiplevalueselect($event.value)"
+                            [multiple]="field.field.selection== 'multi'" [ngModelOptions]="{standalone: true}">
+
+                            <mat-option *ngFor="let position of positionList" [value]="position._id">{{
+                                            position.positonview?position.positonview:' ' 
+                                            }}</mat-option>
+
+                          </mat-select>
+                        </mat-form-field>
+                      </div>
+                      <div *ngIf="field.field.name === 'status'">
+                        <mat-form-field [floatLabel]="'never'">
+                          <mat-select matInput class="form-control" [formControlName]="field.field.name"
+                            [required]="field.field.validation.required?true:false"
+                            (selectionChange)="statuschnage($event.value)">
+                            <mat-option *ngFor="let status of StatusList " [value]="status._id">{{
+                        status.label
+                        }}</mat-option>
+                          </mat-select>
+                        </mat-form-field>
+                      </div>
+
+                      <mat-form-field [floatLabel]="'never'"
+                        *ngIf="field.field.name !== 'position' && field.field.name !== 'status'">
+                        <mat-select matInput class="form-control" [formControlName]="field.field.name"
+                          [required]="field.field.validation.required?true:false">
+
+                          <div *ngIf="field.field.name === 'country'">
+                            <mat-option *ngFor="let country of countryList" [value]="country._id"
+                              (click)="countryData(country._id)">{{
+                        country.name }}</mat-option>
+                          </div>
+                          <div *ngIf="field.field.name === 'gender'">
+                            <mat-option *ngFor="let gen of GenderList" [value]="gen._id" (click)="gender(gen._id)">{{
+                                                                        gen.name }}</mat-option>
+                          </div>
+                          <div *ngIf="field.field.name === 'age'">
+                            <mat-option *ngFor="let age of ageList" [value]="age._id">{{
+      age.label
+      }}</mat-option>
+                          </div>
+
+                          <div *ngIf="field.field.name === 'region'">
+                            <mat-option *ngFor="let region of regionsList" [value]="region._id">{{ region.name }}
+                            </mat-option>
+                          </div>
+                          <div *ngIf="field.field.name === 'district'">
+                            <mat-option *ngFor="let district of districtList" [value]="district._id">{{ district.name }}
+                            </mat-option>
+                          </div>
+                          <div *ngIf="field.field.name === 'state'">
+                            <mat-option *ngFor="let state of stateList" [value]="state._id">{{ state.name }}
+                            </mat-option>
+                          </div>
+
+
+                          <div *ngIf="field.field.name === 'handed'">
+
+                            <mat-option *ngFor="let hand of handedList" [value]="hand._id">{{
+                        hand.name
+                          }}</mat-option>
+
+                          </div>
+
+                        </mat-select>
+                      </mat-form-field>
+                    </div>
+                  </div>
+                  <div class="error"
+                    *ngIf="form.get(field.field.name).invalid && (form.get(field.field.name).dirty || form.get(field.field.name).touched)">
+
+                    <div class="error1" *ngIf="field.field.name=='user_name'">
+                      User name should not contain white Space or special characters
+                    </div>
+                    <div class="error1" *ngIf="field.field.name !=='user_name'">
+                      invalid input
+                    </div>
+
+
+                  </div>
+                </div>
+              </div>
+            </mat-card>
+          </div>
+          <div fxFlex="49">
+            <mat-card class="childContainer">
+              <div *ngFor="let field of fields | slice:this.length/2">
+                <div class="input-container">
+                  <div class="label-container">
+                    <span class="label" [attr.for]="field.fieldname">
+                      {{ field.field.label }}</span>
+                  </div>
+
+                  <div class="field-container" [ngSwitch]="field.field.type">
+                    <mat-form-field [floatLabel]="'never'" *ngSwitchCase="'text'">
+                      <div *ngIf="field.field.name === 'email'">
+                        <input matInput type="email" pattern="^[^\s@]+@[^\s@]+\.[^\s@]{2,}$"
+                          [placeholder]="field.field.label" class="form-control"
+                          [required]="field.field.validation.required?true:false"
+                          [formControlName]="field.field.name" />
+                      </div>
+                      <div *ngIf="field.field.name === 'user_name'">
+                        <input matInput type="text" (keydown.space)="$event.preventDefault();"
+                          [placeholder]="field.label" class="form-control"
+                          [required]="field.field.validation.required?true:false" name="user"
+                          [formControlName]="field.field.name" />
+
+                      </div>
+                      <div
+                        *ngIf="field.field.name !='email' && field.field.name !== 'mobile_phone' && field.field.name !== 'home_phone' && field.field.name !== 'user_name' && field.field.name !== 'grad_year'">
+                        <input matInput type="text" [placeholder]="field.label" [id]="field.field.name"
+                          class="form-control" [required]="field.field.validation.required?true:false"
+                          [formControlName]="field.field.name" />
+                      </div>
+                      <div *ngIf="field.field.name === 'grad_year'">
+                        <input matInput type="text" pattern="\d{4}" [placeholder]="field.label" [id]="field.field.name"
+                          class="form-control" [required]="field.field.validation.required?true:false"
+                          [formControlName]="field.field.name" />
+                      </div>
+
+                      <div *ngIf="field.field.name === 'mobile_phone'">
+                        <input matInput [value]="mobile" (keyup)="formatMobile($event.target.value)"
+                          [placeholder]="field.field.label " pattern="^(\([0-9]{3}\) |[0-9]{3}-)[0-9]{3}-[0-9]{4}$"
+                          type="tel" [required]="field.field.validation.required?true:false" maxlength="14"
+                          [formControlName]="field.field.name">
+                      </div>
+                      <!-- <div *ngIf="field.field.name === 'mobile_phone'">
+                                <input matInput [(ngModel)]="mobile" (keyup)="formatMobile($event.target.value)" [placeholder]="field.field.label "
+                                  [ngModelOptions]="{standalone: true}" pattern="^(\([0-9]{3}\) |[0-9]{3}-)[0-9]{3}-[0-9]{4}$" type="tel"
+                                  [required]="field.field.validation.required?true:false" maxlength="14">
+                              </div> -->
+                      <div *ngIf="field.field.name === 'home_phone'">
+                        <input matInput [value]="home" [placeholder]="field.field.label" type="tel"
+                          pattern="^(\([0-9]{3}\) |[0-9]{3}-)[0-9]{3}-[0-9]{4}$"
+                          (keyup)="formatHome($event.target.value)"
+                          [required]="field.field.validation.required?true:false" maxlength="14"
+                          [formControlName]="field.field.name">
+                      </div>
+                    </mat-form-field>
+                    <mat-form-field [floatLabel]="'never'" *ngSwitchCase="'number'">
+                      <input matInput type="Number" min="0" class="form-control" [formControlName]="field.field.name"
+                        [required]="field.field.validation.required?true:false" />
+                    </mat-form-field>
+                    <mat-form-field [floatLabel]="'never'" *ngSwitchCase="'date'">
+                      <input matInput [matDatepicker]="endpicker" class="form-control"
+                        [formControlName]="field.field.name" style="width:inherit" />
+                      <mat-datepicker-toggle matSuffix [for]="endpicker"></mat-datepicker-toggle>
+                      <mat-datepicker #endpicker></mat-datepicker>
+                    </mat-form-field>
+                    <div *ngSwitchCase="'file'">
+                      <div *ngIf="field.field.name === 'profile_image'">
+                        <input type="file" style="display: none" #logoInput (change)="getClubImage($event)"
+                          #logoprofileInput />
+                        <mat-form-field [floatLabel]="'never'" (click)="logoInput.click()">
+                          <input matInput placeholder="Upload the Image" class="m-pointer" [value]="logo" disabled />
+
+                          <img *ngIf="logo" [src]="
+                                _DomSanitizationService.bypassSecurityTrustUrl(club_img)
+                              " height="100" />
+                          <span matSuffix class="m-pointer">
+                            <i class="fas fa-upload"></i>
+                          </span>
+                        </mat-form-field>
+                      </div>
+
+                      <div *ngIf="field.field.name === 'school_logo'">
+                        <input type="file" style="display: none" #logoschoolInput (change)="school_image($event)" />
+                        <mat-form-field [floatLabel]="'never'" (click)="logoschoolInput.click()">
+                          <input matInput placeholder="Upload the Image" class="m-pointer" [value]="school_image_logo"
+                            disabled />
+
+                          <img *ngIf="school_image_logo" [src]="
+                                _DomSanitizationService.bypassSecurityTrustUrl(
+                                  school_img
+                                )
+                              " height="100" />
+                          <span matSuffix class="m-pointer">
+                            <i class="fas fa-upload"></i>
+                          </span>
+                        </mat-form-field>
+                      </div>
+                      <div *ngIf="field.field.name === 'college_logo'">
+                        <input type="file" style="display: none" #colloge_logoInput
+                          (change)="getcollegeImage($event)" />
+                        <mat-form-field [floatLabel]="'never'" (click)="colloge_logoInput.click()">
+                          <input matInput placeholder="Upload the Image" class="m-pointer" [value]="college_image"
+                            disabled />
+
+                          <img *ngIf="college_image" [src]="
+                                _DomSanitizationService.bypassSecurityTrustUrl(
+                                  college_img
+                                )
+                              " height="100" />
+                          <span matSuffix class="m-pointer">
+                            <i class="fas fa-upload"></i>
+                          </span>
+                        </mat-form-field>
+                      </div>
+                    </div>
+
+                    <div *ngSwitchCase="'boolean'">
+                      <div class="field-container custom-input-padding">
+                        <mat-checkbox (change)="checkbox1($event)" [checked]="marked" name="isCaptain"></mat-checkbox>
+                        <!-- <input type="checkbox" data-md-icheck (change)="checkbox1($event)" /> -->
+                      </div>
+                      <br>
+                    </div>
+
+                    <div *ngSwitchCase="'dropdown2'">
+                      <div class="field-container" *ngIf="field.field.name === 'reach'">
+                        <select class="dateInput" name="reachFeets" [value]="reach_feets"
+                          (click)="getreachFeets($event)" placeholder="Feet">
+                          <option value="5">5'</option>
+                          <option value="6">6'</option>
+                          <option value="7">7'</option>
+                          <option value="8">8'</option>
+                          <option value="9">9'</option>
+                          <option value="10">10'</option>
+                          <option value="11">11'</option>
+                          <option value="12">12'</option>
+                          <option value="13">13'</option>
+                          <option value="14">14'</option>
+                        </select>
+                        <select class="dateInput" name="reachInches" [value]="reach_inch"
+                          (click)="getreachInches($event)" placeholder="Inch">
+                          <option value="0">0''</option>
+                          <option value="1">1''</option>
+                          <option value="2">2''</option>
+                          <option value="3">3''</option>
+                          <option value="4">4''</option>
+                          <option value="5">5''</option>
+                          <option value="6">6''</option>
+                          <option value="7">7''</option>
+                          <option value="8">8''</option>
+                          <option value="9">9''</option>
+                          <option value="10">10''</option>
+                          <option value="11">11''</option>
+                        </select>
+                      </div>
+                      <div class="field-container custom-input-padding" *ngIf="field.field.name === 'approach_touch'">
+                        <select class="dateInput" name="approachFeets" [value]="approch_feets"
+                          (click)="getapproachFeets($event)" placeholder="Feet">
+                          <option value="6">6'</option>
+                          <option value="7">7'</option>
+                          <option value="8">8'</option>
+                          <option value="9">9'</option>
+                          <option value="10">10'</option>
+                          <option value="11">11'</option>
+                          <option value="12">12'</option>
+                          <option value="13">13'</option>
+                          <option value="14">14'</option>
+                          <option value="15">15'</option>
+                          <option value="16">16'</option>
+                          <option value="17">17'</option>
+                        </select>
+                        <select class="dateInput" name="approachInches" [value]="approch_inch"
+                          (click)="getapproachInches($event)" placeholder="Inch">
+                          <option value="0">0''</option>
+                          <option value="1">1''</option>
+                          <option value="2">2''</option>
+                          <option value="3">3''</option>
+                          <option value="4">4''</option>
+                          <option value="5">5''</option>
+                          <option value="6">6''</option>
+                          <option value="7">7''</option>
+                          <option value="8">8''</option>
+                          <option value="9">9''</option>
+                          <option value="10">10''</option>
+                          <option value="11">11''</option>
+                        </select>
+                      </div>
+
+                      <div class="field-container custom-input-padding" *ngIf="field.field.name === 'height'">
+                        <select class="dateInput" (click)="getheightFeets($event)" [value]="height_feets"
+                          name="heightFeets" placeholder="Feet">
+                          <option value="4">4'</option>
+                          <option value="5">5'</option>
+                          <option value="6">6'</option>
+                          <option value="7">7'</option>
+                        </select>
+                        <select class="dateInput" (click)="getheightInches($event)" [value]="height_inch"
+                          name="heightInches" placeholder="Inch">
+                          <option value="0">0''</option>
+                          <option value="1">1''</option>
+                          <option value="2">2''</option>
+                          <option value="3">3''</option>
+                          <option value="4">4''</option>
+                          <option value="5">5''</option>
+                          <option value="6">6''</option>
+                          <option value="7">7''</option>
+                          <option value="8">8''</option>
+                          <option value="9">9''</option>
+                          <option value="10">10''</option>
+                          <option value="11">11''</option>
+                        </select>
+                      </div>
+
+                    </div>
+                    <div *ngSwitchCase="'age'">
+                      <mat-form-field [floatLabel]="'never'">
+                        <mat-select matInput class="form-control" [formControlName]="field.field.name"
+                          [required]="field.field.validation.required?true:false">
+                          <div *ngIf="field.field.name === 'age'">
+                            <mat-option *ngFor="let age of ageList" [value]="age._id">{{
+                    age.label
+                    }}</mat-option>
+                          </div>
+                        </mat-select>
+                      </mat-form-field>
+                    </div>
+                    <div *ngSwitchCase="'dropdown'">
+                      <div *ngIf="field.field.name === 'position'">
+                        <mat-form-field>
+                          <mat-select matInput [(ngModel)]="selectedAthletePosition"
+                            [required]="field.field.validation.required?true:false"
+                            (selectionChange)="multiplevalueselect($event.value)"
+                            [multiple]="field.field.selection== 'multi'" [ngModelOptions]="{standalone: true}">
+
+                            <mat-option *ngFor="let position of positionList" [value]="position._id">{{
+                                            position.positonview
+                                            }}</mat-option>
+
+                          </mat-select>
+                        </mat-form-field>
+                      </div>
+                      <div *ngIf="field.field.name === 'status'">
+                        <mat-form-field [floatLabel]="'never'">
+                          <mat-select matInput class="form-control" [formControlName]="field.field.name"
+                            [required]="field.field.validation.required?true:false"
+                            (selectionChange)="statuschnage($event.value)">
+                            <mat-option *ngFor="let status of StatusList " [value]="status._id">{{
+                                status.label
+                                }}</mat-option>
+                          </mat-select>
+                        </mat-form-field>
+                      </div>
+                      <mat-form-field [floatLabel]="'never'"
+                        *ngIf="field.field.name !== 'position' && field.field.name !== 'status'">
+                        <mat-select matInput class="form-control" [formControlName]="field.field.name"
+                          [required]="field.field.validation.required?true:false"
+                          [multiple]="field.field.selection== 'multi'">
+
+                          <div *ngIf="field.field.name === 'country'">
+                            <mat-option *ngFor="let country of countryList" [value]="country._id"
+                              (click)="countryData(country._id)">{{
+                          country.name }}</mat-option>
+                          </div>
+                          <div *ngIf="field.field.name === 'gender'">
+                            <mat-option *ngFor="let gen of GenderList" [value]="gen._id" (click)="gender(gen._id)">{{
+                                                  gen.name }}</mat-option>
+                          </div>
+                          <div *ngIf="field.field.name === 'age'">
+                            <mat-option *ngFor="let age of ageList" [value]="age._id">{{
+            age.label
+            }}</mat-option>
+                          </div>
+
+                          <div *ngIf="field.field.name === 'region'">
+                            <mat-option *ngFor="let region of regionsList" [value]="region._id">{{ region.name }}
+                            </mat-option>
+                          </div>
+                          <div *ngIf="field.field.name === 'district'">
+                            <mat-option *ngFor="let district of districtList" [value]="district._id">{{ district.name }}
+                            </mat-option>
+                          </div>
+                          <div *ngIf="field.field.name === 'state'">
+                            <mat-option *ngFor="let state of stateList" [value]="state._id">{{ state.name }}
+                            </mat-option>
+                          </div>
+
+
+                          <div *ngIf="field.field.name === 'handed'">
+                            <mat-option *ngFor="let hand of handedList" [value]="hand._id">{{
+                        hand.name
+                        }}</mat-option>
+                          </div>
+                          <!-- <div *ngIf="field.field.name === 'status'">
+                     
+                      <mat-option *ngFor="let status of StatusList " [value]="status._id">{{
+                        status.label
+                        }}</mat-option>
+               
+                    </div> -->
+                        </mat-select>
+                      </mat-form-field>
+                    </div>
+                  </div>
+                  <div class="error"
+                    *ngIf="form.get(field.field.name).invalid && (form.get(field.field.name).dirty || form.get(field.field.name).touched)">
+
+                    <div class="error1" *ngIf="field.field.name=='user_name'">
+                      User name should not contain white Space or special characters
+                    </div>
+                    <div class="error1" *ngIf="field.field.name !=='user_name'">
+                      invalid input
+                    </div>
+
+
+                  </div>
+                </div>
+              </div>
+              <div *ngIf="signed_senior">
+                <div class="input-container" *ngFor="let field of clgarr">
+
+                  <div class="label-container">
+                    <span class="label" [attr.for]="field.fieldname">
+                      {{ field.field.label }}</span>
+                  </div>
+                  <div class="field-container" [ngSwitch]="field.field.type">
+                    <mat-form-field [floatLabel]="'never'" *ngSwitchCase="'text'">
+                      <input matInput type="text" [placeholder]="field.label" class="form-control"
+                        [required]="field.field.validation.required?true:false" name="clgname"
+                        [(ngModel)]="collage_name" #clgname="ngModel" [ngModelOptions]="{standalone: true}" />
+                    </mat-form-field>
+                    <div *ngSwitchCase="'file'">
+                      <div *ngIf="field.field.name === 'college_logo'">
+                        <input type="file" style="display: none" #colloge_logoInput
+                          (change)="getcollegeImage($event)" />
+                        <mat-form-field [floatLabel]="'never'" (click)="colloge_logoInput.click()">
+                          <input matInput placeholder="Upload the Image" class="m-pointer" [value]="college_image"
+                            disabled />
+
+                          <img *ngIf="college_image" [src]="
+                                          _DomSanitizationService.bypassSecurityTrustUrl(
+                                            college_img
+                                          )
+                                        " height="100" />
+                          <span matSuffix class="m-pointer">
+                            <i class="fas fa-upload"></i>
+                          </span>
+                        </mat-form-field>
+                      </div>
+                    </div>
+
+
+                  </div>
+
+                </div>
+              </div>
+              <div class="input-container" *ngIf="isEdit">
+                <div class="label-container"><span class="label-icon"> </span> <span class="label">PARENT </span></div>
+
+                <div class="field-container">
+                  <mat-form-field [floatLabel]="'never'">
+                    <input matInput [value]="this.ParentName" name="parentName" readonly />
+                  </mat-form-field>
+                </div>
+              </div>
+            </mat-card>
+          </div>
+        </div>
+        <mat-card>
+          <div fxLayout="row" fxLayoutAlign="center center" style="margin: 5px">
+
+            <div *ngIf="isEdit">
+
+              <button mat-raised-button class="m-jumbo-button m-pointer" (click)="checkUNvalid()" *ngIf="form.valid">
+                Update
+              </button>
+              <button mat-raised-button class="m-jumbo-button m-pointer" (click)="updateEdit()" *ngIf="!form.valid">
+                Update
+              </button>
+            </div>
+            <button mat-raised-button class="m-jumbo-button m-pointer" (click)="cancelChanges()">
+              Cancel
+            </button>
+          </div>
+        </mat-card>
+      </mat-card-content>
+    </form>
+    <mat-card-content>
+      <div class="m-table-container">
+        <mat-card class="m-title">
+          <h2>Club Fees</h2>
+          <div class="custom-design-block" *ngIf="planData; else noPlan">
+            <mat-grid-list cols="2" rowHeight="30px">
+              <mat-grid-tile>
+                <span class="ct-left-heading">Athlete Name: </span>&nbsp;<span *ngFor="let field of fields">
+                  <h2 *ngIf="field.field.name === 'first_name' || field.field.name === 'last_name'">
+                    {{field.value}}&nbsp;
+                  </h2>
+                </span>
+              </mat-grid-tile>
+              <mat-grid-tile>
+                <span class="ct-left-heading">Package Amount: </span>&nbsp;
+                {{planData.planId.package_amount | currency:'USD':true:'1.2-2'}}
+              </mat-grid-tile>
+              <mat-grid-tile>
+                <span class="ct-left-heading">Package Name: </span>&nbsp;{{planData.planId.name}}
+              </mat-grid-tile>
+              <mat-grid-tile>
+                <span class="ct-left-heading">Amount Paid: </span>&nbsp; {{paidAmount | currency:'USD':true:'1.2-2'}}
+              </mat-grid-tile>
+              <mat-grid-tile>
+                <span class="ct-left-heading">&nbsp; </span>&nbsp;
+              </mat-grid-tile>
+              <mat-grid-tile>
+                <span class="ct-left-heading">Balance Owing: </span>&nbsp;
+                <h2>{{owningAmount | currency:'USD':true:'1.2-2'}}</h2>
+              </mat-grid-tile>
+            </mat-grid-list>
+          </div>
+          <br><br>
+          <ng-template #noPlan>
+            Plan not yet added.
+          </ng-template>
+        </mat-card>
+        <mat-table #table [dataSource]="dataSource" *ngIf="planData">
+          <ng-container matColumnDef="paid_date">
+            <mat-header-cell *matHeaderCellDef>
+              <span class="m-table-header">Date</span>
+            </mat-header-cell>
+            <mat-cell *matCellDef="let element" class="light-red m-pointer">
+              <ng-container
+                *ngIf="element.transactionDetails !== undefined && element.transactionDetails.created_on !== undefined; else installmentDateTpl">
+                {{ element.transactionDetails.created_on | date: 'MM-dd-yyyy' }}
+              </ng-container>
+              <ng-template #installmentDateTpl>
+                {{ element.installments.installments_date | date: 'MM-dd-yyyy' }}
+              </ng-template>
+            </mat-cell>
+          </ng-container>
+          <ng-container matColumnDef="status">
+            <mat-header-cell *matHeaderCellDef>
+              <span class="m-table-header">Status </span>
+            </mat-header-cell>
+            <mat-cell *matCellDef="let element" class="light-red m-pointer">
+              <ng-container *ngIf="element.status === 0; else paidStatusTpl">
+                <span class="table-icon m-pointer" (click)="changePayStatus(element)"
+                  title="Change installment pay status">
+                  Auto Pay
+                </span>
+              </ng-container>
+              <ng-template #paidStatusTpl>
+                Paid
+              </ng-template>
+            </mat-cell>
+          </ng-container>
+          <ng-container matColumnDef="installment_amount">
+            <mat-header-cell *matHeaderCellDef>
+              <span class="m-table-header">Amount</span>
+            </mat-header-cell>
+            <mat-cell *matCellDef="let element" class="light-red m-pointer">
+              <ng-container
+                *ngIf="(element.transactionDetails !== undefined && element.transactionDetails.amount !== undefined && element.transactionDetails.amount !== null); else tkpInstallmentAmt">
+                {{ element.transactionDetails.amount | currency:'USD':true:'1.2-2' }}
+              </ng-container>
+              <ng-template #tkpInstallmentAmt>
+                {{ element.installments.installment_amount | currency:'USD':true:'1.2-2' }}
+              </ng-template>
+            </mat-cell>
+          </ng-container>
+          <ng-container matColumnDef="installments_type">
+            <mat-header-cell *matHeaderCellDef>
+              <span class="m-table-header">Type</span>
+            </mat-header-cell>
+            <mat-cell *matCellDef="let element" class="light-red m-pointer">
+              {{element.installments.installments_type.label}}
+            </mat-cell>
+          </ng-container>
+          <!-- <ng-container matColumnDef="installment_frequency">
+            <mat-header-cell *matHeaderCellDef>
+              <span class="m-table-header">Frequency</span>
+            </mat-header-cell>
+            <mat-cell *matCellDef="let element" class="light-red m-pointer">
+              {{element.installments.installment_frequency.label}}
+            </mat-cell>
+          </ng-container>                   -->
+          <ng-container matColumnDef="payment_method">
+            <mat-header-cell *matHeaderCellDef>
+              <span class="m-table-header">Method</span>
+            </mat-header-cell>
+            <mat-cell *matCellDef="let element" class="light-red m-pointer">
+              <ng-container
+                *ngIf="element.transactionDetails !== undefined && element.transactionDetails.type !== undefined && element.transactionDetails.type.label !== undefined">
+                {{  (element.transactionDetails.type.label)?element.transactionDetails.type.label:'NA' }}
+              </ng-container>
+              <ng-container *ngIf="!element.transactionDetails">
+                --
+              </ng-container>
+            </mat-cell>
+          </ng-container>
+          <ng-container matColumnDef="notes">
+            <mat-header-cell *matHeaderCellDef>
+              <span class="m-table-header">Notes</span>
+            </mat-header-cell>
+            <mat-cell *matCellDef="let element" class="light-red m-pointer">
+              <ng-container
+                *ngIf="element.transactionDetails !== undefined && element.transactionDetails.statusMsg !== undefined && element.transactionDetails.statusMsg !== undefined">
+                {{  (element.transactionDetails.statusMsg)?element.transactionDetails.statusMsg:'NA' }}
+              </ng-container>
+              <ng-container *ngIf="!element.transactionDetails">
+                --
+              </ng-container>
+            </mat-cell>
+          </ng-container>
+
+          <ng-container matColumnDef="createdBy">
+            <mat-header-cell *matHeaderCellDef>
+              <span class="m-table-header">Created By</span>
+            </mat-header-cell>
+            <mat-cell *matCellDef="let element" class="light-red m-pointer">
+              <ng-container
+                *ngIf="(element.createdBy !== undefined && element.createdBy.profile_fields !== undefined && element.createdBy.profile_fields[0].value !== undefined); else noCreatedByTpl">
+                {{element.createdBy.profile_fields[0].value}} &nbsp;{{element.createdBy.profile_fields[1].value}}
+              </ng-container>
+              <ng-template #noCreatedByTpl>
+                --
+              </ng-template>
+            </mat-cell>
+          </ng-container>
+
+          <ng-container matColumnDef="createdAt">
+            <mat-header-cell *matHeaderCellDef>
+              <span class="m-table-header">Created On</span>
+            </mat-header-cell>
+            <mat-cell *matCellDef="let element" class="light-red m-pointer">
+              <ng-container *ngIf="(element.createdAt !== undefined); else noCreatedAtTlp">
+                {{element.createdAt | date: 'MM-dd-yyyy' }}
+              </ng-container>
+            </mat-cell>
+            <ng-template #noCreatedAtTlp>
+              --
+            </ng-template>
+          </ng-container>
+
+
+          <ng-container matColumnDef="Actions">
+            <mat-header-cell *matHeaderCellDef>
+              Actions
+            </mat-header-cell>
+            <mat-cell *matCellDef="let element">
+              <ng-container>
+                <span class="table-icon m-pointer" (click)="editInstallment(element)" title="Edit installment">
+                  <i class="fas fa-pencil-alt"></i>
+                </span> &nbsp;&nbsp;&nbsp;
+                <span class="table-icon m-pointer" *ngIf="element.active" (click)="deleteInstallment(element)"
+                  title="Delete installment">
+                  <i class="fas fa-trash-alt"></i>
+                </span>&nbsp;&nbsp;&nbsp;
+                <span class="table-icon m-pointer" *ngIf="!element.active" (click)="restoreDeletedInstallment(element)"
+                  title="Re-store deleted installment">
+                  Re-store
+                </span>
+              </ng-container>
+            </mat-cell>
+          </ng-container>
+          <mat-header-row class="cust-mat-header" *matHeaderRowDef="displayedColumns"></mat-header-row>
+          <mat-row *matRowDef="let row; columns: displayedColumns" [ngClass]="{'paid_installment': row.status}"></mat-row>
+        </mat-table>
+      </div>
+      <mat-card class="m-title" *ngIf="planData">
+        <button mat-raised-button class="m-jumbo-button m-pointer" (click)="addOfflinePayment()">
+          Add Payment
+        </button>
+      </mat-card>
+    </mat-card-content>
+  </mat-card>
+</div>

@@ -1,0 +1,86 @@
+<div class="m-container">
+  <mat-card class="m-title">
+    <h3>REVIEW</h3>
+  </mat-card>
+
+  <mat-card style="padding: 0px 20px;">
+    <div fxLayout="row" fxLayoutAlign="space-between">
+
+      <div class="input-container">
+        <div class="label-container">
+          <span class="label-icon">
+            <!-- <i class="far fa-list-alt"></i> -->
+          </span>
+          <span class="label">TEAM NAME</span>
+        </div>
+        <div class="field-container">
+          <mat-form-field [floatLabel]="'never'">
+            <mat-select>
+              <mat-option value="team1">Team 1</mat-option>
+              <mat-option value="team2">Team 2</mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+      </div>
+
+      <div class="input-container">
+        <div class="label-container">
+          <span class="label-icon">
+            <!-- <i class="far fa-list-alt"></i> -->
+          </span>
+          <span class="label">ATHLETE NAME</span>
+        </div>
+        <div class="field-container">
+          <mat-form-field [floatLabel]="'never'">
+            <mat-select>
+              
+              <mat-option value="team1">Team 1</mat-option>
+              <mat-option value="team2">Team 2</mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+      </div>
+
+    </div>
+  </mat-card>
+  
+  <mat-card>
+    <div fxLayout="column" style="margin: 10px" *ngFor="let q of count; let i = index">
+
+      <div fxLayout="row" fxLayoutAlign="center start" class="question-container">
+        <div fxLayout="column" fxFlex="60" fxLayoutAlign="start end">
+
+          <!-- <div> -->
+          <div class="question-box">
+            <div class="question-mark">
+              <button class="fab-button">
+                <i class="fas fa-question"></i>
+              </button>
+            </div>
+            {{q.value}}
+          </div>
+          <!-- </div> -->
+          <div class="show-answer" (click)="showAnswerIndex = i; showAnswerCard = !showAnswerCard">
+            View the answer
+          </div>
+          
+
+          <div class="answer-box" *ngIf="showAnswerCard === true && showAnswerIndex === i">
+            <div class="answer-icon">
+              <button class="fab-button">
+                <i class="fas fa-comment-alt"></i>
+              </button>
+            </div>
+            Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy
+            text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen
+            book. Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's
+            standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make
+            a type specimen book.
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </mat-card>
+  <!-- <app-search-select [dropdownList]="banks" (valueUpdated)="updatedValue($event)"></app-search-select> -->
+</div>

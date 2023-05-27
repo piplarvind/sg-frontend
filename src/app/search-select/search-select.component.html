@@ -1,0 +1,45 @@
+<mat-form-field floatLabel="never">
+  <mat-select
+    [formControl]="bankCtrl"
+    id="dropSel"
+    [placeholder]="placeHolder"
+    #dropSelect
+    [multiple]="isMultiple"
+    [(ngModel)]="alreadySel"
+    [disabled]="isDisabled"
+    [required]="isRequired"
+    (ngModelChange)="getResultVal($event)"
+  >
+    <ngx-mat-select-search
+      [formControl]="bankFilterCtrl"
+      [placeholderLabel]="'Search'"
+      [noEntriesFoundLabel]="'No Entry Found'"
+    ></ngx-mat-select-search>
+    <div *ngIf="!isMAIL">
+      <mat-option *ngFor="let bank of filteredBanks | async" [value]="bank._id">
+        <span *ngIf="isTeam">{{ bank.name }}</span>
+        <span *ngIf="isUser">{{ bank.first_name }} {{ bank.last_name }}</span>
+        <span *ngIf="isPackage">{{ bank.package_name }}</span>
+        <span *ngIf="isRes">{{ bank.resource_name }}</span>
+        <span *ngIf="isDistrict">{{ bank.district }}</span>
+        <span *ngIf="isRegion">{{ bank.region }}</span>
+        <span *ngIf="isDefault">{{ bank.name }}</span>
+        <span *ngIf="isClub">{{ bank.club_name }}</span>
+        <span *ngIf="islabel">{{ bank.label }}</span>
+      </mat-option>
+    </div>
+    <div *ngIf="isMAIL">
+      <mat-option *ngFor="let bank of filteredBanks | async" [value]="bank">
+        <span *ngIf="isTeam">{{ bank.name }}</span>
+        <span *ngIf="isUser">{{ bank.first_name }} {{ bank.last_name }}</span>
+        <span *ngIf="isPackage">{{ bank.package_name }}</span>
+        <span *ngIf="isRes">{{ bank.resource_name }}</span>
+        <span *ngIf="isDistrict">{{ bank.district }}</span>
+        <span *ngIf="isRegion">{{ bank.region }}</span>
+        <span *ngIf="isDefault">{{ bank.name }}</span>
+        <span *ngIf="isClub">{{ bank.club_name }}</span>
+        <span *ngIf="islabel">{{ bank.label }}</span>
+      </mat-option>
+    </div>
+  </mat-select>
+</mat-form-field>

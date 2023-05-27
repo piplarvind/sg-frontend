@@ -1,0 +1,417 @@
+<div class="m-container">
+  <mat-card class="m-title">
+    <h3>{{title}}</h3>
+  </mat-card>
+  <form #clubForm=ngForm>
+    <mat-card>
+      <!-- <div *ngIf="isLoading">Loading</div> *ngIf="!isLoading" -->
+      <mat-card-content>
+        <div fxLayout="row" fxLayoutAlign="space-between">
+          <div fxFlex="49">
+            <mat-card class="childContainer">
+              <!-- <div class="input-container">
+                <div class="errortxt" [hidden]="ownerFirstName.valid || ownerFirstName.pristine">
+                  Owner Name is required
+                </div>
+                <div class="label-container">
+                  <span class="label-icon">
+                  </span>
+                  <span class="label">OWNER FIRST NAME</span>
+                </div>
+                <div class="field-container">
+                  <mat-form-field [floatLabel]="'never'">
+                    <input matInput [(ngModel)]="club.first_name" required name="ownerFirstName" #ownerFirstName="ngModel"
+                      maxlength="40" placeholder="Owner First Name">
+                  </mat-form-field>
+                </div>
+              </div> -->
+              <!-- <div class="input-container">
+           
+                <div class="label-container">
+                  <span class="label-icon">
+                  </span>
+                  <span class="label">OWNER LAST NAME</span>
+                </div>
+                <div class="field-container">
+                  <mat-form-field [floatLabel]="'never'">
+                    <input matInput [(ngModel)]="club.last_name" name="ownerLastName" #ownerLastName="ngModel"
+                      maxlength="40" placeholder="Owner Last Name">
+                  </mat-form-field>
+                </div>
+              </div> -->
+                    <div class="input-container">
+                      <div class="errortxt" [hidden]="clubName.valid || clubName.pristine">
+                        Club ID is required
+                      </div>
+                      <div class="label-container">
+                        <span class="label-icon">
+                        </span>
+                        <span class="label">CLUB ID#</span>
+                      </div>
+                      <div class="field-container">
+                        <mat-form-field [floatLabel]="'never'">
+                          <input matInput [(ngModel)]="club.club_code" name="clubID" #clubName="ngModel" 
+                            placeholder="Club ID" >
+                        </mat-form-field>
+                      </div>
+                    </div>
+              <div class="input-container">
+                <div class="errortxt" [hidden]="clubName.valid || clubName.pristine">
+                  Club Name is required
+                </div>
+                <div class="label-container">
+                  <span class="label-icon">
+                  </span>
+                  <span class="label">CLUB NAME</span>
+                </div>
+                <div class="field-container">
+                  <mat-form-field [floatLabel]="'never'">
+                    <input matInput [(ngModel)]="club.club_name" name="clubName" #clubName="ngModel" maxlength="40"
+                      placeholder="Club Name" required>
+                  </mat-form-field>
+                </div>
+              </div>
+              <div class="input-container">
+                <div class="label-container">
+                  <span class="label-icon">
+                  </span>
+                  <span class="label">SHORT NAME</span>
+                </div>
+                <div class="field-container">
+                  <mat-form-field [floatLabel]="'never'">
+                    <input matInput placeholder="Short Name" [(ngModel)]="club.short_name" maxlength="40" 
+                      name="clubShort">
+                  </mat-form-field>
+                </div>
+              </div>
+              <div class="input-container">
+                <div class="errortxt" [hidden]="clubCode.valid || clubCode.pristine">
+                  Club Code is required
+                </div>
+                <div class="label-container">
+                  <span class="label-icon">
+                  </span>
+                  <span class="label">AAU CLUB CODE</span>
+                </div>
+                <div class="field-container">
+                  <mat-form-field [floatLabel]="'never'">
+                    <input matInput [(ngModel)]="club.code"  name="clubCode" #clubCode="ngModel" placeholder="Club Code"
+                      type="tel" maxlength="20">
+                  </mat-form-field>
+                </div>
+              </div>
+              <div class="input-container" *ngIf="showImage">
+                <div class="label-container">
+                  <span class="label-icon">
+                  </span>
+                  <span class="label">UPLOAD LOGO</span>
+                </div>
+                <div class="field-container">
+                  <input type="file" style="display: none" #logoInput (change)="getClubImage($event)" id="logo">
+                  <mat-form-field [floatLabel]="'never'" (click)="logoInput.click()">
+                    <input matInput placeholder="Upload the Image" class="m-pointer" [value]="club.logo" disabled>
+                   
+                    <img *ngIf="club.logo" [src]="_DomSanitizationService.bypassSecurityTrustUrl(club_img)" height="100" />
+                    <span matSuffix class="m-pointer">
+                      <i class="fas fa-upload"></i>
+                    </span>
+                  </mat-form-field>
+                </div>
+                <!-- <button class="border-button" (click)="uploadBannerImage()"    class="table-icon m-pointer"
+            
+                title="save image">Save</button> -->
+              </div>
+
+              <div class="input-container">
+                <div class="label-container">
+                  <span class="label-icon">
+                  </span>
+                  <span class="label">WEBSITE</span>
+                </div>
+                <div class="field-container">
+                  <mat-form-field [floatLabel]="'never'">
+                    <input matInput [(ngModel)]="club.website" placeholder="Website" type="url" name="clubWeb">
+                  </mat-form-field>
+                </div>
+              </div>
+              <!-- <div class="input-container" *ngIf="!isEdit">
+                <div class="errortxt" [hidden]="clubEmail.valid || clubEmail.pristine">
+                  Email is required
+                </div>
+                <div class="errortxt" *ngIf="invalidEmail">
+                  Invalid email</div>
+                <div class="label-container">
+                  <span class="label-icon">
+                  </span>
+                  <span class="label">EMAIL</span>
+                </div>
+                <div class="field-container">
+                  <mat-form-field [floatLabel]="'never'">
+                    <input matInput [(ngModel)]="club.email" name="clubEmail" #clubEmail="ngModel" placeholder="Email"
+                      type="email" required>
+             
+                  </mat-form-field>
+                </div>
+              </div> -->
+              <!-- <div class="input-container" *ngIf="isEdit">
+                <div class="label-container">
+                  <span class="label-icon">
+                  </span>
+                  <span class="label">EMAIL</span>
+                </div>
+                <div class="field-container">
+                  <mat-form-field [floatLabel]="'never'">
+                    <input matInput [(ngModel)]="club.email" name="clubEmail" #clubEmail="ngModel" placeholder="Email"
+                      type="email" readonly>
+                 
+                  </mat-form-field>
+                </div>
+              </div> -->
+              <!-- <div class="input-container" *ngIf="!isEdit">
+                <div class="errortxt" [hidden]="mobilePhone.valid || mobilePhone.pristine">
+                  Mobile Phone is required
+                </div>
+           
+                <div *ngIf="invalidNumber" class="errortxt">
+                  <span>Invalid Mobile Number</span>
+                </div>
+                <div class="label-container">
+                  <span class="label-icon">
+                  </span>
+                  <span class="label">MOBILE PHONE</span>
+                </div>
+                <div class="field-container">
+                  <mat-form-field [floatLabel]="'never'">
+                    <input matInput placeholder="Enter Mobile no" [(ngModel)]="club.mobile_phone" name="mobilePhone"
+                      #mobilePhone="ngModel" type="tel" (keyup)="formatMobile()" maxlength="14" required>
+                  </mat-form-field>
+                </div>
+              </div> -->
+
+              <!-- <div class="input-container" *ngIf="isEdit">
+                <div class="label-container">
+                  <span class="label-icon">
+                  </span>
+                  <span class="label">MOBILE PHONE</span>
+                </div>
+                <div class="field-container">
+                  <mat-form-field [floatLabel]="'never'">
+                    <input matInput placeholder="Enter Mobile no" [(ngModel)]="club.mobile_phone" name="mobilePhone"
+                      #mobilePhone="ngModel" type="tel" (keyup)="formatMobile()" maxlength="14" readonly>
+                  </mat-form-field>
+                </div>
+              </div> -->
+
+              <div class="input-container">
+                <div class="errortxt" [hidden]="districtVal.valid || districtVal.untouched">
+                  District is required
+                </div>
+                <div class="label-container">
+                  <span class="label-icon">
+                  </span>
+                  <span class="label">AAU DISTRICT</span>
+                </div>
+                <div class="field-container">
+                  <mat-form-field [floatLabel]="'never'">
+                    <mat-select matInput placeholder="Select the District" name="districtVal" #districtVal="ngModel"
+                      [(ngModel)]="selectedDistrictId">
+                      <mat-option *ngFor="let district of districtList" [value]="district._id" (click)='districtData(district)'>{{district.name}}</mat-option>
+                    </mat-select>
+                  </mat-form-field>
+                </div>
+              </div>
+              <div class="input-container">
+                <div class="errortxt" [hidden]="regionVal.valid || regionVal.untouched">
+                  Region is required
+                </div>
+                <div class="label-container">
+                  <span class="label-icon">
+                  </span>
+                  <span class="label">USAV REGION</span>
+                </div>
+                <div class="field-container">
+                  <mat-form-field [floatLabel]="'never'">
+                    <mat-select matInput placeholder="Select the region" [(ngModel)]="selectedregionId" name="regionVal"
+                      #regionVal="ngModel">
+                      <mat-option *ngFor="let region of regionsList" [value]="region._id" (click)='regionData(region)'>{{region.name}}
+                      </mat-option>
+                    </mat-select>
+                  </mat-form-field>
+                </div>
+              </div>
+            </mat-card>
+          </div>
+          <!-- right card -->
+          <div fxFlex="49">
+            <mat-card class="childContainer">
+              <!-- <div class="errortxt" [hidden]="address1.valid || address1.pristine">
+                Address is required
+              </div> -->
+              <div class="input-container">
+                <div class="label-container">
+                  <span class="label-icon">
+                  </span>
+                  <span class="label">ADDRESS LINE 1</span>
+                </div>
+                <div class="field-container">
+                  <mat-form-field [floatLabel]="'never'">
+                    <input matInput [(ngModel)]="club.address_line_1" name="address1" #address1="ngModel" placeholder="Enter Address"
+                      maxlength="40">
+                  </mat-form-field>
+                </div>
+              </div>
+              <div class="input-container">
+                <div class="label-container">
+                  <span class="label-icon">
+                  </span>
+                  <span class="label">ADDRESS LINE 2</span>
+                </div>
+                <div class="field-container">
+                  <mat-form-field [floatLabel]="'never'">
+                    <input matInput [(ngModel)]="club.address_line_2" placeholder="Enter Address" name="address2"
+                      maxlength="40">
+                  </mat-form-field>
+                </div>
+              </div>
+              <div class="input-container">
+                <div class="errortxt" [hidden]="clubCity.valid || clubCity.pristine">
+                  City is required
+                </div>
+                <div class="label-container">
+                  <span class="label-icon">
+                  </span>
+                  <span class="label">CITY</span>
+                </div>
+                <div class="field-container">
+                  <mat-form-field [floatLabel]="'never'">
+                    <input matInput [(ngModel)]="club.city" placeholder="Enter City" required name="clubCity" #clubCity="ngModel">
+                  </mat-form-field>
+                </div>
+              </div>
+              <div class="input-container">
+                <!-- <div class="errortxt" [hidden]="stateVal.valid || stateVal.untouched">
+                  State is required
+                </div> -->
+                <div class="label-container">
+                  <span class="label-icon">
+                  </span>
+                  <span class="label">STATE</span>
+                </div>
+                <div class="field-container">
+                  <mat-form-field [floatLabel]="'never'">
+                    <mat-select matInput placeholder="Select State" [(ngModel)]="selectedStateId" name="stateVal"
+                 #stateVal="ngModel">
+                      <!-- required #stateVal="ngModel" (change)="getCities($event.value)"> -->
+                      <mat-option *ngFor="let state of stateList" [value]="state._id" (click)='stateData(state)'>{{state.name}}</mat-option>
+                    </mat-select>
+                  </mat-form-field>
+                </div>
+              </div>
+              <div class="input-container">
+                <div class="errortxt" [hidden]="clubZip.valid || clubZip.pristine">
+                  ZipCode is required
+                </div>
+                <div class="label-container">
+                  <span class="label-icon">
+                  </span>
+                  <span class="label">ZIP</span>
+                </div>
+                <div class="field-container">
+                  <mat-form-field [floatLabel]="'never'">
+                    <input matInput [(ngModel)]="club.zip" placeholder="Zip Code" type="tel" name="clubZip"
+                      #clubZip="ngModel" maxlength="14">
+                  </mat-form-field>
+                </div>
+              </div>
+              <div class="input-container">
+                <!-- <div class="errortxt" [hidden]="clubCountry.valid || clubCountry.untouched">
+                  Country is required
+                </div> -->
+                <div class="label-container">
+                  <span class="label-icon">
+                  </span>
+                  <span class="label">COUNTRY</span>
+                </div>
+                <div class="field-container">
+                  <mat-form-field [floatLabel]="'never'">
+                    <mat-select matInput color="red" placeholder="Select Country" [(ngModel)]="selectedCountryId"
+           name="clubCountry" #clubCountry="ngModel" (change)="getStates($event.value)">
+                      <mat-option *ngFor="let country of countryList" [value]="country._id" (click)='countryData(country)'>{{country.name}}</mat-option>
+                    </mat-select>
+                  </mat-form-field>
+                </div>
+              </div>
+              <!-- <div class="input-container">
+                <div class="label-container">
+                  <span class="label-icon">
+                  </span>
+                  <span class="label">VALIDITY PERIOD</span>
+                </div>
+                <div class="field-container">
+                  <mat-form-field [floatLabel]="'never'">
+                    <mat-select matInput placeholder="Select validity" name="selectedValidity" [(ngModel)]="selectedValidity"
+                      required>
+                      <mat-option style='font-size: 14px' *ngFor="let validity of validityList" [value]="validity.value">{{validity.viewValue}}</mat-option>
+                    </mat-select>
+                  </mat-form-field>
+                </div>
+              </div> -->
+              <div class="input-container" style="padding: 16px 0">
+                <div class="label-container">
+                  <span class="label-icon">
+                  </span>
+                  <span class="label">SET THEME COLOR</span>
+                </div>
+                <div class="field-container">
+                  <input type="color" [(ngModel)]="club.color" name="clubTheme" style="width: 35%;">
+                </div>
+              </div>
+            </mat-card>
+          </div>
+        </div>
+        <mat-card *ngIf="isEdit">
+          <h4>List of all Admins</h4>
+          <div class="m-table-container">
+            <mat-table #table [dataSource]="dataSource" matSort>
+              <ng-container matColumnDef="name">
+                <mat-header-cell *matHeaderCellDef mat-sort-header>
+                  <span class="m-table-header"> Name </span>
+                </mat-header-cell>
+                <mat-cell *matCellDef="let element" class="light-red m-pointer textCenter " > {{element.name ?
+                  element.name : "New Admin"}}
+                 </mat-cell>
+              </ng-container>
+              <ng-container matColumnDef="email">
+                <mat-header-cell *matHeaderCellDef mat-sort-header>
+                  <span class="m-table-header "> Email </span>
+                </mat-header-cell>
+                <mat-cell *matCellDef="let element" class="textCenter" > {{element.email}} </mat-cell>
+              </ng-container>
+              <ng-container matColumnDef="mobile">
+                <mat-header-cell *matHeaderCellDef mat-sort-header>
+                  <span class="m-table-header"> Mobile </span>
+                </mat-header-cell>
+                <mat-cell *matCellDef="let element" class="textCenter" > {{element.mobile}} </mat-cell>
+              </ng-container>
+              <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+              <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+            </mat-table>
+          </div>
+        </mat-card>
+        <mat-card>
+          <div fxLayout="row" fxLayoutAlign="center center" style="margin: 5px">
+            <div *ngIf="!isEdit">
+              <button mat-raised-button class="m-jumbo-button m-pointer" *ngIf="clubForm.form.valid" (click)="createClub()">Submit</button>
+              <button mat-raised-button class="m-jumbo-button m-pointer" *ngIf="!clubForm.form.valid" (click)="clubSubmit()">Submit</button>
+            </div>
+            <div *ngIf="isEdit">
+              <button mat-raised-button class="m-jumbo-button m-pointer" (click)="updateClub()" *ngIf="clubForm.form.valid">Update</button>
+              <button mat-raised-button class="m-jumbo-button m-pointer" (click)="updateEdit()" *ngIf="!clubForm.form.valid">Update</button>
+            </div>
+            <button mat-raised-button class="m-jumbo-button m-pointer" (click)="cancelClub()">Cancel</button>
+          </div>
+        </mat-card>
+      </mat-card-content>
+    </mat-card>
+  </form>
+</div>

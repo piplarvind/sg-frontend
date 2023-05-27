@@ -1,0 +1,163 @@
+<div class="m-container">
+  <mat-card class="m-title">
+    <h3>USERS</h3>
+  </mat-card>
+
+  <mat-card style="min-height: 77vh">
+    <mat-card-title>
+      <div fxLayout="row" fxLayoutAlign="space-between">
+        <div fxFlex="50" class="m-sub-title">
+          User Details
+        </div>
+        <!-- <div fxFle{{element.createdBy && element.createdBy.first_name
+              && element.createdBy.last_name && element.createdBy.role ? element.createdBy.first_name + ' ' +
+              element.createdBy.last_name + '-' + element.createdBy.role.user_role : 'Signed-Up'}}perAdmin" style="text-align: right">
+            Select Club{{element.createdBy && element.createdBy.first_name
+              && element.createdBy.last_name && element.createdBy.role ? element.createdBy.first_name + ' ' +
+              element.createdBy.last_name + '-' + element.createdBy.role.user_role : 'Signed-Up'}}
+          </div>
+        <div fxFlex="30" class="m-sub-title" *ngIf="isSuperAdmin" style="text-align: center">  
+          <mat-select style="width:80%" placeholder="Select Club Here" [(ngModel)]="curSelectClub" (change)="dropdownChange($event)">
+            <mat-option *ngFor="let club of clubsList" [value]="club._id">{{club.club_name}}</mat-option>
+          </mat-select>
+        </div> -->
+      </div>
+    </mat-card-title>
+    <mat-card-content>
+
+      <mat-divider class="m-divider"></mat-divider>
+      <br>
+   
+      <div fxLayout="row" fxLayoutAlign="space-between">
+        <!-- <div fxFlex="30">
+     <button mat-mini-fab color="primary">
+            <i class="fas fa-search"></i>
+          </button>
+        </div>  -->
+        <!-- <div fxFlex="30">
+          <button mat-raised-button ng-init="buttontext='Show All'" (click)="ShowAll($event)">{{buttontext}}
+          </button>
+        </div> -->
+
+        <!-- <div fxFlex="40" fxLayoutAlign="end">
+         
+          <button mat-raised-button class="m-button m-pointer" routerLink="/users/add">Add User&nbsp;&nbsp;+</button>
+        </div> -->
+      </div>
+
+      <div class="m-table-container">
+          <div fxLayout="row" fxLayoutAlign="space-between">
+              <div>
+                  <button mat-raised-button ng-init="buttontext='Show All'" (click)="ShowAll($event)">{{buttontext}}
+                  </button>
+                </div>
+              <div>
+              <mat-form-field >
+                  <input matInput type="text" (keyup)="doFilter($event)" placeholder="Search">
+                </mat-form-field>
+          </div>
+          <mat-paginator [length]="100" [pageSize]="100" [pageSizeOptions]="[8,10, 25, 50, 75, 100]">
+            </mat-paginator>
+            <div fxLayoutAlign="end">
+              <!-- <button mat-raised-button class="m-button m-pointer" (click)="openDialog()">Search by All Types</button> -->
+              <button mat-raised-button class="m-button m-pointer" routerLink="/users/add">Add User&nbsp;&nbsp;+</button>
+            </div>
+          </div>
+         <br>
+        <mat-table #table [dataSource]="dataSource" matSort>
+
+          <ng-container matColumnDef="name">
+            <mat-header-cell *matHeaderCellDef mat-sort-header>
+              <span class="m-table-header"> Username </span>
+            </mat-header-cell>
+            <mat-cell *matCellDef="let element" class="light-red m-pointer textCenter">
+              {{element.name}}
+            </mat-cell>
+          </ng-container>
+
+
+          <ng-container matColumnDef="mobile_phone">
+            <mat-header-cell *matHeaderCellDef mat-sort-header>
+              <span class="m-table-header"> Mobile Phone  </span>
+            </mat-header-cell>
+            <mat-cell *matCellDef="let element" class="textCenter"> {{element.mobile_phone}} </mat-cell>
+          </ng-container>
+          
+          <ng-container matColumnDef="createdAt">
+            <mat-header-cell *matHeaderCellDef mat-sort-header>
+              <span class="m-table-header">Created On </span>
+            </mat-header-cell>
+            <mat-cell *matCellDef="let element" class="textCenter">
+              <!-- {{element.createdAt.split("T")[0] | date :
+              'MM/dd/yyyy'}} -->
+              {{element.createdAt | date : 'MM/dd/yyyy'}}
+            </mat-cell>
+          </ng-container>
+
+          <ng-container matColumnDef="createdBy">
+            <mat-header-cell *matHeaderCellDef mat-sort-header>
+              <span class="m-table-header"> Created By </span>
+            </mat-header-cell>
+            <mat-cell *matCellDef="let element" class="textCenter">
+              {{element.createdBy && element.createdBy.first_name
+              && element.createdBy.last_name && element.createdBy.role ? element.createdBy.first_name + ' ' +
+              element.createdBy.last_name + '-' + element.createdBy.role.user_role : 'Signed-Up'}}
+              <!-- {{element.createdBy}} -->
+            </mat-cell>
+          </ng-container>
+
+          <ng-container matColumnDef="role">
+            <mat-header-cell *matHeaderCellDef mat-sort-header>
+              <span class="m-table-header" class="textCenter"> User Type </span>
+            </mat-header-cell>
+            <mat-cell *matCellDef="let element" class="textCenter">
+              <!-- {{element.user_id && element.user_id.role &&
+              element.user_id.role.user_role ? element.user_id.role.user_role : 'Role'}}  -->
+              {{element.role}}
+            </mat-cell>
+          </ng-container>
+
+          <ng-container matColumnDef="email">
+            <mat-header-cell *matHeaderCellDef mat-sort-header>
+              <span class="m-table-header"> Email </span>
+            </mat-header-cell>
+            <mat-cell *matCellDef="let element" class="textCenter">
+              <!-- {{element.user_id && element.user_id.email ?
+              element.user_id.email : 'e-Mail'}}  -->
+              {{element.email}}
+            </mat-cell>
+          </ng-container>
+
+          <ng-container matColumnDef="deleted">
+            <mat-header-cell *matHeaderCellDef mat-sort-header>
+              <span class="m-table-header"> Status </span>
+            </mat-header-cell>
+            <mat-cell *matCellDef="let element" class="textCenter">
+              <button (click)="InactiveUser(element)" [class]="(element.user_id.deleted ) ? 'active' : 'inactive'">{{getStatus(element.user_id.deleted)}}</button>
+
+            </mat-cell>
+          </ng-container>
+
+          <ng-container matColumnDef="Actions">
+            <mat-header-cell *matHeaderCellDef class="textCenter"> Actions </mat-header-cell>
+            <mat-cell *matCellDef="let element" class="textCenter">
+              <span class="table-icon m-pointer" (click)="editUser(element)" title="Edit User">
+                <i class="fas fa-pencil-alt"></i>
+              </span>
+
+              <span class="table-icon m-pointer" (click)="deleteUser(element)">
+                <i class="fas fa-trash"></i>
+              </span>
+            </mat-cell>
+          </ng-container>
+
+          <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+          <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+        </mat-table>
+        <!-- <mat-paginator [length]="100" [pageSize]="100" [pageSizeOptions]="[10, 25, 50, 75, 100]">
+        </mat-paginator> -->
+      </div>
+    </mat-card-content>
+  </mat-card>
+
+</div>

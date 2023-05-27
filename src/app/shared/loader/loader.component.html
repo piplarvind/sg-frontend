@@ -1,0 +1,7 @@
+<!-- <h1>
+  {{ sharedService.showLoader | json }}
+</h1> -->
+<div class="loadContainer" [hidden]="!sharedService.showLoader">
+  <mat-progress-spinner mode="indeterminate" value="100" [strokeWidth]="5" [diameter]="64 * size"></mat-progress-spinner>
+  <span class="message">{{message}}</span>
+</div>

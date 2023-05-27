@@ -1,0 +1,208 @@
+<div mat-dialog-content>
+  <div class="input-container">
+    <div class="label-container">
+      <span class="label-icon"> </span>
+      <span class="label">Frequency</span>
+    </div>
+    <div class="field-container">
+      <mat-form-field>
+        <mat-select
+          name="repeattype"
+          [(ngModel)]="data.repeat_type"
+          (ngModelChange)="repeatType($event)"
+        >
+          <mat-option *ngFor="let condition of repeatArray" [value]="condition">
+            {{ condition }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+  </div>
+
+  <!-- 
+      <select
+        name="selector"
+        [(ngModel)]="daycondition"
+        (ngModelChange)="every($event)"
+        required
+      >
+
+        <option *ngFor="let condition of conditionarray" [value]="condition">{{
+          condition
+        }}</option>
+      </select> -->
+  <!-- </div> -->
+
+  <div *ngIf="data.repeat_type === 'day'">
+    <div class="input-container">
+      <div class="label-container">
+        <span class="label-icon"> </span>
+        <span class="label"> No Of days</span>
+      </div>
+      <div class="field-container">
+        <mat-radio-group
+          aria-label="Select an option"
+          [(ngModel)]="day"
+          (ngModelChange)="selectday($event)"
+        >
+          <mat-radio-button value="*">Every</mat-radio-button>
+
+          <mat-form-field class="example-full-width">
+            <input
+              type="number"
+              matInput
+              [(ngModel)]="day"
+              [min]="1"
+              (ngModelChange)="selectday($event)"
+            />
+          </mat-form-field>
+        </mat-radio-group>
+        <!-- <h4>mat-select</h4>
+        <mat-form-field>
+          <mat-label>Favorite food</mat-label>
+          <mat-select [(ngModel)]="selectedValue" name="food">
+            <mat-option *ngFor="let food of foods" [value]="food.value">
+              {{ food.viewValue }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+        <p>Selected food: {{ selectedValue }}</p> -->
+      </div>
+    </div>
+  </div>
+
+  <div *ngIf="data.repeat_type === 'week'">
+    <mat-chip-list multiple>
+      <mat-chip
+        class="chip_margin"
+        *ngFor="let chip of daysOfTheWeekarray; let i = index"
+        selectable="true"
+        [selected]="isSelected(chip.value)"
+        (click)="onClick($event, chip.value, i)"
+      >
+        <span class="unselectableText">{{ chip.viewValue }}</span>
+      </mat-chip>
+    </mat-chip-list>
+
+    <br />
+    <br />
+    <div class="input-container">
+      <div class="label-container">
+        <span class="label-icon"> </span>
+        <span class="label"> Week number </span>
+      </div>
+      <div class="field-container">
+        <mat-form-field>
+          <mat-select
+            name="taskrepeat"
+            [(ngModel)]="weekOfMonth"
+            (ngModelChange)="selectweefonMonth($event)"
+          >
+            <mat-option
+              *ngFor="let weeknumber of weekarray"
+              [value]="weeknumber"
+            >
+              {{ weeknumber }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+    </div>
+  </div>
+
+  <div *ngIf="data.repeat_type === 'month'">
+    <div class="input-container">
+      <div class="label-container">
+        <span class="label-icon"> </span>
+        <span class="label">month </span>
+      </div>
+      <div class="field-container">
+        <mat-form-field>
+          <mat-select name="month_selected" [(ngModel)]="this.data.month">
+            <mat-option
+              *ngFor="let monthnumber of montharray"
+              [value]="monthnumber.value"
+            >
+              {{ monthnumber.viewValue }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+    </div>
+
+    <div class="input-container">
+      <div class="label-container">
+        <span class="label-icon"> </span>
+        <span class="label">day of month </span>
+      </div>
+      <div class="field-container">
+        <div class="field-container">
+          <mat-form-field>
+            <mat-select
+              name="month_selected"
+              [(ngModel)]="this.dayOfMonth"
+              (ngModelChange)="monthday($event)"
+              multiple
+            >
+              <mat-option
+                *ngFor="let monthnumber of dayOfMonthArry"
+                [value]="monthnumber"
+              >
+                {{ monthnumber }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+
+        <!-- <mat-form-field>
+          <input
+            matInput
+            [matDatepicker]="picker"
+            [(ngModel)]="dayOfMonth"
+             (ngModelChange)="selectdayOfMonth($event.value)"
+            style="width:inherit"
+            required
+          />
+          <mat-datepicker-toggle
+            matSuffix
+            [for]="picker"
+          ></mat-datepicker-toggle>
+          <mat-datepicker (onclick)="monthday($event)" #picker></mat-datepicker>
+        </mat-form-field> -->
+      </div>
+    </div>
+  </div>
+  <div *ngIf="data.repeat_type === 'year'">
+    <div class="input-container">
+      <div class="label-container">
+        <span class="label-icon"> </span>
+        <span class="label"> No Of year</span>
+      </div>
+      <div class="field-container">
+        <mat-radio-group
+          aria-label="Select an option"
+          [(ngModel)]="years"
+          (ngModelChange)="selectYear($event)"
+        >
+          <mat-radio-button value="*">Every</mat-radio-button>
+
+          <mat-form-field class="example-full-width">
+            <input
+              type="number"
+              matInput
+              [(ngModel)]="years"
+              [min]="1"
+              (ngModelChange)="selectYear($event)"
+            />
+          </mat-form-field>
+        </mat-radio-group>
+      </div>
+    </div>
+  </div>
+</div>
+<div mat-dialog-actions>
+  <button mat-button (click)="onNoClick()">Cancel</button>
+  <button mat-button [mat-dialog-close]="data" cdkFocusInitial>
+    Ok
+  </button>
+</div>

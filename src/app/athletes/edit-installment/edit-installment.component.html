@@ -1,0 +1,158 @@
+<div class="m-container">
+    <mat-card class="m-title">
+        <h3>{{title}}</h3>
+    </mat-card>
+
+    <form #installmentForm="ngForm" autocomplete="off">
+        <mat-card>
+            <mat-card-content>
+                <div fxLayout="row" fxLayoutAlign="space-between" class="box_layout">
+                    <div fxFlex="49">
+                        <mat-card class="childContainer">
+                            <div class="input-container">
+                                <div class="label-container">
+                                    <span class="label">Payment Amount<span> &#36;</span></span>
+                                </div>
+                                <div class="field-container">
+                                    <mat-form-field [floatLabel]="'never'">
+                                        <input matInput placeholder="Enter Amount"
+                                            [(ngModel)]="installmentData.installments.installment_amount"
+                                            name="installment_amount" #installment_amount="ngModel" required>
+                                    </mat-form-field>
+                                </div>
+                            </div>
+
+                            <div class="input-container">
+                                <div class="label-container">
+                                    <span class="label">Payment Date</span>
+                                </div>
+                                <div class="field-container">
+                                    <mat-form-field [floatLabel]="'never'">
+                                        <input matInput [matDatepicker]="picker" #installments_date="ngModel"
+                                            [(ngModel)]="installmentData.installments.installments_date"
+                                            style="width:inherit" ui-date="{dateFormat: 'yy-mm-dd'}"
+                                            name="installments_date" placeholder="Installment Date" required />
+                                        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                                        <mat-datepicker #picker></mat-datepicker>
+                                    </mat-form-field>
+                                </div>
+                            </div>
+
+                            <div class="input-container">
+                                <div class="label-container">
+                                    <span class="label-icon"></span>
+                                    <span class="label">Notes/Comments</span>
+                                </div>
+                                <div class="field-container">
+                                    <mat-form-field [floatLabel]="'never'">
+                                        <input matInput placeholder="Comments Here" name="statusMsg"
+                                            #statusMsg="ngModel"
+                                            [(ngModel)]="installmentData.transactionDetails.statusMsg">
+                                    </mat-form-field>
+                                </div>
+                            </div>
+
+
+                        </mat-card>
+                    </div>
+
+                    <div fxFlex="49">
+                        <mat-card class="childContainer">
+
+                            <div class="input-container">
+                                <div class="label-container">
+                                    <span class="label-icon"></span>
+                                    <span class="label">Payment Status</span>
+                                </div>
+                                <div class="field-container">
+                                    <mat-form-field [floatLabel]="'never'">
+                                        <mat-select name="status" #status="ngModel" [(ngModel)]="installmentData.status"
+                                            placeholder="Select Payment Status" required>
+                                            <mat-option [value]="0">
+                                                Auto Pay
+                                            </mat-option>
+                                            <mat-option [value]="1">
+                                                Paid
+                                            </mat-option>
+                                        </mat-select>
+                                    </mat-form-field>
+                                </div>
+                            </div>
+
+                            <div class="input-container">
+                                <div class="label-container">
+                                    <span class="label-icon"></span>
+                                    <span class="label">Payment Type</span>
+                                </div>
+                                <div class="field-container">
+                                    <mat-form-field [floatLabel]="'never'">
+                                        <mat-select name="installments_type" #installments_type="ngModel"
+                                            [(ngModel)]="installmentData.installments.installments_type._id"
+                                            placeholder="Select Payment Type" required>
+                                            <mat-option *ngFor="let installments_type of installmentsType"
+                                                [value]="installments_type._id">
+                                                {{installments_type.label}}
+                                            </mat-option>
+                                        </mat-select>
+                                    </mat-form-field>
+                                </div>
+                            </div>
+
+                            <!-- <div class="input-container">
+                                <div class="label-container">
+                                    <span class="label-icon"></span>
+                                    <span class="label">Payment Type</span>
+                                </div>
+                                <div class="field-container">
+                                    <mat-form-field [floatLabel]="'never'">
+                                        <mat-select name="installment_frequency" #installment_frequency="ngModel"
+                                            [(ngModel)]="installmentData.installments.installment_frequency"
+                                            placeholder="Select Payment Type" required>
+                                            <mat-option *ngFor="let installment_frequency of installmentFrequency"
+                                                [value]="installment_frequency._id">
+                                                {{installment_frequency.label}}
+                                            </mat-option>
+                                        </mat-select>
+                                    </mat-form-field>
+                                </div>
+                            </div> -->
+
+                            <div class="input-container">
+                                <div class="label-container">
+                                    <span class="label-icon"></span>
+                                    <span class="label">Payment Method</span>
+                                </div>
+                                <div class="field-container">
+                                    <mat-form-field [floatLabel]="'never'">
+                                        <mat-select name="type" #type="ngModel"
+                                            [(ngModel)]="installmentData.transactionDetails.type"
+                                            placeholder="Select Payment Method" required>
+                                            <mat-option *ngFor="let paymenttype of paymentTypeList"
+                                                [value]="paymenttype._id">
+                                                {{paymenttype.label}}
+                                            </mat-option>
+                                        </mat-select>
+                                    </mat-form-field>
+                                </div>
+                            </div>
+
+
+                        </mat-card>
+                    </div>
+                </div>
+
+
+
+                
+                <mat-card>
+                    <div fxLayout="row" fxLayoutAlign="center center" style="margin: 5px">
+                        <button mat-raised-button class="m-jumbo-button m-pointer"
+                            (click)="editInstallment(installmentData._id)">Save</button>
+                        <button mat-raised-button class="m-jumbo-button m-pointer"
+                            (click)="cancelChange()">Cancel</button>
+                    </div>
+                </mat-card>
+            </mat-card-content>
+        </mat-card>
+    </form>
+</div>

@@ -1,0 +1,192 @@
+<div class="m-container">
+  <mat-card class="m-title">
+    <h3>ADD PURCHASE TRANSACTIONS</h3>
+  </mat-card>
+  <form #transactionForm=ngForm>
+    <mat-card class="childContainer">
+      <div fxLayout="row" fxLayoutAlign="space-between">
+        <div fxFlex="49">
+
+          <div class="input-container">
+            <div class="label-container">
+              <span class="label-icon">
+              </span>
+              <span class="label">Invoice Number</span>
+            </div>
+            <div class="field-container">
+              <mat-form-field [floatLabel]="'never'">
+                <input matInput placeholder="Enter invoice Number" name='invoice' [(ngModel)]="transaction.invoice"
+                  required>
+              </mat-form-field>
+            </div>
+          </div>
+
+          <div class="input-container">
+            <div class="label-container">
+              <span class="label-icon">
+              </span>
+              <span class="label">P.O Number</span>
+            </div>
+            <div class="field-container">
+              <mat-form-field [floatLabel]="'never'">
+                <input matInput placeholder="Enter P.O Number" name='ponumber' [(ngModel)]="transaction.po_number"
+                  required>
+              </mat-form-field>
+            </div>
+          </div>
+
+          <div class="input-container">
+            <div class="label-container">
+              <span class="label-icon">
+              </span>
+              <span class="label">Category</span>
+            </div>
+            <div class="field-container">
+              <mat-form-field [floatLabel]="'never'">
+                <mat-select placeholder="Select Category" [(ngModel)]="transaction.categoryId" name='category'
+                  (selectionChange)="selectedCategory($event.value)" required>
+                  <mat-option *ngFor="let category of categoryList" [value]="category._id" (click)='selCategory(category)'>{{category.name}}</mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+          </div>
+
+          <div class="input-container">
+            <div class="label-container">
+              <span class="label-icon">
+              </span>
+              <span class="label">Brand</span>
+            </div>
+            <div class="field-container">
+              <mat-form-field [floatLabel]="'never'">
+                <mat-select placeholder="Select Brand" [(ngModel)]="transaction.brandId" name='brand' (selectionChange)="selectedBrand($event.value)"
+                  required>
+                  <mat-option *ngFor="let brand of brandList" [value]="brand.brand._id">{{brand.brand.name}}</mat-option>
+                </mat-select>
+                <!-- <mat-select placeholder="Select Brand" *ngIf="isEdit" [(ngModel)]="brandName._id" (change)="selectedBrand($event.value)"
+                required>
+                <mat-option *ngFor="let brand of brandList" [value]="brand.name">{{brand.name}}</mat-option>
+              </mat-select> -->
+              </mat-form-field>
+            </div>
+          </div>
+
+          <div class="input-container">
+            <div class="label-container">
+              <span class="label-icon">
+              </span>
+              <span class="label">Color</span>
+            </div>
+            <div class="field-container">
+              <mat-form-field [floatLabel]="'never'">
+                <mat-select placeholder="Select Color" [(ngModel)]="transaction.colorId" name='color' (selectionChange)="selectedColor($event.value)"
+                  required>
+                  <mat-option *ngFor="let color of colorList" [value]="color.color._id">{{color.color.name}}</mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+          </div>
+
+        </div>
+        <div fxFlex="49">
+
+          <div class="input-container">
+            <div class="label-container">
+              <span class="label-icon">
+              </span>
+              <span class="label">Size</span>
+            </div>
+            <div class="field-container">
+              <mat-form-field [floatLabel]="'never'">
+                <mat-select placeholder="Select Size" [(ngModel)]="transaction.sizeId" name='size' (selectionChange)="selectedSize($event.value)"
+                  required>
+                  <mat-option *ngFor="let size of sizeList" [value]="size.size._id">{{size.size.size}}</mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+          </div>
+
+          <div class="input-container">
+            <div class="label-container">
+              <span class="label-icon">
+              </span>
+              <span class="label">Product</span>
+            </div>
+            <div class="field-container">
+              <mat-form-field [floatLabel]="'never'">
+                <!-- <mat-select placeholder="Select Product" [value]="productName" (change)="selectproduct($event)" (click)="filterProducts()" required>
+                            <mat-option *ngFor="let product of productList" [value]="product">{{product.name}}</mat-option>
+                          </mat-select> -->
+                <mat-select [(ngModel)]="transaction.product_id" placeholder="Select Product" name='product' required>
+                  <mat-option *ngFor="let product of productList" [value]="product._id">{{product.name}}</mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+          </div>
+
+          <div class="input-container">
+            <div class="label-container">
+              <span class="label-icon">
+              </span>
+              <span class="label">Quantity</span>
+            </div>
+            <div class="field-container">
+              <mat-form-field [floatLabel]="'never'">
+                <input matInput placeholder="Enter Quantity" name='quantity' [(ngModel)]="transaction.quantity"
+                  required>
+              </mat-form-field>
+            </div>
+          </div>
+
+          <div class="input-container">
+            <div class="label-container">
+              <span class="label-icon">
+              </span>
+              <span class="label">Purchase Price</span>
+            </div>
+            <div class="field-container">
+              <mat-form-field [floatLabel]="'never'">
+                <input matInput placeholder="Enter selling price" name='purPrice' [(ngModel)]="transaction.purchase_price"
+                  required>
+              </mat-form-field>
+            </div>
+          </div>
+
+          <div class="input-container">
+            <div class="label-container">
+              <span class="label-icon">
+              </span>
+              <span class="label">Total Price</span>
+            </div>
+            <div class="field-container">
+              <mat-form-field [floatLabel]="'never'">
+                <input matInput placeholder="Enter shipping & handling price" name='total' [(ngModel)]="transaction.total_price"
+                  required>
+              </mat-form-field>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <mat-card>
+        <!-- <button mat-raised-button class="m-jumbo-button m-pointer" *ngIf="!isEdit" (click)="saveTransaction()">Submit</button>
+      <button mat-raised-button class="m-jumbo-button m-pointer" *ngIf="isEdit" (click)="updatetransaction()">Update</button>
+      <button mat-raised-button class="m-jumbo-button m-pointer" (click)="cancelTransaction()">Cancel</button> -->
+        <div fxLayout="row" fxLayoutAlign="center center" style="margin: 5px">
+          <div *ngIf="!isEdit">
+            <button mat-raised-button class="m-jumbo-button m-pointer" *ngIf="transactionForm.form.valid" (click)="saveTransaction()">Submit</button>
+            <button mat-raised-button class="m-jumbo-button m-pointer" *ngIf="!transactionForm.form.valid" (click)="submit()">Submit</button>
+          </div>
+          <div *ngIf="isEdit">
+            <button mat-raised-button class="m-jumbo-button m-pointer" (click)="updatetransaction()" *ngIf="transactionForm.form.valid">Update</button>
+            <button mat-raised-button class="m-jumbo-button m-pointer" (click)="updateEdit()" *ngIf="!transactionForm.form.valid">Update</button>
+          </div>
+          <button mat-raised-button class="m-jumbo-button m-pointer" (click)="cancel()">Cancel</button>
+        </div>
+      </mat-card>
+      <br>
+      <!-- {{transaction | json}} -->
+    </mat-card>
+  </form>
+</div>

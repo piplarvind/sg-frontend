@@ -1,0 +1,50 @@
+<div class="m-container">
+  <mat-card class="m-title">
+    <h3>{{ title }}</h3>
+  </mat-card>
+  <mat-card fxLayout="row" style="padding: 12px 24px">
+    <div class="input-container">
+      <!-- <div class="errortxt" [hidden]="colorName.valid || colorName.pristine">
+         Color Name is required
+        </div>
+        <div class="errortxt" [hidden]="!colorName.hasError('pattern')">Only alphabets allowed</div> -->
+      <div
+        class="label-container"
+        style="
+      width: 10%; padding-right: 20px;"
+      >
+        <span class="label-icon"> </span>
+        <span class="label">COLOR NAME</span>
+      </div>
+      <div class="field-container">
+        <mat-form-field [floatLabel]="'never'">
+          <input
+            matInput
+            placeholder="Enter Name"
+            [(ngModel)]="colorName"
+            required
+          />
+          <!-- name="colorName" #colorName="ngModel"  maxlength="40" pattern="[a-zA-Z][a-zA-Z ]+" required -->
+        </mat-form-field>
+      </div>
+    </div>
+    <div>
+      <button
+        mat-raised-button
+        class="m-jumbo-button m-pointer"
+        (click)="saveColor()"
+        *ngIf="!isEdit"
+      >
+        Save
+      </button>
+      <button
+        mat-raised-button
+        class="m-jumbo-button m-pointer"
+        (click)="updateColor()"
+        *ngIf="isEdit"
+      >
+        Update
+      </button>
+    </div>
+  </mat-card>
+</div>

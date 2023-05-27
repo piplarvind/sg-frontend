@@ -1,0 +1,54 @@
+<div class="m-container">
+  <mat-card class="m-title">
+    <h3>{{title}}</h3>
+  </mat-card>
+  <form #categoryForm=ngForm>
+    <mat-card class="childContainer">
+      <div class="input-container">
+        <!-- <div class="errortxt" [hidden]="colorName.valid || colorName.pristine">
+         Color Name is required
+        </div>
+        <div class="errortxt" [hidden]="!colorName.hasError('pattern')">Only alphabets allowed</div> -->
+        <div class="label-container">
+          <span class="label-icon">
+          </span>
+          <span class="label">NAME</span>
+        </div>
+        <div class="field-container">
+          <mat-form-field [floatLabel]="'never'">
+            <input matInput placeholder="Enter Category Name" [(ngModel)]='categoryName' name="categoryName" required>
+            <!-- name="colorName" #colorName="ngModel"  maxlength="40" pattern="[a-zA-Z][a-zA-Z ]+" required -->
+          </mat-form-field>
+        </div>
+      </div>
+      <div class="input-container">
+        <div class="label-container">
+          <span class="label-icon">
+          </span>
+          <span class="label">SIZE CHART</span>
+        </div>
+        <div class="field-container">
+          <mat-form-field [floatLabel]="'never'">
+            <mat-select placeholder="Select Size" [(ngModel)]="category.sizeId" name="categorysize" (selectionChange)="getType($event.value)"
+              required>
+              <mat-option *ngFor="let type of group_size" [value]="type._id">{{type.group_name}}</mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+      </div>
+      <!-- <button mat-raised-button class="m-jumbo-button m-pointer" *ngIf="!isEdit" (click)="saveCategory()">Save</button>
+    <button mat-raised-button class="m-jumbo-button m-pointer" *ngIf="isEdit" (click)="updateCategory()">Update</button> -->
+      <div fxLayout="row" fxLayoutAlign="center center" style="margin: 5px">
+        <div *ngIf="!isEdit">
+          <button mat-raised-button class="m-jumbo-button m-pointer" *ngIf="categoryForm.form.valid" (click)="saveCategory()">Submit</button>
+          <button mat-raised-button class="m-jumbo-button m-pointer" *ngIf="!categoryForm.form.valid" (click)="categorySubmit()">Submit</button>
+        </div>
+        <div *ngIf="isEdit">
+          <button mat-raised-button class="m-jumbo-button m-pointer" (click)="updateCategory()" *ngIf="categoryForm.form.valid">Update</button>
+          <button mat-raised-button class="m-jumbo-button m-pointer" (click)="updateEdit()" *ngIf="!categoryForm.form.valid">Update</button>
+        </div>
+        <button mat-raised-button class="m-jumbo-button m-pointer" (click)="cancelCategory()">Cancel</button>
+      </div>
+    </mat-card>
+  </form>
+</div>

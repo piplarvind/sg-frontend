@@ -1,0 +1,28 @@
+.mat-progress-spinner {
+  display: inline-block;
+  vertical-align: middle;
+}
+
+.message {
+  margin-left: 0.5em;
+}
+
+.loadContainer{
+  height: 100vh !important;
+  width: 100vw !important;
+  background: black;
+  opacity: .7;
+  position:absolute;
+  z-index: 555;
+}
+
+.mat-progress-spinner{
+  justify-content: center;
+  margin:auto;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+

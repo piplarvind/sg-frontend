@@ -1,0 +1,217 @@
+<div class="m-container">
+  <mat-card class="m-title">
+    <h3>{{ title }}</h3>
+  </mat-card>
+  <form #seasonForm="ngForm">
+    <mat-card>
+      <mat-card-content>
+        <div fxLayout="row" fxLayoutAlign="space-between">
+          <!-- left card -->
+          <div fxFlex="100">
+            <mat-card class="childContainer formContainer">
+              <div class="input-container">
+                <div
+                  class="errortxt"
+                  [hidden]="seasonName.valid || seasonName.untouched"
+                >
+                  Season Name is Required
+                </div>
+                <div class="label-container">
+                  <span class="label-icon">
+                    <!-- <i class="far fa-list-alt"></i> -->
+                  </span>
+                  <span class="label">SEASON NAME</span>
+                </div>
+                <div class="field-container">
+                  <mat-form-field [floatLabel]="'never'">
+                    <input
+                      matInput
+                      placeholder="Enter Season Name"
+                      [(ngModel)]="season.season_name"
+                      required
+                      name="seasonName"
+                      #seasonName="ngModel"
+                      required
+                    />
+                  </mat-form-field>
+                </div>
+              </div>
+
+              <div class="input-container">
+                <div
+                  class="errortxt"
+                  [hidden]="startDate.valid || startDate.untouched"
+                >
+                  Start Date is Required
+                </div>
+                <div class="label-container">
+                  <span class="label-icon">
+                    <!-- <i class="far fa-list-alt"></i> -->
+                  </span>
+                  <span class="label">START DATE</span>
+                </div>
+                <div class="field-container">
+                  <mat-form-field [floatLabel]="'never'">
+                    <!-- <input matInput [matDatepicker]="picker" [min]="today" placeholder="Enter Start Date" [(ngModel)]="season.start_date" style="width:inherit;" name="startDate" #startDate="ngModel" required> -->
+                    <input
+                      matInput
+                      [matDatepicker]="picker"
+                      placeholder="Enter Start Date"
+                      [(ngModel)]="season.start_date"
+                      style="width:inherit;"
+                      name="startDate"
+                      [min]="season.start_date ? season.start_date : today"
+                      #startDate="ngModel"
+                      required
+                    />
+                    <mat-datepicker-toggle
+                      matSuffix
+                      [for]="picker"
+                    ></mat-datepicker-toggle>
+                    <mat-datepicker #picker></mat-datepicker>
+                  </mat-form-field>
+                </div>
+              </div>
+
+              <div class="input-container">
+                <div
+                  class="errortxt"
+                  [hidden]="endDate.valid || endDate.untouched"
+                >
+                  End Date is Required
+                </div>
+                <div class="label-container">
+                  <span class="label-icon">
+                    <!-- <i class="far fa-list-alt"></i> -->
+                  </span>
+                  <span class="label">END DATE</span>
+                </div>
+                <div class="field-container">
+                  <mat-form-field [floatLabel]="'never'">
+                    <!-- <input matInput [matDatepicker]="picker2" [min]="season.start_date" placeholder="Enter End Date" -->
+                    <input
+                      matInput
+                      [matDatepicker]="picker2"
+                      placeholder="Enter End Date"
+                      [(ngModel)]="season.end_date"
+                      style="width:inherit;"
+                      name="endDate"
+                      [min]="season.start_date ? season.start_date : today"
+                      #endDate="ngModel"
+                      required
+                    />
+                    <mat-datepicker-toggle
+                      matSuffix
+                      [for]="picker2"
+                    ></mat-datepicker-toggle>
+                    <mat-datepicker #picker2></mat-datepicker>
+                  </mat-form-field>
+                </div>
+              </div>
+            </mat-card>
+          </div>
+
+          <!-- right card -->
+          <!-- <div fxFlex="49">
+          <mat-card class="childContainer">
+
+            <div class="input-container">
+              <div class="label-container">
+                
+                <span class="label">PLACE</span>
+              </div>
+              <div class="field-container">
+                <mat-form-field [floatLabel]="'never'">
+                  <input matInput placeholder="Enter Location" [(ngModel)]="event.location">
+                </mat-form-field>
+              </div>
+            </div>
+
+            <div class="input-container">
+              <div class="label-container">
+               
+                <span class="label">DATE</span>
+              </div>
+              <div class="field-container">
+                <mat-form-field [floatLabel]="'never'">
+                  <input matInput [matDatepicker]="picker" [(ngModel)]="event.eventDate" style="width:inherit;">
+                  <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                  <mat-datepicker #picker></mat-datepicker>
+                </mat-form-field>
+              </div>
+            </div>
+
+            <div class="input-container">
+              <div class="label-container">
+                
+                <span class="label">TIME</span>
+              </div>
+              <div class="field-container">
+                <mat-form-field [floatLabel]="'never'">
+                  <input matInput type="time" placeholder="Enter Event Time" [(ngModel)]="event.eventTime">
+                </mat-form-field>
+              </div>
+            </div>
+
+          </mat-card>
+        </div> -->
+        </div>
+
+        <mat-card>
+          <div fxLayout="row" fxLayoutAlign="center center" style="margin: 5px">
+            <!--    <button mat-raised-button class="m-jumbo-button m-pointer" (click)="createSeason()" *ngIf="!isEdit"
+              [disabled]="!seasonForm.form.valid">Submit</button>
+            <button mat-raised-button class="m-jumbo-button m-pointer" (click)="updateSeason()" *ngIf="isEdit"
+              [disabled]="!seasonForm.form.valid">Update</button>
+            <button mat-raised-button class="m-jumbo-button m-pointer" routerLink="/seasons">Cancel</button>
+          </div> -->
+
+            <div *ngIf="!isEdit">
+              <button
+                mat-raised-button
+                class="m-jumbo-button m-pointer"
+                *ngIf="seasonForm.form.valid"
+                (click)="createSeason()"
+              >
+                Submit
+              </button>
+              <button
+                mat-raised-button
+                class="m-jumbo-button m-pointer"
+                *ngIf="!seasonForm.form.valid"
+                (click)="seasonSubmit()"
+              >
+                Submit
+              </button>
+            </div>
+            <div *ngIf="isEdit">
+              <button
+                mat-raised-button
+                class="m-jumbo-button m-pointer"
+                (click)="updateSeason()"
+                *ngIf="seasonForm.form.valid"
+              >
+                Update
+              </button>
+              <button
+                mat-raised-button
+                class="m-jumbo-button m-pointer"
+                (click)="updateEdit()"
+                *ngIf="!seasonForm.form.valid"
+              >
+                Update
+              </button>
+            </div>
+            <button
+              mat-raised-button
+              class="m-jumbo-button m-pointer"
+              (click)="cancelSeason()"
+            >
+              Cancel
+            </button>
+          </div>
+        </mat-card>
+      </mat-card-content>
+    </mat-card>
+  </form>
+</div>

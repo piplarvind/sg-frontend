@@ -1,0 +1,46 @@
+<!-- <input [(ngModel)]="group._id" /> -->
+
+<mat-card>
+  <!-- <div class="input-container">
+    <div class="label-container">
+      <span class="label">Order</span>
+    </div>
+    <div class="field-container">
+      <mat-form-field [floatLabel]="'never'">
+        <input
+          matInput
+          type="text"
+          name="name"
+          [(ngModel)]="group.order"
+          #name="ngModel"
+          required
+          placeholder="order"
+        />
+      </mat-form-field>
+    </div>
+  </div> -->
+  <div class="input-container">
+    <div class="label-container">
+      <span class="label">Role</span>
+    </div>
+
+    <div class="field-container">
+      <mat-form-field [floatLabel]="'never'">
+        <mat-select
+          placeholder="Select  Role"
+          [(ngModel)]="group.type"
+          (ngModelChange)="changeDropdown(group.type)"
+          required
+        >
+          <mat-option *ngFor="let pt of profileTypes" [value]="pt._id">{{
+            pt.name
+          }}</mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+  </div>
+  <button (click)="addSection()">Add section</button>
+  <div *ngFor="let section of group.sections">
+    <app-add-section [group]="group" [section]="section"></app-add-section>
+  </div>
+</mat-card>

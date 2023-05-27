@@ -1,0 +1,158 @@
+<div class="m-container">
+  <mat-card class="m-title" fxLayout="row" fxLayoutAlign="space-between">
+    <h3>OFFLINE PAYMENTS DETAIL</h3>
+    <button
+      mat-raised-button
+      class="m-button m-pointer"
+      routerLink="/offlinePayment/addPayment"
+    >
+      Add Payment&nbsp;&nbsp;+
+    </button>
+  </mat-card>
+  <mat-card style="min-height: 77vh">
+    <div class="m-table-container" fxLayout="row" fxLayoutAlign="space-between">
+      <div>
+        PAYMENT DETAILS
+      </div>
+      <div>
+        <mat-form-field>
+          <input
+            matInput
+            type="text"
+            (keyup)="doFilter($event)"
+            [placeholder]="keyup ? 'Please Press Enter key' : 'Search by Name'"
+          />
+        </mat-form-field>
+      </div>
+
+      <div></div>
+      <div>
+        <mat-paginator
+          #paginator
+          [length]="totalLength"
+          [pageSize]="limit"
+          [pageSizeOptions]="pageLimit"
+          (page)="changePage($event)"
+        >
+        </mat-paginator>
+      </div>
+    </div>
+
+    <mat-card-content>
+      <mat-divider class="m-divider"></mat-divider>
+      <br />
+
+      <div class="m-table-container">
+        <mat-table
+          #table
+          [dataSource]="dataSource"
+          matSort
+          (matSortChange)="namesort($event)"
+        >
+          <ng-container matColumnDef="payer">
+            <mat-header-cell
+              *matHeaderCellDef
+              mat-sort-header
+              style="margin-left: 25px"
+            >
+              <span class="m-table-header">Paid By </span>
+            </mat-header-cell>
+            <mat-cell *matCellDef="let element" class="light-red m-pointer">
+              {{ element.payer }}
+              <!-- {{element.athleteName}} -->
+            </mat-cell>
+          </ng-container>
+
+          <ng-container matColumnDef="behalf">
+            <mat-header-cell
+              *matHeaderCellDef
+              mat-sort-header
+              style="margin-left: 25px"
+            >
+              <span class="m-table-header">Athlete Name </span>
+            </mat-header-cell>
+            <mat-cell *matCellDef="let element" class="light-red m-pointer">
+              {{ element.behalf }}
+              <!-- {{element.athleteName}} -->
+            </mat-cell>
+          </ng-container>
+
+          <ng-container matColumnDef="total_amount_paid">
+            <mat-header-cell *matHeaderCellDef>
+              <span class="m-table-header">Amount </span>
+            </mat-header-cell>
+            <mat-cell *matCellDef="let element">
+              {{ element.total_amount_paid }}
+            </mat-cell>
+          </ng-container>
+
+          <ng-container matColumnDef="isOffline">
+            <mat-header-cell *matHeaderCellDef>
+              <span class="m-table-header">Payment Method </span>
+            </mat-header-cell>
+            <mat-cell *matCellDef="let element" class="textCenter">
+              {{ element.isOffline === true ? 'Online' : 'Offline' }}
+            </mat-cell>
+          </ng-container>
+
+          <ng-container matColumnDef="type">
+            <mat-header-cell *matHeaderCellDef>
+              <span class="m-table-header">Fee Type </span>
+            </mat-header-cell>
+            <mat-cell *matCellDef="let element"> {{ element.type }}</mat-cell>
+          </ng-container>
+          <ng-container matColumnDef="payedOn">
+            <mat-header-cell *matHeaderCellDef mat-sort-header>
+              <span class="m-table-header">Date </span>
+            </mat-header-cell>
+            <mat-cell *matCellDef="let element">
+              {{ element.createdAt | date: 'MM/dd/yyyy' }}
+            </mat-cell>
+          </ng-container>
+
+          <!-- <ng-container matColumnDef="inputBy">
+            <mat-header-cell *matHeaderCellDef>
+              <span class="m-table-header">InputBy </span>
+            </mat-header-cell>
+            <mat-cell *matCellDef="let element">
+              {{ element.comments }}
+            </mat-cell>
+          </ng-container> -->
+
+          <ng-container matColumnDef="comments">
+            <mat-header-cell *matHeaderCellDef>
+              <span class="m-table-header">Notes </span>
+            </mat-header-cell>
+            <mat-cell *matCellDef="let element">
+              {{ element.comments }}
+            </mat-cell>
+          </ng-container>
+
+          <ng-container matColumnDef="createdBy">
+            <mat-header-cell *matHeaderCellDef mat-sort-header>
+              <span class="m-table-header">Input By </span>
+            </mat-header-cell>
+            <mat-cell *matCellDef="let element"> </mat-cell>
+          </ng-container>
+
+          <ng-container matColumnDef="Actions">
+            <mat-header-cell *matHeaderCellDef>Actions (Edit/Delete)</mat-header-cell>
+            <mat-cell *matCellDef="let element">
+              <span
+                class="table-icon m-pointer"
+                (click)="editOfflinePayment(element)"
+                title="Edit Payment"
+              >
+                <i class="fas fa-pencil-alt"></i>
+              </span>
+            </mat-cell>
+          </ng-container>
+          <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+          <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
+        </mat-table>
+        <!-- <mat-paginator [length]="100" [pageSize]="100" [pageSizeOptions]="[25, 50, 75, 100]">
+        </mat-paginator> -->
+      </div>
+    </mat-card-content>
+  </mat-card>
+</div>

@@ -1,0 +1,58 @@
+<mat-card>
+  <div class="input-container">
+    <div class="label-container">
+      <span class="label">Name</span>
+    </div>
+    <div class="field-container">
+      <mat-form-field [floatLabel]="'never'">
+        <input
+          matInput
+          type="text"
+          name="name"
+          [(ngModel)]="this.profileGroup.name"
+          #name="ngModel"
+          required
+          placeholder="name"
+        />
+      </mat-form-field>
+    </div>
+    <button (click)="addGroup()">Add Profile Type</button>
+    <div *ngFor="let group of profileGroup.groups">
+      <app-add-group
+        [group]="group"
+        [profileGroup]="profileGroup"
+      ></app-add-group>
+    </div>
+  </div>
+</mat-card>
+<mat-card>
+  <div fxLayout="row" fxLayoutAlign="center center" style="margin: 5px">
+    <div *ngIf="!isEdit">
+      <button
+        mat-raised-button
+        class="m-jumbo-button m-pointer"
+        (click)="SubmitGroup()"
+      >
+        Submit
+      </button>
+    </div>
+
+    <div *ngIf="isEdit">
+      <button
+        mat-raised-button
+        class="m-jumbo-button m-pointer"
+        (click)="editGroup()"
+      >
+        Update
+      </button>
+    </div>
+
+    <button
+      mat-raised-button
+      class="m-jumbo-button m-pointer"
+      (click)="cancelChanges()"
+    >
+      Cancel
+    </button>
+  </div>
+</mat-card>

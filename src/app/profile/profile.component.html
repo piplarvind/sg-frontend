@@ -1,0 +1,282 @@
+<div class="m-container">
+  <mat-card class="m-title">
+    <h3>USER ACCOUNT</h3>
+  </mat-card>
+
+  <mat-card style="min-height: 77vh" *ngIf="datafield">
+    <mat-card-title>
+      <div fxLayout="row" fxLayoutAlign="space-between">
+        <div fxFlex="50" class="m-sub-title">
+          User Details
+        </div>
+      </div>
+    </mat-card-title>
+    <mat-card-content>
+      <mat-divider class="m-divider"></mat-divider>
+      <br />
+
+      <div id="profile-container">
+        <div fxLayout="row">
+          <div
+            id="profile-brief"
+            fxLayout="column"
+            fxLayoutAlign="center center"
+          >
+            <div class="profile-image">
+              <div style="width: 200px; height: 200px;" class="logo-container">
+                <img
+                  style=" width: 100%; height: 100%;"
+                  [src]="
+                    _DomSanitizationService.bypassSecurityTrustUrl(userPic)
+                  "
+                />
+              </div>
+              <input
+                type="file"
+                style="display:none"
+                #profilePic
+                (change)="testingFunc($event)"
+                id="profile"
+              />
+              <button
+                class="profile-edit"
+                mat-mini-fab
+                color="primary"
+                (click)="profilePic.click()"
+              >
+                <i class="fas fa-pencil-alt"></i>
+              </button>
+            </div>
+
+            <div class="profile-name">
+              {{ this.user.first_name }} {{ this.user.last_name }}
+            </div>
+            <div class="profile-status">
+              <span class="status-symbol"> </span>
+            </div>
+            <div class="profile-role">
+              {{ userDetails.types[0].name ? userDetails.types[0].name : 'NA' }}
+            </div>
+          </div>
+        </div>
+        <!--  -->
+
+        <!--  -->
+
+        <div
+          fxLayout="row"
+          class="m-row row-2"
+          style="margin-top: 30px;"
+          fxLayoutAlign="space-between"
+        >
+          <div fxFlex="18" class="input-container">
+            <div>
+              <span class="label">First Name</span>
+            </div>
+            <div>
+              <mat-form-field [floatLabel]="'never'">
+                <input
+                  matInput
+                  placeholder="First Name"
+                  [(ngModel)]="user.first_name"
+                  readonly
+                />
+              </mat-form-field>
+            </div>
+          </div>
+
+          <div fxFlex="18" class="input-container">
+            <div>
+              <span class="label">Last Name</span>
+            </div>
+            <div>
+              <mat-form-field [floatLabel]="'never'">
+                <input
+                  matInput
+                  placeholder="Last Name"
+                  [(ngModel)]="user.last_name"
+                  readonly
+                />
+              </mat-form-field>
+            </div>
+          </div>
+
+          <div fxFlex="18" class="input-container">
+            <div>
+              <span class="label">Email</span>
+            </div>
+            <div>
+              <mat-form-field [floatLabel]="'never'">
+                <input
+                  matInput
+                  placeholder="email"
+                  [(ngModel)]="user.email"
+                  readonly
+                />
+              </mat-form-field>
+            </div>
+          </div>
+
+          <div fxFlex="18" class="input-container">
+            <div>
+              <span class="label">UserName</span>
+            </div>
+            <div>
+              <mat-form-field [floatLabel]="'never'">
+                <input
+                  matInput
+                  placeholder="UserName"
+                  [(ngModel)]="user.name"
+                  readonly
+                />
+              </mat-form-field>
+            </div>
+          </div>
+        </div>
+        <!--  -->
+
+        <div
+          fxLayout="row"
+          class="m-row row-2"
+          style="margin-top: 30px;"
+          fxLayoutAlign="space-between"
+        >
+          <div fxFlex="18" class="input-container">
+            <div>
+              <span class="label">Mobile</span>
+            </div>
+            <div>
+              <mat-form-field [floatLabel]="'never'">
+                <input
+                  matInput
+                  placeholder="Mobile (username)"
+                  [(ngModel)]="user.mobile"
+                  readonly
+                />
+              </mat-form-field>
+            </div>
+          </div>
+
+          <div fxFlex="18" class="input-container">
+            <div>
+              <span class="label">Home</span>
+            </div>
+            <div>
+              <mat-form-field [floatLabel]="'never'">
+                <input
+                  matInput
+                  placeholder="Home"
+                  [(ngModel)]="user.home_phone"
+                  readonly
+                />
+              </mat-form-field>
+            </div>
+          </div>
+
+          <div fxFlex="18" class="input-container">
+            <div>
+              <span class="label">Address Line 1</span>
+            </div>
+            <div>
+              <mat-form-field [floatLabel]="'never'">
+                <input
+                  matInput
+                  placeholder="Address Line 1"
+                  [(ngModel)]="user.address_line_1"
+                  readonly
+                />
+              </mat-form-field>
+            </div>
+          </div>
+
+          <div fxFlex="18" class="input-container">
+            <div>
+              <span class="label">Address Line 2</span>
+            </div>
+            <div>
+              <mat-form-field [floatLabel]="'never'">
+                <input
+                  matInput
+                  placeholder="Address Line 2"
+                  [(ngModel)]="user.address_line_2"
+                  readonly
+                />
+              </mat-form-field>
+            </div>
+          </div>
+        </div>
+
+        <div
+          fxLayout="row"
+          class="m-row row-2"
+          style="margin-top: 30px;"
+          fxLayoutAlign="space-between"
+        >
+          <div fxFlex="18" class="input-container">
+            <div>
+              <span class="label">City</span>
+            </div>
+            <div>
+              <mat-form-field [floatLabel]="'never'">
+                <input
+                  matInput
+                  placeholder="City"
+                  [(ngModel)]="user.city"
+                  readonly
+                />
+              </mat-form-field>
+            </div>
+          </div>
+
+          <div fxFlex="18" class="input-container">
+            <div>
+              <span class="label">State</span>
+            </div>
+            <div>
+              <mat-form-field [floatLabel]="'never'">
+                <input
+                  matInput
+                  placeholder="State"
+                  [(ngModel)]="selectedStateId"
+                  readonly
+                />
+              </mat-form-field>
+            </div>
+          </div>
+
+          <div fxFlex="18" class="input-container">
+            <div>
+              <span class="label">Zip</span>
+            </div>
+            <div>
+              <mat-form-field [floatLabel]="'never'">
+                <input
+                  matInput
+                  placeholder="Zip"
+                  [(ngModel)]="user.zip"
+                  readonly
+                />
+              </mat-form-field>
+            </div>
+          </div>
+
+          <div fxFlex="18" class="input-container">
+            <div>
+              <span class="label">Country</span>
+            </div>
+            <div>
+              <mat-form-field [floatLabel]="'never'">
+                <input
+                  matInput
+                  placeholder="Country"
+                  [(ngModel)]="selectedCountryId"
+                  readonly
+                />
+              </mat-form-field>
+            </div>
+          </div>
+        </div>
+      </div>
+    </mat-card-content>
+  </mat-card>
+</div>

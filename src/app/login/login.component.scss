@@ -1,0 +1,40 @@
+@import 'src/theme/theme-variables';
+.login-container {
+  // position: absolute;
+  width: 200px;
+  // width: 18vw;
+  background: rgba($color: #ffffff, $alpha: 0.8);
+  .login-box {
+    // position: absolute;
+    // width: 200px;
+    margin-bottom: 20px;
+    .image-container {
+      margin: 20px 0;
+      text-align: center;
+      img {
+        margin: 0 auto;
+        display: inline-block;
+        width: 50%;
+      }
+    }
+    h3 {
+      padding: 5px;
+      text-align: center;
+    }
+    mat-form-field {
+      padding: 5px;
+      width: 100%;
+      input {
+        width: 100%;
+      }
+    }
+    button {
+      margin: 5px 0 20px 0;
+    }
+  }
+}
+
+.banner {
+  background: url('/assets/backcover.jpg') no-repeat;
+  background-size: cover;
+}

@@ -1,0 +1,276 @@
+<div class="m-container">
+  <mat-card class="m-title">
+    <h3>{{ title }}</h3>
+  </mat-card>
+  <form #assignForm="ngForm">
+    <mat-card>
+      <mat-card-content>
+        <div fxLayout="row" fxLayoutAlign="space-between">
+          <!-- left card -->
+          <div fxFlex="49">
+            <mat-card class="childContainer">
+              <div class="input-container">
+                <div class="errortxt" [hidden]="name.valid || name.untouched">
+                  Task Name is required
+                </div>
+                <div class="label-container">
+                  <span class="label">TASK NAME</span>
+                </div>
+                <div class="field-container">
+                  <mat-form-field [floatLabel]="'never'">
+                    <mat-select
+                      matInput
+                      name="name"
+                      #name="ngModel"
+                      required
+                      placeholder="Select Task"
+                      [(ngModel)]="training.library"
+                    >
+                      <mat-option
+                        *ngFor="let task of taskList"
+                        [value]="task._id"
+                        >{{ task.task_name }}</mat-option
+                      >
+                    </mat-select>
+                  </mat-form-field>
+                </div>
+              </div>
+
+              <div class="input-container" *ngIf="!showCoachName">
+                <!-- <div
+                  class="errortxt"
+                  [hidden]="assignBy.valid || assignBy.untouched"
+                >
+                  Assigned By is required
+                </div> -->
+                <div class="label-container">
+                  <span class="label">ASSIGNED BY</span>
+                </div>
+                <div class="field-container">
+                  <app-search-select
+                    [isTeam]="true"
+                    [isRequired]="true"
+                    [dropdownList]="coachList"
+                    placeholder="Select Coach"
+                    [alreadySel]="training.coach"
+                    (valueUpdated)="getCoach($event)"
+                  ></app-search-select>
+
+                  <!-- <mat-form-field [floatLabel]="'never'">
+                    <mat-select
+                      matInput
+                      name="assignBy"
+                      #assignBy="ngModel"
+                      required
+                      placeholder="Select Coach"
+                      [(ngModel)]="training.coach"
+                    >
+                      <mat-option
+                        *ngFor="let coach of coachList"
+                        [value]="coach._id"
+                        >{{ coach.name }}</mat-option
+                      >
+                    </mat-select>
+                  </mat-form-field> -->
+                </div>
+              </div>
+              <div class="input-container" *ngIf="showCoachName">
+                <div class="label-container">
+                  <span class="label">ASSIGNED BY</span>
+                </div>
+                <div class="field-container">
+                  <mat-form-field [floatLabel]="'never'">
+                    <input
+                      matInput
+                      [value]="coachName"
+                      placeholder="Enter coach Name"
+                      name="coach"
+                    />
+                  </mat-form-field>
+                </div>
+              </div>
+
+              <div class="input-container" *ngIf="teamsList">
+                <div class="label-container">
+                  <span class="label">SELECT TEAM(S)</span>
+                </div>
+                <div class="field-container">
+                  <app-search-select
+                    [isTeam]="true"
+                    [dropdownList]="teamsList"
+                    placeholder="Select Team(s)"
+                    [alreadySel]="training.team_id"
+                    (valueUpdated)="selectedTeam($event.value)"
+                  ></app-search-select>
+                  <!-- <mat-form-field [floatLabel]="'never'">
+                    <mat-select
+                      matInput
+                      name="teams"
+                      #teams="ngModel"
+                      (selectionChange)="selectedTeam($event.value)"
+                      placeholder="Select Team(s)"
+                      [(ngModel)]="training.team_id"
+                    >
+                      <mat-option
+                        *ngFor="let team of teamsList"
+                        [value]="team._id"
+                        >{{ team.name }}</mat-option
+                      >
+                    </mat-select>
+                  </mat-form-field> -->
+                </div>
+              </div>
+            </mat-card>
+          </div>
+
+          <!-- right card -->
+          <div fxFlex="49">
+            <mat-card class="childContainer">
+              <div class="input-container">
+                <div class="label-container">
+                  <span class="label">SELECT ATHLETE (S)</span>
+                </div>
+                <div class="field-container">
+                  <app-search-select
+                    [isTeam]="true"
+                    [isMultiple]="true"
+                    [dropdownList]="athleteList"
+                    placeholder="Select Athlete(s)"
+                    [alreadySel]="training.atheletes"
+                    (valueUpdated)="atheleteschange($event.value)"
+                  ></app-search-select>
+                  <!-- <mat-form-field [floatLabel]="'never'">
+                    
+                    <mat-select
+                      matInput
+                      name="atheletes"
+                      #atheletes="ngModel"
+                      placeholder="Select Athlete(s)"
+                      [(ngModel)]="training.atheletes"
+                      (selectionChange)="atheleteschange($event.value)"
+                      multiple
+                    >
+                      <mat-option
+                        *ngFor="let athlete of athleteList"
+                        [value]="athlete._id"
+                        >{{ athlete.name }}
+                      </mat-option>
+                    </mat-select>
+                  </mat-form-field> -->
+                </div>
+              </div>
+
+              <div class="input-container">
+                <div
+                  class="errortxt"
+                  [hidden]="startDate.valid || startDate.pristine"
+                >
+                  Start Date is required
+                </div>
+                <div class="label-container">
+                  <span class="label-icon"> </span>
+                  <span class="label">START DATE</span>
+                </div>
+                <div class="field-container">
+                  <mat-form-field [floatLabel]="'never'">
+                    <!-- <input matInput [matDatepicker]="picker" [min]="today" placeholder="Start Date" name="start" #start="ngModel"
+                      [(ngModel)]="training.start_date" required> -->
+                    <input
+                      matInput
+                      [matDatepicker]="picker"
+                      [min]="training.start_date ? training.start_date : today"
+                      placeholder="Start Date"
+                      [(ngModel)]="training.start_date"
+                      name="startDate"
+                      #startDate="ngModel"
+                      required
+                    />
+                    <mat-datepicker-toggle
+                      matSuffix
+                      [for]="picker"
+                    ></mat-datepicker-toggle>
+                    <mat-datepicker #picker></mat-datepicker>
+                  </mat-form-field>
+                </div>
+              </div>
+              <div class="input-container">
+                <div class="label-container">
+                  <span class="label-icon"> </span>
+                  <span class="label">END DATE</span>
+                </div>
+                <div class="field-container">
+                  <mat-form-field [floatLabel]="'never'">
+                    <input
+                      matInput
+                      [matDatepicker]="endpicker"
+                      [min]="training.start_date"
+                      placeholder="End Date"
+                      name="end"
+                      #end="ngModel"
+                      [(ngModel)]="training.end_date"
+                      required
+                    />
+                    <mat-datepicker-toggle
+                      matSuffix
+                      [for]="endpicker"
+                    ></mat-datepicker-toggle>
+                    <mat-datepicker #endpicker></mat-datepicker>
+                  </mat-form-field>
+                </div>
+              </div>
+            </mat-card>
+          </div>
+        </div>
+
+        <mat-card>
+          <div fxLayout="row" fxLayoutAlign="center center" style="margin: 5px">
+            <div *ngIf="!isEdit">
+              <button
+                mat-raised-button
+                class="m-jumbo-button m-pointer"
+                *ngIf="assignForm.form.valid"
+                (click)="assignTraining()"
+              >
+                Submit
+              </button>
+              <button
+                mat-raised-button
+                class="m-jumbo-button m-pointer"
+                *ngIf="!assignForm.form.valid"
+                (click)="trainingSubmit()"
+              >
+                Submit
+              </button>
+            </div>
+            <div *ngIf="isEdit">
+              <button
+                mat-raised-button
+                class="m-jumbo-button m-pointer"
+                (click)="updateTraining()"
+                *ngIf="assignForm.form.valid"
+              >
+                Update
+              </button>
+              <button
+                mat-raised-button
+                class="m-jumbo-button m-pointer"
+                (click)="updateEdit()"
+                *ngIf="!assignForm.form.valid"
+              >
+                Update
+              </button>
+            </div>
+
+            <button
+              mat-raised-button
+              class="m-jumbo-button m-pointer"
+              (click)="cancelChanges()"
+            >
+              Cancel
+            </button>
+          </div>
+        </mat-card>
+      </mat-card-content>
+    </mat-card>
+  </form>
+</div>

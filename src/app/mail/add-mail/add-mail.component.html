@@ -1,0 +1,161 @@
+<div class="m-container">
+  <mat-card class="m-title">
+    <h3>{{ title }}</h3>
+  </mat-card>
+
+  <mat-card>
+    <div class="label-container">
+      <span class="label">RECIPIENT TYPE</span>
+    </div>
+    <div class="field-container">
+      <mat-radio-group (change)="recipientChanged($event)" [(ngModel)]="recVal">
+        <div style="margin:5px">
+          <mat-radio-button value="all" style="font-size:14px;"
+            >All</mat-radio-button
+          >
+        </div>
+        <div style="margin:5px">
+          <mat-radio-button value="team" style="font-size:14px;"
+            >Team</mat-radio-button
+          >
+        </div>
+        <div style="margin:5px">
+          <mat-radio-button value="role" style="font-size:14px;"
+            >Role</mat-radio-button
+          >
+        </div>
+      </mat-radio-group>
+    </div>
+    <div style="width: 30vw;margin-top:20px;" *ngIf="isTeamSelected">
+      <div class="label-container">
+        <span class="label">SELECT TEAM(S)</span>
+      </div>
+      <div class="field-container">
+        <!-- <mat-form-field [floatLabel]="'never'">
+              <mat-select placeholder="Select Teams" [(ngModel)]="selectedTeams" multiple (change)="getTeamsRecipient()">
+                <mat-option *ngFor = "let team of teamsList" [value]="team">{{team.name}}</mat-option>
+               
+              </mat-select>
+            </mat-form-field> -->
+        <app-search-select
+          [dropdownList]="teamsList"
+          placeHolder="Select Teams"
+          [isTeam]="true"
+          [isMultiple]="true"
+          [isMAIL]="true"
+          (valueUpdated)="getTeamsRecipient($event)"
+        ></app-search-select>
+      </div>
+    </div>
+    <div style="display:flex;">
+      <div style="width: 30vw;margin-top:20px;" *ngIf="isRoleSelected">
+        <div class="label-container">
+          <span class="label">SELECT ROLE</span>
+        </div>
+        <div class="field-container">
+          <mat-form-field [floatLabel]="'never'">
+            <mat-select
+              placeholder="Select Role"
+              (selectionChange)="getUsersbyRole($event)"
+            >
+              <mat-option *ngFor="let role of rolesList" [value]="role">{{
+                role.name
+              }}</mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+      </div>
+
+      <!-- (click)="selectRole(role)" -->
+      <div style="width: 30vw;margin-top:20px;" *ngIf="isRoleSelected">
+        <div class="label-container">
+          <span class="label">SELECT USERS</span>
+        </div>
+        <div class="field-container">
+          <!-- <mat-form-field [floatLabel]="'never'">
+                <mat-select placeholder="Select Users" multiple [(ngModel)]="selectedUsers" (change)="getUserRecipient($event)"> 
+                  <mat-option *ngFor = "let user of roleUserList" [value]="user">{{user.first_name}} {{user.last_name}}</mat-option>
+                  
+                </mat-select>
+              </mat-form-field> -->
+          <app-search-select
+            [dropdownList]="roleUserList"
+            placeHolder="Select Users"
+            [isDefault]="true"
+            [isMAIL]="true"
+            [isMultiple]="true"
+            (valueUpdated)="getUserRecipient($event)"
+          ></app-search-select>
+        </div>
+      </div>
+    </div>
+    <div class="input-container" style="margin-top:15px">
+      <div class="label-container recipient">
+        <span class="label">TO</span>
+      </div>
+      <div class="field-container">
+        <mat-form-field [floatLabel]="'never'">
+          <mat-chip-list #chipList>
+            <mat-chip
+              *ngFor="let user of recipients"
+              [selectable]="selectable"
+              [removable]="removable"
+              (removed)="remove(user)"
+              color="lightgrey"
+              style="margin-top:5px;"
+            >
+              {{ user.name }}
+              <mat-icon matChipRemove *ngIf="removable" style="color:white"
+                >cancel</mat-icon
+              >
+            </mat-chip>
+            <input
+              matInput
+              placeholder="List of recipients"
+              [matChipInputFor]="chipList"
+            />
+          </mat-chip-list>
+        </mat-form-field>
+      </div>
+    </div>
+    <div>
+      <div class="input-container" style="margin-top:15px">
+        <div class="label-container recipient">
+          <span class="label">SUBJECT</span>
+        </div>
+        <div class="field-container" style="margin-left: 20px;">
+          <mat-form-field [floatLabel]="'never'">
+            <input matInput name="mailSubject" [(ngModel)]="mailSub" />
+          </mat-form-field>
+        </div>
+      </div>
+      <div></div>
+      <!-- <app-ngx-editor
+        [placeholder]="'Enter content here...'"
+        [spellcheck]="true"
+        height="200px"
+        minHeight="200px"
+        [(ngModel)]="htmlContent"
+      ></app-ngx-editor> -->
+    </div>
+    <!-- <mat-card> -->
+    <div fxLayout="row" fxLayoutAlign="center center" style="margin: 5px">
+      <button
+        mat-raised-button
+        class="m-jumbo-button m-pointer"
+        (click)="sendMail()"
+      >
+        Send
+      </button>
+
+      <button
+        mat-raised-button
+        class="m-jumbo-button m-pointer"
+        routerLink="/mail"
+      >
+        Cancel
+      </button>
+    </div>
+    <!-- </mat-card> -->
+  </mat-card>
+</div>

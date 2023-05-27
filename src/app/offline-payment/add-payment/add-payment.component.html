@@ -1,0 +1,655 @@
+<div class="m-container">
+  <mat-card class="m-title">
+    <h3>{{ title }}</h3>
+  </mat-card>
+  <form #offlineForm="ngForm">
+    <mat-card>
+      <mat-card-content>
+        <div fxLayout="row btn_layout">
+          <div class="btns_save">
+            <button class="btn_save" value="Save" (click)="savePayments()">
+                Save
+              </button>
+            </div>
+        </div>
+        <div fxLayout="row" fxLayoutAlign="space-between" class="box_layout">
+            
+
+          <div fxFlex="49">
+            <mat-card class="childContainer">
+              <div class="input-container">
+                <div class="label-container">
+                  <span class="label">Payer</span>
+                </div>
+                <div class="field-container">
+                  <app-search-select [dropdownList]="payerList" placeholder="Select Parent" [alreadySel]="offline.payer"
+                    [isDefault]="true" (valueUpdated)="ParentSelected($event)" [isRequired]="true" [isDisabled]="isEdit">
+                  </app-search-select>
+                </div>
+              </div>
+              <div class="input-container">
+                <div class="label-container">
+                  <span class="label">Athlete</span>
+                </div>
+                <div class="field-container">
+                  <app-search-select [dropdownList]="athleteList" placeholder="Select Athlete"
+                    [alreadySel]="offline.behalf" [isDefault]="true" (valueUpdated)="athleteSelected($event)"
+                    [isRequired]="true"  [isDisabled]="isEdit">
+                  </app-search-select>
+                </div>
+              </div>
+
+              <div class="input-container" *ngIf="!isEdit">
+                <div class="label-container">
+                  <span class="label">Plan</span>
+                </div>
+                <div class="field-container">
+                  <mat-form-field [floatLabel]="'never'">
+                    <mat-select matInput name="plans" #plans="ngModel" placeholder="Select Plan"
+                      [(ngModel)]="offline.planId" required>
+                      <mat-option *ngFor="let plan of packageList" [value]="plan._id" (click)="selectedPackage(plan)">
+                        {{ plan.name }}
+                      </mat-option>
+                    </mat-select>
+                  </mat-form-field>
+                </div>
+              </div>
+              <div class="input-container" *ngIf="isEdit">
+                <div class="label-container">
+                  <span class="label">PLAN</span>
+                </div>
+                <div class="field-container">
+                  <mat-form-field [floatLabel]="'never'">
+                    <input matInput name="packname" placeholder="Package name" [value]="plan_detail.name" readonly />
+                  </mat-form-field>
+                </div>
+              </div>
+
+              
+
+              <div class="input-container">
+                <div class="label-container">
+                  <span class="label-icon">
+                  </span>
+                  <span class="label"> Installments</span>
+                </div>
+                <div class="field-container">
+                   
+
+                  <mat-radio-group class="radio-group" [value]="plan_detail.installment"  (change)="installmentOption($event.value)"  [disabled]="plan_detail.disableno">
+                    <mat-radio-button style="    padding-right: 60px;" class="radio-button"
+                      [checked]="true === plan_detail.installment" value=0  [disabled]="plan_detail.disableno"> Yes</mat-radio-button>
+                    <mat-radio-button class="radio-button"  [checked]="false === plan_detail.installment" value=1 
+                      >
+                      No</mat-radio-button>
+                  </mat-radio-group>
+                </div>
+              </div>
+
+              <div>
+                <div class="input-container" *ngIf="plan_detail.installment && !isEdit">
+                  <br>
+                  <div class="label-container">
+                    <span class="label-icon">
+
+                    </span>
+                    <span class="label">No. Of Installments</span>
+                  </div>
+                  <div class="field-container">
+                    <mat-form-field [floatLabel]="'never'">
+                      <mat-select matInput name="athletes" #installmentno="ngModel" placeholder="Select Installment"
+                        [(ngModel)]="plan_detail.install" required>
+                        <mat-option *ngFor="let install of  plan_detail.installments" [value]="install._id"
+                          (click)="selectedInstallment (install)">
+                          {{install.installments_no}}</mat-option>
+                      </mat-select>
+                    </mat-form-field>
+                  </div>
+                </div>
+                <div class="input-container" *ngIf="plan_detail.installment && isEdit">
+                  <div class="label-container">
+                    <span class="label-icon">
+
+                    </span>
+                    <span class="label"> INSTALLMENTS NO.</span>
+                  </div>
+                  <div class="field-container">
+                    <mat-form-field [floatLabel]="'never'">
+                      <input matInput name="pamount" #pamount="ngModel" placeholder="Package Amount"
+                        [(ngModel)]="plan_detail.installments_no" readonly />
+                    </mat-form-field>
+                  </div>
+                </div>
+
+                <div class="input-container display_container">
+
+                  <div class="label-container">
+                    <span class="label-icon">
+  
+                    </span>
+                    <span class="label">Offline Amount</span>
+                  </div>
+                  <div class="field-container">
+                     <mat-form-field [floatLabel]="'never'">
+                      <input matInput [(ngModel)]="plan_detail.amount_paid" placeholder="Enter Amount" name="AmountPaid"
+          #totalAmountPaid="ngModel" (change)="TotalamountChange(plan_detail.amount_paid)">
+                    </mat-form-field>
+                    
+                  </div>
+                </div>
+               
+                
+
+                <div class="input-container " *ngIf="plan_detail.installment">
+
+                  <div class="label-container">
+                    <span class="label-icon">
+
+                    </span>
+                    <span class="label">Offline Transaction Mode</span>
+                  </div>
+                  <div class="field-container">
+                    <mat-form-field [floatLabel]="'never'">
+                      <!-- <input matInput  placeholder="Offline Amount"
+                        name="offlinePaymentAmount">  -->
+                        <mat-select (selectionChange)="getpaymenttype($event.value,i)" placeholder="Select Transaction Type">
+                          <mat-option *ngFor="let paymenttype of paymenttypeList" [value]="paymenttype._id">
+                            {{paymenttype.label}}
+                          </mat-option>
+                        </mat-select>
+                        
+                    </mat-form-field>
+                  </div>
+                </div>
+
+
+                
+
+                <div class="input-container" *ngIf="plan_detail.installment">
+
+                  <div class="label-container">
+                    <span class="label-icon">
+
+                    </span>
+                    <span class="label">Comments</span>
+                  </div>
+                  <div class="field-container">
+                    <mat-form-field [floatLabel]="'never'">
+                      <input matInput  placeholder="Comments Here"
+                        name="comments" >
+                    </mat-form-field>
+                  </div>
+                </div>
+
+                <div class="input-container" *ngIf="plan_detail.installment">
+
+                    <div class="label-container">
+                      <span class="label-icon">
+  
+                      </span>
+                      <span class="label">Transactions Date</span>
+                    </div>
+                    <div class="field-container">
+                      <mat-form-field [floatLabel]="'never'">
+                        <input matInput [matDatepicker]="picker" placeholder="Choose a date">
+                        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                         <mat-datepicker #picker></mat-datepicker>
+                      </mat-form-field>
+                    </div>
+                  </div>
+
+              </div>
+
+
+              
+
+              
+
+            </mat-card>
+          </div>
+          <div fxFlex="49">
+            <mat-card class="childContainer">
+
+                <div class="input-container display_container">
+                    <div class="label-container">
+                      <span class="label">Package Amount</span>
+                    </div>
+                    <div class="field-container">
+                      <!-- <mat-form-field [floatLabel]="'never'">
+                        <input matInput name="pamount" placeholder="Package Amount" [value]="plan_detail.package_amount"
+                          readonly />
+                      </mat-form-field> -->
+                      {{plan_detail.package_amount | currency:'USD'}}
+                    </div>
+                  </div>
+
+             <div class="input-container display_container">
+                <div class="label-container">
+                  <span class="label">Late Pay Days</span>
+                </div>
+                <div class="field-container">
+                  <!-- <mat-form-field [floatLabel]="'never'">
+                    <input matInput name="latepay" #latepay="ngModel" placeholder="Late Pay Days"
+                      [(ngModel)]="plan_detail.late_pay_days" readonly />
+                  </mat-form-field> -->
+                  {{plan_detail.late_pay_days}}
+                </div>
+              </div> 
+
+               <div class="input-container display_container">
+                <div class="label-container">
+                  <span class="label">Late Payment Fee</span>
+                </div>
+                <div class="field-container">
+                  <!-- <mat-form-field [floatLabel]="'never'">
+                    <input matInput name="latefee" #latefee="ngModel" placeholder="Late Pay Fee"
+                      [(ngModel)]="plan_detail.late_pay_fee" readonly />
+                  </mat-form-field> -->
+                  {{plan_detail.late_pay_fee | currency:'USD'}}
+                </div>
+              </div> 
+
+               <div class="input-container display_container">
+                <div class="label-container">
+                  <span class="label">Monthly Due Date</span>
+                </div>
+                <div class="field-container">
+                  <!-- <mat-form-field [floatLabel]="'never'">
+                    <input matInput name="due" #due="ngModel" placeholder="Monthly Due Date"
+                      [(ngModel)]="plan_detail.monthly_due_date" readonly />
+                  </mat-form-field> -->
+                  {{plan_detail.monthly_due_date}}
+                </div>
+              </div> 
+
+              <!-- <div class="input-container">
+                  <div class="label-container">
+                    <span class="label">Down Payments</span>
+                  </div>
+                  <div class="field-container">
+                   
+                    {{plan_detail.downpayment}}
+                  </div>
+                </div>  -->
+
+                <div class="input-container display_container" *ngIf="plan_detail.installment">
+
+                  <div class="label-container">
+                    <span class="label-icon">
+
+                    </span>
+                    <span class="label">Down Payment</span>
+                  </div>
+                  <div class="field-container">
+                    <!-- <mat-form-field [floatLabel]="'never'">
+                      <input matInput [(ngModel)]="plan_detail.down_pay_amount" placeholder="Enter Amount"
+                        name="downPayAmount" #downPayAmount="ngModel" readonly>
+                    </mat-form-field> -->
+                    {{plan_detail.down_pay_amount | currency:'USD'}}
+                  </div>
+                </div>
+
+                <div class="input-container display_container" *ngIf="plan_detail.installment">
+
+                  <div class="label-container">
+                    <span class="label-icon">
+
+                    </span>
+                    <span class="label">Installment Amount</span>
+                  </div>
+                  <div class="field-container">
+                    <!-- <mat-form-field [floatLabel]="'never'">
+                      <input matInput [(ngModel)]="plan_detail.installment_amount" placeholder="Enter Amount"
+                        name="installmentAmount" #installmentAmount="ngModel" readonly>
+                    </mat-form-field> -->
+                    {{plan_detail.installment_amount | currency:'USD'}}
+                  </div>
+                </div>
+
+             
+
+              <div class="input-container" *ngIf="plan_detail.installment">
+                <div class="label-container">
+                  <span class="label">Balance Amount</span>
+                </div>
+                <div class="field-container">
+                  <!-- <mat-form-field [floatLabel]="'never'">
+                    <input matInput name="balAmt" #balAmt="ngModel" [(ngModel)]='balAmount'
+                      placeholder="Balance Amount" readonly>
+                  </mat-form-field> -->
+                  {{balAmount | currency:'USD'}}
+                </div>
+              </div>
+
+
+              <!-- <div class="input-container">
+                <div class="label-container">
+                  <span class="label">VALIDITY FROM DATE</span>
+                </div>
+                <div class="field-container">
+                  <mat-form-field [floatLabel]="'never'">
+                    <input matInput name="fromDate" [value]="plan_detail.validity_from|date: 'MM/dd/yyyy'" readonly />
+                  </mat-form-field>
+                </div>
+              </div> -->
+              
+              <!-- <div class="input-container">
+                <div class="label-container">
+                  <span class="label-icon"> </span>
+                  <span class="label">VALIDITY TILL DATE</span>
+                </div>
+                <div class="field-container">
+                  <mat-form-field [floatLabel]="'never'">
+                    <input matInput placeholder="Validity Till Date" name="validityTill"
+                      [value]="plan_detail.validity_to|date: 'MM/dd/yyyy'" readonly />
+                  </mat-form-field>
+                </div>
+              </div> -->
+
+
+
+
+
+              
+
+
+              <!-- <div class="input-container" style="display:flex;">
+                <div class="label-container" style="padding-top: 15px;;">
+                  <span class="label-icon"> </span>
+                  <span class="lable">COMMENTS</span>
+                </div>
+                <div class="field-container">
+                  <mat-form-field
+                    [floatLabel]="'never'"
+                    style="width:75%;height: 100px;"
+                  >
+                    <textarea
+                      matInput
+                      placeholder="Enter Comments"
+                      [(ngModel)]="offline.comments"
+                      style="width:100%;height: 100px;"
+                      name="comments"
+                      required
+                    ></textarea>
+                  </mat-form-field>
+                </div>
+              </div> -->
+            </mat-card>
+
+
+          </div>
+        </div>
+        <div fxLayout="row" class="box_layout">
+
+          <mat-card fxFlex="100" *ngIf="offline.payments.length">
+
+              <div style="display: inline">
+                              
+                   
+                     <span class="label-icon"></span>
+                     <span class="label">Current Transaction Total</span>
+                      <span>&nbsp;{{plan_detail.amount_paid | currency:'USD'}} &nbsp;</span>
+                                      
+                      <span class="label-icon">/</span>
+                      <span class="label">Assigned</span>
+                      <span>&nbsp;{{plan_detail.amount_paid - plan_detail.currenttotal_transaction | currency:'USD'}} &nbsp;</span>
+                                       
+                        <span class="label-icon">/</span>
+                        <span class="label">Balance</span>
+                        <span>
+                          <!-- <mat-form-field>
+                             <input matInput [(ngModel)]="plan_detail.bal_amount" name="balAmount"
+                              #totalAmountPaid="ngModel" readonly>
+                              
+                          </mat-form-field> -->
+                          <!-- {{plan_detail.bal_amount}} -->
+                          &nbsp;{{plan_detail.currenttotal_transaction | currency:'USD'}}
+                        </span>
+                     
+                   
+
+
+<!-- <div style="display: inline">
+   <div class="input-container">
+  
+    <div class="label-container">
+      <span class="label-icon">
+  
+      </span>
+      <span class="label">Assigned</span>
+    </div>
+    <div class="field-container">
+      <mat-form-field [floatLabel]="'never'">
+        <input matInput [(ngModel)]="plan_detail.currenttotal_transaction" placeholder="Enter Amount"
+          name="currenttansaction">
+      </mat-form-field>
+    </div>
+  </div>  -->
+  <!-- <div class="input-container">
+  
+    <div class="label-container">
+      <span class="label-icon">
+  
+      </span>
+      <span class="label"> Current Transaction Total</span>
+    </div>
+    <div class="field-container">
+      <mat-form-field [floatLabel]="'never'">
+        <input matInput [(ngModel)]="plan_detail.amount_paid" placeholder="Enter Amount" name="AmountPaid"
+          #totalAmountPaid="ngModel" (change)="TotalamountChange(plan_detail.amount_paid)">
+      </mat-form-field>
+    </div>
+  </div> -->
+
+  <!-- <div class="input-container">
+  
+    <div class="label-container">
+      <span class="label-icon">
+  
+      </span>
+      <span class="label">Available Balance</span>
+    </div>
+    <div class="field-container">
+      <mat-form-field [floatLabel]="'never'">
+        <input matInput [(ngModel)]="plan_detail.bal_amount" placeholder="Enter Amount" name="balAmount"
+          #totalAmountPaid="ngModel">
+      </mat-form-field>
+    </div>
+  </div> -->
+
+
+</div>
+
+
+            <div class="m-table-container" >
+              <mat-table #table [dataSource]="offline.payments" matSort>
+  <ng-container matColumnDef="installmenttypedo">
+    <mat-header-cell *matHeaderCellDef mat-sort-header>
+      <span class="m-table-header">Package </span>
+    </mat-header-cell>
+    <mat-cell *matCellDef="let element; let i = index;" class="">
+
+      {{plan_detail.name }}-{{element.installments_type? element.installments_type.label:''}}
+  
+    </mat-cell>
+  </ng-container>
+                <ng-container matColumnDef="Due_date">
+                  <mat-header-cell *matHeaderCellDef mat-sort-header>
+                    <span class="m-table-header">Due Date </span>
+                  </mat-header-cell>
+                  <mat-cell *matCellDef="let element; let i = index;" class="">
+
+                    {{element.installments_date | date:'MM/dd/yyyy'}}
+
+                  </mat-cell>
+                </ng-container>
+                <!-- <ng-container matColumnDef="payedOn">
+                  <mat-header-cell *matHeaderCellDef mat-sort-header>
+                    <span class="m-table-header"> Paid On </span>
+                  </mat-header-cell>
+                  <mat-cell *matCellDef="let element; let i = index;"> -->
+                    <!-- <ng-container *ngIf="!element.isEditrecord && isEdit">
+                      <mat-form-field [floatLabel]="'never'">
+
+                        <input matInput [value]="element.payedOn | date:'MM/dd/yyyy'" style="width:inherit"
+                          name="payedon" placeholder="Paid on  Date" readonly />
+
+                      </mat-form-field>
+                    </ng-container> -->
+<!-- *ngIf="element.isEditrecord || !isEdit" -->
+                    <!-- <ng-container >
+                      <mat-form-field [floatLabel]="'never'">
+
+                        <input matInput [matDatepicker]="picker1" [(ngModel)]=element.payedOn [ngModelOptions]="{standalone: true}" placeholder="Paid on  Date" />
+                        <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+                        <mat-datepicker #picker1></mat-datepicker>
+                      </mat-form-field>
+                    </ng-container>
+
+
+
+                  </mat-cell>
+                </ng-container> -->
+
+                <!-- <ng-container matColumnDef="type">
+                  <mat-header-cell *matHeaderCellDef mat-sort-header>
+                    <span class="m-table-header">Type</span>
+                  </mat-header-cell>
+
+
+                  <mat-cell *matCellDef="let element; let i = index;" class="textLeft"> -->
+                    <!-- <ng-container *ngIf="!element.isEditrecord && isEdit">
+                      <mat-form-field>
+                        <mat-select [value]="element.type" name="type">
+                          <mat-option *ngFor="let paymenttype of paymenttypeList" [disabled]='!element.isEditrecord'
+                            [value]="paymenttype._id">{{paymenttype.label}}</mat-option>
+                        </mat-select>
+                      </mat-form-field>
+                    </ng-container> -->
+
+
+
+                    <!-- <ng-container >
+                      <mat-form-field>
+                        <mat-select (selectionChange)="getpaymenttype($event.value,i)" [(ngModel)]=element.type
+                          [ngModelOptions]="{standalone: true}">
+                          <mat-option *ngFor="let paymenttype of paymenttypeList" [value]="paymenttype._id">
+                            {{paymenttype.label}}</mat-option>
+                        </mat-select>
+                      </mat-form-field>
+                    </ng-container>
+
+                  </mat-cell>
+                </ng-container> -->
+
+
+
+                <ng-container matColumnDef="due">
+                  <mat-header-cell *matHeaderCellDef mat-sort-header>
+                    <span class="m-table-header">Due</span>
+                  </mat-header-cell>
+                  <mat-cell *matCellDef="let element; let i = index;" class="textLeft">
+                    {{element.installment_amount}}
+                  </mat-cell>
+                </ng-container>
+
+                <ng-container matColumnDef="amount">
+                    <mat-header-cell *matHeaderCellDef mat-sort-header>
+                      <span class="m-table-header">Amount Paid</span>
+                    </mat-header-cell>
+                    <mat-cell *matCellDef="let element; let i = index;" class="textLeft">
+                      {{element.installment_amount}}
+                    </mat-cell>
+                  </ng-container>
+
+                <ng-container matColumnDef="status">
+                  <mat-header-cell *matHeaderCellDef mat-sort-header>
+                    <span class="m-table-header">Status </span>
+                  </mat-header-cell>
+                  <mat-cell *matCellDef="let element; let i = index;" class="table-icon m-pointer textRight">
+
+                    {{ getStatus(element.status) }}
+                  </mat-cell>
+                </ng-container>
+                <!-- <ng-container matColumnDef="comments">
+                  <mat-header-cell *matHeaderCellDef mat-sort-header>
+                    <span class="m-table-header">Comment </span>
+                  </mat-header-cell>
+                  <mat-cell *matCellDef="let element; let i = index;"> -->
+                    <!-- <ng-container *ngIf="!element.isEditrecord && isEdit ">
+                      <span >{{element.comments}}</span>
+                    </ng-container> -->
+
+                    <!-- <ng-container >
+                      <mat-form-field [floatLabel]="'never'">
+                        <input matInput type="text" [(ngModel)]=element.comments [ngModelOptions]="{standalone: true}" />
+                      </mat-form-field>
+
+                      
+                    </ng-container>
+
+                  </mat-cell>
+
+                </ng-container> -->
+
+                
+                <ng-container matColumnDef="edit">
+                  <mat-header-cell *matHeaderCellDef mat-sort-header>
+                    <span class="m-table-header">Action </span>
+                  </mat-header-cell>
+                  <mat-cell *matCellDef="let element; let i = index;" class="">
+                  <button class="table-icon m-pointer" value="Assign" (click)="updateactionPayment(element.action,i)">{{element.action}}</button>
+                   
+                  </mat-cell>
+                </ng-container>
+
+                <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+                <mat-row *matRowDef="let row; columns: displayedColumns; let i = index"></mat-row>
+              </mat-table>
+
+            </div>
+          </mat-card>
+        </div>
+
+        <mat-card>
+          <div fxLayout="row" fxLayoutAlign="center center" style="margin: 5px">
+            <div *ngIf="!isEdit">
+              <button mat-raised-button class="m-jumbo-button m-pointer" *ngIf="offlineForm.form.valid"
+                (click)="submitPayment()">
+                Submit
+              </button>
+              <button mat-raised-button class="m-jumbo-button m-pointer" *ngIf="!offlineForm.form.valid"
+                (click)="validateSubmit()">
+                Submit
+              </button>
+            </div>
+            <div *ngIf="isEdit">
+              <button
+                mat-raised-button
+                class="m-jumbo-button m-pointer"
+                *ngIf="offlineForm.form.valid"
+                (click)="updatePayment()"
+              >
+                Update
+              </button>
+              <button
+                mat-raised-button
+                class="m-jumbo-button m-pointer"
+                *ngIf="!offlineForm.form.valid"
+                (click)="updateForm()"
+              >
+                Update
+              </button>
+            </div>
+            <button  *ngIf="!isEdit" mat-raised-button class="m-jumbo-button m-pointer" (click)="cancelPayments()">
+              Cancel
+            </button>
+                <button *ngIf="isEdit"  mat-raised-button class="m-jumbo-button m-pointer" (click)="cancelPayments()">
+                  Cancel
+                </button>
+          </div>
+        </mat-card>
+      </mat-card-content>
+    </mat-card>
+  </form>
+</div>

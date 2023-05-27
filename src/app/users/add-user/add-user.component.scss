@@ -1,0 +1,23 @@
+.input-container.single {
+    // display: inline-block;
+    // width: 40%;
+    .label-container {
+        width: 30%;
+        display: inline-block;
+    }
+    .field-container {
+        width: 50%;
+        display: inline-block;
+    }
+}
+
+.dateInput {
+    text-transform: uppercase;
+    display: inline-block;
+    width: 23%;
+    min-height: 30px !important;
+    background: none;
+    border: 1px solid grey;
+    border-radius: 5px;
+    padding: 5px 2px;
+}

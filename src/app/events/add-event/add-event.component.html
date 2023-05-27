@@ -1,0 +1,1057 @@
+<div class="m-container">
+  <mat-card class="m-title">
+    <h3>{{title}}</h3>
+  </mat-card>
+  <mat-card>
+    <form #eventForm="ngForm" name="event" >
+    <!-- <div *ngIf="isLoading">Loading</div> -->
+    <mat-card-content>
+       
+      <div fxLayout="row" fxLayoutAlign="space-between">
+        <!-- left card -->
+        <div fxFlex="49">
+          <mat-card class="childContainer">
+            <div class="input-container" *ngIf="isEdit">
+              <div class="label-container">
+                <span class="label-icon">
+                </span>
+                <span class="label">EVENT TYPE</span>
+              </div>
+              <div class="field-container">
+                <mat-form-field [floatLabel]="'never'">
+                  <mat-select placeholder="Select the Event Type" (selectionChange)="getType($event.value)"
+                    [(ngModel)]="this.event.event_type.event_type"  name=" event_type"required>
+                    <mat-option *ngFor="let type of eventTypes" [value]="type.event_type">{{type.event_type}}
+                    </mat-option>
+                  </mat-select>
+                </mat-form-field>
+              </div>
+            </div>
+         
+            <div class="input-container" *ngIf="!isEdit">
+              <div class="label-container">
+                <span class="label-icon">
+                </span>
+                <span class="label">EVENT TYPE</span>
+              </div>
+              <div class="field-container">
+                <mat-form-field [floatLabel]="'never'">
+                  <mat-select placeholder="Select the Event Type" (selectionChange)="getType($event.value)"
+                    [(ngModel)]="event.type"  name="type" #type="ngModel" required>
+                    <mat-option *ngFor="let type of eventTypes" [value]="type.event_type">
+                      {{type.event_type}}
+                    </mat-option>
+                  </mat-select>
+                </mat-form-field>
+              </div>
+            </div>
+
+
+
+                  <div class="input-container">
+                    <div class="errortxt" [hidden]="eventName.valid || eventName.pristine">
+                      Event Name is required
+                    </div>
+                    <div class="label-container">
+                      <span class="label-icon">
+                      </span>
+                      <span class="label">NAME</span>
+                    </div>
+                    <div class="field-container">
+                      <mat-form-field [floatLabel]="'never'">
+                        <textarea matInput placeholder="Enter Event Name" [(ngModel)]="event.name" name="eventName" #eventName="ngModel"
+                          style="overflow: hidden; height:40px" maxlength="100" required></textarea>
+                      </mat-form-field>
+                    </div>
+                  </div>
+
+            <div *ngIf="!isMatch && isStandard">
+        
+
+
+              <div class="input-container" style="margin-bottom: 15px; margin-top:10px;">
+                <div class="label-container">
+                  <span class="label-icon">
+                  </span>
+                  <span class="label">PAID EVENT </span>
+                </div>
+                <div class="field-container">
+                  <mat-checkbox [(ngModel)]="is_paid" [checked]="is_paid" name="ispaid" #ispaid="ngModel" (change)="isPaid($event)">
+                  </mat-checkbox>
+                </div>
+              </div>
+              <div *ngIf="is_paid">
+
+                <!-- <div class="input-container">
+                  <div class="label-container">
+                    <span class="label-icon">
+                    </span>
+                    <span class="label">amount</span>
+                  </div>
+                  <div class="field-container">
+                    <div class="field-container">
+                      <input matInput type="number" placeholder="Enter amount" [(ngModel)]="amount" required>
+                    </div>
+                  </div>
+                </div> -->
+                    <div class="input-container">
+                      <div class="label-container">
+                        <span class="label-icon"> </span>
+                        <span class="label"> AMOUNT</span>
+                      </div>
+                      <div class="field-container">
+                        <mat-form-field class="example-full-width">
+                          <input matInput [min]="0" [(ngModel)]="amount"   name="amoun" #amoun="ngModel"  (ngModelChange)="validateOrder($event)" />
+                        </mat-form-field>
+                      </div>
+                    </div>
+<!-- 
+                <div class="input-container" style="margin-bottom: 15px; margin-top:10px;">
+                  <div class="label-container">
+                    <span class="label-icon">
+                    </span>
+                    <span class="label">ONE TIME FEE </span>
+                  </div>
+                  <div class="field-container">
+                    <mat-checkbox class="example-margin" [(ngModel)]="isonetimefee"></mat-checkbox>
+                  </div>
+                </div> -->
+              </div>
+
+
+              <div class="input-container" style="margin-bottom: 15px; margin-top:10px;">
+                <div class="label-container">
+                  <span class="label-icon">
+                  </span>
+                  <span class="label">REPEAT</span>
+                </div>
+                <div class="field-container">
+                    <mat-checkbox class="example-margin" [(ngModel)]="is_repeated" (change)=" isRepeat($event)"  name="repeat" #repeat="ngModel">
+                    </mat-checkbox>
+                </div>
+              </div>
+
+              <div class="input-container" style="margin-bottom: 15px; margin-top:10px;">
+                <div class="label-container">
+                  <span class="label-icon"> </span>
+                  <span class="label">PUBLIC EVENT  </span>
+                </div>
+                <div class="field-container">
+                  <mat-checkbox class="example-margin" [(ngModel)]="is_private"  name="isprivate" #isprivate="ngModel"></mat-checkbox>
+                </div>
+              </div>
+
+              <div class="input-container" style="margin-bottom: 15px; margin-top:10px;">
+                <div class="label-container">
+                  <span class="label-icon">
+                  </span>
+                  <span class="label"> ONLY AUTHORIZED USER</span>
+                </div>
+                <div class="field-container">
+                  <section class="example-section">
+                    <mat-checkbox class="example-margin" [(ngModel)]="only_auth_user" name="auth" #auth="ngModel"></mat-checkbox>
+                  </section>
+                </div>
+              </div>
+
+            </div>
+
+<div class="input-container">
+
+  <div class="label-container">
+    <span class="label-icon">
+    </span>
+    <span class="label">Audience</span>
+  </div>
+  <div class="field-container">
+    <mat-form-field [floatLabel]="'never'">
+    <mat-select placeholder="Select the Audience" [(ngModel)]="event.audience"  (ngModelChange)="getAudience($event)" 
+      name="audi" #audi="ngModel"   >
+      <mat-option *ngFor="let audie of audienceList" [value]="audie._id">
+        {{audie.name}}
+      </mat-option>
+    </mat-select>
+    </mat-form-field>
+  </div>
+</div>
+<div class="input-container" *ngIf="showTeamaudi">
+
+  <div class="label-container">
+    <span class="label-icon">
+    </span>
+    <span class="label">Audience Team</span>
+  </div>
+  <div class="field-container">
+    <mat-form-field [floatLabel]="'never'">
+      <mat-select placeholder="Select the Team" 
+        [(ngModel)]="event.audiTeam" name="ateam" #ateam="ngModel"  multiple >
+        <mat-option *ngFor="let team of audiTeamlist" [value]="team._id">
+          {{team.name}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+</div>
+
+
+     
+            <div class="input-container" >
+              <div class= "label-container">
+                <span class="label-icon">
+                </span>
+                <span class="label">DESCRIPTION</span>
+              </div>
+              <div class="field-container">
+                <mat-form-field [floatLabel]="'never'">
+                  <textarea matInput placeholder="Enter Event Description" style="overflow: hidden; height:50px"
+                    name="desc" #desc="ngModel" maxlength="104" [(ngModel)]="event.description"  required></textarea>
+                </mat-form-field>
+              </div>
+            </div>
+            <div class="input-container" >
+              <div class="label-container">
+                <span class="label-icon">
+                </span>
+                <span class="label">LOCATION</span>
+              </div>
+              <div class="field-container">
+                <mat-form-field [floatLabel]="'never'">
+                  <input matInput placeholder="Enter Event Location" ngx-google-places-autocomplete
+                    #placesRef="ngx-places" (onAddressChange)="handleAddressChange($event)"
+                    [(ngModel)]="event.location.address_line_1" name="location" #location="ngModel">
+                </mat-form-field>
+              </div>
+            </div>
+            <div class="input-container" >
+              <div class="label-container">
+                <span class="label">START DATE </span>
+              </div>
+              <div class="field-container">
+                <mat-form-field [floatLabel]="'never'">
+                    <!-- <input matInput [matDatepicker]="dp"  [(ngModel)]="event.start_date" name="start_date" #start_date="ngModel" >
+                    <mat-datepicker-toggle matSuffix [for]="dp"></mat-datepicker-toggle>
+                    <mat-datepicker #dp></mat-datepicker> -->
+                  <input matInput [matDatepicker]="picker" [(ngModel)]="event.start_date" [min]="event.start_date?event.start_date:today" style="width:inherit" name="start_date" #start_date="ngModel"
+                    required>
+                  <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                  <mat-datepicker #picker></mat-datepicker>
+                </mat-form-field>
+              </div>
+            </div>
+            <div class="input-container" >
+              <div class="label-container">
+                <span class="label-icon">
+                </span>
+                <span class="label">START TIME</span>
+              </div>
+            
+              <div class="field-container">
+                <mat-form-field [floatLabel]="'never'">
+                  <input matInput type="time" placeholder="Enter Event Time"  [(ngModel)]="event.start_time" name="start_time" #start_time="ngModel" required>
+                </mat-form-field>
+              </div>
+            </div>
+
+            <!-- [hidden]="!endRequired" -->
+            <div class="input-container" >
+              <div class="label-container">
+                <span class="label-icon">
+                </span>
+                <span class="label">END DATE</span>
+              </div>
+              <div class="field-container">
+                <mat-form-field [floatLabel]="'never'">
+                  <input matInput [matDatepicker]="endpicker" [(ngModel)]="event.end_date"  [min]="event.start_date?event.start_date:today" style="width:inherit" name="end_date" #end_date="ngModel">
+                  <mat-datepicker-toggle matSuffix [for]="endpicker"></mat-datepicker-toggle>
+                  <mat-datepicker #endpicker></mat-datepicker>
+                </mat-form-field>
+              </div>
+            </div>
+       
+            <div class="input-container">
+              <div class="label-container">
+                <span class="label-icon">
+                </span>
+                <span class="label">END TIME</span>
+              </div>
+              <div class="field-container">
+                <mat-form-field [floatLabel]="'never'">
+                  <input matInput type="time" placeholder="Enter Event Time" [(ngModel)]="event.end_time"  name="end_time" #end_time="ngModel">
+                </mat-form-field>
+              </div>
+            </div>
+          </mat-card>
+        </div>
+        <!-- right card -->
+        <div fxFlex="49" *ngIf="isMatch">
+          <mat-card class="childContainer">
+
+<div class="input-container">
+  <div class="label-container">
+    <span class="label-icon"> </span>
+    <span class="label">Gender</span>
+  </div>
+  <div class="field-container">
+    <mat-form-field [floatLabel]="'never'">
+      <mat-select matNativeControl matInput name="gen" placeholder="Select Gender" [(ngModel)]="event.gender"
+        (selectionChange)="gender($event.value)">
+        <mat-option *ngFor="let i of GenderList" [value]="i._id">{{ i.name }}</mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+</div>
+
+            <div class="input-container">
+              <div class="label-container">
+                <span class="label-icon">
+                </span>
+                <span class="label">AGE GROUP</span>
+              </div>
+
+              <div class="field-container">
+                <mat-form-field [floatLabel]="'never'">
+                  <mat-select placeholder="Select Age Group" [(ngModel)]="selectedTeam1Age"
+                    (change)="getAge1Type($event.value)" name="age1" #age1="ngModel">
+                    <!-- [disabled]="isStandard"  -->
+                    <mat-option *ngFor="let age of ageList" [value]="age._id">{{
+                      age.label
+                      }}</mat-option>
+                  </mat-select>
+                </mat-form-field>
+              </div>
+            </div>
+            <div class="input-container">
+              <div class="label-container">
+                <span class="label-icon">
+                </span>
+                <span class="label">TEAM 1</span>
+                <span *ngIf='isOtherClub'> (Home Team)</span>
+              </div>
+              <!-- |agepipe:event.team1Age -->
+              <div class="field-container">
+                <app-search-select [isDefault]="true" [dropdownList]="team1List| agepipe:selectedTeam1Age "
+                  placeHolder="Select Home Team" [alreadySel]="selectedTeam1Id" (valueUpdated)="getHomeTeam($event)">
+                </app-search-select>
+
+              </div>
+
+            </div>
+            <div class="input-container radio">
+              <div class="label-container">
+                <span class="label">TEAM 2 TYPE</span>
+              </div>
+              <div class="field-container">
+                <mat-radio-group class="radio-group" [value]="event.team2type"
+                  (change)="team2TypeChanged($event.value)">
+                  <mat-radio-button class="radio-button" [checked]="0 === event.team2type" value=0> Same Club
+                  </mat-radio-button>
+                  <mat-radio-button class="radio-button" [checked]="1 === event.team2type" value=1> Other Club
+                  </mat-radio-button>
+                  <mat-radio-button class="radio-button" [checked]="2 === event.team2type" value=2> Outside SportGrit
+                  </mat-radio-button>
+                </mat-radio-group>
+              </div>
+            </div>
+            <!-- ngModelChange -->
+            <div class="input-container" *ngIf="isOtherClub">
+              <div class="label-container">
+                <span class="label-icon">
+                </span>
+                <span class="label">OTHER CLUB</span>
+              </div>
+              <div class="field-container">
+                <!-- <mat-form-field [floatLabel]="'never'">
+                  <mat-select placeholder="Select Other Club" (selectionChange)="otherClubChanged($event.value)"
+                    name="other_Club" #other_Club="ngModel" [(ngModel)]="selectedClub"  [compareWith]="_compareFn" required>
+                    <mat-option *ngFor="let club of clubList" [value]="club._id" (click)='otherClubs(club)'>
+                      {{club.club_name}}</mat-option>
+                  </mat-select>
+                </mat-form-field> -->
+                  <app-search-select [isClub]="true" [dropdownList]="clubList"
+                    placeHolder="Select Other Club" [alreadySel]="selectedClub"
+                    (valueUpdated)="otherClubChanged($event.value)">
+                  </app-search-select>
+              </div>
+            </div>
+<div class="input-container">
+  <div class="label-container">
+    <span class="label-icon"> </span>
+    <span class="label">Gender</span>
+  </div>
+  <div class="field-container">
+    <mat-form-field [floatLabel]="'never'">
+      <mat-select matNativeControl matInput name="gen2" placeholder="Select Gender" [(ngModel)]="event.gender2"
+        (selectionChange)="gender2($event.value)">
+        <mat-option *ngFor="let i of GenderList" [value]="i._id">{{ i.name }}</mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+</div>
+
+    <div class="input-container" *ngIf="!isOutside && isOtherClub">
+      <div class="label-container">
+        <span class="label-icon">
+        </span>
+        <span class="label">AGE GROUP</span>
+      </div>
+      <div class="field-container">
+        <mat-form-field [floatLabel]="'never'">
+          <mat-select placeholder="Select Age Group" [(ngModel)]="selectedTeam2Ageotherclub" name="selecteam2ageother"
+            #selecteam2ageother="ngModel" [compareWith]="_compareFnage" (selectionChange)="getAge2Typeotherclub($event.value)">
+            <mat-option *ngFor="let age of ageList2" [value]="age._id">{{
+                            age.label
+                            }}</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+    </div>
+    <!-- *ngIf="!isOutside" -->
+
+    <div class="input-container" *ngIf="!isOutside && isOtherClub">
+      <div class="label-container">
+        <span class="label-icon">
+        </span>
+        <span class="label">TEAM 2 </span>
+        <span *ngIf='isOtherClub'> (Opposing)</span>
+      </div>
+      <div class="field-container">
+        <app-search-select [isDefault]="true"   [dropdownList]="team2List|agepipe:selectedTeam2Ageotherclub "
+          placeHolder="Select Opponent Team" [alreadySel]="selectedTeam2Idotherclub" (valueUpdated)="getOpponentTeamotherclub($event)">
+        </app-search-select>
+      </div>
+    </div>
+
+            <div class="input-container" *ngIf="!isOutside && !isOtherClub">
+              <div class="label-container">
+                <span class="label-icon">
+                </span>
+                <span class="label">AGE GROUP</span>
+              </div>
+              <div class="field-container">
+                <mat-form-field [floatLabel]="'never'">
+                  <mat-select placeholder="Select Age Group" [(ngModel)]="selectedTeam2Age" name="selecteam2age"#selecteam2age="ngModel" [compareWith]="_compareFnage" 
+                    (change)="getAge2Type($event.value)">
+                    <mat-option *ngFor="let age of ageList2" [value]="age._id">{{
+                        age.label
+                        }}</mat-option>
+                  </mat-select>
+                </mat-form-field>
+              </div>
+            </div>
+            <!-- *ngIf="!isOutside" -->
+          
+            <div class="input-container" *ngIf="!isOutside  && !isOtherClub">
+              <div class="label-container">
+                <span class="label-icon">
+                </span>
+                <span class="label">TEAM 2 </span>
+                <span *ngIf='isOtherClub'> (Opposing)</span>
+              </div>
+              <div class="field-container" >
+                <app-search-select [isDefault]="true" [dropdownList]="team2List|agepipe:selectedTeam2Age" 
+                  placeHolder="Select Opponent Team" [alreadySel]="selectedTeam2Id"
+                  (valueUpdated)="getOpponentTeam($event)"></app-search-select>
+              </div>
+            </div>
+            <!-- |agepipe:event.team2Age -->
+
+            <!-- preview event -->
+            
+            <!-- end preview event -->
+          </mat-card>
+        </div>
+      </div>
+      <div fxLayout="row" fxLayoutAlign="space-between" *ngIf="isOutside">
+        <div fxFlex="49">
+          <mat-card class="childContainer" style=" height: 60%">
+            <div class="input-container">
+              <div class="label-container">
+                <span class="label-icon">
+                </span>
+                <span class="label">OPPOSING TEAM NAME</span>
+              </div>
+              <div class="field-container">
+                <mat-form-field class="example-full-width">
+                  <textarea matInput placeholder="Enter Name" [(ngModel)]="event.opponent_team.name" name="selecteam2age"#oppteam="ngModel"></textarea>
+                </mat-form-field>
+              </div>
+            </div>
+            <div class="input-container">
+              <div class="label-container">
+                <span class="label-icon">
+                </span>
+                <span class="label">AGE GROUP</span>
+              </div>
+              <div class="field-container">
+                <mat-form-field [floatLabel]="'never'">
+                  <mat-select placeholder="Select Age Group" [(ngModel)]="selectedOutsideTeamAge"
+                    (selectionChange)="getOutsideSgAgeType($event.value)" name="outsideteamage">
+                    <mat-option *ngFor="let age of ageList" [value]="age._id">{{
+                      age.label
+                      }}</mat-option>
+                  </mat-select>
+                </mat-form-field>
+              </div>
+            </div>
+            <div class="input-container">
+              <div class="label-container">
+                <span class="label-icon">
+                </span>
+                <span class="label">ADDRESS 1</span>
+              </div>
+              <div class="field-container">
+                <mat-form-field [floatLabel]="'never'">
+                  <textarea matInput placeholder="Enter Address" [(ngModel)]="event.opponent_team.address_line_1"
+                    required name="oppteam_add"></textarea>
+                </mat-form-field>
+              </div>
+            </div>
+            <div class="input-container">
+              <div class="label-container">
+                <span class="label-icon">
+                </span>
+                <span class="label">ADDRESS 2</span>
+              </div>
+              <div class="field-container">
+                <mat-form-field [floatLabel]="'never'">
+                  <textarea matInput placeholder="Enter Address"
+                    [(ngModel)]="event.opponent_team.address_line_2" name="oppteamaddd2"></textarea>
+                </mat-form-field>
+              </div>
+            </div>
+            <div class="input-container">
+              <div class="label-container">
+                <span class="label-icon">
+                </span>
+                <span class="label">CITY</span>
+              </div>
+              <div class="field-container">
+                <mat-form-field [floatLabel]="'never'">
+                  <textarea matInput placeholder="Enter City Name" name="cityName" #cityName="ngModel" maxlength="40"
+                    [(ngModel)]="event.opponent_team.city" required>
+                         </textarea>
+                </mat-form-field>
+              </div>
+            </div>
+            <!-- <div class="input-container">
+              <div class="label-container">
+                <span class="label-icon">
+                </span>
+                <span class="label">STATE</span>
+              </div>
+              <div class="field-container">
+                <mat-form-field [floatLabel]="'never'">
+                  <textarea matInput placeholder="Enter State Name" name="stateName" #stateName="ngModel" maxlength="40"
+                    [(ngModel)]="event.opponent_team.state" required>
+                        </textarea>
+                </mat-form-field>
+              </div>
+            </div> -->
+
+            <div class="input-container">
+              <!-- <div class="errortxt" [hidden]="stateVal.valid || stateVal.untouched">
+                  State is required
+                </div> -->
+              <div class="label-container">
+                <span class="label-icon">
+                </span>
+                <span class="label">STATE</span>
+              </div>
+              <div class="field-container">
+                <mat-form-field [floatLabel]="'never'">
+                  <mat-select matInput placeholder="Select State" [(ngModel)]="selectedStateId"  name="stateVal"
+                    #stateVal="ngModel">
+                    <!-- required #stateVal="ngModel" (change)="getCities($event.value)"> -->
+                    <mat-option *ngFor="let state of stateList" [value]="state._id" (click)='stateData(state)'>
+                      {{state.name}}</mat-option>
+                  </mat-select>
+                </mat-form-field>
+              </div>
+            </div>
+            <div class="input-container">
+              <!-- <div class="errortxt" [hidden]="eventsCountry.valid || eventsCountry.untouched">
+                    Country is required
+                  </div> -->
+              <div class="label-container">
+                <span class="label-icon">
+                </span>
+                <span class="label">COUNTRY</span>
+              </div>
+              <div class="field-container">
+                <mat-form-field [floatLabel]="'never'">
+                  <mat-select matInput color="red" placeholder="Select Country" [(ngModel)]="selectedCountryId"
+                    name="eventsCountry" #eventsCountry="ngModel" (change)="getStates($event.value)">
+                    <mat-option *ngFor="let country of countryList" [value]="country._id"
+                      (click)='countryData(country)'>{{country.name}}</mat-option>
+                  </mat-select>
+                </mat-form-field>
+              </div>
+            </div>
+            <div class="input-container">
+              <div class="label-container">
+                <span class="label-icon">
+                </span>
+                <span class="label">PIN CODE</span>
+              </div>
+              <div class="field-container">
+                <mat-form-field [floatLabel]="'never'">
+                  <textarea matInput placeholder="Enter Pin Code" [(ngModel)]="event.opponent_team.pin_code" name="zip">
+                      </textarea>
+                </mat-form-field>
+              </div>
+            </div>
+
+          </mat-card>
+        </div>
+        <div fxFlex="49">
+          <mat-card class="childContainer" style=" height: 98%">
+            <div class="input-container">
+              <div class="label-container">
+                <span class="label-icon">
+                </span>
+                <span class="label">HEAD COACH FIRST NAME</span>
+              </div>
+              <div class="field-container">
+                <mat-form-field [floatLabel]="'never'">
+                  <textarea matInput name="headCoach" #headCoach="ngModel" maxlength="40" placeholder="Enter First Name"
+                    [(ngModel)]="event.opponent_team.head_coach_firstname"  required>
+                          </textarea>
+                </mat-form-field>
+              </div>
+            </div>
+            <div class="input-container">
+              <div class="label-container">
+                <span class="label-icon">
+                </span>
+                <span class="label">HEAD COACH LAST NAME</span>
+              </div>
+              <div class="field-container">
+                <mat-form-field [floatLabel]="'never'">
+                  <textarea matInput placeholder="Enter Last Name" name="headClast" #headClast="ngModel"
+                    [(ngModel)]="event.opponent_team.head_coach_lastname" required>
+                          </textarea>
+                </mat-form-field>
+              </div>
+            </div>
+            <div class="input-container">
+              <div class="errortxt" [hidden]="headCEmail.valid || headCEmail.pristine">
+                Email is required
+              </div>
+              <div class="errortxt" [hidden]="!headCEmail.hasError('pattern')">
+                Invalid email</div>
+              <div class="label-container">
+                <span class="label-icon">
+                </span>
+                <span class="label">HEAD COACH EMAIL ID</span>
+              </div>
+              <div class="field-container">
+                <mat-form-field [floatLabel]="'never'">
+                  <textarea matInput placeholder="Enter Email ID" [(ngModel)]="event.opponent_team.head_coach_email"
+                    required name="headCEmail" #headCEmail="ngModel" placeholder="Email"
+                    pattern="^[^\s@]+@[^\s@]+\.[^\s@]{2,}$" type="email">
+                            </textarea>
+                </mat-form-field>
+              </div>
+            </div>
+            <div class="input-container">
+              <!-- <div class="errortxt" [hidden]="!headcoachPh.hasError('pattern')">
+                      Only numbers allowed</div> -->
+              <div *ngIf="invalidHeadCoachNumber" class="errortxt">
+                <span>Invalid Mobile Number</span>
+              </div>
+              <div class="label-container">
+                <span class="label-icon">
+                </span>
+                <span class="label">HEAD COACH CONTACT NO</span>
+              </div>
+              <div class="field-container">
+                <mat-form-field [floatLabel]="'never'">
+                  <textarea matInput name="headcoachPh" #headcoachPh="ngModel" maxlength='14'
+                    placeholder="Enter Contact No" [(ngModel)]="event.opponent_team.head_coach_mobile"
+                    (keyup)="formatHeadCoachMobile()" required>
+                              </textarea>
+                </mat-form-field>
+              </div>
+            </div>
+            <div class="input-container">
+              <div class="label-container">
+                <span class="label-icon">
+                </span>
+                <span class="label">ASST. COACH FIRST NAME</span>
+              </div>
+              <div class="field-container">
+                <mat-form-field [floatLabel]="'never'">
+                  <textarea matInput placeholder="Enter First Name" name="asstCoach" #asstCoach="ngModel" maxlength="40"
+                    [(ngModel)]="event.opponent_team.assistant_coach_firstname" required>
+                       </textarea>
+                </mat-form-field>
+              </div>
+            </div>
+            <div class="input-container">
+              <div class="label-container">
+                <span class="label-icon">
+                </span>
+                <span class="label">ASST. COACH LAST NAME</span>
+              </div>
+              <div class="field-container">
+                <mat-form-field [floatLabel]="'never'">
+                  <textarea matInput placeholder="Enter Last Name" name="asstLname" #asstLname="ngModel" maxlength="40"
+                    [(ngModel)]="event.opponent_team.assistant_coach_lastname" required>
+                      </textarea>
+                </mat-form-field>
+              </div>
+            </div>
+            <div class="input-container">
+              <div class="errortxt" [hidden]="teamrepCEmail.valid || teamrepCEmail.pristine">
+                Email is required
+              </div>
+              <div class="errortxt" [hidden]="!teamrepCEmail.hasError('pattern')">
+                Invalid email</div>
+              <div class="label-container">
+                <span class="label-icon">
+                </span>
+                <span class="label">ASST. COACH EMAIL ID</span>
+              </div>
+              <div class="field-container">
+                <mat-form-field [floatLabel]="'never'">
+                  <textarea matInput placeholder="Enter Email ID"
+                    [(ngModel)]="event.opponent_team.assistant_coach_email" required name="teamrepCEmail"
+                    #teamrepCEmail="ngModel" placeholder="Email" pattern="^[^\s@]+@[^\s@]+\.[^\s@]{2,}$" type="email">
+                      </textarea>
+                </mat-form-field>
+              </div>
+            </div>
+            <div class="input-container">
+              <div *ngIf="invalidAsstCoachNumber" class="errortxt">
+                <span>Invalid Mobile Number</span>
+              </div>
+              <div class="label-container">
+                <span class="label-icon">
+                </span>
+                <span class="label">ASST. COACH CONTACT NO</span>
+              </div>
+              <div class="field-container">
+                <mat-form-field [floatLabel]="'never'">
+                  <textarea matInput placeholder="Enter Phone Number" name="asstcoachPh" (keyup)="formatMobile()"
+                    #asstcoachPh="ngModel" maxlength='14' [(ngModel)]="event.opponent_team.assistant_coach_mobile"
+                    required>
+                      </textarea>
+                </mat-form-field>
+              </div>
+            </div>
+            <div class="input-container">
+              <div class="label-container">
+                <span class="label-icon">
+                </span>
+                <span class="label">TEAM REP FIRST NAME</span>
+              </div>
+              <div class="field-container">
+                <mat-form-field [floatLabel]="'never'">
+                  <textarea matInput name="teamRep" #teamRep="ngModel" maxlength="40" placeholder="Enter First Name"
+                    [(ngModel)]="event.opponent_team.temporary_rep_firstname" required>
+                    </textarea>
+                </mat-form-field>
+              </div>
+            </div>
+            <div class="input-container">
+              <div class="label-container">
+                <span class="label-icon">
+                </span>
+                <span class="label">TEAM REP LAST NAME</span>
+              </div>
+              <div class="field-container">
+                <mat-form-field [floatLabel]="'never'">
+                  <input matInput name="teamLname" #teamLname="ngModel" maxlength="40" placeholder="Enter Last Name"
+                    [(ngModel)]="event.opponent_team.temporary_rep_lastname" required>
+                </mat-form-field>
+              </div>
+            </div>
+            <div class="input-container">
+              <div class="errortxt" [hidden]="teamRepemail.valid || teamRepemail.pristine">
+                Email is required
+              </div>
+              <div class="errortxt" [hidden]="!teamRepemail.hasError('pattern')">
+                Invalid email</div>
+              <div class="label-container">
+                <span class="label-icon">
+                </span>
+                <span class="label">TEAM REP EMAIL ID</span>
+              </div>
+              <div class="field-container">
+                <mat-form-field [floatLabel]="'never'">
+                  <textarea matInput placeholder="Enter Email Id" [(ngModel)]="event.opponent_team.temporary_rep_email"
+                    required name="teamRepemail" #teamRepemail="ngModel" placeholder="Email"
+                    pattern="^[^\s@]+@[^\s@]+\.[^\s@]{2,}$" type="email">
+                   </textarea>
+                </mat-form-field>
+              </div>
+            </div>
+            <div class="input-container">
+              <!-- <div class="errortxt" [hidden]="!teamRepPh.hasError('pattern')">
+                Only numbers allowed</div> -->
+              <div *ngIf="invalidTeamRepNumber" class="errortxt">
+                <span>Invalid Mobile Number</span>
+              </div>
+              <div class="label-container">
+                <span class="label-icon">
+                </span>
+                <span class="label">TEAM REP CONTACT NO</span>
+              </div>
+              <div class="field-container">
+                <mat-form-field [floatLabel]="'never'">
+                  <textarea matInput placeholder="Enter Phone Number" name="teamRepPh" (keyup)="formatTeamMobile()"
+                    #teamRepPh="ngModel" maxlength='14' [(ngModel)]="event.opponent_team.temporary_rep_mobile" required>
+                  </textarea>
+                </mat-form-field>
+              </div>
+            </div>
+            <div fxLayout="row" fxLayoutAlign="center center" style="margin: 5px">
+              <div class="input-container">
+                <div class="label-container">
+                  <span class="label-icon">
+                    <!-- <i class="far fa-list-alt"></i> -->
+                  </span>
+                  <span class="label">UPLOAD PHOTO</span>
+                </div>
+                <div class="field-container">
+                  <input type="file" style="display: none" #logoInput (change)="getEventImage($event)">
+                  <mat-form-field [floatLabel]="'never'" (click)="logoInput.click()">
+                    <input matInput placeholder="Upload the Photo" class="m-pointer" [value]="event.opponent_team.logo"
+                      disabled>
+                    <img *ngIf="event.opponent_team.logo" [src]="
+                                              _DomSanitizationService.bypassSecurityTrustUrl(opteamlogo)
+                                            " height="100" />
+                    <span matSuffix class="m-pointer">
+                      <i class="fas fa-upload"></i>
+                    </span>
+                  </mat-form-field>
+                </div>
+              </div>
+              <button class="border-button" (click)="uploadImage()">Save</button>
+            </div>
+          </mat-card>
+        </div>
+      </div>
+ 
+      <mat-card>
+        <div fxLayout="row" fxLayoutAlign="center center" style="margin: 5px">
+          <div   *ngIf="!isEdit">
+                  <button mat-raised-button class="m-jumbo-button m-pointer" (click)="createEvent()"
+                    *ngIf="eventForm.valid">Submit</button>
+              <button mat-raised-button class="m-jumbo-button m-pointer" (click)="updateEdit()"
+                *ngIf="!eventForm.valid">Submit</button>
+          </div>
+    
+            <div   *ngIf="isEdit" >
+                        <button mat-raised-button class="m-jumbo-button m-pointer" (click)="updateEvents()"
+                          *ngIf="eventForm.valid">Update</button>
+                        <button mat-raised-button class="m-jumbo-button m-pointer" (click)="updateEdit()" *ngIf="!eventForm.valid">
+                          Update
+                        </button>
+            </div>
+
+          <button mat-raised-button class="m-jumbo-button m-pointer" (click)="cancelEvents()">Cancel</button>
+        </div>
+      </mat-card>
+        <mat-card *ngIf="isEdit && selectedEvnt===tryouts">
+          <div fxLayout="row" fxLayoutAlign="space-between">
+            <div>
+              <h3>Registrants for Tryouts</h3>
+            </div>
+        
+            <div>
+        
+              <button id="a" (click)="Download()"><i class="fa fa-download"> CSV Download </i></button>
+            </div>
+          </div>
+        
+        
+          <div class="m-table-container">
+            <mat-table #table [dataSource]="dataSource" matSort>
+              <ng-container matColumnDef="name">
+                <mat-header-cell *matHeaderCellDef mat-sort-header>
+                  <span class="m-table-header"> Athlete Name </span>
+                </mat-header-cell>
+                <mat-cell *matCellDef="let element" class="light-red m-pointer textCenter"> {{element.name?element.name:""}}
+                </mat-cell>
+              </ng-container>
+        
+              <ng-container matColumnDef="agegroup">
+                <mat-header-cell *matHeaderCellDef mat-sort-header>
+                  <span class="m-table-header"> Age Group </span>
+                </mat-header-cell>
+                <mat-cell *matCellDef="let element" class="light-red m-pointer textCenter">
+                  {{element.agegroup?element.agegroup:""}}
+                </mat-cell>
+              </ng-container>
+              <ng-container matColumnDef="position">
+                <mat-header-cell *matHeaderCellDef mat-sort-header>
+                  <span class="m-table-header"> Position </span>
+                </mat-header-cell>
+                <mat-cell *matCellDef="let element" class="light-red m-pointer textCenter">
+                  {{element.position?element.position:""}}
+                </mat-cell>
+              </ng-container>
+              <ng-container matColumnDef="parentname">
+                <mat-header-cell *matHeaderCellDef mat-sort-header>
+                  <span class="m-table-header"> Parent Name </span>
+                </mat-header-cell>
+                <mat-cell *matCellDef="let element" class="light-red m-pointer textCenter">
+                  {{element.parentname?element.parentname:""}} </mat-cell>
+              </ng-container>
+              <ng-container matColumnDef="transaction_id">
+                <mat-header-cell *matHeaderCellDef mat-sort-header>
+                  <span class="m-table-header"> Transaction ID </span>
+                </mat-header-cell>
+                <mat-cell *matCellDef="let element" class="light-red m-pointer textCenter">
+                  {{element.transaction_id?element.transaction_id:""}} </mat-cell>
+              </ng-container>
+              <ng-container matColumnDef="registrationdate">
+                <mat-header-cell *matHeaderCellDef mat-sort-header>
+                  <span class="m-table-header"> Registration Date </span>
+                </mat-header-cell>
+                <mat-cell *matCellDef="let element" class="light-red m-pointer textCenter">
+                  {{element.registrationdate| date :'MM/dd/yyyy'}} </mat-cell>
+              </ng-container>
+              <ng-container matColumnDef="accepted">
+                <mat-header-cell *matHeaderCellDef mat-sort-header>
+                  <span class="m-table-header"> accepted </span>
+                </mat-header-cell>
+                <mat-cell *matCellDef="let element ; let i=index " class="textCenter">
+                  <div id="a" [ngClass]="{'green-text': element.accepted==true, 'red-text': element.accepted==false }"
+                   >{{element.accepted}}</div>
+                </mat-cell>
+              </ng-container>
+    
+              <ng-container matColumnDef="action">
+                <mat-header-cell *matHeaderCellDef class="textCenter">
+                  Actions
+                </mat-header-cell>
+                <mat-cell *matCellDef="let element" class="textCenter">
+                  <span class="table-icon m-pointer" (click)="editregistration(element)" title="Edit Register user">
+                    <i class="fas fa-pencil-alt"></i>
+                  </span>
+     
+                </mat-cell>
+              </ng-container>
+            <ng-container matColumnDef="link">
+              <mat-header-cell *matHeaderCellDef class="textCenter">
+                Link
+              </mat-header-cell>
+              <mat-cell *matCellDef="let element" class="textCenter">
+            
+                <span  *ngIf="element.accepted==false"class="table-icon m-pointer " (click)="linkregistration(element)"  title="link Register User">
+                  <u class="linkhref">Link</u>
+                </span>
+                <span class="disabled" *ngIf="element.accepted==true">
+                  Link
+                </span>
+              </mat-cell>
+            </ng-container>
+         
+              <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+              <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+            </mat-table>
+          </div>
+        </mat-card>
+
+          <mat-card *ngIf="isEdit && selectedEvnt===tryouts">
+            <div fxLayout="row" fxLayoutAlign="space-between">
+              <div>
+                <h3>Register Through App</h3>
+              </div>
+          
+              <div>
+          
+                <!-- <button id="a" (click)="Download()"><i class="fa fa-download"> CSV Download </i></button> -->
+              </div>
+            </div>
+          
+          
+            <div class="m-table-container">
+              <mat-table #table [dataSource]="dataSource2" matSort>
+                <ng-container matColumnDef="name">
+                  <mat-header-cell *matHeaderCellDef mat-sort-header>
+                    <span class="m-table-header"> Athlete Name </span>
+                  </mat-header-cell>
+                  <mat-cell *matCellDef="let element" class="light-red m-pointer textCenter"> {{element.name?element.name:""}}
+                  </mat-cell>
+                </ng-container>
+          
+                <ng-container matColumnDef="agegroup">
+                  <mat-header-cell *matHeaderCellDef mat-sort-header>
+                    <span class="m-table-header"> Age Group </span>
+                  </mat-header-cell>
+                  <mat-cell *matCellDef="let element" class="light-red m-pointer textCenter">
+                    {{element.agegroup?element.agegroup:""}}
+                  </mat-cell>
+                </ng-container>
+                <!-- <ng-container matColumnDef="position">
+                  <mat-header-cell *matHeaderCellDef mat-sort-header>
+                    <span class="m-table-header"> Position </span>
+                  </mat-header-cell>
+                  <mat-cell *matCellDef="let element" class="light-red m-pointer textCenter">
+                    {{element.position?element.position:""}}
+                  </mat-cell>
+                </ng-container> -->
+                <!-- <ng-container matColumnDef="parentname">
+                  <mat-header-cell *matHeaderCellDef mat-sort-header>
+                    <span class="m-table-header"> Parent Name </span>
+                  </mat-header-cell>
+                  <mat-cell *matCellDef="let element" class="light-red m-pointer textCenter">
+                    {{element.parentname?element.parentname:""}} </mat-cell>
+                </ng-container> -->
+                <!-- <ng-container matColumnDef="transaction_id">
+                  <mat-header-cell *matHeaderCellDef mat-sort-header>
+                    <span class="m-table-header"> Transaction ID </span>
+                  </mat-header-cell>
+                  <mat-cell *matCellDef="let element" class="light-red m-pointer textCenter">
+                    {{element.transaction_id?element.transaction_id:""}} </mat-cell>
+                </ng-container> -->
+                <ng-container matColumnDef="registrationdate">
+                  <mat-header-cell *matHeaderCellDef mat-sort-header>
+                    <span class="m-table-header"> Registration Date </span>
+                  </mat-header-cell>
+                  <mat-cell *matCellDef="let element" class="light-red m-pointer textCenter">
+                    {{element.registrationdate| date :'MM/dd/yyyy'}} </mat-cell>
+                </ng-container>
+                <ng-container matColumnDef="accepted">
+                  <mat-header-cell *matHeaderCellDef mat-sort-header>
+                    <span class="m-table-header"> accepted </span>
+                  </mat-header-cell>
+                  <mat-cell *matCellDef="let element ; let i=index " class="textCenter">
+                    <div id="a" [ngClass]="{'green-text': element.accepted==true, 'red-text': element.accepted==false }">
+                      {{element.accepted}}</div>
+                  </mat-cell>
+                </ng-container>
+          
+            
+                <ng-container matColumnDef="link">
+                  <mat-header-cell *matHeaderCellDef class="textCenter">
+                    Link
+                  </mat-header-cell>
+                  <mat-cell *matCellDef="let element" class="textCenter">
+          <span *ngIf="element.accepted==false" class="table-icon m-pointer " (click)="linkuserregistration(element)" 
+            title="App Register User">
+            <u class="linkhref">Link</u>
+          </span>
+          <span class="disabled" *ngIf="element.accepted==true">
+            Link
+          </span>
+
+
+                
+                  </mat-cell>
+                </ng-container>
+          
+                <mat-header-row *matHeaderRowDef="displayedColumns2"></mat-header-row>
+                <mat-row *matRowDef="let row; columns: displayedColumns2;"></mat-row>
+              </mat-table>
+            </div>
+          </mat-card>
+    </mat-card-content>
+    </form>
+  </mat-card>
+
+
+</div>

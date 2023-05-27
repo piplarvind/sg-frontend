@@ -1,0 +1,150 @@
+<div class="m-container">
+  <mat-card class="m-title">
+    <h3>ATHLETES NOT PAID</h3>
+  </mat-card>
+  <mat-card style="min-height: 77vh">
+    <div fxLayout="row" fxLayoutAlign="space-between" class="m-table-container">
+      <div>
+        Athletes Not Paid Details
+      </div>
+      <div>
+        <mat-form-field>
+          <input
+            matInput
+            type="text"
+            (keyup)="doFilter($event)"
+            [placeholder]="keyup ? 'Please Press Enter key' : 'Search by Name'"
+          />
+        </mat-form-field>
+      </div>
+
+      <div>
+        <mat-paginator
+          #paginator
+          [length]="totalLength"
+          [pageSize]="limit"
+          [pageSizeOptions]="pageLimit"
+          (page)="changePage($event)"
+        >
+        </mat-paginator>
+      </div>
+    </div>
+
+    <mat-card-content>
+      <mat-divider class="m-divider"></mat-divider>
+      <br />
+
+      <div class="m-table-container">
+        <mat-table
+          #table
+          [dataSource]="dataSource"
+          matSort
+          (matSortChange)="namesort($event)"
+        >
+          <ng-container matColumnDef="date">
+            <mat-header-cell *matHeaderCellDef mat-sort-header>
+              <span class="m-table-header">Date</span>
+            </mat-header-cell>
+            <mat-cell
+              *matCellDef="let element"
+              class="light-red m-pointer textCenter "
+              style="text-transform: capitalize"
+            >
+              {{ element.date | date: 'MM/dd/yyyy' }}
+            </mat-cell>
+          </ng-container>
+
+          <ng-container matColumnDef="amount">
+            <mat-header-cell *matHeaderCellDef mat-sort-header>
+              <span class="m-table-header"> Amount Due(&#36;) </span>
+            </mat-header-cell>
+            <mat-cell *matCellDef="let element" class="textCenter">
+              {{ element.amount }}
+            </mat-cell>
+          </ng-container>
+
+          <ng-container matColumnDef="athlete">
+            <mat-header-cell *matHeaderCellDef mat-sort-header>
+              <span class="m-table-header"> Athlete</span>
+            </mat-header-cell>
+            <mat-cell
+              *matCellDef="let element"
+              class="light-red m-pointer "
+              style="text-transform: capitalize"
+            >
+              {{ element.athlete }}
+            </mat-cell>
+          </ng-container>
+
+          <ng-container matColumnDef="email">
+            <mat-header-cell *matHeaderCellDef mat-sort-header>
+              <span class="m-table-header"> Email ( Athlete )</span>
+            </mat-header-cell>
+            <mat-cell
+              *matCellDef="let element"
+              class="light-red m-pointer "
+              style="text-transform: capitalize"
+            >
+              {{ element.email }}
+            </mat-cell>
+          </ng-container>
+
+          <ng-container matColumnDef="contact_no_athlete">
+            <mat-header-cell *matHeaderCellDef mat-sort-header>
+              <span class="m-table-header"> Contact No ( Athlete ) </span>
+            </mat-header-cell>
+            <mat-cell *matCellDef="let element">
+              {{ element.contact_no_athlete }}</mat-cell
+            >
+          </ng-container>
+
+          <ng-container matColumnDef="payer">
+            <mat-header-cell *matHeaderCellDef mat-sort-header>
+              <span class="m-table-header">Payor</span>
+            </mat-header-cell>
+            <mat-cell *matCellDef="let element">
+              {{ element.payer }}
+            </mat-cell>
+          </ng-container>
+
+          <ng-container matColumnDef="payer_email">
+            <mat-header-cell *matHeaderCellDef mat-sort-header>
+              <span class="m-table-header"> Email ( Payor )</span>
+            </mat-header-cell>
+            <mat-cell
+              *matCellDef="let element"
+              class="light-red m-pointer "
+              style="text-transform: capitalize"
+            >
+              {{ element.payer_email }}
+            </mat-cell>
+          </ng-container>
+
+          <ng-container matColumnDef="contact_no_payer">
+            <mat-header-cell *matHeaderCellDef mat-sort-header>
+              <span class="m-table-header"> Contact No ( Payor )</span>
+            </mat-header-cell>
+            <mat-cell *matCellDef="let element">
+              {{ element.contact_no_payer }}
+            </mat-cell>
+          </ng-container>
+
+          <!-- <ng-container matColumnDef="deleted">
+              <mat-header-cell *matHeaderCellDef mat-sort-header>
+                <span class="m-table-header"> Status </span>
+              </mat-header-cell>
+              <mat-cell *matCellDef="let element" class="textCenter">
+                <button (click)="deleteTraining(element)" [class]="(element.active) ? 'inactive' : 'active'">{{getStatus(element.active)}}</button>
+            
+              </mat-cell>
+            </ng-container> -->
+
+          <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+          <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
+        </mat-table>
+        <!-- <mat-paginator [length]="100" [pageSize]="100" [pageSizeOptions]="[25, 50, 75, 100]">
+        </mat-paginator> -->
+      </div>
+    </mat-card-content>
+  </mat-card>
+</div>

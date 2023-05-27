@@ -1,0 +1,363 @@
+<div class="m-container">
+  <mat-card class="m-title">
+    <h3>{{ title }}</h3>
+  </mat-card>
+  <form #teamForm="ngForm">
+    <mat-card>
+      <mat-card-content>
+        <div fxLayout="row" fxLayoutAlign="space-between">
+          <!-- left card -->
+          <div fxFlex="49">
+            <mat-card class="childContainer">
+              <div class="input-container">
+                <div
+                  class="errortxt"
+                  [hidden]="teamName.valid || teamName.pristine"
+                >
+                  Team Name is required
+                </div>
+                <div class="label-container">
+                  <span class="label-icon"> </span>
+                  <span class="label">TEAM NAME</span>
+                </div>
+                <div class="field-container">
+                  <mat-form-field [floatLabel]="'never'">
+                    <input
+                      matInput
+                      [(ngModel)]="team.name"
+                      name="teamName"
+                      maxlength="50"
+                      placeholder="Enter Team Name"
+                      required
+                      #teamName="ngModel"
+                    />
+                  </mat-form-field>
+                </div>
+              </div>
+              <div class="input-container">
+                <div class="label-container">
+                  <span class="label-icon"> </span>
+                  <span class="label">Gender</span>
+                </div>
+                <div class="field-container">
+                  <mat-form-field [floatLabel]="'never'">
+                    <mat-select
+                      matNativeControl
+                      matInput
+                      name="gen"
+                      placeholder="Select Gender"
+                      [(ngModel)]="team.gender"
+                      (selectionChange)="gender($event.value)"
+                    >
+                      <mat-option
+                        *ngFor="let i of GenderList"
+                        [value]="i._id"
+                        >{{ i.name }}</mat-option
+                      >
+                    </mat-select>
+                  </mat-form-field>
+                </div>
+              </div>
+              <div class="input-container">
+                <div class="label-container">
+                  <span class="label-icon"> </span>
+                  <span class="label">AGE GROUP</span>
+                </div>
+                <div class="field-container">
+                  <mat-form-field [floatLabel]="'never'">
+                    <mat-select
+                      matNativeControl
+                      matInput
+                      name="age"
+                      placeholder="Select the Age group of the team"
+                      [(ngModel)]="team.age"
+                      (selectionChange)="ageChanged($event.value)"
+                    >
+                      <mat-option
+                        *ngFor="let age of ageList"
+                        [value]="age._id"
+                        >{{ age.label }}</mat-option
+                      >
+                    </mat-select>
+                  </mat-form-field>
+                </div>
+              </div>
+
+              <div class="input-container">
+                <div
+                  class="errortxt"
+                  [hidden]="teamPackage.valid || teamPackage.untouched"
+                >
+                  Club Package is required
+                </div>
+                <div class="label-container">
+                  <span class="label-icon"> </span>
+                  <span class="label">CLUB PACKAGE</span>
+                </div>
+                <div class="field-container">
+                  <mat-form-field [floatLabel]="'never'">
+                    <mat-select
+                      matInput
+                      name="teamPackage"
+                      [(ngModel)]="team.package"
+                      placeholder="Select Package"
+                      #teamPackage="ngModel"
+                      required
+                    >
+                      <mat-option
+                        *ngFor="let package of packageList"
+                        [value]="package._id"
+                        >{{ package.name }}</mat-option
+                      >
+                    </mat-select>
+                  </mat-form-field>
+                </div>
+              </div>
+              <div class="input-container">
+                <div class="label-container">
+                  <span class="label-icon"> </span>
+                  <span class="label">TEAM INFO</span>
+                </div>
+                <div class="field-container">
+                  <mat-form-field [floatLabel]="'never'">
+                    <input
+                      matInput
+                      [(ngModel)]="team.info"
+                      placeholder="Enter Team Info"
+                      name="teamInfo"
+                      maxlength="50"
+                      #teamInfo="ngModel"
+                    />
+                  </mat-form-field>
+                </div>
+              </div>
+              <div class="input-container">
+                <div class="label-container">
+                  <span class="label-icon"> </span>
+                  <span class="label">CLUB RANK</span>
+                </div>
+                <div class="field-container">
+                  <mat-form-field [floatLabel]="'never'">
+                    <input
+                      matInput
+                      [(ngModel)]="team.order"
+                      name="oder"
+                      type="number"
+                      placeholder="Enter order"
+                      min="0"
+                      #order="ngModel"
+                    />
+                  </mat-form-field>
+                </div>
+              </div>
+              <div class="input-container" *ngIf="showUploadImg">
+                <div class="label-container">
+                  <span class="label-icon"> </span>
+                  <span class="label">UPLOAD TEAM PHOTO</span>
+                </div>
+                <div class="field-container">
+                  <input
+                    type="file"
+                    style="display: none"
+                    #logoInput
+                    (change)="getTeamImage($event)"
+                    id="logo"
+                  />
+                  <mat-form-field
+                    [floatLabel]="'never'"
+                    (click)="logoInput.click()"
+                  >
+                    <input
+                      matInput
+                      placeholder="Upload the Image"
+                      class="m-pointer"
+                      [value]="team.logo"
+                      disabled
+                    />
+                    <!-- <mat-hint *ngIf="isEdit"> HInt/suggestion</mat-hint> -->
+                    <img
+                      *ngIf="team.logo"
+                      [src]="
+                        _DomSanitizationService.bypassSecurityTrustUrl(logo_img)
+                      "
+                      height="100"
+                    />
+
+                    <span matSuffix class="m-pointer">
+                      <i class="fas fa-upload"></i>
+                    </span>
+                  </mat-form-field>
+                </div>
+                <button class="border-button" (click)="uploadTeamImage()">
+                  Save
+                </button>
+              </div>
+              <!-- <div class="input-container" *ngIf="showUploadImg">
+                <div class="label-container">
+                  <span class="label-icon"> </span> <span class="label">UPLOAD TEAM BANNER PHOTO </span>
+                </div>
+                <div class="field-container">
+                  <input type="file" style="display: none" #bannerInput  (change)="getBannerImage($event)"
+                    id="banner" />
+                  <mat-form-field [floatLabel]="'never'" (click)="bannerInput.click()">
+                    <input matInput placeholder="Upload the banner" class="m-pointer" [value]="team.banner"
+                  disabled />
+                   
+                   
+                    <img *ngIf="team.banner" [src]="_DomSanitizationService.bypassSecurityTrustUrl(img)" height="100" /> 
+                
+                  
+                   
+                    <span matSuffix class="m-pointer"> <i class="fas fa-upload"></i> </span>
+                  </mat-form-field>
+                </div>
+              <button class="border-button" (click)="uploadBannerImage()">Save</button>
+              </div> -->
+            </mat-card>
+          </div>
+
+          <!-- right card -->
+          <div fxFlex="49">
+            <mat-card class="childContainer">
+              <div class="input-container">
+                <div class="label-container">
+                  <span class="label-icon"> </span>
+                  <span class="label">HEAD COACH</span>
+                </div>
+                <div class="field-container">
+                  <mat-form-field [floatLabel]="'never'">
+                    <mat-select
+                      matInput
+                      name="headCoach"
+                      [(ngModel)]="team.head_coach"
+                      (selectionChange)="getHeadCoach($event.value)"
+                      placeholder="Select Head Coach"
+                    >
+                      <mat-option
+                        *ngFor="let coach of coachList"
+                        [value]="coach._id"
+                        >{{ coach.name }}</mat-option
+                      >
+                    </mat-select>
+                  </mat-form-field>
+                </div>
+              </div>
+              <div class="input-container">
+                <div class="label-container">
+                  <span class="label-icon"> </span>
+                  <span class="label">ASSISTANT COACH</span>
+                </div>
+                <div class="field-container">
+                  <mat-form-field [floatLabel]="'never'">
+                    <mat-select
+                      matInput
+                      name="assistantcoach"
+                      [(ngModel)]="team.assistant_coach"
+                      (selectionChange)="getAssistant($event.value)"
+                      placeholder="Select Assistant Coach"
+                    >
+                      <mat-option
+                        *ngFor="let coach of coachList"
+                        [value]="coach._id"
+                        >{{ coach.name }}</mat-option
+                      >
+                    </mat-select>
+                  </mat-form-field>
+                </div>
+              </div>
+              <div class="input-container">
+                <div class="label-container">
+                  <span class="label-icon"> </span>
+                  <span class="label">TEAM REP</span>
+                </div>
+                <div class="field-container">
+                  <mat-form-field [floatLabel]="'never'">
+                    <mat-select
+                      matInput
+                      name="teamrep"
+                      [(ngModel)]="team.team_rep"
+                      placeholder="Select Parent"
+                      (selectionChange)="getTeamRep($event.value)"
+                    >
+                      <mat-option
+                        *ngFor="let rep of parentList"
+                        [value]="rep._id"
+                        >{{ rep.name }}</mat-option
+                      >
+                    </mat-select>
+                  </mat-form-field>
+                </div>
+              </div>
+
+              <div class="input-container">
+                <div class="label-container">
+                  <span class="label-icon"> </span>
+                  <span class="label">ATHLETE</span>
+                </div>
+                <div class="field-container">
+                  <app-search-select
+                    [dropdownList]="athleteList"
+                    placeHolder="Select Athletes"
+                    [isTeam]="true"
+                    [isMultiple]="true"
+                    [alreadySel]="team.athletes"
+                    (valueUpdated)="getTeamAthletes($event)"
+                  >
+                  </app-search-select>
+                </div>
+              </div>
+              <mat-card>
+                <h3>Athlete Name</h3>
+                <div
+                  *ngFor="let i of this.showathlete"
+                  style="display:inline-flex; flex-wrap: wrap"
+                >
+                  {{ i.name }}, &nbsp;
+                </div>
+              </mat-card>
+            </mat-card>
+          </div>
+        </div>
+        <mat-card>
+          <div fxLayout="row" fxLayoutAlign="center center" style="margin: 5px">
+            <div *ngIf="!isEdit">
+              <button
+                mat-raised-button
+                class="m-jumbo-button m-pointer"
+                *ngIf="teamForm.form.valid"
+                (click)="createTeam()"
+              >
+                Submit
+              </button>
+              <button
+                mat-raised-button
+                class="m-jumbo-button m-pointer"
+                *ngIf="!teamForm.form.valid"
+                (click)="teamSubmit()"
+              >
+                Submit
+              </button>
+            </div>
+
+            <button
+              mat-raised-button
+              class="m-jumbo-button m-pointer"
+              (click)="updateTeam()"
+              *ngIf="isEdit"
+              [disabled]="!teamForm.valid"
+            >
+              Update
+            </button>
+            <button
+              mat-raised-button
+              class="m-jumbo-button m-pointer"
+              (click)="cancelTeam()"
+            >
+              Cancel
+            </button>
+          </div>
+        </mat-card>
+      </mat-card-content>
+    </mat-card>
+  </form>
+</div>

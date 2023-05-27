@@ -1,0 +1,171 @@
+<div class="m-container">
+  <mat-card class="m-title">
+    <h3>{{ title }}</h3>
+  </mat-card>
+  <form #profileType="ngForm">
+    <mat-card>
+      <mat-card-content>
+        <div fxLayout="row" fxLayoutAlign="center center"></div>
+
+        <mat-card>
+          <div class="input-container">
+            <div class="label-container">
+              <span class="label">NAME</span>
+            </div>
+            <div class="field-container">
+              <mat-form-field [floatLabel]="'never'">
+                <input
+                  matInput
+                  name="fname"
+                  [(ngModel)]="profile_type.name"
+                  #fname="ngModel"
+                  required
+                  placeholder="Name"
+                />
+              </mat-form-field>
+            </div>
+          </div>
+          <div class="input-container">
+            <div class="label-container">
+              <span class="label">DESCRIPTION</span>
+            </div>
+            <div class="field-container">
+              <mat-form-field [floatLabel]="'never'">
+                <input
+                  matInput
+                  name="description"
+                  [(ngModel)]="profile_type.description"
+                  #description="ngModel"
+                  placeholder="description"
+                />
+              </mat-form-field>
+            </div>
+          </div>
+
+          <div class="input-container">
+            <div class="label-container">
+              <span class="label">PRIORITY</span>
+            </div>
+            <div class="field-container">
+              <mat-form-field [floatLabel]="'never'">
+                <input
+                  matInput
+                  name="priority"
+                  type="number"
+                  min="0"
+                  [(ngModel)]="profile_type.priority"
+                  #priority="ngModel"
+                  placeholder="priority"
+                  required
+                />
+              </mat-form-field>
+            </div>
+          </div>
+          <div class="input-container">
+            <div class="label-container">
+              <span class="label">ABBR</span>
+            </div>
+            <div class="field-container">
+              <mat-form-field [floatLabel]="'never'">
+                <input
+                  matInput
+                  name="abbr"
+                  type="text"
+                  [(ngModel)]="profile_type.abbr"
+                  #abbr="ngModel"
+                  placeholder="abbr"
+                  required
+                />
+              </mat-form-field>
+            </div>
+          </div>
+          <div class="input-container">
+            <div class="label-container">
+              <span class="label">ORDER</span>
+            </div>
+            <div class="field-container">
+              <mat-form-field [floatLabel]="'never'">
+                <input
+                  matInput
+                  type="number"
+                  name="order"
+                  [(ngModel)]="profile_type.order"
+                  min="0"
+                  placeholder="order"
+                />
+              </mat-form-field>
+            </div>
+          </div>
+          <div class="input-container">
+            <div class="label-container">
+              <span class="label">FIELDS</span>
+            </div>
+            <div class="field-container">
+              <app-search-select
+                [islabel]="true"
+                [dropdownList]="fieldList"
+                placeHolder="Select field"
+                [alreadySel]="this.profile_type.fields"
+                [isMultiple]="true"
+                (valueUpdated)="getfield($event.value)"
+              >
+              </app-search-select>
+            </div>
+          </div>
+        </mat-card>
+
+        <!-- user info end -->
+
+        <mat-card>
+          <div fxLayout="row" fxLayoutAlign="center center" style="margin: 5px">
+            <div *ngIf="!isEdit">
+              <button
+                mat-raised-button
+                class="m-jumbo-button m-pointer"
+                *ngIf="profileType.form.valid"
+                (click)="createProfiles()"
+              >
+                Submit
+              </button>
+              <button
+                mat-raised-button
+                class="m-jumbo-button m-pointer"
+                *ngIf="!profileType.form.valid"
+                (click)="ProfileSubmit()"
+              >
+                Submit
+              </button>
+            </div>
+
+            <div *ngIf="isEdit">
+              <button
+                mat-raised-button
+                class="m-jumbo-button m-pointer"
+                (click)="editProfiles()"
+                *ngIf="profileType.form.valid"
+              >
+                Update
+              </button>
+              <button
+                mat-raised-button
+                class="m-jumbo-button m-pointer"
+                (click)="updateEdit()"
+                *ngIf="!profileType.form.valid"
+              >
+                Update
+              </button>
+            </div>
+
+            <button
+              mat-raised-button
+              class="m-jumbo-button m-pointer"
+              (click)="cancelChanges()"
+            >
+              Cancel
+            </button>
+          </div>
+        </mat-card>
+      </mat-card-content>
+    </mat-card>
+  </form>
+</div>

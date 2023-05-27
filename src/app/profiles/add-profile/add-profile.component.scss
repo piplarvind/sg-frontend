@@ -1,0 +1,34 @@
+.checkbox-column {
+  display: inline-block !important;
+  // width:48%;
+}
+
+.dateInput {
+  text-transform: uppercase;
+  display: inline-block;
+  width: 23%;
+  background: none;
+  border: 1px solid grey;
+  border-radius: 0.5rem;
+  padding: 0.5rem 0.2rem;
+}
+
+::ng-deep .hide-data {
+  mat-select {
+    .mat-select-trigger {
+      .mat-select-value {
+        // .mat-select-value-text {
+        color: white !important;
+        // }
+      }
+    }
+  }
+}
+::ng-deep .mat-checkbox .mat-checkbox-layout {
+  /* margin-left: 6rem; */
+  margin: auto;
+}
+.error1 {
+  color: red;
+}
+

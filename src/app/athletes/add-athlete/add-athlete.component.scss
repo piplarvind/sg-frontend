@@ -1,0 +1,39 @@
+::ng-deep .dateInput {
+  text-transform: uppercase;
+  display: inline-block;
+  width: 23%;
+  background: none;
+  border: 1px solid grey;
+  border-radius: 5px;
+  padding: 5px 2px;
+}
+
+::ng-deep .custom-design-block figure.mat-figure {
+  justify-content: left !important;
+}
+
+::ng-deep mat-header-cell {
+  padding-left: 1px !important;
+}
+
+::ng-deep .hide-data {
+  mat-select {
+    .mat-select-trigger {
+      .mat-select-value {
+        // .mat-select-value-text {
+        color: white !important;
+        // }
+      }
+    }
+  }
+}
+::ng-deep .m-table-header{
+  margin-left: 1px !important;
+}
+
+::ng-deep .error1 {
+  color: red;
+}
+::ng-deep .paid_installment{
+  background-color:#e1f7e7 !important;
+}

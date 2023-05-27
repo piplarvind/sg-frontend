@@ -1,0 +1,379 @@
+<div class="m-container">
+  <mat-card class="m-title">
+    <h3>{{ title }}</h3>
+  </mat-card>
+  <form #trainingForm="ngForm">
+    <mat-card>
+      <mat-card-content>
+        <div fxLayout="row" fxLayoutAlign="space-between">
+          <!-- left card -->
+          <div fxFlex="49">
+            <mat-card class="childContainer">
+              <div class="input-container">
+                <div
+                  class="errortxt"
+                  [hidden]="taskname.valid || taskname.pristine"
+                >
+                  Task Name is required
+                </div>
+                <div class="label-container">
+                  <span class="label-icon"> </span>
+                  <span class="label">TASK NAME</span>
+                </div>
+                <div class="field-container">
+                  <mat-form-field [floatLabel]="'never'">
+                    <input
+                      matInput
+                      [(ngModel)]="training.task_name"
+                      placeholder="Enter Task Name"
+                      name="taskname"
+                      #taskname="ngModel"
+                      required
+                    />
+                  </mat-form-field>
+                </div>
+              </div>
+
+              <div class="input-container">
+                <div
+                  class="errortxt"
+                  [hidden]="description.valid || description.pristine"
+                >
+                  Description is required
+                </div>
+                <div class="label-container">
+                  <span class="label-icon"> </span>
+                  <span class="label">TASK DESCRIPTION</span>
+                </div>
+                <div class="field-container">
+                  <mat-form-field [floatLabel]="'never'">
+                    <textarea
+                      matInput
+                      [(ngModel)]="training.task_description"
+                      placeholder="Enter Task Description"
+                      name="description"
+                      #description="ngModel"
+                      required
+                    ></textarea>
+                  </mat-form-field>
+                </div>
+              </div>
+
+              <!-- <div class="input-container">
+              <div class="label-container">
+                <span class="label-icon">
+
+                </span>
+                <span class="label">TEAM NAME (S)</span>
+              </div>
+              <div class="field-container">
+                <mat-form-field [floatLabel]="'never'">
+                  <mat-select placeholder="Select Team(s)" [(ngModel)]="training.team_name">
+                    <mat-option *ngFor="let team of teamsList" [value]="team._id">{{team.name}}</mat-option>
+                  </mat-select>
+                </mat-form-field>
+              </div>
+            </div>
+
+            <div class="input-container">
+              <div class="label-container">
+                <span class="label-icon">
+
+                </span>
+                <span class="label">SELECT ATHLETE</span>
+              </div>
+              <div class="field-container">
+                <mat-form-field [floatLabel]="'never'">
+                  <mat-select placeholder="Select Athlete(s)" [(ngModel)]="training.atheletes" multiple>
+                    <mat-option *ngFor="let athlete of athleteList" [value]="athlete._id">{{athlete.first_name}} {{athlete.last_name}}</mat-option>
+
+                  </mat-select>
+                </mat-form-field>
+              </div>
+            </div> -->
+
+              <div class="input-container">
+                <div class="errortxt" [hidden]="type.valid || type.untouched">
+                  Task Type is required
+                </div>
+                <div class="label-container">
+                  <span class="label-icon"> </span>
+                  <span class="label">ASSIGNMENT TYPE</span>
+                </div>
+                <div class="field-container">
+                  <mat-form-field [floatLabel]="'never'">
+                    <mat-select
+                      matInput
+                      placeholder="Select Assignment"
+                      name="type"
+                      #type="ngModel"
+                      required
+                      [(ngModel)]="training.assignment_type"
+                      (change)="getTaskNameByAssignment($event.value)"
+                    >
+                      <mat-option
+                        *ngFor="let assign of assignTypes"
+                        [value]="assign._id"
+                        >{{ assign.AssignmentType }}</mat-option
+                      >
+                    </mat-select>
+                  </mat-form-field>
+                </div>
+              </div>
+            </mat-card>
+          </div>
+
+          <!-- right card -->
+          <div fxFlex="49">
+            <mat-card class="childContainer">
+              <div class="input-container">
+                <div
+                  class="errortxt"
+                  [hidden]="interval.valid || interval.untouched"
+                >
+                  Interval is required
+                </div>
+                <div class="label-container">
+                  <span class="label-icon"> </span>
+                  <span class="label">TASK INTERVAL</span>
+                </div>
+                <div class="field-container">
+                  <mat-form-field [floatLabel]="'never'">
+                    <mat-select
+                      matInput
+                      name="interval"
+                      #interval="ngModel"
+                      required
+                      placeholder="Select Activity"
+                      [(ngModel)]="training.task_type"
+                    >
+                      <mat-option
+                        *ngFor="let activity of activityTypes"
+                        [value]="activity._id"
+                        >{{ activity.task_type }}</mat-option
+                      >
+                    </mat-select>
+                  </mat-form-field>
+                </div>
+              </div>
+
+              <!-- <div class="input-container">
+              <div class="label-container">
+                <span class="label-icon">
+
+                </span>
+                <span class="label">TASK DESCRIPTION</span>
+              </div>
+              <div class="field-container">
+                <mat-form-field [floatLabel]="'never'">
+                  <textarea matInput [(ngModel)]="training.task_description"></textarea>
+                </mat-form-field>
+              </div>
+            </div> -->
+
+              <!-- <div class="input-container">
+              <div class="label-container">
+                <span class="label-icon">
+
+                </span>
+                <span class="label">START DATE</span>
+              </div>
+              <div class="field-container">
+                <mat-form-field [floatLabel]="'never'">
+                  <input matInput [matDatepicker]="picker" placeholder="Start Date" [(ngModel)]="training.start_date">
+                  <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                  <mat-datepicker #picker></mat-datepicker>
+                </mat-form-field>
+              </div>
+            </div>
+            <div class="input-container">
+              <div class="label-container">
+                <span class="label-icon">
+
+                </span>
+                <span class="label">END DATE</span>
+              </div>
+              <div class="field-container">
+                <mat-form-field [floatLabel]="'never'">
+                  <input matInput [matDatepicker]="endpicker" placeholder="End Date" [(ngModel)]="training.end_date">
+                  <mat-datepicker-toggle matSuffix [for]="endpicker"></mat-datepicker-toggle>
+                  <mat-datepicker #endpicker></mat-datepicker>
+                </mat-form-field>
+              </div>
+            </div> -->
+              <div class="input-container" *ngIf="!showCoachName">
+                <div
+                  class="errortxt"
+                  [hidden]="created.valid || created.untouched"
+                >
+                  Created By is required
+                </div>
+                <div class="label-container">
+                  <span class="label-icon"> </span>
+                  <span class="label">CREATED BY</span>
+                </div>
+                <div class="field-container">
+                  <mat-form-field [floatLabel]="'never'">
+                    <mat-select
+                      matInput
+                      name="created"
+                      #created="ngModel"
+                      required
+                      placeholder="Select User"
+                      [(ngModel)]="training.created_by"
+                      [disabled]="isEdit"
+                    >
+                      <mat-option
+                        *ngFor="let coach of coachList"
+                        [value]="coach._id"
+                        >{{ coach.name }}</mat-option
+                      >
+                    </mat-select>
+                  </mat-form-field>
+                </div>
+              </div>
+              <div class="input-container" *ngIf="showCoachName">
+                <div class="label-container">
+                  <span class="label-icon"> </span>
+                  <span class="label">CREATED BY</span>
+                </div>
+
+                <div class="field-container">
+                  <mat-form-field [floatLabel]="'never'">
+                    <input
+                      matInput
+                      [value]="coachName"
+                      placeholder="Enter coach Name"
+                      name="coach"
+                    />
+                  </mat-form-field>
+                </div>
+              </div>
+
+              <div class="input-container">
+                <!-- <div class="errortxt" [hidden]="resource.valid || resource.untouched">
+                Resource is required
+              </div> -->
+                <div class="label-container">
+                  <span class="label">RESOURCES</span>
+                </div>
+                <div class="field-container" *ngIf="taskList">
+                  <!-- <mat-form-field [floatLabel]="'never'">
+                  <mat-select matInput name="resource" #resource = "ngModel" required placeholder="Select Resources" [(ngModel)]="training.resources" multiple>
+                    <mat-option *ngFor="let task of taskList" [value]="task._id">{{task.resource_name}}</mat-option>
+                  </mat-select>
+                </mat-form-field> -->
+                  <app-search-select
+                    [isRes]="true"
+                    [dropdownList]="taskList"
+                    placeHolder="Select Resources"
+                    [isMultiple]="true"
+                    [alreadySel]="training.resources"
+                    (valueUpdated)="getResources($event)"
+                  ></app-search-select>
+                </div>
+              </div>
+            </mat-card>
+          </div>
+        </div>
+
+        <mat-card class="resources" *ngIf="isEdit">
+          <mat-tab-group>
+            <mat-tab label="Videos">
+              <!-- <p *ngFor="let resource of curTrainVideos"><a [href]="resource.video.vimeoData?.links[1].link" target="_blank">{{resource.video.name}}</a></p> -->
+              <!-- <p *ngFor="let resource of curTrainVideos" (click)="playVideo(resource)">
+                <a href='{{link}}' target="_blank">{{resource.video.name}}</a></p> -->
+              <p
+                *ngFor="let resource of curTrainVideos"
+                style="cursor:pointer;color:blue;text-decoration: underline;"
+                (click)="playVideo(resource)"
+              >
+                {{ resource.video.name }}
+              </p>
+            </mat-tab>
+            <!-- <mat-tab label="Images">
+              <p *ngFor="let resource of curTrainImages"><a [href]="resource.image" target="_blank">{{resource.image?.split('/')[1]}}</a></p>
+            </mat-tab> -->
+            <mat-tab label="Images">
+              <p *ngFor="let resource of curTrainImages">
+                <a
+                  style="cursor:pointer;color:blue;text-decoration: underline;"
+                  (click)="showImage(resource)"
+                  >{{ resource.image?.split('/')[1] }}</a
+                >
+              </p>
+            </mat-tab>
+            <mat-tab label="Documents">
+              <!-- [href]="resource.doc.filepath" target="_blank" -->
+              <p *ngFor="let resource of curTrainDocs">
+                <a
+                  style="cursor:pointer;color:blue;text-decoration: underline;"
+                  (click)="openDocument(resource)"
+                  >{{ resource.doc.name }}
+                </a>
+              </p>
+            </mat-tab>
+            <mat-tab label="Quiz">
+              <span *ngFor="let resource of curTrainQuiz">
+                <p *ngFor="let question of resource.quiz">
+                  {{ question.Question }}
+                </p>
+              </span>
+            </mat-tab>
+          </mat-tab-group>
+        </mat-card>
+
+        <mat-card>
+          <div fxLayout="row" fxLayoutAlign="center center" style="margin: 5px">
+            <!-- <button mat-raised-button class="m-jumbo-button m-pointer" (click)="createTraining()" *ngIf="!isEdit" [disabled]="!trainingForm.valid">Submit</button> -->
+            <!-- <button mat-raised-button class="m-jumbo-button m-pointer" (click)="updateTraining()" *ngIf="isEdit" [disabled]="!trainingForm.valid">Update</button> -->
+
+            <div *ngIf="!isEdit">
+              <button
+                mat-raised-button
+                class="m-jumbo-button m-pointer"
+                *ngIf="trainingForm.form.valid"
+                (click)="createTraining()"
+              >
+                Submit
+              </button>
+              <button
+                mat-raised-button
+                class="m-jumbo-button m-pointer"
+                *ngIf="!trainingForm.form.valid"
+                (click)="trainingSubmit()"
+              >
+                Submit
+              </button>
+            </div>
+            <div *ngIf="isEdit">
+              <button
+                mat-raised-button
+                class="m-jumbo-button m-pointer"
+                (click)="updateTraining()"
+                *ngIf="trainingForm.form.valid"
+              >
+                Update
+              </button>
+              <button
+                mat-raised-button
+                class="m-jumbo-button m-pointer"
+                (click)="updateEdit()"
+                *ngIf="!trainingForm.form.valid"
+              >
+                Update
+              </button>
+            </div>
+            <button
+              mat-raised-button
+              class="m-jumbo-button m-pointer"
+              (click)="cancelChanges()"
+            >
+              Cancel
+            </button>
+          </div>
+        </mat-card>
+      </mat-card-content>
+    </mat-card>
+  </form>
+</div>

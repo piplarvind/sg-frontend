@@ -1,0 +1,243 @@
+<div class="m-container">
+  <mat-card class="m-title">
+    <h3>Add Product</h3>
+  </mat-card>
+  <form #productForm=ngForm>
+    <div fxLayout="row" fxLayoutAlign="space-between">
+      <div fxFlex="49">
+        <mat-card class="childContainer">
+          <div class="input-container">
+            <div class="label-container">
+              <span class="label-icon">
+              </span>
+              <span class="label">CATEGORY</span>
+            </div>
+            <div class="field-container">
+              <mat-form-field [floatLabel]="'never'">
+                <mat-select placeholder="Select Category" [(ngModel)]="categoryId" (change)="selectedCategory($event.value)"
+                  name="categoryName" required>
+                  <mat-option *ngFor="let category of categoryList" [value]="category._id" (click)='selectCategory(category)'>{{category.name}}</mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+          </div>
+          <div class="input-container">
+            <div class="label-container">
+              <span class="label-icon">
+              </span>
+              <span class="label">PRODUCT NAME</span>
+            </div>
+            <div class="field-container">
+              <mat-form-field [floatLabel]="'never'">
+                <input matInput placeholder="Enter Product Name" [(ngModel)]="product.name" name='productName' required>
+              </mat-form-field>
+            </div>
+          </div>
+          <div class="input-container">
+            <div class="label-container">
+              <span class="label-icon">
+              </span>
+              <span class="label">GENDER</span>
+            </div>
+            <div class="field-container">
+              <mat-form-field [floatLabel]="'never'">
+                <mat-select placeholder="Select Gender" [(ngModel)]="genderId" name='gender' (change)="selectedGender($event.value)"
+                  required>
+                  <mat-option *ngFor="let gender of genderList" [value]="gender._id" (click)='selGender(gender)'>{{gender.gender}}</mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+          </div>
+          <div class="input-container">
+            <div class="label-container">
+              <span class="label-icon">
+              </span>
+              <span class="label">BRAND</span>
+            </div>
+            <div class="field-container">
+              <mat-form-field [floatLabel]="'never'">
+                <mat-select placeholder="Select Brand" [(ngModel)]="brandId" name='brandname' (selectionChange)="selectedBrand($event.value)"
+                  required>
+                  <mat-option *ngFor="let brand of brandList" [value]="brand._id">{{brand.name}}</mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+          </div>
+          <div class="input-container">
+            <div class="label-container">
+              <span class="label-icon">
+              </span>
+              <span class="label">SIZE</span>
+            </div>
+            <div class="field-container">
+              <mat-form-field [floatLabel]="'never'">
+                <mat-select placeholder="Select Size" [(ngModel)]="sizeId" name='size' (click)='getList()'
+                  (selectionChange)="selectedSize($event.value)" required>
+                  <mat-option *ngFor="let size of categorySizeList" [value]="size._id" (click)='selSize(size)'>{{size.size}}</mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+          </div>
+          <div class="input-container">
+            <div class="label-container">
+              <span class="label-icon">
+              </span>
+              <span class="label">COLOR</span>
+            </div>
+            <div class="field-container">
+              <mat-form-field [floatLabel]="'never'">
+                <mat-select placeholder="Select Color" [(ngModel)]="colorId" name='color' (selectionChange)="selectedColor($event.value)"
+                  required>
+                  <mat-option *ngFor="let color of colorList" [value]="color._id" (click)=selColor(color)>{{color.name}}</mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+          </div>
+          <div class="input-container">
+            <div class="label-container">
+              <span class="label-icon">
+              </span>
+              <span class="label">DESCRIPTION</span>
+            </div>
+            <div class="field-container">
+              <mat-form-field [floatLabel]="'never'">
+                <input matInput placeholder="Enter Description" [(ngModel)]="product.description" name='desc' required>
+              </mat-form-field>
+            </div>
+          </div>
+        </mat-card>
+      </div>
+      <div fxFlex="49">
+        <mat-card clas='childContainer'>
+
+          <div class="input-container">
+            <div class="label-container">
+              <span class="label-icon">
+              </span>
+              <span class="label">STOCK QUANTITY</span>
+            </div>
+            <div class="field-container">
+              <mat-form-field [floatLabel]="'never'">
+                <input matInput [(ngModel)]="product.stock" name='stock' readonly>
+              </mat-form-field>
+            </div>
+          </div>
+          <div class="input-container">
+            <div class="label-container">
+              <span class="label-icon">
+              </span>
+              <span class="label">SELLING PRICE</span>
+            </div>
+            <div class="field-container">
+              <mat-form-field [floatLabel]="'never'">
+                <input matInput placeholder="Enter selling price" name='sellPrice' [(ngModel)]="product.selling_price"
+                  required>
+              </mat-form-field>
+            </div>
+          </div>
+          <div class="input-container">
+            <div class="label-container">
+              <span class="label-icon">
+              </span>
+              <span class="label">SHIPPING & HANDLING PRICE</span>
+            </div>
+            <div class="field-container">
+              <mat-form-field [floatLabel]="'never'">
+                <input matInput placeholder="Enter shipping & handling price" name='shipping' [(ngModel)]="product.shipping_price"
+                  required>
+              </mat-form-field>
+            </div>
+          </div>
+          <div class="input-container">
+            <div class="label-container">
+              <span class="label-icon">
+              </span>
+              <span class="label">VAT</span>
+            </div>
+            <div class="field-container">
+              <mat-form-field [floatLabel]="'never'">
+                <input matInput placeholder="Enter VAT" [(ngModel)]="product.tax" name='tax' required>
+              </mat-form-field>
+            </div>
+          </div>
+          <!-- <div class="input-container">
+          <div class="label-container">
+            <span class="label">UPLOAD PHOTO</span>
+          </div>
+          <div class="field-container">
+            <input type="file" style="display: none" #logoInput (change)="getProductImage($event)">
+            <mat-form-field [floatLabel]="'never'" (click)="logoInput.click()">
+              <input id="inputFile" matInput placeholder="Upload the Image" name="productImage" class="m-pointer" [value]="product.logo" (valueUpdated)="getProductImage($event)" disabled>
+             
+              <span matSuffix class="m-pointer" >
+                <i class="fas fa-upload"></i>
+              </span>
+            </mat-form-field>
+          </div>
+        </div> -->
+          <div class="input-container" style='display:flex;'>
+            <div class="label-container">
+              <span class="label-icon">
+              </span>
+              <span class="label">APPROXIMATE DELIVERY RANGE(No of Days)</span>
+            </div>
+            <div class="field-container" style='    display: flex;
+            flex-direction: row;     align-items: center;'>
+              <span style='padding: 5px;'>From</span>
+              <input type='number' style='height: 40px;    padding: 10px;
+            width: 40%;' placeholder="Enter min days"
+                min="0" [(ngModel)]='product.estimated_delivery_date_min' name='min' required>
+              <span style='padding: 5px;'>
+                To</span>
+              <input type='number' style='height: 40px;padding: 10px;
+            width: 40%;' placeholder="Enter max days"
+                min="0" [(ngModel)]='product.estimated_delivery_date_max' name='max' required>
+            </div>
+          </div>
+        </mat-card>
+      </div>
+    </div>
+
+    <mat-card fxLayout="row" style="padding: 12px 24px">
+      <div class="input-container" fxFlex="40">
+        <div class="label-container">
+          <span class="label-icon">
+            <!-- <i class="far fa-list-alt"></i> -->
+          </span>
+          <span class="label">UPLOAD IMAGE</span>
+        </div>
+        <div class="field-container">
+          <input type="file" style="display: none" #imageInput (change)="getImageDetail($event)">
+          <mat-form-field [floatLabel]="'never'" (click)="imageInput.click()">
+            <input matInput placeholder="Upload Image" class="m-pointer" [value]="selectedImg" disabled>
+            <mat-hint> Hint/suggestion</mat-hint>
+            <span matSuffix class="m-pointer">
+              <i class="fas fa-upload"></i>
+            </span>
+          </mat-form-field>
+        </div>
+      </div>
+
+      <button class="border-button" (click)="uploadImage()">Save</button>
+
+    </mat-card>
+
+    <mat-card>
+      <div fxLayout="row" fxLayoutAlign="center center" style="margin: 5px">
+        <!-- <button mat-raised-button class="m-jumbo-button m-pointer" *ngIf="!isEdit" (click)="saveProduct()">Submit</button>
+      <button mat-raised-button class="m-jumbo-button m-pointer" *ngIf="isEdit" (click)="updateProduct()">Update</button> -->
+
+        <div *ngIf="!isEdit">
+          <button mat-raised-button class="m-jumbo-button m-pointer" *ngIf="productForm.form.valid" (click)="saveProduct()">Submit</button>
+          <button mat-raised-button class="m-jumbo-button m-pointer" *ngIf="!productForm.form.valid" (click)="productSubmit()">Submit</button>
+        </div>
+        <div *ngIf="isEdit">
+          <button mat-raised-button class="m-jumbo-button m-pointer" (click)="updateProduct()" *ngIf="productForm.form.valid">Update</button>
+          <button mat-raised-button class="m-jumbo-button m-pointer" (click)="updateEdit()" *ngIf="!productForm.form.valid">Update</button>
+        </div>
+
+        <button mat-raised-button class="m-jumbo-button m-pointer" (click)="cancelProduct()">Cancel</button>
+      </div>
+    </mat-card>
+  </form>
+</div>

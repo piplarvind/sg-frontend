@@ -1,0 +1,95 @@
+<div class="m-container">
+  <mat-card class="m-title">
+    <h3>LEADERBOARD</h3>
+  </mat-card>
+
+  <mat-card style="min-height: 77vh">
+    <mat-card-title>
+      <div fxLayout="row" fxLayoutAlign="space-between">
+        <div fxFlex="50" class="m-sub-title">
+          Leaderboard Details
+        </div>
+      </div>
+    </mat-card-title>
+    <mat-card-content>
+
+      <mat-divider class="m-divider"></mat-divider>
+      <br>
+      <div fxLayout="row" fxLayoutAlign="space-between">
+        <div fxFlex="30">
+            <mat-form-field >
+                <input matInput type="text" (keyup)="doFilter($event)" placeholder="Search">
+              </mat-form-field>
+          <!-- <button mat-mini-fab color="primary">
+            <i class="fas fa-search"></i>
+          </button> -->
+        </div>
+        <div fxFlex="40" fxLayoutAlign="end">
+          <button mat-raised-button class="m-button m-pointer" (click)="openDialog()">Search by All Types</button>
+          <button mat-raised-button class="m-button m-pointer" routerLink="/leaderboard/update">Add Stats&nbsp;&nbsp;+</button>
+        </div>
+      </div>
+
+      <div class="m-table-container">
+          <mat-paginator [length]="100" [pageSize]="100" [pageSizeOptions]="[25, 50, 75, 100]">
+            </mat-paginator>
+        <mat-table #table [dataSource]="dataSource" matSort>
+
+          <ng-container matColumnDef="eventName">
+            <mat-header-cell *matHeaderCellDef mat-sort-header>
+              <span class="m-table-header">Event Name </span>
+            </mat-header-cell>
+            <mat-cell *matCellDef="let element" class="light-red m-pointer"> {{element.eventName}} </mat-cell>
+          </ng-container>
+
+          <ng-container matColumnDef="eventDate">
+            <mat-header-cell *matHeaderCellDef mat-sort-header>
+              <span class="m-table-header">Date </span>
+            </mat-header-cell>
+            <mat-cell *matCellDef="let element"> {{element.eventDate.split("T")[0]}} </mat-cell>
+          </ng-container>
+
+          <ng-container matColumnDef="location">
+            <mat-header-cell *matHeaderCellDef mat-sort-header>
+              <span class="m-table-header">Location </span>
+            </mat-header-cell>
+            <mat-cell *matCellDef="let element"> {{element.location}} </mat-cell>
+          </ng-container>
+
+          <ng-container matColumnDef="totalteams">
+            <mat-header-cell *matHeaderCellDef mat-sort-header>
+              <span class="m-table-header">Teams </span>
+            </mat-header-cell>
+            <mat-cell *matCellDef="let element"> {{element.team1.teamDetails.name}}Vs {{element.team2.teamDetails.name}} </mat-cell>
+          </ng-container>
+
+          <ng-container matColumnDef="eventTime">
+            <mat-header-cell *matHeaderCellDef mat-sort-header>
+              <span class="m-table-header">Description</span>
+            </mat-header-cell>
+            <mat-cell *matCellDef="let element"> {{element.eventDesc}} </mat-cell>
+          </ng-container>
+
+
+          <ng-container matColumnDef="Actions">
+            <mat-header-cell *matHeaderCellDef class="textCenter"> Actions </mat-header-cell>
+            <mat-cell *matCellDef="let element" class="textCenter" style="text-align: right;">
+              <span class="table-icon m-pointer" (click)="editEvent(element)" title="Edit Event">
+                <i class="fas fa-pencil-alt"></i>
+              </span>
+              <span class="table-icon m-pointer" (click)="deleteEvent(element)">
+                <i class="fas fa-trash"></i>
+              </span>
+            </mat-cell>
+          </ng-container>
+
+          <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+          <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+        </mat-table>
+        <mat-paginator [length]="100" [pageSize]="10" [pageSizeOptions]="[5, 10, 25, 100]">
+        </mat-paginator>
+      </div>
+    </mat-card-content>
+  </mat-card>
+
+</div>

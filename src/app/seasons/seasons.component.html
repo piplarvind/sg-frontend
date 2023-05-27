@@ -1,0 +1,129 @@
+<div class="m-container">
+  <mat-card class="m-title" fxLayout="row" fxLayoutAlign="space-between">
+    <h3>SEASONS</h3>
+    <button
+      mat-raised-button
+      class="m-button m-pointer"
+      routerLink="/seasons/add"
+    >
+      Add Season&nbsp;&nbsp;+
+    </button>
+  </mat-card>
+
+  <mat-card style="min-height: 77vh">
+    <div class="m-table-container" fxLayout="row" fxLayoutAlign="space-between">
+      <div>
+        Season Details
+      </div>
+      <div>
+        <mat-form-field>
+          <input
+            matInput
+            type="text"
+            (keyup)="doFilter($event)"
+            [placeholder]="keyup ? 'Please Press Enter key' : 'Search by Name'"
+          />
+        </mat-form-field>
+      </div>
+
+      <div></div>
+      <div>
+        <mat-paginator
+          #paginator
+          [length]="totalLength"
+          [pageSize]="limit"
+          [pageSizeOptions]="pageLimit"
+          (page)="changePage($event)"
+        >
+        </mat-paginator>
+      </div>
+    </div>
+
+    <mat-card-content>
+      <mat-divider class="m-divider"></mat-divider>
+      <br />
+
+      <div class="m-table-container">
+        <mat-table
+          #table
+          [dataSource]="dataSource"
+          matSort
+          (matSortChange)="namesort($event)"
+        >
+          <ng-container matColumnDef="season_name">
+            <mat-header-cell *matHeaderCellDef mat-sort-header>
+              <span class="m-table-header">Season Name </span>
+            </mat-header-cell>
+            <mat-cell
+              *matCellDef="let element"
+              class="light-red m-pointer "
+              style="margin-left: 2% !important"
+            >
+              <!-- {{element.season_name}} -->
+              {{ element.season_name }}
+            </mat-cell>
+          </ng-container>
+
+          <ng-container matColumnDef="start_date">
+            <mat-header-cell *matHeaderCellDef mat-sort-header>
+              <span class="m-table-header">Start Date </span>
+            </mat-header-cell>
+            <mat-cell *matCellDef="let element">
+              {{ element.start_date | date: 'MM/dd/yyyy' }}
+            </mat-cell>
+          </ng-container>
+
+          <ng-container matColumnDef="end_date">
+            <mat-header-cell *matHeaderCellDef mat-sort-header>
+              <span class="m-table-header">End Date</span>
+            </mat-header-cell>
+            <mat-cell *matCellDef="let element">
+              {{ element.end_date | date: 'MM/dd/yyyy' }}
+            </mat-cell>
+          </ng-container>
+
+          <ng-container matColumnDef="Actions">
+            <mat-header-cell *matHeaderCellDef mat-sort-header>
+              Actions
+            </mat-header-cell>
+            <mat-cell *matCellDef="let element; let i = index">
+              <span
+                *ngIf="element.status === 0"
+                class="table-icon m-pointer"
+                (click)="editEvent(element)"
+                title="Edit  season"
+              >
+                <i class="fas fa-pencil-alt"></i>
+              </span>
+              <span *ngIf="element.status === 1">
+                <button
+                  class="table-icon m-pointer"
+                  (click)="endSeason(element)"
+                  title="End  season"
+                >
+                  End the Season
+                </button>
+              </span>
+              <span class="table-icon m-pointer" *ngIf="element.status === 2">
+                Completed
+              </span>
+
+              <!-- <button [class]="element.endSeason ? 'completed' : 'end of season'">{{getStatus(element.active)}}</button> -->
+              <span
+                *ngIf="element.status === 0"
+                class="table-icon m-pointer"
+                (click)="deleteSeason(element)"
+                title="delete season"
+              >
+                <i class="fas fa-trash"></i>
+              </span>
+            </mat-cell>
+          </ng-container>
+
+          <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+          <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
+        </mat-table>
+      </div>
+    </mat-card-content>
+  </mat-card>
+</div>

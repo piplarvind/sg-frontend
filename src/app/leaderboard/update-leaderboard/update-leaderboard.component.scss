@@ -1,0 +1,69 @@
+.field-container {
+    .label {
+        width: 70%;
+        display: inline-block;
+    }
+    .input-field {
+        width: 25%;
+        display: inline-block;
+    }
+}
+
+table {
+    tr {
+        padding: 10px 5px !important;
+        th {
+            // border: 1px solid black;
+            padding: 5px 5px;
+        }
+        td {
+            padding: 7px 10px;
+            .table-input {
+                width: 30px;
+                padding: 7px;
+            }
+        }
+    }
+}
+
+.text {
+    font-size: 16px;
+}
+
+.small-cards {
+    mat-card-title {
+        font-weight: bold;
+        font-size: 15px;
+        padding: 0;
+        margin: 0;
+    }
+    .field-container {
+        .label,
+        .input-field {
+            padding: 0;
+            margin: 0;
+            mat-form-field {
+                height: 30px;
+                padding: 0;
+                margin: 0;
+            }
+        }
+    }
+}
+
+.m-body {
+    mat-card {
+        padding: 10px !important;
+        margin: 5px !important;
+    }
+}
+
+.card-row {
+    padding: 0;
+    margin: 0;
+    mat-card {
+        padding: 10px !important;
+        margin: 10px !important; // position: relative;
+        // top: -15px;
+    }
+}

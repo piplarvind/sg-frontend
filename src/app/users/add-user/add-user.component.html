@@ -1,0 +1,367 @@
+<div class="m-container">
+  <mat-card class="m-title">
+    <h3>{{title}}</h3>
+  </mat-card>
+  <form #userForm="ngForm">
+    <mat-card >
+      <div fxLayout="row">
+      <div fxFlex="49">
+      <div class="input-container single" *ngIf='!isEdit'>
+        <div class="label-container">
+          <span class="label-icon">
+          </span>
+          <span class="label">USER TYPE</span>
+        </div>
+        <div class="field-container">
+          <mat-form-field [floatLabel]="'never'">
+            <mat-select matInput placeholder="Select User Type" name="selectedUserRole" [(ngModel)]="selectedUserRole"
+              [value]="selectedUserRole">
+              <mat-option style='font-size: 14px' *ngFor="let user of rolesList" [value]="user._id" (click)="selectUser(user)">{{user.user_role}}</mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+      </div>
+      <div class="input-container single" *ngIf='isEdit'>
+        <div class="label-container">
+          <span class="label-icon">
+          </span>
+          <span class="label">USER TYPE</span>
+        </div>
+        <div class="field-container">
+          <mat-form-field [floatLabel]="'never'">
+            <mat-select matInput placeholder="Select User Type" name="selectedUserRole" [(ngModel)]="selectedUserRole"
+              [value]="selectedUserRole">
+              <mat-option style='font-size: 14px' *ngFor="let user of rolesList" [value]="user._id" (click)="selectUser(user)">{{user.user_role}}</mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+      </div>
+    </div>
+      <div *ngIf="parent" fxFlex="49">
+      <div class="input-container single" *ngIf='!isEdit'>
+        <div class="label-container">
+          <span class="label-icon">
+          </span>
+          <span class="label">PARENT OF</span>
+        </div>
+        <div class="field-container">
+          <mat-form-field [floatLabel]="'never'">
+            <mat-select matInput placeholder="Select athlete" name="child"  (selectionChange)="ChildChange($event.value)"  #child="ngModel" [(ngModel)]="user.child"
+              [value]="child"  multiple>
+              <mat-option style='font-size: 14px'  *ngFor="let athlete of athleteList" select [value]="athlete._id" >{{athlete.first_name
+                + ' ' +
+                athlete.last_name}}</mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+      </div>
+
+
+      <div class="input-container single" *ngIf='isEdit'>
+        <div class="label-container">
+          <span class="label-icon">
+          </span>
+          <span class="label">PARENT OF</span>
+        </div>
+        <div class="field-container">
+          <mat-form-field [floatLabel]="'never'">
+            <mat-select matInput placeholder="Select athlete" name="child"    (selectionChange)="ChildChange($event.value)" #child="ngModel" [(ngModel)]="user.child"
+            [value]="child"  multiple>
+              <mat-option style='font-size: 14px'  *ngFor="let athlete of athleteList" [value]="athlete._id" >{{athlete.first_name
+                + ' ' +
+                athlete.last_name}}</mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+      </div>
+    </div>
+  </div>
+    </mat-card>
+    <mat-card *ngIf="showForm">
+      <div *ngIf="isLoading">Loading</div>
+      <mat-card-content *ngIf="!isLoading">
+
+        <div fxLayout="row" fxLayoutAlign="space-between">
+          <!-- left card -->
+          <div fxFlex="49">
+            <mat-card class="childContainer">
+              <div class="input-container">
+                <div class="errortxt" [hidden]="firstName.valid || firstName.pristine">
+                  First Name is required
+                </div>
+                <div class="label-container">
+                  <span class="label-icon">
+                  </span>
+                  <span class="label">FIRST NAME</span>
+                </div>
+                <div class="field-container">
+                  <mat-form-field [floatLabel]="'never'">
+                    <input matInput [(ngModel)]="user.first_name" placeholder="First Name" name="firstName" #firstName="ngModel"
+                      required>
+                  </mat-form-field>
+
+                </div>
+              </div>
+              <div class="input-container">
+                <div class="errortxt" [hidden]="lastName.valid || lastName.pristine">
+                  Last Name is required
+                </div>
+                <div class="label-container">
+                  <span class="label-icon">
+                  </span>
+                  <span class="label">LAST NAME</span>
+                </div>
+                <div class="field-container">
+                  <mat-form-field [floatLabel]="'never'">
+                    <input matInput [(ngModel)]="user.last_name" placeholder="Last Name" name="lastName" #lastName="ngModel">
+                  </mat-form-field>
+                </div>
+              </div>
+              <!-- <div class="input-container custom-input-padding" *ngIf="hideUserDetails">
+                <div class="errortxt" [hidden]="monthVal.valid || monthVal.untouched">
+                  Month is required
+                </div>
+                <div class="errortxt" [hidden]="dateVal.valid || dateVal.pristine">
+                  Date is required
+                </div>
+                <div class="errortxt" [hidden]="yearVal.valid || yearVal.pristine || yearVal.touched">
+                  Year is required
+                </div>
+                <div *ngIf="errorYear" class="errortxt">
+                  <span>Please enter valid digits</span>
+                </div>
+                <div class="label-container">
+                  <span class="label-icon">
+                  </span>
+                  <span class="label">DATE OF BIRTH</span>
+                </div>
+                <div class="field-container">
+                  <select class="dateInput" style="height:30px" [(ngModel)]="dob.month" placeholder="Mon" name="monthVal"
+                    #monthVal="ngModel" required>
+                    <option value="0">Jan</option>
+                    <option value="1">Feb</option>
+                    <option value="2">Mar</option>
+                    <option value="3">Apr</option>
+                    <option value="4">May</option>
+                    <option value="5">Jun</option>
+                    <option value="6">Jul</option>
+                    <option value="7">Aug</option>
+                    <option value="8">Sep</option>
+                    <option value="9">Oct</option>
+                    <option value="10">Nov</option>
+                    <option value="11">Dec</option>
+                  </select>
+                  <input class="dateInput" type="number" style='font-size: 14px' placeholder="DD" min="1" max="31"
+                    [(ngModel)]="dob.day" name="dateVal" #dateVal="ngModel" required>
+                  <input class="dateInput" type="number" style='font-size: 14px' placeholder="YYYY" min="1950" max="2018"
+                    [(ngModel)]="dob.year" name="yearVal" #yearVal="ngModel" (focusout)="validateYear(dob.year)"
+                    required>
+                </div>
+              </div> -->
+              <!-- <div *ngIf="userform.submitted && userName.invalid" class="invalid-feedback">
+                    <div *ngIf="userName.errors.required" class="text-danger"> User Name is required</div>
+                </div> -->
+              <div class="input-container" *ngIf='!isEdit'>
+                <div class="errortxt" [hidden]="userEmail.valid || userEmail.pristine">
+                  <!-- Email is required -->
+                </div>
+                <div class="errortxt" [hidden]="!userEmail.hasError('pattern')">
+                  <!-- invalid  -->
+                </div>
+                <div *ngIf="userEmail.invalid && userForm.submitted">
+                  <div class="errortxt">
+                    Invalid email</div>
+                </div>
+
+                <div class="label-container">
+                  <span class="label-icon">
+                  </span>
+                  <span class="label">EMAIL</span>
+                </div>
+                <div class="field-container">
+                  <mat-form-field [floatLabel]="'never'">
+                    <input matInput [(ngModel)]="user.email" placeholder="Email" pattern="^[^\s@]+@[^\s@]+\.[^\s@]{2,}$"
+                      type="email" name="userEmail" #userEmail="ngModel" required>
+                  </mat-form-field>
+                </div>
+              </div>
+              <div class="input-container" *ngIf='isEdit'>
+                <div class="label-container">
+                  <span class="label-icon">
+                  </span>
+                  <span class="label">EMAIL</span>
+                </div>
+                <div class="field-container">
+                  <mat-form-field [floatLabel]="'never'">
+                    <input matInput [(ngModel)]="user.email" placeholder="Email" pattern="^[^\s@]+@[^\s@]+\.[^\s@]{2,}$"
+                      type="email" name="userEmail" #userEmail="ngModel" readonly>
+                  </mat-form-field>
+                </div>
+              </div>
+              <div class="input-container" *ngIf=!isEdit>
+                <div class="errortxt" [hidden]="userMobile.valid || userMobile.pristine">
+                  Mobile is required
+                </div>
+                <div *ngIf="invalidNumber" class="errortxt">
+                  <span>Invalid Mobile Number</span>
+                </div>
+                <div class="label-container">
+                  <span class="label-icon">
+                  </span>
+                  <span class="label">MOBILE PHONE (login)</span>
+                </div>
+                <div class="field-container">
+                  <mat-form-field [floatLabel]="'never'">
+                    <input matInput [(ngModel)]="user.mobile_phone" placeholder="Mobile" type="tel" (keyup)="formatMobile($event)"
+                      maxlength="14" name="userMobile" #userMobile="ngModel" required>
+                  </mat-form-field>
+                </div>
+              </div>
+              <div class="input-container" *ngIf=isEdit>
+                <div class="label-container">
+                  <span class="label-icon">
+                  </span>
+                  <span class="label">MOBILE PHONE (login)</span>
+                </div>
+                <div class="field-container">
+                  <mat-form-field [floatLabel]="'never'">
+                    <input matInput [(ngModel)]="user.mobile_phone" placeholder="Mobile" type="tel" name="userMobile"
+                      #userMobile="ngModel" readonly>
+                  </mat-form-field>
+                </div>
+              </div>
+              <div class="input-container" *ngIf="hideUserDetails">
+                <div *ngIf="invalidHomeNumber" class="errortxt">
+                  <span>Invalid Home Number</span>
+                </div>
+                <div class="label-container">
+                  <span class="label-icon">
+                  </span>
+                  <span class="label">HOME PHONE</span>
+                </div>
+                <div class="field-container">
+                  <mat-form-field [floatLabel]="'never'">
+                    <input matInput [(ngModel)]="user.home_phone" placeholder="Home Phone" type="tel" (keyup)="formatHome($event)"
+                      maxlength="14" name="userHome" #userHome="ngModel">
+                  </mat-form-field>
+                </div>
+              </div>
+            </mat-card>
+          </div>
+          <!-- right card -->
+          <div fxFlex="49" *ngIf="hideUserDetails">
+            <mat-card class="childContainer">
+              <div class="input-container">
+                <!-- <div class="errortxt" [hidden]="userAddress.valid || userAddress.pristine">
+                  Address is required
+                </div> -->
+                <div class="label-container">
+                  <span class="label-icon">
+                  </span>
+                  <span class="label">ADDRESS LINE 1</span>
+                </div>
+                <div class="field-container">
+                  <mat-form-field [floatLabel]="'never'">
+                    <input matInput [(ngModel)]="user.address_line_1" placeholder="Address Line 1" maxlength="40" name="userAddress"
+                      #userAddress="ngModel" >
+                  </mat-form-field>
+                </div>
+              </div>
+              <div class="input-container" *ngIf="hideUserDetails">
+                <div class="label-container">
+                  <span class="label-icon">
+                  </span>
+                  <span class="label">ADDRESS LINE 2</span>
+                </div>
+                <div class="field-container">
+                  <mat-form-field [floatLabel]="'never'">
+                    <input matInput [(ngModel)]="user.address_line_2" placeholder="Address Line 2" maxlength="40" name="userAddress2"
+                      #userAddress2="ngModel">
+                  </mat-form-field>
+                </div>
+              </div>
+              <div class="input-container">
+                <div class="errortxt" [hidden]="userCity.valid || userCity.pristine">
+                  City is required
+                </div>
+                <div class="errortxt" [hidden]="!userCity.hasError('pattern')">Only alphabets allowed</div>
+                <div class="label-container">
+                  <span class="label-icon">
+                  </span>
+                  <span class="label">CITY</span>
+                </div>
+                <div class="field-container">
+                  <mat-form-field [floatLabel]="'never'">
+                    <input matInput placeholder="City" [(ngModel)]="user.city" name="userCity" #userCity="ngModel"
+                      maxlength="40" pattern="[a-zA-Z][a-zA-Z ]+" required>
+                  </mat-form-field>
+                </div>
+              </div>
+              <div class="input-container">
+                <div class="errortxt" [hidden]="userState.valid || userState.untouched">
+                  State is required
+                </div>
+                <div class="label-container">
+                  <span class="label-icon">
+                  </span>
+                  <span class="label">STATE</span>
+                </div>
+                <div class="field-container">
+                  <mat-form-field [floatLabel]="'never'">
+                    <mat-select matInput color="red" placeholder="Select State" required [(ngModel)]="selectedStateId"
+                      name="userState" #userState="ngModel">
+                      <mat-option *ngFor="let state of stateList" [value]="state._id" (click)='stateData(state)'>{{state.name}}</mat-option>
+                    </mat-select>
+                  </mat-form-field>
+                </div>
+              </div>
+              <div class="input-container">
+                <div class="errortxt" [hidden]="!userZip.hasError('pattern')">
+                  Special Characters not allowed</div>
+                <div class="label-container">
+                  <span class="label-icon">
+                  </span>
+                  <span class="label">ZIP CODE</span>
+                </div>
+                <div class="field-container">
+                  <mat-form-field [floatLabel]="'never'">
+                    <input matInput [(ngModel)]="user.zip" placeholder="Zip" type="tel" maxlength="14" name="userZip"
+                      #userZip="ngModel" required>
+                  </mat-form-field>
+                </div>
+              </div>
+              <div class="input-container">
+                <div class="errortxt" [hidden]="userCountry.valid || userCountry.untouched">
+                  Country is required
+                </div>
+                <div class="label-container">
+                  <span class="label-icon">
+                  </span>
+                  <span class="label">COUNTRY</span>
+                </div>
+                <div class="field-container">
+                  <mat-form-field [floatLabel]="'never'">
+                    <mat-select color="red" required placeholder="Select Country" [(ngModel)]="selectedCountryId" name="userCountry"
+                      (change)="getStates($event.value)" #userCountry="ngModel">
+                      <mat-option *ngFor="let country of countryList" [value]="country._id" (click)='countryData(country)'>{{country.name}}</mat-option>
+                    </mat-select>
+                  </mat-form-field>
+                </div>
+              </div>
+            </mat-card>
+          </div>
+        </div>
+        <mat-card>
+          <div fxLayout="row" fxLayoutAlign="center center">
+            <div *ngIf="!isEdit">
+              <button mat-raised-button class="m-jumbo-button m-pointer" *ngIf="userForm.valid" (click)="createUser()">Submit</button>
+              <button mat-raised-button class="m-jumbo-button m-pointer" *ngIf="!userForm.valid" (click)="errorSubmit()">Submit</button>
+            </div>
+            <button mat-raised-button class="m-jumbo-button m-pointer" *ngIf='isEdit' (click)="updateUser()">Update</button>
+            <button mat-raised-button class="m-jumbo-button m-pointer" (click)="cancelChange()">Cancel</button>
+          </div>
+        </mat-card>
+      </mat-card-content>
+    </mat-card>
+  </form>
+</div>

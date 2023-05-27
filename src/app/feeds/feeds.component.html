@@ -1,0 +1,167 @@
+<div class="m-container">
+  <mat-card class="m-title">
+    <h3>FEEDS</h3>
+  </mat-card>
+  <mat-card style="min-height: 77vh">
+    <div fxLayout="row" fxLayoutAlign="space-between" class="m-table-container">
+      <div>
+        Feeds Details
+      </div>
+      <div>
+        <mat-form-field>
+          <input
+            matInput
+            type="text"
+            (keyup)="doFilter($event)"
+              [placeholder]="keyup ? 'Please Press Enter key' : 'Search by Name'"
+          />
+        </mat-form-field>
+      </div>
+      <div>
+        <mat-paginator
+          #paginator
+          [length]="totalLength"
+          [pageSize]="limit"
+          [pageSizeOptions]="pageLimit"
+          (page)="changePage($event)"
+        >
+        </mat-paginator>
+      </div>
+    </div>
+
+    <mat-card-content>
+      <mat-divider class="m-divider"></mat-divider>
+      <br />
+      <!-- <div fxLayout="row" fxLayoutAlign="space-between">
+        <div fxFlex="30">
+            <mat-form-field >
+                <input matInput type="text" (keyup)="doFilter($event)" placeholder="Search">
+              </mat-form-field>
+        </div>
+      </div> -->
+      <div class="m-table-container">
+        <mat-table
+          #table
+          [dataSource]="dataSource"
+          matSort
+          (matSortChange)="namesort($event)"
+        >
+          <ng-container matColumnDef="date">
+            <mat-header-cell *matHeaderCellDef mat-sort-header>
+              <span class="m-table-header">Date </span>
+            </mat-header-cell>
+            <mat-cell *matCellDef="let element" class="textCenter">
+              {{ element.date | date: 'MM/dd/yyyy' }}
+            </mat-cell>
+          </ng-container>
+          <ng-container matColumnDef="feedType">
+            <mat-header-cell *matHeaderCellDef mat-sort-header>
+              <span class="m-table-header">Type </span>
+            </mat-header-cell>
+            <mat-cell *matCellDef="let element" class="textCenter">
+              <div *ngIf="element.type === 0">Post</div>
+              <div *ngIf="element.type === 1">Post, Image</div>
+              <div *ngIf="element.type === 2">Post, Video</div>
+            </mat-cell>
+          </ng-container>
+          <ng-container matColumnDef="target">
+            <mat-header-cell *matHeaderCellDef mat-sort-header>
+              <span class="m-table-header">Target </span>
+            </mat-header-cell>
+            <mat-cell *matCellDef="let element" class="textCenter">
+              <div *ngIf="element.abusive_user">Abusive User</div>
+              <div *ngIf="element.abusive_post">Abusive Post</div>
+            </mat-cell>
+          </ng-container>
+          <ng-container matColumnDef="post_text">
+            <mat-header-cell *matHeaderCellDef mat-sort-header>
+              <span class="m-table-header">Post Text </span>
+            </mat-header-cell>
+            <mat-cell *matCellDef="let element" class="textCenter">
+              {{ element.post_text }}
+            </mat-cell>
+          </ng-container>
+          <ng-container matColumnDef="post_image">
+            <mat-header-cell
+              *matHeaderCellDef
+              class="textCenter"
+              mat-sort-header
+            >
+              <span class="m-table-header">Post Image</span>
+            </mat-header-cell>
+            <mat-cell *matCellDef="let element" class="textCenter">
+              <div
+                *ngIf="element.type === 1"
+                (click)="openImage(element)"
+                style="cursor:pointer;color:blue;text-decoration: underline;"
+              >
+                Click here
+              </div>
+            </mat-cell>
+          </ng-container>
+          <ng-container matColumnDef="post_video">
+            <mat-header-cell
+              *matHeaderCellDef
+              class="textCenter"
+              mat-sort-header
+            >
+              <span class="m-table-header">Post Video</span>
+            </mat-header-cell>
+            <mat-cell *matCellDef="let element" class="textCenter">
+              <div
+                *ngIf="element.type === 2"
+                (click)="playVideo(element)"
+                style="cursor:pointer;color:blue;text-decoration: underline;"
+              >
+                Click here
+              </div>
+            </mat-cell>
+          </ng-container>
+
+          <ng-container matColumnDef="status">
+            <mat-header-cell
+              *matHeaderCellDef
+              class="textCenter"
+              mat-sort-header
+            >
+              <span class="m-table-header textCenter">Status</span>
+            </mat-header-cell>
+            <mat-cell
+              *matCellDef="let element; let i = index"
+              class="textCenter"
+            >
+              <button
+                *ngIf="element.abusive_user"
+                (click)="updateUserStatus(element)"
+                [class]="element.abusive_user ? 'inactive' : 'active'"
+              >
+                {{ getStatus1(element.abusive_user) }}
+              </button>
+              <button
+                *ngIf="element.abusive_post"
+                (click)="updatePostStatus(element)"
+                [class]="element.abusive_post ? 'active' : 'inactive'"
+              >
+                {{ getStatus2(element.abusive_post) }}
+              </button>
+            </mat-cell>
+          </ng-container>
+
+          <!-- <ng-container matColumnDef="active">
+              <mat-header-cell *matHeaderCellDef mat-sort-header>
+                <span class="m-table-header textCenter"> Status </span>
+              </mat-header-cell>
+              <mat-cell *matCellDef="let element; let i = index" class="textCenter">
+                <button (click)="deleteClub(element)" [class]="(element.active) ? 'inactive' : 'active'">{{getStatus(element.active)}}</button>
+              </mat-cell>
+            </ng-container> -->
+
+          <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+          <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
+        </mat-table>
+        <!-- <mat-paginator [length]="100" [pageSize]="100" [pageSizeOptions]="[25, 50, 75, 100]">
+        </mat-paginator> -->
+      </div>
+    </mat-card-content>
+  </mat-card>
+</div>

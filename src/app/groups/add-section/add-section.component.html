@@ -1,0 +1,109 @@
+<mat-card>
+  <div class="delete">
+    <span (click)="deleteSection(section)">
+      <span class="table-icon m-pointer" title="Delete Section">
+        <i class="fas fa-trash"></i>
+      </span>
+    </span>
+  </div>
+
+  <div>
+    <div class="input-container">
+      <div class="label-container">
+        <span class="label">Title</span>
+      </div>
+      <div class="field-container">
+        <mat-form-field [floatLabel]="'never'">
+          <input
+            matInput
+            name="sTitle"
+            [(ngModel)]="section.title"
+            required
+            placeholder="Title"
+          />
+        </mat-form-field>
+      </div>
+    </div>
+    <div class="input-container">
+      <div class="label-container">
+        <span class="label">Order</span>
+      </div>
+      <div class="field-container">
+        <mat-form-field [floatLabel]="'never'">
+          <input
+            matInput
+            name="Order"
+            [min]="1"
+            [(ngModel)]="section.order"
+            #Order="ngModel"
+            (ngModelChange)="validateOrder($event)"
+            required
+            placeholder="order"
+          />
+        </mat-form-field>
+      </div>
+    </div>
+
+    <div><span>Profile fields</span></div>
+    <!-- <div *ngFor="let field of section.profile_fields">
+      <ul class="flex-container shorthand">
+        <li class="flex-item">
+          <mat-checkbox [(ngModel)]="field.isSelected"
+            ><span>{{ field.field.label }}</span></mat-checkbox
+          >
+
+          <input
+            class="order_input"
+            type="number"
+            [min]="0"
+            name="order"
+            [(ngModel)]="field.order"
+            #order="ngModel"
+          />
+        </li>
+      </ul>
+    </div> -->
+    <!-- <ul
+      class="flex-container shorthand"
+      *ngFor="let field of section.profile_fields; let i = index"
+    >
+      <li class="flex-item">
+        <mat-checkbox [(ngModel)]="field.isSelected"
+          ><span>{{ field.field.label }}</span></mat-checkbox
+        >
+
+        <input
+          class="order_input"
+          [min]="0"
+          name="order"
+          [(ngModel)]="field.order"
+          (ngModelChange)="validateProfileOrder($event, i)"
+          #order="ngModel"
+        />
+      </li>
+    </ul> -->
+    <div
+      #gridView
+      [ngStyle]="{ 'width.px': divSize }"
+      [fxShow]="setColNum(gridView.style.width)"
+    >
+      <mat-grid-list [cols]="columnNum" rowHeight="2.5rem">
+        <mat-grid-tile
+          *ngFor="let field of section.profile_fields; let i = index"
+        >
+          <mat-checkbox class="checkbox" [(ngModel)]="field.isSelected"
+            ><span>{{ field.field.label }}</span></mat-checkbox
+          >
+
+          <input
+            class="order_input"
+            [min]="0"
+            name="order"
+            [(ngModel)]="field.order"
+            (ngModelChange)="validateProfileOrder($event, i)"
+            #order="ngModel"
+        /></mat-grid-tile>
+      </mat-grid-list>
+    </div>
+  </div>
+</mat-card>

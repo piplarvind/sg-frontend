@@ -1,0 +1,26 @@
+@import "src/variables";
+mat-card.button {
+    color: $primary;
+    padding: 24px 50px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.recepHeading{
+    font-size: 20px; 
+}
+
+.recepName{
+    margin-left: 20px;
+}
+
+.mailReciever{
+    padding: 10px 0px 25px 0px;
+    border-bottom: 1px solid lightgrey;
+}
+
+.mailContent{
+    padding: 30px 10px 20px 0px;
+    min-height: 200px;
+}
+
