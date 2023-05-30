@@ -39,22 +39,42 @@
                   </mat-form-field>
                 </div>
               </div> -->
-                    <div class="input-container">
-                      <div class="errortxt" [hidden]="clubName.valid || clubName.pristine">
-                        Club ID is required
-                      </div>
-                      <div class="label-container">
-                        <span class="label-icon">
-                        </span>
-                        <span class="label">CLUB ID#</span>
-                      </div>
-                      <div class="field-container">
-                        <mat-form-field [floatLabel]="'never'">
-                          <input matInput [(ngModel)]="club.club_code" name="clubID" #clubName="ngModel" 
-                            placeholder="Club ID" >
-                        </mat-form-field>
-                      </div>
-                    </div>
+              
+              <div class="input-container">
+                <div class="errortxt" [hidden]="sportVal.valid || sportVal.untouched">
+                  Sport is required
+                </div>
+                <div class="label-container">
+                  <span class="label-icon">
+                  </span>
+                  <span class="label">SPORT</span>
+                </div>
+                <div class="field-container">
+                  <mat-form-field [floatLabel]="'never'">
+                    <mat-select matInput placeholder="Select the Sport" name="sportVal" #sportVal="ngModel"
+                      [(ngModel)]="selectedSportId">
+                      <mat-option *ngFor="let sport of sportList" [value]="sport._id" (click)='sportData(sport)'>{{sport.sport_name}}</mat-option>
+                    </mat-select>
+                  </mat-form-field>
+                </div>
+              </div>
+
+              <div class="input-container">
+                <div class="errortxt" [hidden]="clubName.valid || clubName.pristine">
+                  Club ID is required
+                </div>
+                <div class="label-container">
+                  <span class="label-icon">
+                  </span>
+                  <span class="label">CLUB ID#</span>
+                </div>
+                <div class="field-container">
+                  <mat-form-field [floatLabel]="'never'">
+                    <input matInput [(ngModel)]="club.club_code" name="clubID" #clubName="ngModel" 
+                      placeholder="Club ID" >
+                  </mat-form-field>
+                </div>
+              </div>
               <div class="input-container">
                 <div class="errortxt" [hidden]="clubName.valid || clubName.pristine">
                   Club Name is required

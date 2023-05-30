@@ -48,6 +48,7 @@ import { ProfilesModule } from '@app/profiles/profiles.module';
 import { ProfileTypeModule } from '@app/profile-type/profile-type.module';
 
 import { JwtInterceptor } from './core/http/jwt.interceptor';
+
 @NgModule({
   imports: [
     BrowserModule,

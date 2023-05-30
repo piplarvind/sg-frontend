@@ -61,7 +61,6 @@ export class AddTeamComponent implements OnInit {
     athletes: '',
     banner: '',
     logo: '',
-
     head_coach: '',
     assistant_coach: '',
     team_rep: '',

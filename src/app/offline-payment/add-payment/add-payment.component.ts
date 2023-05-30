@@ -450,8 +450,8 @@ export class AddPaymentComponent implements OnInit {
   submitPayment() {
     this.sharedService.showLoader = true;
     const temp = this.offline;
-    console.log(temp);
-    let paiddata: boolean = false;
+    console.log('offline=>',temp);
+    let paiddata: boolean = true;
     temp.clubId = this.curClub;
     if (this.offline.payments.length) {
       temp.payments = this.offline.payments.map(prop => {

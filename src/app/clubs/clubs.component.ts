@@ -45,6 +45,7 @@ export class ClubsComponent implements OnInit, AfterViewInit {
   displayedColumns: any = [
     'club_name',
     // 'mobile_phone',
+    'sport',
     'website',
     'created_at',
     'createdBy',

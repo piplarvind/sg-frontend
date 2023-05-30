@@ -5,7 +5,7 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 import { MatSortModule } from '@angular/material/sort';
 import { MaterialModule } from '@app/material.module';
 
-// import { NgxEditorModule} from 'ngx-editor';
+import { NgxEditorModule } from 'ngx-editor';
 
 import { MailRoutingModule } from '@app/mail/mail-routing.module';
 import { MailComponent } from '@app/mail/mail.component';
@@ -20,13 +20,14 @@ import { SearchSelectModule } from '@app/search-select/search-select.module';
 
 @NgModule({
   imports: [
-    CommonModule,MatSortModule,
+    CommonModule,
+    MatSortModule,
     TranslateModule,
     FlexLayoutModule,
     SearchSelectModule,
     MaterialModule,
     MailRoutingModule,
-    // NgxEditorModule,
+    NgxEditorModule,
     FormsModule,
     // NgxMatSelectSearchModule,
     ReactiveFormsModule,

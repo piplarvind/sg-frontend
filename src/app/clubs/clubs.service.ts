@@ -1,21 +1,21 @@
-import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
-
+import { Injectable } from "@angular/core";
+import { HttpClient, HttpHeaders } from "@angular/common/http";
 
 @Injectable()
 export class ClubsService {
   curClub: any = {};
-  createClub = 'clubs/';
-  getClubs = 'clubs/';
-  editClub = 'clubs/';
-  deleteClub = 'clubs/';
-  fetchOneClub = 'clubs/';
-  getCountries = 'lookup/country';
-  getAllState = 'lookup/state?filter=';
-  allregions = 'lookup/region';
-  getDistrictsList = 'lookup/district';
-  clubadminRoles = 'profiles/?club=5';
-  getAllAthleteClubFees = 'clubs/athleteclubfee/';
+  createClub = "clubs/";
+  getClubs = "clubs/";
+  editClub = "clubs/";
+  deleteClub = "clubs/";
+  fetchOneClub = "clubs/";
+  getCountries = "lookup/country";
+  getAllState = "lookup/state?filter=";
+  allregions = "lookup/region";
+  getDistrictsList = "lookup/district";
+  getSportsList = "sports/";
+  clubadminRoles = "profiles/?club=5";
+  getAllAthleteClubFees = "clubs/athleteclubfee/";
   // headers = new HttpHeaders({
   //   'Content-Type': 'application/json',
   //   Authorization: localStorage.token
@@ -29,7 +29,7 @@ export class ClubsService {
         (res: any) => {
           resolve(res);
         },
-        err => {
+        (err) => {
           reject(err);
         }
       );
@@ -43,7 +43,7 @@ export class ClubsService {
         (res: any) => {
           resolve(res);
         },
-        err => {
+        (err) => {
           reject(err);
         }
       );
@@ -52,12 +52,12 @@ export class ClubsService {
   getClubList1(skip, limit) {
     return new Promise((resolve, reject) => {
       this.http
-        .get(this.getClubs + '?skip=' + skip + '&limit=' + limit)
+        .get(this.getClubs + "?skip=" + skip + "&limit=" + limit)
         .subscribe(
           (res: any) => {
             resolve(res);
           },
-          err => {
+          (err) => {
             reject(err);
           }
         );
@@ -69,7 +69,7 @@ export class ClubsService {
         (res: any) => {
           resolve(res);
         },
-        err => {
+        (err) => {
           reject(err);
         }
       );
@@ -81,7 +81,7 @@ export class ClubsService {
         (res: any) => {
           resolve(res);
         },
-        err => {
+        (err) => {
           reject(err);
         }
       );
@@ -92,13 +92,13 @@ export class ClubsService {
     return new Promise((resolve, reject) => {
       this.http
         .get(
-          this.getClubs + '?' + 'active=false&skip=' + skip + '&limit=' + limit
+          this.getClubs + "?" + "active=false&skip=" + skip + "&limit=" + limit
         )
         .subscribe(
           (res: any) => {
             resolve(res);
           },
-          err => {
+          (err) => {
             reject(err);
           }
         );
@@ -117,19 +117,19 @@ export class ClubsService {
 
   updateClub(club, credentials: any) {
     const tempHeaders = {
-      Authorization: localStorage.getItem('token')
+      Authorization: localStorage.getItem("token"),
     };
     const newFormData = this.transformRequest(credentials);
     return new Promise((resolve, reject) => {
       this.http
         .put(this.editClub + club, newFormData, {
-          headers: tempHeaders
+          headers: tempHeaders,
         })
         .subscribe(
           (res: any) => {
             resolve(res);
           },
-          err => {
+          (err) => {
             reject(err);
           }
         );
@@ -137,13 +137,13 @@ export class ClubsService {
   }
 
   removeClub(credentials: any, obj: any) {
-    console.log('obj', obj);
+    console.log("obj", obj);
     return new Promise((resolve, reject) => {
       this.http.patch(this.deleteClub + credentials, obj).subscribe(
         (res: any) => {
           resolve(res);
         },
-        err => {
+        (err) => {
           reject(err);
         }
       );
@@ -151,10 +151,13 @@ export class ClubsService {
   }
 
   extraxtNo(e: any) {
-    if (e !== '') {
-      e = e.replace(/[^A-Z0-9]+/gi, '');
+    if (e !== "") {
+      e = e.replace(/[^A-Z0-9]+/gi, "");
       return e;
     }
+  }
+  getSports() {
+    return this.http.get(this.getSportsList);
   }
 
   getAllCountries() {
@@ -174,12 +177,12 @@ export class ClubsService {
   getClubadmin(club_id) {
     return new Promise((resolve, reject) => {
       this.http
-        .post(this.clubadminRoles + club_id + '&type=Club_Admin', {})
+        .post(this.clubadminRoles + club_id + "&type=Club_Admin", {})
         .subscribe(
           (res: any) => {
             resolve(res);
           },
-          err => {
+          (err) => {
             reject(err);
           }
         );
@@ -192,14 +195,14 @@ export class ClubsService {
         (res: any) => {
           resolve(res);
         },
-        err => {
+        (err) => {
           reject(err);
         }
       );
     });
   }
 
-  getAthleteClubFeeList(athleteId:any, type: any) {
+  getAthleteClubFeeList(athleteId: any, type: any) {
     return this.http.get(this.getAllAthleteClubFees + athleteId);
   }
 }

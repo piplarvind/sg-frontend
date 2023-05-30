@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 # Sportsgrit
 
 This project was generated with [ngX-Rocket](https://github.com/ngx-rocket/generator-ngx-rocket/)
@@ -131,5 +130,3 @@ Development, build and quality processes are based on [angular-cli](https://gith
 - [Browser routing](docs/routing.md)
 =======
 # tg_web_admin
-
->>>>>>> cb01936b7ce61cde66f56d5be732234c5e623ab9

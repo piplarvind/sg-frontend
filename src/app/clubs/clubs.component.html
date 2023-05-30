@@ -121,6 +121,16 @@
             </mat-cell>
           </ng-container>
 
+          <ng-container matColumnDef="sport">
+            <mat-header-cell *matHeaderCellDef mat-sort-header>
+              <span class="m-table-header"> Sport </span>
+            </mat-header-cell>
+            <mat-cell *matCellDef="let element">
+              {{ element.sport.sport_name }}
+            </mat-cell>
+          </ng-container>
+
+
           <ng-container matColumnDef="website">
             <mat-header-cell *matHeaderCellDef mat-sort-header>
               <span class="m-table-header"> Website </span>

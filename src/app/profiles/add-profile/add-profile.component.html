@@ -113,7 +113,7 @@
                         <input type="file" style="display: none" #logoInput (change)="getClubImage($event)"
                           #logoprofileInput />
                         <mat-form-field [floatLabel]="'never'" (click)="logoInput.click()">
-                          <input matInput placeholder="Upload the Image" class="m-pointer" [value]="logo" disabled />
+                          <input matInput placeholder="Upload the image" class="m-pointer" [value]="logo" disabled />
                        
                           <img *ngIf="logo" [src]="_DomSanitizationService.bypassSecurityTrustUrl(club_img)
                           "

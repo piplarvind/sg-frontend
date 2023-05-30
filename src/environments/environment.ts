@@ -23,16 +23,16 @@ export const environment = {
   imageUrl: 'http://192.168.2.35:8000/v2/vb/',
   */
 
+  //Local
   serverUrl: 'http://localhost:8000/api/v2/',
   imageUrl: 'http://localhost:8000/v2/',
-
+  resetpasswordurl: 'http://54.185.76.175:8000/manage/forgotPassword',
+  
+  
   // dev
   //serverUrl: 'http://staging.sportgrit.com/api/v2/vb/',
   //imageUrl: 'http://staging.sportgrit.com/v2/vb/',
   //resetpasswordurl: 'http://staging.sportgrit.com/manage/forgotPassword',
-  
-
-  resetpasswordurl: 'http://vb.sportgrit.innovatily.net/forgotPassword',
   
   
   // production

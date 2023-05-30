@@ -33,10 +33,12 @@ export class AddClubComponent implements OnInit {
   clubLogo = '';
   tempFile: any = '';
   club_img: any;
+  sportList: any;
   districtList: any;
   invalidEmail: any;
   invalidNumber: Boolean;
   club: any = {
+    sport:'',
     club_code: '',
     name: '',
     // first_name: '',
@@ -54,6 +56,7 @@ export class AddClubComponent implements OnInit {
     total_teams: '',
     region: ''
   };
+  selectedSportId: any;
   selectedregion: any;
   selectedregionId: any;
   selectedState: any;
@@ -106,6 +109,7 @@ export class AddClubComponent implements OnInit {
         this.getStates(countryId);
       });
     }
+    this.getSports();
     this.getCountries();
     this.getDistricts();
     this.getAllRegions();
@@ -173,7 +177,7 @@ export class AddClubComponent implements OnInit {
         this.club = res.data;
         this.selectedValidity = this.club.validity;
         this.selectedCountryId = this.club.country._id;
-
+        this.selectedSportId = this.club.sport._id;
         this.selectedStateId = this.club.state._id;
         this.selectedDistrictId = this.club.district._id;
         this.selectedregionId = this.club.region._id;
@@ -181,10 +185,9 @@ export class AddClubComponent implements OnInit {
           this.club_img = `${environment.imageUrl}${res.data.logo}`;
           this.tempFile = res.data.logo;
         }
-
         this.getStates(this.selectedCountryId);
-
         this.sharedService.showLoader = false;
+        console.log(this.club);
       })
       .catch((err: any) => {});
   }
@@ -248,6 +251,7 @@ export class AddClubComponent implements OnInit {
     //     .subscribe((res: any) => {});
     // } else {
     //   temp.mobile_phone = this.extraxtNo(temp.mobile_phone);
+    temp.sport = this.selectedSportId;
     temp.country = this.selectedCountryId;
     temp.state = this.selectedStateId;
     temp.district = this.selectedDistrictId;
@@ -282,7 +286,7 @@ export class AddClubComponent implements OnInit {
     const temp = this.club;
 
     temp.logo = this.tempFile;
-
+    temp.sport = this.selectedSportId;
     temp.country = this.selectedCountryId;
     temp.state = this.selectedStateId;
     temp.district = this.selectedDistrictId;
@@ -348,10 +352,19 @@ export class AddClubComponent implements OnInit {
     });
   }
 
+  getSports() {
+    this.clubService.getSports().subscribe((res: any) => {
+      this.sportList = [...res.data];
+    });
+  }
+
   districtData(district: any) {
     this.selectedDistrictId = district._id;
   }
 
+  sportData(sport: any) {
+    this.selectedSportId = sport._id;
+  }
   formatMobile(number: any) {
     return this.inputChanged(number);
   }
