@@ -25,7 +25,7 @@ export const environment = {
 
   //Local
   serverUrl: 'http://localhost:8000/api/v2/',
-  imageUrl: 'http://localhost:8000/v2/',
+  imageUrl: 'http://localhost:8000/',
   resetpasswordurl: 'http://54.185.76.175:8000/manage/forgotPassword',
   
   
