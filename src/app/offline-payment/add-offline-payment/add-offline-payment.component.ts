@@ -18,7 +18,7 @@ import * as moment from 'moment';
 })
 export class AddOfflinePaymentComponent implements OnInit {
   @ViewChild(MatPaginator) paginator: MatPaginator;
-  title = 'ADD PAYMENTS DETAIL';
+  title = 'Add Payments Detail';
 
   today: Date = new Date();
 

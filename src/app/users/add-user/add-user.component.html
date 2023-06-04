@@ -10,11 +10,11 @@
         <div class="label-container">
           <span class="label-icon">
           </span>
-          <span class="label">USER TYPE</span>
+          <span class="label">User Type</span>
         </div>
         <div class="field-container">
           <mat-form-field [floatLabel]="'never'">
-            <mat-select matInput placeholder="Select User Type" name="selectedUserRole" [(ngModel)]="selectedUserRole"
+            <mat-select matInput placeholder="Select user type" name="selectedUserRole" [(ngModel)]="selectedUserRole"
               [value]="selectedUserRole">
               <mat-option style='font-size: 14px' *ngFor="let user of rolesList" [value]="user._id" (click)="selectUser(user)">{{user.user_role}}</mat-option>
             </mat-select>
@@ -25,11 +25,11 @@
         <div class="label-container">
           <span class="label-icon">
           </span>
-          <span class="label">USER TYPE</span>
+          <span class="label">User Type</span>
         </div>
         <div class="field-container">
           <mat-form-field [floatLabel]="'never'">
-            <mat-select matInput placeholder="Select User Type" name="selectedUserRole" [(ngModel)]="selectedUserRole"
+            <mat-select matInput placeholder="Select user type" name="selectedUserRole" [(ngModel)]="selectedUserRole"
               [value]="selectedUserRole">
               <mat-option style='font-size: 14px' *ngFor="let user of rolesList" [value]="user._id" (click)="selectUser(user)">{{user.user_role}}</mat-option>
             </mat-select>
@@ -42,7 +42,7 @@
         <div class="label-container">
           <span class="label-icon">
           </span>
-          <span class="label">PARENT OF</span>
+          <span class="label">Parent Of</span>
         </div>
         <div class="field-container">
           <mat-form-field [floatLabel]="'never'">
@@ -61,7 +61,7 @@
         <div class="label-container">
           <span class="label-icon">
           </span>
-          <span class="label">PARENT OF</span>
+          <span class="label">Parent Of</span>
         </div>
         <div class="field-container">
           <mat-form-field [floatLabel]="'never'">
@@ -87,16 +87,16 @@
             <mat-card class="childContainer">
               <div class="input-container">
                 <div class="errortxt" [hidden]="firstName.valid || firstName.pristine">
-                  First Name is required
+                  First name is required
                 </div>
                 <div class="label-container">
                   <span class="label-icon">
                   </span>
-                  <span class="label">FIRST NAME</span>
+                  <span class="label">First Name</span>
                 </div>
                 <div class="field-container">
                   <mat-form-field [floatLabel]="'never'">
-                    <input matInput [(ngModel)]="user.first_name" placeholder="First Name" name="firstName" #firstName="ngModel"
+                    <input matInput [(ngModel)]="user.first_name" placeholder="First name" name="firstName" #firstName="ngModel"
                       required>
                   </mat-form-field>
 
@@ -104,16 +104,16 @@
               </div>
               <div class="input-container">
                 <div class="errortxt" [hidden]="lastName.valid || lastName.pristine">
-                  Last Name is required
+                  Last name is required
                 </div>
                 <div class="label-container">
                   <span class="label-icon">
                   </span>
-                  <span class="label">LAST NAME</span>
+                  <span class="label">Last Name</span>
                 </div>
                 <div class="field-container">
                   <mat-form-field [floatLabel]="'never'">
-                    <input matInput [(ngModel)]="user.last_name" placeholder="Last Name" name="lastName" #lastName="ngModel">
+                    <input matInput [(ngModel)]="user.last_name" placeholder="Last name" name="lastName" #lastName="ngModel">
                   </mat-form-field>
                 </div>
               </div>
@@ -133,7 +133,7 @@
                 <div class="label-container">
                   <span class="label-icon">
                   </span>
-                  <span class="label">DATE OF BIRTH</span>
+                  <span class="label">DOB</span>
                 </div>
                 <div class="field-container">
                   <select class="dateInput" style="height:30px" [(ngModel)]="dob.month" placeholder="Mon" name="monthVal"
@@ -176,7 +176,7 @@
                 <div class="label-container">
                   <span class="label-icon">
                   </span>
-                  <span class="label">EMAIL</span>
+                  <span class="label">Email</span>
                 </div>
                 <div class="field-container">
                   <mat-form-field [floatLabel]="'never'">
@@ -189,7 +189,7 @@
                 <div class="label-container">
                   <span class="label-icon">
                   </span>
-                  <span class="label">EMAIL</span>
+                  <span class="label">Email</span>
                 </div>
                 <div class="field-container">
                   <mat-form-field [floatLabel]="'never'">
@@ -203,12 +203,12 @@
                   Mobile is required
                 </div>
                 <div *ngIf="invalidNumber" class="errortxt">
-                  <span>Invalid Mobile Number</span>
+                  <span>Invalid mobile number</span>
                 </div>
                 <div class="label-container">
                   <span class="label-icon">
                   </span>
-                  <span class="label">MOBILE PHONE (login)</span>
+                  <span class="label">Mobile Phone (login)</span>
                 </div>
                 <div class="field-container">
                   <mat-form-field [floatLabel]="'never'">
@@ -221,7 +221,7 @@
                 <div class="label-container">
                   <span class="label-icon">
                   </span>
-                  <span class="label">MOBILE PHONE (login)</span>
+                  <span class="label">Mobile Phone (login)</span>
                 </div>
                 <div class="field-container">
                   <mat-form-field [floatLabel]="'never'">
@@ -232,12 +232,12 @@
               </div>
               <div class="input-container" *ngIf="hideUserDetails">
                 <div *ngIf="invalidHomeNumber" class="errortxt">
-                  <span>Invalid Home Number</span>
+                  <span>Invalid home number</span>
                 </div>
                 <div class="label-container">
                   <span class="label-icon">
                   </span>
-                  <span class="label">HOME PHONE</span>
+                  <span class="label">Home Phone</span>
                 </div>
                 <div class="field-container">
                   <mat-form-field [floatLabel]="'never'">
@@ -258,7 +258,7 @@
                 <div class="label-container">
                   <span class="label-icon">
                   </span>
-                  <span class="label">ADDRESS LINE 1</span>
+                  <span class="label">Address Line 1</span>
                 </div>
                 <div class="field-container">
                   <mat-form-field [floatLabel]="'never'">
@@ -271,7 +271,7 @@
                 <div class="label-container">
                   <span class="label-icon">
                   </span>
-                  <span class="label">ADDRESS LINE 2</span>
+                  <span class="label">Address Line 2</span>
                 </div>
                 <div class="field-container">
                   <mat-form-field [floatLabel]="'never'">
@@ -288,7 +288,7 @@
                 <div class="label-container">
                   <span class="label-icon">
                   </span>
-                  <span class="label">CITY</span>
+                  <span class="label">City</span>
                 </div>
                 <div class="field-container">
                   <mat-form-field [floatLabel]="'never'">
@@ -304,7 +304,7 @@
                 <div class="label-container">
                   <span class="label-icon">
                   </span>
-                  <span class="label">STATE</span>
+                  <span class="label">State</span>
                 </div>
                 <div class="field-container">
                   <mat-form-field [floatLabel]="'never'">
@@ -337,7 +337,7 @@
                 <div class="label-container">
                   <span class="label-icon">
                   </span>
-                  <span class="label">COUNTRY</span>
+                  <span class="label">Country</span>
                 </div>
                 <div class="field-container">
                   <mat-form-field [floatLabel]="'never'">

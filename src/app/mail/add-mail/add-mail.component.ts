@@ -22,7 +22,7 @@ export class AddMailComponent implements OnInit {
   curClub: string;
   selectedTeams: Array<any>;
   recipients = [];
-  title = 'COMPOSE MAIL';
+  title = 'Compose Mail';
   rolesList: Array<any> = [];
   roleUserList: Array<any>;
   mailSub: string;

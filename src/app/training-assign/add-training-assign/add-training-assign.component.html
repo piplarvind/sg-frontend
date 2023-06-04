@@ -14,7 +14,7 @@
                   Task Name is required
                 </div>
                 <div class="label-container">
-                  <span class="label">TASK NAME</span>
+                  <span class="label">Task Name</span>
                 </div>
                 <div class="field-container">
                   <mat-form-field [floatLabel]="'never'">
@@ -23,7 +23,7 @@
                       name="name"
                       #name="ngModel"
                       required
-                      placeholder="Select Task"
+                      placeholder="Select task"
                       [(ngModel)]="training.library"
                     >
                       <mat-option
@@ -44,14 +44,14 @@
                   Assigned By is required
                 </div> -->
                 <div class="label-container">
-                  <span class="label">ASSIGNED BY</span>
+                  <span class="label">Assigned By</span>
                 </div>
                 <div class="field-container">
                   <app-search-select
                     [isTeam]="true"
                     [isRequired]="true"
                     [dropdownList]="coachList"
-                    placeholder="Select Coach"
+                    placeholder="Select coach"
                     [alreadySel]="training.coach"
                     (valueUpdated)="getCoach($event)"
                   ></app-search-select>
@@ -62,7 +62,7 @@
                       name="assignBy"
                       #assignBy="ngModel"
                       required
-                      placeholder="Select Coach"
+                      placeholder="Select coach"
                       [(ngModel)]="training.coach"
                     >
                       <mat-option
@@ -76,14 +76,14 @@
               </div>
               <div class="input-container" *ngIf="showCoachName">
                 <div class="label-container">
-                  <span class="label">ASSIGNED BY</span>
+                  <span class="label">Assigned By</span>
                 </div>
                 <div class="field-container">
                   <mat-form-field [floatLabel]="'never'">
                     <input
                       matInput
                       [value]="coachName"
-                      placeholder="Enter coach Name"
+                      placeholder="Enter coach name"
                       name="coach"
                     />
                   </mat-form-field>
@@ -92,13 +92,13 @@
 
               <div class="input-container" *ngIf="teamsList">
                 <div class="label-container">
-                  <span class="label">SELECT TEAM(S)</span>
+                  <span class="label">Select Team(s)</span>
                 </div>
                 <div class="field-container">
                   <app-search-select
                     [isTeam]="true"
                     [dropdownList]="teamsList"
-                    placeholder="Select Team(s)"
+                    placeholder="Select team(s)"
                     [alreadySel]="training.team_id"
                     (valueUpdated)="selectedTeam($event.value)"
                   ></app-search-select>
@@ -108,7 +108,7 @@
                       name="teams"
                       #teams="ngModel"
                       (selectionChange)="selectedTeam($event.value)"
-                      placeholder="Select Team(s)"
+                      placeholder="Select team(s)"
                       [(ngModel)]="training.team_id"
                     >
                       <mat-option
@@ -128,14 +128,14 @@
             <mat-card class="childContainer">
               <div class="input-container">
                 <div class="label-container">
-                  <span class="label">SELECT ATHLETE (S)</span>
+                  <span class="label">Select Athlete(s)</span>
                 </div>
                 <div class="field-container">
                   <app-search-select
                     [isTeam]="true"
                     [isMultiple]="true"
                     [dropdownList]="athleteList"
-                    placeholder="Select Athlete(s)"
+                    placeholder="Select athlete(s)"
                     [alreadySel]="training.atheletes"
                     (valueUpdated)="atheleteschange($event.value)"
                   ></app-search-select>
@@ -165,11 +165,11 @@
                   class="errortxt"
                   [hidden]="startDate.valid || startDate.pristine"
                 >
-                  Start Date is required
+                  Start date is required
                 </div>
                 <div class="label-container">
                   <span class="label-icon"> </span>
-                  <span class="label">START DATE</span>
+                  <span class="label">Start Date</span>
                 </div>
                 <div class="field-container">
                   <mat-form-field [floatLabel]="'never'">
@@ -179,7 +179,7 @@
                       matInput
                       [matDatepicker]="picker"
                       [min]="training.start_date ? training.start_date : today"
-                      placeholder="Start Date"
+                      placeholder="Start date"
                       [(ngModel)]="training.start_date"
                       name="startDate"
                       #startDate="ngModel"
@@ -196,7 +196,7 @@
               <div class="input-container">
                 <div class="label-container">
                   <span class="label-icon"> </span>
-                  <span class="label">END DATE</span>
+                  <span class="label">End Date</span>
                 </div>
                 <div class="field-container">
                   <mat-form-field [floatLabel]="'never'">
@@ -204,7 +204,7 @@
                       matInput
                       [matDatepicker]="endpicker"
                       [min]="training.start_date"
-                      placeholder="End Date"
+                      placeholder="End date"
                       name="end"
                       #end="ngModel"
                       [(ngModel)]="training.end_date"

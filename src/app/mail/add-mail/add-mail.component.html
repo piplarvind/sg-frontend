@@ -5,7 +5,7 @@
 
   <mat-card>
     <div class="label-container">
-      <span class="label">RECIPIENT TYPE</span>
+      <span class="label">Recipient Type</span>
     </div>
     <div class="field-container">
       <mat-radio-group (change)="recipientChanged($event)" [(ngModel)]="recVal">
@@ -28,7 +28,7 @@
     </div>
     <div style="width: 30vw;margin-top:20px;" *ngIf="isTeamSelected">
       <div class="label-container">
-        <span class="label">SELECT TEAM(S)</span>
+        <span class="label">Select Team(s)</span>
       </div>
       <div class="field-container">
         <!-- <mat-form-field [floatLabel]="'never'">
@@ -50,12 +50,12 @@
     <div style="display:flex;">
       <div style="width: 30vw;margin-top:20px;" *ngIf="isRoleSelected">
         <div class="label-container">
-          <span class="label">SELECT ROLE</span>
+          <span class="label">Select Role</span>
         </div>
         <div class="field-container">
           <mat-form-field [floatLabel]="'never'">
             <mat-select
-              placeholder="Select Role"
+              placeholder="Select role"
               (selectionChange)="getUsersbyRole($event)"
             >
               <mat-option *ngFor="let role of rolesList" [value]="role">{{
@@ -69,7 +69,7 @@
       <!-- (click)="selectRole(role)" -->
       <div style="width: 30vw;margin-top:20px;" *ngIf="isRoleSelected">
         <div class="label-container">
-          <span class="label">SELECT USERS</span>
+          <span class="label">Select Users</span>
         </div>
         <div class="field-container">
           <!-- <mat-form-field [floatLabel]="'never'">
@@ -80,7 +80,7 @@
               </mat-form-field> -->
           <app-search-select
             [dropdownList]="roleUserList"
-            placeHolder="Select Users"
+            placeHolder="Select users"
             [isDefault]="true"
             [isMAIL]="true"
             [isMultiple]="true"
@@ -91,7 +91,7 @@
     </div>
     <div class="input-container" style="margin-top:15px">
       <div class="label-container recipient">
-        <span class="label">TO</span>
+        <span class="label">To</span>
       </div>
       <div class="field-container">
         <mat-form-field [floatLabel]="'never'">
@@ -121,7 +121,7 @@
     <div>
       <div class="input-container" style="margin-top:15px">
         <div class="label-container recipient">
-          <span class="label">SUBJECT</span>
+          <span class="label">Subject</span>
         </div>
         <div class="field-container" style="margin-left: 20px;">
           <mat-form-field [floatLabel]="'never'">

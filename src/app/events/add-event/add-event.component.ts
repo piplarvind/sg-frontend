@@ -94,7 +94,7 @@ export class AddEventComponent implements OnInit, OnChanges {
   invalidAsstCoachNumber: Boolean;
   invalidHeadCoachNumber: Boolean;
   invalidTeamRepNumber: Boolean;
-  title = 'CREATE EVENT';
+  title = 'Create Event';
   isOutside: Boolean;
   selectedCountryId: any;
   selectedStateId: any;

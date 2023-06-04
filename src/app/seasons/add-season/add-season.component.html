@@ -20,13 +20,13 @@
                   <span class="label-icon">
                     <!-- <i class="far fa-list-alt"></i> -->
                   </span>
-                  <span class="label">SEASON NAME</span>
+                  <span class="label">Season Name</span>
                 </div>
                 <div class="field-container">
                   <mat-form-field [floatLabel]="'never'">
                     <input
                       matInput
-                      placeholder="Enter Season Name"
+                      placeholder="Enter season name"
                       [(ngModel)]="season.season_name"
                       required
                       name="seasonName"
@@ -42,13 +42,13 @@
                   class="errortxt"
                   [hidden]="startDate.valid || startDate.untouched"
                 >
-                  Start Date is Required
+                  Start date is required
                 </div>
                 <div class="label-container">
                   <span class="label-icon">
                     <!-- <i class="far fa-list-alt"></i> -->
                   </span>
-                  <span class="label">START DATE</span>
+                  <span class="label">Start Date</span>
                 </div>
                 <div class="field-container">
                   <mat-form-field [floatLabel]="'never'">
@@ -56,7 +56,7 @@
                     <input
                       matInput
                       [matDatepicker]="picker"
-                      placeholder="Enter Start Date"
+                      placeholder="Enter start date"
                       [(ngModel)]="season.start_date"
                       style="width:inherit;"
                       name="startDate"
@@ -78,13 +78,13 @@
                   class="errortxt"
                   [hidden]="endDate.valid || endDate.untouched"
                 >
-                  End Date is Required
+                  End date is required
                 </div>
                 <div class="label-container">
                   <span class="label-icon">
                     <!-- <i class="far fa-list-alt"></i> -->
                   </span>
-                  <span class="label">END DATE</span>
+                  <span class="label">Edit Date</span>
                 </div>
                 <div class="field-container">
                   <mat-form-field [floatLabel]="'never'">
@@ -92,7 +92,7 @@
                     <input
                       matInput
                       [matDatepicker]="picker2"
-                      placeholder="Enter End Date"
+                      placeholder="Enter end date"
                       [(ngModel)]="season.end_date"
                       style="width:inherit;"
                       name="endDate"
@@ -118,11 +118,11 @@
             <div class="input-container">
               <div class="label-container">
                 
-                <span class="label">PLACE</span>
+                <span class="label">Place</span>
               </div>
               <div class="field-container">
                 <mat-form-field [floatLabel]="'never'">
-                  <input matInput placeholder="Enter Location" [(ngModel)]="event.location">
+                  <input matInput placeholder="Enter location" [(ngModel)]="event.location">
                 </mat-form-field>
               </div>
             </div>
@@ -130,7 +130,7 @@
             <div class="input-container">
               <div class="label-container">
                
-                <span class="label">DATE</span>
+                <span class="label">Date</span>
               </div>
               <div class="field-container">
                 <mat-form-field [floatLabel]="'never'">
@@ -144,11 +144,11 @@
             <div class="input-container">
               <div class="label-container">
                 
-                <span class="label">TIME</span>
+                <span class="label">Time</span>
               </div>
               <div class="field-container">
                 <mat-form-field [floatLabel]="'never'">
-                  <input matInput type="time" placeholder="Enter Event Time" [(ngModel)]="event.eventTime">
+                  <input matInput type="time" placeholder="Enter event time" [(ngModel)]="event.eventTime">
                 </mat-form-field>
               </div>
             </div>

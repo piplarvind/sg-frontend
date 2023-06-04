@@ -25,7 +25,7 @@ import {
 export class AddrecruiterComponent implements OnInit {
   showAthlete: any = [];
   age: any = '';
-  title = 'CREATE RECRUITER';
+  title = 'Create Recruiter';
   length: any;
   mobile: string = '';
   college_image: any = '';
@@ -89,7 +89,7 @@ export class AddrecruiterComponent implements OnInit {
   getOneRecruiter(id: any) {
     this.sharedService.showLoader = true;
 
-    this.title = 'EDIT RECRUITER';
+    this.title = 'Edit Recruiter';
 
     this.ProfilesService.fetchOneUser(id, 'cms_recruiter', this.type)
       .then((e: any) => {

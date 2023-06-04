@@ -23,7 +23,7 @@ import {
   styleUrls: ['./add-team.component.scss']
 })
 export class AddTeamComponent implements OnInit {
-  title: any = 'CREATE TEAM';
+  title: any = 'Create Team';
   GenderList: any = [];
   showathlete: any = [];
   clubLogo = '';
@@ -203,7 +203,7 @@ export class AddTeamComponent implements OnInit {
   getOneTeam(id: any) {
     this.sharedService.showLoader = true;
     this.isEdit = true;
-    this.title = 'EDIT TEAM';
+    this.title = 'Edit Team';
 
     this.teamService
       .getOneTeam(id)

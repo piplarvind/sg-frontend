@@ -8,7 +8,7 @@ import { Router, ActivatedRoute } from '@angular/router';
   styleUrls: ['./add-category.component.scss']
 })
 export class AddCategoryComponent implements OnInit {
-  title: string = 'ADD';
+  title: string = 'Add';
   isEdit: Boolean = false;
   categoryName: any;
   group_size: Array<any>;

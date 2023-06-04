@@ -29,7 +29,7 @@ import { ProfilesService } from '@app/profiles/profiles.service';
   styleUrls: ['./add-sport.component.scss']
 })
 export class AddSportComponent implements OnInit {
-  title: any = 'CREATE SPORT';
+  title: any = 'Create Sport';
   sportLogo = '';
   tempFile: any = '';
   sport_img: any;
@@ -79,7 +79,7 @@ export class AddSportComponent implements OnInit {
     this.sharedService.showLoader = true;
     this.isEdit = true;
     this.showImage = true;
-    this.title = 'EDIT SPORT';
+    this.title = 'Edit Sport';
     this.sportService
       .getOneSport(id)
       .then((res: any) => {

@@ -27,7 +27,7 @@ export class AddUserComponent implements OnInit {
 
   showForm = false;
   isLoading = true;
-  title: any = 'CREATE USER';
+  title: any = 'Create User';
   isEdit = false;
   // dob = {
   //   month: null,
@@ -196,7 +196,7 @@ export class AddUserComponent implements OnInit {
         console.log(err);
       });
     if (this.router.url !== '/users/add') {
-      this.title = 'EDIT USER';
+      this.title = 'Edit User';
       this.activeRouteSubscriber = this.activateRoute.queryParams.subscribe(param => {
         this.edituserId = param.userId;
       });

@@ -44,7 +44,7 @@ export class AddPackageComponent implements OnInit, AfterViewInit {
     installment_amount: '',
     down_pay_amount: ''
   };
-  title: any = 'CREATE PACKAGE';
+  title: any = 'Create Package';
   curClubId: any;
   isEdit = false;
   displayedColumns: any = ['installments', 'downPay', 'emi', 'Actions'];
@@ -96,7 +96,7 @@ export class AddPackageComponent implements OnInit, AfterViewInit {
       sessionStorage.selected_package
     ) {
       this.sharedService.showLoader = true;
-      this.title = 'EDIT PACKAGES';
+      this.title = 'Edit Package';
 
       this.getpackagedata = JSON.parse(sessionStorage.selected_package);
       this.package_id = this.getpackagedata._id;

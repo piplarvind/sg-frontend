@@ -91,7 +91,7 @@ export class AddProfileComponent implements OnInit {
   checkIfOthersAreSelected: boolean = false;
   isEdit: boolean = false;
   SeletedRole: any = [];
-  title: string = 'ADD PROFILE';
+  title: string = 'Add Profile';
   fields: any = [];
   createfield: any = [];
   type: any = [];
@@ -434,7 +434,7 @@ export class AddProfileComponent implements OnInit {
   getOneProfile(id) {
     this.sharedService.showLoader = true;
     this.isEdit = true;
-    this.title = 'EDIT PROFILE TYPE';
+    this.title = 'Edit Profile Type';
     this.ProfilesService.fetchOneUser(id, 'cms_profile', this.usertype).then(
       (e: any) => {
         this.sharedService.showLoader = false;

@@ -28,7 +28,7 @@ import {
   ]
 })
 export class AddSeasonComponent implements OnInit {
-  title = 'CREATE SEASON';
+  title = 'Create Season';
 
   temp: any;
   today: any = new Date();
@@ -60,7 +60,7 @@ export class AddSeasonComponent implements OnInit {
       this.temp = localStorage.dbName;
     }
     if (this.router.url === '/seasons/edit') {
-      this.title = 'EDIT SEASON';
+      this.title = 'Edit Season';
       this.isEdit = true;
       this.showSubmit = false;
       let get_sea = JSON.parse(sessionStorage.curSeason);
@@ -72,7 +72,7 @@ export class AddSeasonComponent implements OnInit {
     this.sharedService.showLoader = true;
     this.isEdit = true;
 
-    this.title = 'EDIT SEASON';
+    this.title = 'Edit Season';
     this.seasonService
       .getOneSeason(season_id)
       .then((res: any) => {

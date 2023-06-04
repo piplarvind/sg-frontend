@@ -23,7 +23,7 @@ import {
 })
 export class AddparentComponent implements OnInit {
   age: any = '';
-  title = 'CREATE PARENT';
+  title = 'Create Parent';
   length: any;
   type: any;
   createfield: any = [];
@@ -88,7 +88,7 @@ export class AddparentComponent implements OnInit {
   getOneParent(id: any) {
     this.sharedService.showLoader = true;
 
-    this.title = 'EDIT PARENT';
+    this.title = 'Edit Parent';
 
     this.ProfilesService.fetchOneUser(id, 'cms_parent', this.type)
       .then((e: any) => {

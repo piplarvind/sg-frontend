@@ -26,7 +26,7 @@ export class AddResourceComponent implements OnInit {
     new Date().getDate() +
     '/' +
     new Date().getFullYear();
-  title = 'RESOURCE LIBRARY';
+  title = 'Resource Library';
   isEdit = false;
   curSelectClub: any;
   isSubmit: Boolean;

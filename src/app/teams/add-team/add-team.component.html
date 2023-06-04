@@ -14,11 +14,11 @@
                   class="errortxt"
                   [hidden]="teamName.valid || teamName.pristine"
                 >
-                  Team Name is required
+                  Team name is required
                 </div>
                 <div class="label-container">
                   <span class="label-icon"> </span>
-                  <span class="label">TEAM NAME</span>
+                  <span class="label">Team Name</span>
                 </div>
                 <div class="field-container">
                   <mat-form-field [floatLabel]="'never'">
@@ -27,7 +27,7 @@
                       [(ngModel)]="team.name"
                       name="teamName"
                       maxlength="50"
-                      placeholder="Enter Team Name"
+                      placeholder="Enter team name"
                       required
                       #teamName="ngModel"
                     />
@@ -45,7 +45,7 @@
                       matNativeControl
                       matInput
                       name="gen"
-                      placeholder="Select Gender"
+                      placeholder="Select gender"
                       [(ngModel)]="team.gender"
                       (selectionChange)="gender($event.value)"
                     >
@@ -61,7 +61,7 @@
               <div class="input-container">
                 <div class="label-container">
                   <span class="label-icon"> </span>
-                  <span class="label">AGE GROUP</span>
+                  <span class="label">Age Group</span>
                 </div>
                 <div class="field-container">
                   <mat-form-field [floatLabel]="'never'">
@@ -69,7 +69,7 @@
                       matNativeControl
                       matInput
                       name="age"
-                      placeholder="Select the Age group of the team"
+                      placeholder="Select the age group of the team"
                       [(ngModel)]="team.age"
                       (selectionChange)="ageChanged($event.value)"
                     >
@@ -88,11 +88,11 @@
                   class="errortxt"
                   [hidden]="teamPackage.valid || teamPackage.untouched"
                 >
-                  Club Package is required
+                  Club package is required
                 </div>
                 <div class="label-container">
                   <span class="label-icon"> </span>
-                  <span class="label">CLUB PACKAGE</span>
+                  <span class="label">Club Package</span>
                 </div>
                 <div class="field-container">
                   <mat-form-field [floatLabel]="'never'">
@@ -100,7 +100,7 @@
                       matInput
                       name="teamPackage"
                       [(ngModel)]="team.package"
-                      placeholder="Select Package"
+                      placeholder="Select package"
                       #teamPackage="ngModel"
                       required
                     >
@@ -116,7 +116,7 @@
               <div class="input-container">
                 <div class="label-container">
                   <span class="label-icon"> </span>
-                  <span class="label">TEAM INFO</span>
+                  <span class="label">Team Info</span>
                 </div>
                 <div class="field-container">
                   <mat-form-field [floatLabel]="'never'">
@@ -134,7 +134,7 @@
               <div class="input-container">
                 <div class="label-container">
                   <span class="label-icon"> </span>
-                  <span class="label">CLUB RANK</span>
+                  <span class="label">Club Rank</span>
                 </div>
                 <div class="field-container">
                   <mat-form-field [floatLabel]="'never'">
@@ -153,7 +153,7 @@
               <div class="input-container" *ngIf="showUploadImg">
                 <div class="label-container">
                   <span class="label-icon"> </span>
-                  <span class="label">UPLOAD TEAM PHOTO</span>
+                  <span class="label">Uplaod Team Photo</span>
                 </div>
                 <div class="field-container">
                   <input
@@ -169,7 +169,7 @@
                   >
                     <input
                       matInput
-                      placeholder="Upload the Image"
+                      placeholder="Upload the image"
                       class="m-pointer"
                       [value]="team.logo"
                       disabled
@@ -194,7 +194,7 @@
               </div>
               <!-- <div class="input-container" *ngIf="showUploadImg">
                 <div class="label-container">
-                  <span class="label-icon"> </span> <span class="label">UPLOAD TEAM BANNER PHOTO </span>
+                  <span class="label-icon"> </span> <span class="label"> Upload Team Banner Photo </span>
                 </div>
                 <div class="field-container">
                   <input type="file" style="display: none" #bannerInput  (change)="getBannerImage($event)"
@@ -222,7 +222,7 @@
               <div class="input-container">
                 <div class="label-container">
                   <span class="label-icon"> </span>
-                  <span class="label">HEAD COACH</span>
+                  <span class="label">Head Coach</span>
                 </div>
                 <div class="field-container">
                   <mat-form-field [floatLabel]="'never'">
@@ -231,7 +231,7 @@
                       name="headCoach"
                       [(ngModel)]="team.head_coach"
                       (selectionChange)="getHeadCoach($event.value)"
-                      placeholder="Select Head Coach"
+                      placeholder="Select Head coach"
                     >
                       <mat-option
                         *ngFor="let coach of coachList"
@@ -245,7 +245,7 @@
               <div class="input-container">
                 <div class="label-container">
                   <span class="label-icon"> </span>
-                  <span class="label">ASSISTANT COACH</span>
+                  <span class="label">Assistant Coach</span>
                 </div>
                 <div class="field-container">
                   <mat-form-field [floatLabel]="'never'">
@@ -254,7 +254,7 @@
                       name="assistantcoach"
                       [(ngModel)]="team.assistant_coach"
                       (selectionChange)="getAssistant($event.value)"
-                      placeholder="Select Assistant Coach"
+                      placeholder="Select Assistant coach"
                     >
                       <mat-option
                         *ngFor="let coach of coachList"
@@ -268,7 +268,7 @@
               <div class="input-container">
                 <div class="label-container">
                   <span class="label-icon"> </span>
-                  <span class="label">TEAM REP</span>
+                  <span class="label">Team Rep</span>
                 </div>
                 <div class="field-container">
                   <mat-form-field [floatLabel]="'never'">
@@ -276,7 +276,7 @@
                       matInput
                       name="teamrep"
                       [(ngModel)]="team.team_rep"
-                      placeholder="Select Parent"
+                      placeholder="Select parent"
                       (selectionChange)="getTeamRep($event.value)"
                     >
                       <mat-option
@@ -292,12 +292,12 @@
               <div class="input-container">
                 <div class="label-container">
                   <span class="label-icon"> </span>
-                  <span class="label">ATHLETE</span>
+                  <span class="label">Athlete</span>
                 </div>
                 <div class="field-container">
                   <app-search-select
                     [dropdownList]="athleteList"
-                    placeHolder="Select Athletes"
+                    placeHolder="Select athletes"
                     [isTeam]="true"
                     [isMultiple]="true"
                     [alreadySel]="team.athletes"

@@ -8,7 +8,7 @@ import { Router, ActivatedRoute } from '@angular/router';
   styleUrls: ['./add-brand.component.scss']
 })
 export class AddBrandComponent implements OnInit {
-  title: string = 'ADD Brand';
+  title: string = 'Add Brand';
   brandName: any;
   clubId: any;
   brand: any = {};

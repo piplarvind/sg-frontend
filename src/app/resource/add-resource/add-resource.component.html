@@ -14,7 +14,7 @@
                 <span class="label-icon">
 
                 </span>
-                <span class="label">USER</span>
+                <span class="label">User</span>
               </div>
               <div class="field-container">
                 <mat-form-field [floatLabel]="'never'">
@@ -47,11 +47,11 @@
               <div class="label-container">
                 <span class="label-icon">
                 </span>
-                <span class="label">RESOURCE TYPE</span>
+                <span class="label">Resouce Type</span>
               </div>
               <div class="field-container">
                 <mat-form-field [floatLabel]="'never'">
-                  <mat-select matInput placeholder="Select Resource Type" name="category" #category="ngModel" required
+                  <mat-select matInput placeholder="Select resource type" name="category" #category="ngModel" required
                     [(ngModel)]="resource.type" [disabled]="categoryDisable">
                     <mat-option value="video">Video</mat-option>
                     <mat-option value="image">Image</mat-option>
@@ -79,11 +79,11 @@
                 <span class="label-icon">
 
                 </span>
-                <span class="label">RESOURCE NAME</span>
+                <span class="label">Resouce Name</span>
               </div>
               <div class="field-container">
                 <mat-form-field [floatLabel]="'never'">
-                  <input matInput placeholder="Resource Name" name="resourceName" pattern="[a-zA-Z][a-zA-Z ]+"
+                  <input matInput placeholder="Resource name" name="resourceName" pattern="[a-zA-Z][a-zA-Z ]+"
                     #resourceName="ngModel" required [(ngModel)]="resource.resource_name">
                 </mat-form-field>
               </div>
@@ -97,11 +97,11 @@
                 <span class="label-icon">
 
                 </span>
-                <span class="label">ASSIGNMENT CATEGORY</span>
+                <span class="label">Assignment Category</span>
               </div>
               <div class="field-container">
                 <mat-form-field [floatLabel]="'never'">
-                  <mat-select matInput name="assignCategory" #assignCategory="ngModel" required placeholder="Select Assignment"
+                  <mat-select matInput name="assignCategory" #assignCategory="ngModel" required placeholder="Select assignment"
                     [(ngModel)]="resource.assignment_type">
                     <mat-option *ngFor="let assignment of assignmentList" [value]="assignment._id">{{assignment.AssignmentType}}</mat-option>
 
@@ -129,18 +129,18 @@
             <span class="label-icon">
               <!-- <i class="far fa-list-alt"></i> -->
             </span>
-            <span class="label">UPLOAD VIDEO</span>
+            <span class="label">Upload Video</span>
           </div>
           <div class="field-container">
             <input type="file" style="display: none" #videoInput (change)="getVideoDetail($event)">
             <mat-form-field [floatLabel]="'never'">
-              <input matInput placeholder="Upload Video" style='color:blue;' class="m-pointer" [value]="selectedVid"
+              <input matInput placeholder="Upload video" style='color:blue;' class="m-pointer" [value]="selectedVid"
                 (click)='playVideo()'>
                 <!-- <video *ngIf="selectedVid" width="100" height="100" controls>
                   <source [src]="selectedVid"     (click)='playVideo()' type="video/mp4">
                 </video>  -->
 
-              <mat-hint> HInt/suggestion</mat-hint>
+              <mat-hint> Hint/suggestion</mat-hint>
               <span matSuffix class="m-pointer">
                 <i class="fas fa-upload" (click)="videoInput.click()"></i>
               </span>
@@ -153,11 +153,11 @@
             <span class="label-icon">
               <!-- <i class="far fa-list-alt"></i> -->
             </span>
-            <span class="label">VIDEO NAME</span>
+            <span class="label">Video Name</span>
           </div>
           <div class="field-container">
             <mat-form-field [floatLabel]="'never'">
-              <input matInput placeholder="Video Name" class="m-pointer" name="videoName" [(ngModel)]="resource.video_name">
+              <input matInput placeholder="Video name" class="m-pointer" name="videoName" [(ngModel)]="resource.video_name">
             </mat-form-field>
           </div>
         </div>
@@ -180,12 +180,12 @@
             <span class="label-icon">
               <!-- <i class="far fa-list-alt"></i> -->
             </span>
-            <span class="label">UPLOAD IMAGE</span>
+            <span class="label">Upload Image</span>
           </div>
           <div class="field-container">
             <input type="file" style="display: none" #imageInput (change)="getImageDetail($event)">
             <mat-form-field [floatLabel]="'never'" >
-              <input matInput placeholder="Upload Image" class="m-pointer" [value]="selectedImg"  (click)='openImage()' 
+              <input matInput placeholder="Upload image" class="m-pointer" [value]="selectedImg"  (click)='openImage()' 
                 readonly>
               <mat-hint> Hint/suggestion</mat-hint>
               <img *ngIf="selectedImg" [src]="_DomSanitizationService.bypassSecurityTrustUrl(selectedImg)" (click)='openImage()'  height="100" width="150"/> 
@@ -201,11 +201,11 @@
           max-width: 100%;'>
           <div class="label-container" style='    width: 25%;
             display: inline-block;'>
-            <span class="label">IMAGE NAME</span>
+            <span class="label">Image Name</span>
           </div>
           <div class="field-container">
             <mat-form-field [floatLabel]="'never'">
-              <input matInput placeholder="Image Name" class="m-pointer" name="imageName" [(ngModel)]="resource.image_name">
+              <input matInput placeholder="Image name" class="m-pointer" name="imageName" [(ngModel)]="resource.image_name">
             </mat-form-field>
           </div>
         </div>
@@ -219,13 +219,13 @@
             <span class="label-icon">
               <!-- <i class="far fa-list-alt"></i> -->
             </span>
-            <span class="label">UPLOAD DOCUMENT</span>
+            <span class="label">Upload Document</span>
           </div>
           <div class="field-container">
             <input type="file" style="display: none" #documentInput (change)="getDocDetails($event)">
             <mat-form-field [floatLabel]="'never'">
-              <input matInput placeholder="Upload Document" class="m-pointer" [value]="docUploadName" (click)='openDoc()'>
-              <mat-hint> HInt/suggestion</mat-hint>
+              <input matInput placeholder="Upload document" class="m-pointer" [value]="docUploadName" (click)='openDoc()'>
+              <mat-hint> Hint/suggestion</mat-hint>
               <span matSuffix class="m-pointer">
                   <!-- <iframe id="viewer" frameborder="0" scrolling="no" width="400" height="600"></iframe> -->
                 <i class="fas fa-upload" (click)="documentInput.click()"></i>
@@ -239,11 +239,11 @@
             <span class="label-icon">
               <!-- <i class="far fa-list-alt"></i> -->
             </span>
-            <span class="label">DOCUMENT NAME</span>
+            <span class="label">Document Name</span>
           </div>
           <div class="field-container">
             <mat-form-field [floatLabel]="'never'">
-              <input matInput placeholder="Document Name" class="m-pointer" name="docname" #docname="ngModel"
+              <input matInput placeholder="Document name" class="m-pointer" name="docname" #docname="ngModel"
                 [(ngModel)]="documentName">
             </mat-form-field>
           </div>
@@ -261,11 +261,11 @@
               <span class="label-icon">
                 <!-- <i class="far fa-list-alt"></i> -->
               </span>
-              <span class="label">QUIZ NAME</span>
+              <span class="label">Quiz Name</span>
             </div>
             <div class="field-container">
               <mat-form-field [floatLabel]="'never'">
-                <input matInput placeholder="Quiz Name" class="m-pointer" name="quizname" [(ngModel)]="resource.quiz_name">
+                <input matInput placeholder="Quiz name" class="m-pointer" name="quizname" [(ngModel)]="resource.quiz_name">
               </mat-form-field>
             </div>
           </div>

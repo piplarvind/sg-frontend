@@ -39,7 +39,7 @@ import { breakStatement } from 'babel-types';
   styleUrls: ['./add-athlete.component.scss']
 })
 export class AddAthleteComponent implements OnInit {
-  title: string = 'EDIT ATHLETE';
+  title: string = 'Edit Athlete';
   collage_name: string = '';
   mobile: any = '';
   signed_senior: boolean = false;

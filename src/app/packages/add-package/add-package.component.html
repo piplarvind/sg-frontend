@@ -18,7 +18,7 @@
                 </div>
                 <div class="label-container">
 
-                  <span class="label">PACKAGE TYPE</span>
+                  <span class="label">Package Type</span>
                 </div>
                 <div class="field-container">
                   <mat-form-field [floatLabel]="'never'">
@@ -36,11 +36,11 @@
                 </div>
                 <div class="label-container">
 
-                  <span class="label">PACKAGE NAME</span>
+                  <span class="label">Package Name</span>
                 </div>
                 <div class="field-container">
                   <mat-form-field [floatLabel]="'never'">
-                    <input matInput placeholder="Enter the Package Name" [(ngModel)]="package.name" name="packageName"
+                    <input matInput placeholder="Enter the package name" [(ngModel)]="package.name" name="packageName"
                       #packageName="ngModel" required>
                   </mat-form-field>
                 </div>
@@ -51,12 +51,12 @@
                 </div>
                 <div class="label-container">
 
-                  <span class="label">TOTAL PRICE <span> &#36;</span></span>
+                  <span class="label">Total Price <span> &#36;</span></span>
                 </div>
                 <div class="field-container">
                   <mat-form-field [floatLabel]="'never'">
                     <!-- <input matInput name="total" #total="ngModel" placeholder="Enter the Cost of Package" (keypress)="restrictMinus($event)" pattern="^$|^([0-9]|[1-9][0-9]|[1][0][0])?"  type="number" [(ngModel)]="package.package_amount" required> -->
-                    <input matInput name="total" #total="ngModel" placeholder="Enter the Cost of Package" min="0"  type="text"
+                    <input matInput name="total" #total="ngModel" placeholder="Enter the cost of package" min="0"  type="text"
                       [(ngModel)]="package.package_amount"  (ngModelChange)="validateamount($event)" required>
                   </mat-form-field>
                 </div>
@@ -67,12 +67,12 @@
                 </div>
                 <div class="label-container">
 
-                  <span class="label">VALIDITY FROM DATE</span>
+                  <span class="label">Validity From Date</span>
                 </div>
                   <div class="field-container">
                     <mat-form-field [floatLabel]="'never'">
                       <input matInput [matDatepicker]="picker"  #validity="ngModel" [(ngModel)]="package.validity_from" style="width:inherit"
-                        name="validity" placeholder="Validity From Date" required />
+                        name="validity" placeholder="Validity from date" required />
                       <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                       <mat-datepicker #picker></mat-datepicker>
                     </mat-form-field>
@@ -91,12 +91,12 @@
     </div>
     <div class="label-container">
   
-      <span class="label">VALIDITY TILL DATE</span>
+      <span class="label">Validity Till Date</span>
     </div>
     <div class="field-container">
       <mat-form-field [floatLabel]="'never'">
         <input matInput [matDatepicker]="picker2" #validitytill="ngModel" [(ngModel)]="package.validity_to" style="width:inherit"
-          name="validitytill" placeholder="Validity Till Date" required />
+          name="validitytill" placeholder="Validity till date" required />
         <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
         <mat-datepicker #picker2></mat-datepicker>
       </mat-form-field>
@@ -119,11 +119,11 @@
                 </div>
                 <div class="label-container">
 
-                  <span class="label">PACKAGE DESCRIPTION</span>
+                  <span class="label">Package Description</span>
                 </div>
                 <div class="field-container">
                   <mat-form-field [floatLabel]="'never'">
-                    <textarea matInput name="description" #description="ngModel" required placeholder="Enter Package Description" 
+                    <textarea matInput name="description" #description="ngModel" required placeholder="Enter package description" 
                       [(ngModel)]="package.description"></textarea>
                   </mat-form-field>
                 </div>
@@ -147,12 +147,12 @@
 
                 <div class="label-container">
 
-                  <span class="label">DUE DATE (Date of month)</span>
+                  <span class="label">Due Date (Date of month)</span>
                 </div>
                 <div class="field-container">
                   <mat-form-field [floatLabel]="'never'">
                     <!-- <input matInput placeholder="Last Date for package validity" type="number" max="31"> -->
-                    <mat-select matInput name="dueDate" #dueDate="ngModel" placeholder="Select the monthly Due Date"
+                    <mat-select matInput name="dueDate" #dueDate="ngModel" placeholder="Select the monthly due date"
                       [(ngModel)]="package.monthly_due_date">
                       <mat-option *ngFor="let date of dates" [value]="date">{{date}}</mat-option>
                     </mat-select>
@@ -162,11 +162,11 @@
               <div class="input-container">
                 <div class="label-container">
 
-                  <span class="label">LATE PAYMENT FEE <span> &#36;</span></span>
+                  <span class="label">Late Payment Fee <span> &#36;</span></span>
                 </div>
                 <div class="field-container">
                   <mat-form-field [floatLabel]="'never'">
-                    <input matInput name="latefee" #latefee="ngModel" placeholder="Late Payment Fee"  min="0"  type="text"
+                    <input matInput name="latefee" #latefee="ngModel" placeholder="Late payment fee"  min="0"  type="text"
                       [(ngModel)]="package.late_pay_fee"(ngModelChange)="validatelateFee($event)" >
                     <!-- <mat-select color="red" placeholder="Select City" ="user.city">
                     <mat-option *ngFor="let city of cityList" [value]="city.id">{{city.name}}</mat-option>
@@ -179,11 +179,11 @@
                   <span class="label-icon">
                     <!-- <i class="far fa-list-alt"></i> -->
                   </span>
-                  <span class="label">LATE PAYMENT (No. of Days)</span>
+                  <span class="label">Late Payment (No. of Days)</span>
                 </div>
                 <div class="field-container">
                   <mat-form-field [floatLabel]="'never'">
-                    <input matInput name="latePayDay" #latePayDay="ngModel" placeholder="No. of days beyond Due Date" type="text"
+                    <input matInput name="latePayDay" #latePayDay="ngModel" placeholder="No. of days beyond due date" type="text"
                        min="0" [(ngModel)]="package.late_pay_days"(ngModelChange)=" validatelateFeeDay($event)">
                     <!-- <mat-select color="red" placeholder="Select City" ="user.city">    pattern="^$|^([0-9]|[1-9][0-9]|[1][0][0])?"  
                     <mat-option *ngFor="let city of cityList" [value]="city.id">{{city.name}}</mat-option>
@@ -212,17 +212,17 @@
                 <div style="display:flex">
                   <div class="input-container">
                     <div *ngIf="errMsg" class="errortxt">
-                      <span>Value cannot be Zero</span>
+                      <span>Value cannot be zero</span>
                     </div>
                     <div class="label-container" style='width: 30%;'>
                       <span class="label-icon">
                         <!-- <i class="far fa-list-alt"></i> -->
                       </span>
-                      <span class="label">NO. OF INSTALLMENTS</span>
+                      <span class="label">NO. of Installments</span>
                     </div>
                     <div class="field-container">
                       <mat-form-field [floatLabel]="'never'">
-                        <input matInput placeholder="No. of Installments" type="number" min="1" name="installNo"
+                        <input matInput placeholder="No. of installments" type="number" min="1" name="installNo"
                           [(ngModel)]="tempInstall.installments_no" (keyup)="checkInstallment()">
                         <!-- <mat-select color="red" placeholder="Select City" ="user.city">
                             <mat-option *ngFor="let city of cityList" [value]="city.id">{{city.name}}</mat-option>
@@ -232,7 +232,7 @@
                   </div>
                   <div class="input-container">
                     <div class="errortxt" *ngIf='tempInstall.down_pay_amount > package.package_amount'><span>Down
-                        Payment should be less than Total Price</span></div>
+                        Payment should be less than total price</span></div>
                     <div *ngIf="errPayment" class="errortxt">
                       <span>Value cannot be Zero</span>
                     </div>
@@ -240,11 +240,11 @@
                       <span class="label-icon">
                         <!-- <i class="far fa-list-alt"></i> -->
                       </span>
-                      <span class="label">DOWN PAYMENT <span> &#36;</span></span>
+                      <span class="label">Down Payment <span> &#36;</span></span>
                     </div>
                     <div class="field-container">
                       <mat-form-field [floatLabel]="'never'">
-                        <input matInput placeholder="Down Payment" type="number" name="downPay" min="1" [(ngModel)]="tempInstall.down_pay_amount"
+                        <input matInput placeholder="Down payment" type="number" name="downPay" min="1" [(ngModel)]="tempInstall.down_pay_amount"
                           (keyup)="checkPayment()">
                         <!-- <mat-select color="red" placeholder="Select City" ="user.city">
                               <mat-option *ngFor="let city of cityList" [value]="city.id">{{city.name}}</mat-option>

@@ -13,7 +13,7 @@ export class AddColorComponent implements OnInit {
   clubId: any;
   color: any = {};
   colorId: any;
-  title: string = 'ADD COLOR';
+  title: string = 'Add Color';
   activeRouteSubscriber: any;
   isEdit: Boolean = false;
   constructor(
@@ -31,7 +31,7 @@ export class AddColorComponent implements OnInit {
     } else {
       this.clubId = localStorage.club_id;
     }
-    this.title = 'ADD COLOR';
+    this.title = 'Add Color';
 
     if (this.router.url !== '/estore/add') {
       this.activeRouteSubscriber = this.activatedRoute.queryParams.subscribe(

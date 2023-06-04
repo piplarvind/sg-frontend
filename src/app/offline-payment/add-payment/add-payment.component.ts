@@ -18,7 +18,7 @@ import * as moment from 'moment';
 })
 export class AddPaymentComponent implements OnInit {
   @ViewChild(MatPaginator) paginator: MatPaginator;
-  title = 'OFFLINE PAYMENTS DETAIL';
+  title = 'Offline Payment Details';
 
   today: Date = new Date();
   // isEditrecord: boolean = false;
@@ -204,7 +204,7 @@ export class AddPaymentComponent implements OnInit {
           };
         });
         this.offline.payments = newres.reverse();
-        this.title = 'EDIT PAYMENT DETAILS';
+        this.title = 'Edit Payment Details';
       })
       .catch((err: any) => {
         console.log(err);

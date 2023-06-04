@@ -24,7 +24,7 @@ import * as moment from 'moment';
 })
 export class AddCoachComponent implements OnInit {
   age: any = '';
-  title = 'CREATE COACH';
+  title = 'Create Coach';
   showImage: Boolean = false;
   length: any;
   ageList: any;
@@ -91,7 +91,7 @@ export class AddCoachComponent implements OnInit {
   getOneCoach(id: any) {
     this.sharedService.showLoader = true;
 
-    this.title = 'EDIT COACH';
+    this.title = 'Edit Coach';
     this.showImage = true;
     this.ProfilesService.fetchOneUser(id, 'cms_coach', this.type)
       .then((e: any) => {

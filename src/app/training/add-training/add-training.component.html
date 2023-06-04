@@ -14,18 +14,18 @@
                   class="errortxt"
                   [hidden]="taskname.valid || taskname.pristine"
                 >
-                  Task Name is required
+                  Task name is required
                 </div>
                 <div class="label-container">
                   <span class="label-icon"> </span>
-                  <span class="label">TASK NAME</span>
+                  <span class="label">Task Name</span>
                 </div>
                 <div class="field-container">
                   <mat-form-field [floatLabel]="'never'">
                     <input
                       matInput
                       [(ngModel)]="training.task_name"
-                      placeholder="Enter Task Name"
+                      placeholder="Enter task name"
                       name="taskname"
                       #taskname="ngModel"
                       required
@@ -43,14 +43,14 @@
                 </div>
                 <div class="label-container">
                   <span class="label-icon"> </span>
-                  <span class="label">TASK DESCRIPTION</span>
+                  <span class="label">Task Description</span>
                 </div>
                 <div class="field-container">
                   <mat-form-field [floatLabel]="'never'">
                     <textarea
                       matInput
                       [(ngModel)]="training.task_description"
-                      placeholder="Enter Task Description"
+                      placeholder="Enter task description"
                       name="description"
                       #description="ngModel"
                       required
@@ -64,7 +64,7 @@
                 <span class="label-icon">
 
                 </span>
-                <span class="label">TEAM NAME (S)</span>
+                <span class="label">Team Name (S)</span>
               </div>
               <div class="field-container">
                 <mat-form-field [floatLabel]="'never'">
@@ -80,7 +80,7 @@
                 <span class="label-icon">
 
                 </span>
-                <span class="label">SELECT ATHLETE</span>
+                <span class="label">Select Athlete</span>
               </div>
               <div class="field-container">
                 <mat-form-field [floatLabel]="'never'">
@@ -94,17 +94,17 @@
 
               <div class="input-container">
                 <div class="errortxt" [hidden]="type.valid || type.untouched">
-                  Task Type is required
+                  Task type is required
                 </div>
                 <div class="label-container">
                   <span class="label-icon"> </span>
-                  <span class="label">ASSIGNMENT TYPE</span>
+                  <span class="label">Assigment Type</span>
                 </div>
                 <div class="field-container">
                   <mat-form-field [floatLabel]="'never'">
                     <mat-select
                       matInput
-                      placeholder="Select Assignment"
+                      placeholder="Select assignment"
                       name="type"
                       #type="ngModel"
                       required
@@ -135,7 +135,7 @@
                 </div>
                 <div class="label-container">
                   <span class="label-icon"> </span>
-                  <span class="label">TASK INTERVAL</span>
+                  <span class="label">Task Interval</span>
                 </div>
                 <div class="field-container">
                   <mat-form-field [floatLabel]="'never'">
@@ -144,7 +144,7 @@
                       name="interval"
                       #interval="ngModel"
                       required
-                      placeholder="Select Activity"
+                      placeholder="Select activity"
                       [(ngModel)]="training.task_type"
                     >
                       <mat-option
@@ -162,7 +162,7 @@
                 <span class="label-icon">
 
                 </span>
-                <span class="label">TASK DESCRIPTION</span>
+                <span class="label">Task Description</span>
               </div>
               <div class="field-container">
                 <mat-form-field [floatLabel]="'never'">
@@ -176,11 +176,11 @@
                 <span class="label-icon">
 
                 </span>
-                <span class="label">START DATE</span>
+                <span class="label">Start Date</span>
               </div>
               <div class="field-container">
                 <mat-form-field [floatLabel]="'never'">
-                  <input matInput [matDatepicker]="picker" placeholder="Start Date" [(ngModel)]="training.start_date">
+                  <input matInput [matDatepicker]="picker" placeholder="Start date" [(ngModel)]="training.start_date">
                   <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                   <mat-datepicker #picker></mat-datepicker>
                 </mat-form-field>
@@ -191,11 +191,11 @@
                 <span class="label-icon">
 
                 </span>
-                <span class="label">END DATE</span>
+                <span class="label">End Date</span>
               </div>
               <div class="field-container">
                 <mat-form-field [floatLabel]="'never'">
-                  <input matInput [matDatepicker]="endpicker" placeholder="End Date" [(ngModel)]="training.end_date">
+                  <input matInput [matDatepicker]="endpicker" placeholder="End date" [(ngModel)]="training.end_date">
                   <mat-datepicker-toggle matSuffix [for]="endpicker"></mat-datepicker-toggle>
                   <mat-datepicker #endpicker></mat-datepicker>
                 </mat-form-field>
@@ -206,11 +206,11 @@
                   class="errortxt"
                   [hidden]="created.valid || created.untouched"
                 >
-                  Created By is required
+                  Created by is required
                 </div>
                 <div class="label-container">
                   <span class="label-icon"> </span>
-                  <span class="label">CREATED BY</span>
+                  <span class="label">Created By</span>
                 </div>
                 <div class="field-container">
                   <mat-form-field [floatLabel]="'never'">
@@ -219,7 +219,7 @@
                       name="created"
                       #created="ngModel"
                       required
-                      placeholder="Select User"
+                      placeholder="Select user"
                       [(ngModel)]="training.created_by"
                       [disabled]="isEdit"
                     >
@@ -235,7 +235,7 @@
               <div class="input-container" *ngIf="showCoachName">
                 <div class="label-container">
                   <span class="label-icon"> </span>
-                  <span class="label">CREATED BY</span>
+                  <span class="label">Created By</span>
                 </div>
 
                 <div class="field-container">
@@ -243,7 +243,7 @@
                     <input
                       matInput
                       [value]="coachName"
-                      placeholder="Enter coach Name"
+                      placeholder="Enter coach name"
                       name="coach"
                     />
                   </mat-form-field>
@@ -255,7 +255,7 @@
                 Resource is required
               </div> -->
                 <div class="label-container">
-                  <span class="label">RESOURCES</span>
+                  <span class="label">Resources</span>
                 </div>
                 <div class="field-container" *ngIf="taskList">
                   <!-- <mat-form-field [floatLabel]="'never'">
@@ -266,7 +266,7 @@
                   <app-search-select
                     [isRes]="true"
                     [dropdownList]="taskList"
-                    placeHolder="Select Resources"
+                    placeHolder="Select resources"
                     [isMultiple]="true"
                     [alreadySel]="training.resources"
                     (valueUpdated)="getResources($event)"

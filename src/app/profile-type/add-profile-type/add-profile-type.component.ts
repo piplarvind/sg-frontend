@@ -106,7 +106,7 @@ export class AddProfileTypeComponent implements OnInit {
   getOneProfile(id: any) {
     this.sharedService.showLoader = true;
 
-    this.title = 'EDIT PROFILE TYPE';
+    this.title = 'Edit Profile Type';
 
     this.ProfileTypeService.fetchOneProfile(id).then((e: any) => {
       this.profile_type = e.data;

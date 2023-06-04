@@ -16,12 +16,12 @@
                 <div class="label-container">
                   <span class="label-icon">
                   </span>
-                  <span class="label">OWNER FIRST NAME</span>
+                  <span class="label">Owner First Name</span>
                 </div>
                 <div class="field-container">
                   <mat-form-field [floatLabel]="'never'">
                     <input matInput [(ngModel)]="sport.first_name" required name="ownerFirstName" #ownerFirstName="ngModel"
-                      maxlength="40" placeholder="Owner First Name">
+                      maxlength="40" placeholder="Owner first name">
                   </mat-form-field>
                 </div>
               </div> -->
@@ -30,23 +30,23 @@
                 <div class="label-container">
                   <span class="label-icon">
                   </span>
-                  <span class="label">OWNER LAST NAME</span>
+                  <span class="label">Owner First Name</span>
                 </div>
                 <div class="field-container">
                   <mat-form-field [floatLabel]="'never'">
                     <input matInput [(ngModel)]="sport.last_name" name="ownerLastName" #ownerLastName="ngModel"
-                      maxlength="40" placeholder="Owner Last Name">
+                      maxlength="40" placeholder="Owner last name">
                   </mat-form-field>
                 </div>
               </div> -->
               <div class="input-container">
                 <div class="errortxt" [hidden]="sportName.valid || sportName.pristine">
-                  Sport ID is required
+                  Sport id is required
                 </div>
                 <div class="label-container">
                   <span class="label-icon">
                   </span>
-                  <span class="label">SPORT ID#</span>
+                  <span class="label">Sport Id#</span>
                 </div>
                 <div class="field-container">
                   <mat-form-field [floatLabel]="'never'">
@@ -57,17 +57,17 @@
               </div>
               <div class="input-container">
                 <div class="errortxt" [hidden]="sportName.valid || sportName.pristine">
-                  Sport Name is required
+                  Sport name is required
                 </div>
                 <div class="label-container">
                   <span class="label-icon">
                   </span>
-                  <span class="label">SPORT NAME</span>
+                  <span class="label">Sport Name</span>
                 </div>
                 <div class="field-container">
                   <mat-form-field [floatLabel]="'never'">
                     <input matInput [(ngModel)]="sport.sport_name" name="sportName" #sportName="ngModel" maxlength="40"
-                      placeholder="Sport Name" required>
+                      placeholder="Sport name" required>
                   </mat-form-field>
                 </div>
               </div>
@@ -76,7 +76,7 @@
                 <div class="label-container">
                   <span class="label-icon">
                   </span>
-                  <span class="label">UPLOAD LOGO</span>
+                  <span class="label">Upload Logo</span>
                 </div>
                 <div class="field-container">
                   <input type="file" style="display: none" #logoInput (change)="getSportImage($event)" id="logo">
@@ -107,7 +107,7 @@
                 <div class="label-container">
                   <span class="label-icon">
                   </span>
-                  <span class="label">ORDER#</span>
+                  <span class="label">Order#</span>
                 </div>
                 <div class="field-container">
                   <mat-form-field [floatLabel]="'never'">
@@ -120,7 +120,7 @@
                 <div class="label-container">
                   <span class="label-icon">
                   </span>
-                  <span class="label">DESCRIPTION</span>
+                  <span class="label">Description</span>
                 </div>
                 <div class="field-container">
                   <mat-form-field [floatLabel]="'never'">
@@ -133,7 +133,7 @@
                 <div class="label-container">
                   <span class="label-icon">
                   </span>
-                  <span class="label">SET THEME COLOR</span>
+                  <span class="label">Set Theme Color</span>
                 </div>
                 <div class="field-container">
                   <input type="color" [(ngModel)]="sport.color" name="sportTheme" style="width: 35%;">

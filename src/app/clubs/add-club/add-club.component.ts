@@ -29,7 +29,7 @@ import { ProfilesService } from '@app/profiles/profiles.service';
   styleUrls: ['./add-club.component.scss']
 })
 export class AddClubComponent implements OnInit {
-  title: any = 'CREATE CLUB';
+  title: any = 'Create Club';
   clubLogo = '';
   tempFile: any = '';
   club_img: any;
@@ -170,7 +170,7 @@ export class AddClubComponent implements OnInit {
     this.sharedService.showLoader = true;
     this.isEdit = true;
     this.showImage = true;
-    this.title = 'EDIT CLUB';
+    this.title = 'Edit Club';
     this.clubService
       .getOneClub(id)
       .then((res: any) => {
