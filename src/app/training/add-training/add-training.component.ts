@@ -193,11 +193,11 @@ export class AddTrainingComponent implements OnInit {
   }
 
   openDocument(resource: any) {
-    window.open(`${environment.imageUrl}/${resource.doc.filepath}`);
+    window.open(`${environment.imageUrl}${resource.doc.filepath}`);
   }
 
   showImage(resource: any) {
-    window.open(`${environment.imageUrl}/${resource.image}`);
+    window.open(`${environment.imageUrl}${resource.image}`);
   }
 
   getAllCoach() {

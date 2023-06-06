@@ -240,12 +240,12 @@ export class AddTeamComponent implements OnInit {
           this.team.athletes = tempArray;
 
           if (e.data.banner) {
-            this.img = `${environment.imageUrl}/${e.data.banner}`;
+            this.img = `${environment.imageUrl}${e.data.banner}`;
           } else if (!e.data.banner) {
             e.data.banner = '';
           }
           if (e.data.logo) {
-            this.logo_img = `${environment.imageUrl}/${e.data.logo}`;
+            this.logo_img = `${environment.imageUrl}${e.data.logo}`;
           }
 
           this.selectedAthlete = tempArray;

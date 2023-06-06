@@ -51,7 +51,7 @@ export class HeaderComponent implements OnInit, AfterViewInit {
   ngOnInit() {
     const obj = JSON.parse(localStorage.userDetails);
     
-    //console.log('obj', obj);
+    console.log('obj', obj);
     this.id = obj._id;
     ref = this;
     this.selectedClub = localStorage.super_cur_clubId
@@ -116,7 +116,10 @@ export class HeaderComponent implements OnInit, AfterViewInit {
 
       // sports
       this.getAllSports();
-      this.storedVal.super_cur_sportName = obj.sport.sport_name;
+      if (obj.club) {
+        this.sportSelected(obj.club.sport);
+      }
+      //this.storedVal.super_cur_sportName = obj.sport.sport_name;
       this.sportService
       .getSportList()
       .then((e: any) => {
@@ -124,8 +127,8 @@ export class HeaderComponent implements OnInit, AfterViewInit {
           localStorage.user_role === "Coach" ||
           localStorage.user_role === "Club Admin"
         ) {
-          const sportDetails = e.data.filter((sport) => sport.club_id === clubId);
-
+          const sportDetails = e.data.filter((sport) => sport._id === obj.club.sport);
+          console.log('sportDetails', sportDetails);
           this.sportLogo = `${environment.imageUrl}${sportDetails[0].logo}`;
         }
       })
@@ -149,10 +152,10 @@ export class HeaderComponent implements OnInit, AfterViewInit {
         })
         .catch((err) => {});
     }
-
+    console.log('header sportLogo', this.sportLogo);
     // this.getSportList();
     this.getClubList();
-
+    
     
   }
 

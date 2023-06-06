@@ -157,7 +157,7 @@ export class AddResourceComponent implements OnInit {
         }
         if (this.resource.type === 'image') {
           // this.selectedImg = this.resource.image;
-          this.selectedImg = `${environment.imageUrl}/${this.resource.image}`;
+          this.selectedImg = `${environment.imageUrl}${this.resource.image}`;
 
           this.resource.image_name = this.resource.image_name;
         }
@@ -169,7 +169,7 @@ export class AddResourceComponent implements OnInit {
   }
 
   openDoc() {
-    window.open(`${environment.imageUrl}/${this.docUploadName}`);
+    window.open(`${environment.imageUrl}${this.docUploadName}`);
   }
 
   openImage() {

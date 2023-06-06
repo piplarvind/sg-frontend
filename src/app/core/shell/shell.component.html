@@ -1,12 +1,13 @@
 <div fxFlex fxLayout="row">
   <div fxFlex="15" fxLayout="column">
-    <div style="background: #FFF; position: relative; margin-top: 2%; margin-bottom: 2.5% ">
+    <div style="background: #FFF; position: relative; margin-bottom: 2.5% ">
       <div fxLayoutAlign="center center" class="title">
-        <img style="width: 100%; height: 100% ; padding: 5%" src="assets/sportgrit_logo.png" alt="SportGrit" />
-        <!-- assets/sportgrit_new_logo.png -->
+        <div fxFlex="12" class="logo-container" style=" height: 100%;" *ngIf="user_role === 'Club Admin'">
+          <img style="width: 100%; height: 98%;" [src]="sportLogo" alt="logo" />
+        </div>
+        <img style="width: 100%; height: 100% ; padding: 4%" src="assets/sportgrit_logo.png" alt="SportGrit" *ngIf="user_role !== 'Club Admin'" />
       </div>
     </div>
-
     <nav>
       <mat-list>
         <a mat-list-item routerLink="/home" routerLinkActive="active" (click)="panelClose(panel1, panel2)"
@@ -17,8 +18,8 @@
         <mat-divider *ngIf="user_role !== 'Coach'"></mat-divider>
 
         <a mat-list-item routerLink="/sports" routerLinkActive="active" (click)="panelClose(panel1, panel2)"
-          *ngIf="user_role !== 'Coach'">
-          <i class="material-icons" *ngIf="user_role !== 'Coach'">local_play</i>&nbsp;&nbsp;
+        *ngIf="user_role === 'Super Admin' || user_role === 'Platform Admin'">
+          <i class="material-icons">local_play</i>&nbsp;&nbsp;
           <span *ngIf="user_role !== 'Coach'">Sports</span>
         </a>
         <mat-divider *ngIf="user_role !== 'Coach'"></mat-divider>

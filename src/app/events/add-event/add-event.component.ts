@@ -1094,7 +1094,7 @@ export class AddEventComponent implements OnInit, OnChanges {
       .getDownloadscvs(this.editEventId)
 
       .then((res: any) => {
-        window.open(`${environment.imageUrl}/${res.data}`);
+        window.open(`${environment.imageUrl}${res.data}`);
       })
       .catch((err: any) => {
         console.log(err);

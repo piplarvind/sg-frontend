@@ -226,7 +226,7 @@ export class FeedsComponent implements OnInit {
   }
 
   openImage(row: any) {
-    window.open(`${environment.imageUrl}/${row.image}`);
+    window.open(`${environment.imageUrl}${row.image}`);
   }
 
   playVideo(row: any) {

@@ -607,7 +607,8 @@ export class AddProfileComponent implements OnInit {
     );
   }
 
-  onUpload(e) {}
+  onUpload(e) { }
+  
   ProfileSubmit() {
     this.sharedService
       .showDialog(
@@ -1147,7 +1148,7 @@ export class AddProfileComponent implements OnInit {
           this.createfield = [];
         } else {
           this.router.navigateByUrl('/profiles');
-          this.sharedService.showMessage('Profile Created successfully ');
+          this.sharedService.showMessage('Profile created successfully');
         }
       })
       .catch((err: any) => {

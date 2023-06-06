@@ -2,10 +2,7 @@
   <mat-card class="m-title">
     <h3>{{ title }}</h3>
   </mat-card>
-
-
   <mat-card>
-
     <div style="width: 100%;
               display: inline-flex;
                flex-wrap: wrap;
@@ -17,16 +14,12 @@
     </div>
   </mat-card>
   <form *ngIf="field" [formGroup]="form" class="form-horizontal">
-
-
     <mat-card >
       <div *ngIf="isLoading">Loading</div>
-    
-      <!-- -->
       <mat-card-content>
         <div fxLayout="row" fxLayoutAlign="space-between">
           <div fxFlex="49">
-            <mat-card >
+            <mat-card>
               <!-- [style.height]="matcard_height + 'px'" flex-direction: column; -->
     
               <!--  -->

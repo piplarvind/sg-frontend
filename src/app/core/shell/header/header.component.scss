@@ -3,6 +3,7 @@
   background: $header-grey;
   // padding: 10px 20px;
   align-items: center;
+  display: flex;
 }
 
 .header-icon {
@@ -64,9 +65,9 @@
   // padding-top: 10px;
   font-size: 30px;
   display: flex;
-  justify-content: center;
-  position: absolute;
-  top: 15px;
+  // justify-content: center;
+  // position: absolute;
+  // top: 15px;
 }
 
 .select-dropdowns{
