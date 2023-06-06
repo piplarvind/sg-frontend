@@ -3,6 +3,7 @@ import { PackagesService } from '@app/packages/packages.service';
 import { Router } from '@angular/router';
 import { SharedService } from '@app/shared/shared.service';
 import { environment } from '../../../environments/environment';
+import { EventsService } from '@app/events/events.service';
 import {
   MatDialog,
   MatDialogRef,
@@ -22,8 +23,11 @@ export class AddPackageComponent implements OnInit, AfterViewInit {
   localStorage = localStorage;
   showForm = false;
   package_id: any;
+  tempId: any;
+  temp: any;
   getpackagedata: any;
   packageType: Array<any> = [];
+  eventType: Array<any> = [];
   showInstallment: Boolean;
   package: any = {
     name: '',
@@ -44,7 +48,7 @@ export class AddPackageComponent implements OnInit, AfterViewInit {
     installment_amount: '',
     down_pay_amount: ''
   };
-  title: any = 'Create Package';
+  title: any = 'Create Event with Associated Fees';
   curClubId: any;
   isEdit = false;
   displayedColumns: any = ['installments', 'downPay', 'emi', 'Actions'];
@@ -85,18 +89,30 @@ export class AddPackageComponent implements OnInit, AfterViewInit {
   constructor(
     private packageservice: PackagesService,
     private router: Router,
-    public sharedService: SharedService
+    public sharedService: SharedService,
+    private eventService: EventsService,
   ) {}
 
   ngOnInit() {
     // this.dataSource = this.package.installments;
     this.getPlantypes();
     if (
+      localStorage.user_role === `${environment.Super_Admin}` ||
+      localStorage.user_role === `${environment.Platform_Admin}`
+    ) {
+      this.temp = localStorage.super_cur_club;
+      this.tempId = localStorage.super_cur_clubId;
+    } else {
+      this.temp = localStorage.dbName;
+      this.tempId = localStorage.club_id;
+    }
+    this.getEventtypes();
+    if (
       this.router.url === '/packages/edit' &&
       sessionStorage.selected_package
     ) {
       this.sharedService.showLoader = true;
-      this.title = 'Edit Package';
+      this.title = 'Edit Event with Associated Fees';
 
       this.getpackagedata = JSON.parse(sessionStorage.selected_package);
       this.package_id = this.getpackagedata._id;
@@ -372,6 +388,17 @@ export class AddPackageComponent implements OnInit, AfterViewInit {
       },
       (err: any) => {
         console.log('error this');
+      }
+    );
+  }
+
+  getEventtypes() {
+    this.eventService.getEventTypes(this.tempId).subscribe(
+      (res: any) => {
+        this.eventType = res.data;
+      },
+      (err: any) => {
+        console.log(err);
       }
     );
   }

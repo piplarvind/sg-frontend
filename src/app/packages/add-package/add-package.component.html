@@ -14,17 +14,18 @@
             <mat-card class="childContainer">
               <div class="input-container">
                 <div class="errortxt" [hidden]="type.valid || type.untouched">
-                  Package Type is required
+                  Event type is required
                 </div>
                 <div class="label-container">
 
-                  <span class="label">Package Type</span>
+                  <span class="label">Event Type</span>
                 </div>
                 <div class="field-container">
                   <mat-form-field [floatLabel]="'never'">
-                    <mat-select matInput name="type" #type="ngModel" required placeholder="Select Package Type"
+                    <mat-select matInput name="type" #type="ngModel" required placeholder="Select event type"
                       [(ngModel)]="package.package_type">
-                      <mat-option *ngFor="let type of packageType" [value]="type._id" (click)="getPackageType(type)">{{type?.package_name}}</mat-option>
+                      <mat-option *ngFor="let type of eventType" [value]="type.event_type">{{type.event_type}}
+                      </mat-option>
                     </mat-select>
                   </mat-form-field>
                   <!-- <app-search-select [dropdownList]="packageType" [isPackage]="true"></app-search-select> -->
@@ -32,22 +33,22 @@
               </div>
               <div class="input-container">
                 <div class="errortxt" [hidden]="packageName.valid || packageName.pristine">
-                  Package Name is required
+                  Event name is required
                 </div>
                 <div class="label-container">
 
-                  <span class="label">Package Name</span>
+                  <span class="label">Event Name</span>
                 </div>
                 <div class="field-container">
                   <mat-form-field [floatLabel]="'never'">
-                    <input matInput placeholder="Enter the package name" [(ngModel)]="package.name" name="packageName"
+                    <input matInput placeholder="Enter the event name" [(ngModel)]="package.name" name="packageName"
                       #packageName="ngModel" required>
                   </mat-form-field>
                 </div>
               </div>
               <div class="input-container">
                 <div class="errortxt" [hidden]="total.valid || total.pristine">
-                  Total Price is required
+                  Total price is required
                 </div>
                 <div class="label-container">
 
@@ -56,7 +57,7 @@
                 <div class="field-container">
                   <mat-form-field [floatLabel]="'never'">
                     <!-- <input matInput name="total" #total="ngModel" placeholder="Enter the Cost of Package" (keypress)="restrictMinus($event)" pattern="^$|^([0-9]|[1-9][0-9]|[1][0][0])?"  type="number" [(ngModel)]="package.package_amount" required> -->
-                    <input matInput name="total" #total="ngModel" placeholder="Enter the cost of package" min="0"  type="text"
+                    <input matInput name="total" #total="ngModel" placeholder="Enter the cost of event" min="0"  type="text"
                       [(ngModel)]="package.package_amount"  (ngModelChange)="validateamount($event)" required>
                   </mat-form-field>
                 </div>
@@ -119,11 +120,11 @@
                 </div>
                 <div class="label-container">
 
-                  <span class="label">Package Description</span>
+                  <span class="label">Event Description</span>
                 </div>
                 <div class="field-container">
                   <mat-form-field [floatLabel]="'never'">
-                    <textarea matInput name="description" #description="ngModel" required placeholder="Enter package description" 
+                    <textarea matInput name="description" #description="ngModel" required placeholder="Enter event description" 
                       [(ngModel)]="package.description"></textarea>
                   </mat-form-field>
                 </div>
@@ -150,12 +151,17 @@
                   <span class="label">Due Date (Date of month)</span>
                 </div>
                 <div class="field-container">
-                  <mat-form-field [floatLabel]="'never'">
-                    <!-- <input matInput placeholder="Last Date for package validity" type="number" max="31"> -->
+                  <!-- <mat-form-field [floatLabel]="'never'">
                     <mat-select matInput name="dueDate" #dueDate="ngModel" placeholder="Select the monthly due date"
                       [(ngModel)]="package.monthly_due_date">
                       <mat-option *ngFor="let date of dates" [value]="date">{{date}}</mat-option>
                     </mat-select>
+                  </mat-form-field> -->
+                  <mat-form-field [floatLabel]="'never'">
+                    <input matInput [matDatepicker]="pickerDueDate"  #dueDate="ngModel" [(ngModel)]="package.monthly_due_date" style="width:inherit"
+                      name="dueDate" placeholder="Due date" />
+                    <mat-datepicker-toggle matSuffix [for]="pickerDueDate"></mat-datepicker-toggle>
+                    <mat-datepicker #pickerDueDate></mat-datepicker>
                   </mat-form-field>
                 </div>
               </div>

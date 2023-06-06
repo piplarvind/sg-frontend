@@ -303,6 +303,12 @@
             <span>Events</span>
           </a>
 
+          <a mat-list-item routerLink="/packages" routerLinkActive="active" (click)="panelClose(panel1, panel2)"
+          *ngIf="user_role === 'Club Admin' || user_role === 'Platform Admin' || user_role === 'Super Admin'">
+          <i class="material-icons">shopping_basket</i>&nbsp;&nbsp;
+          <span>Event with Fees</span>
+        </a>
+
 
         </mat-expansion-panel>
         <!-- /event  -->
@@ -377,13 +383,13 @@
           </a>
        
         </mat-expansion-panel>
-        <mat-divider *ngIf="user_role === 'Club Admin' || user_role === 'Super Admin' || user_role === 'Platform Admin'">
+        <!-- <mat-divider *ngIf="user_role === 'Club Admin' || user_role === 'Super Admin' || user_role === 'Platform Admin'">
         </mat-divider>
         <a mat-list-item routerLink="/packages" routerLinkActive="active" (click)="panelClose(panel1, panel2)"
           *ngIf="user_role === 'Club Admin' || user_role === 'Platform Admin' || user_role === 'Super Admin'">
           <i class="material-icons">shopping_basket</i>&nbsp;&nbsp;
           <span>Packages</span>
-        </a>
+        </a> -->
         <!-- user_role === 'Club Admin' || -->
         <mat-divider *ngIf="user_role === 'Super Admin' || user_role === 'Platform Admin'"></mat-divider>
         <a mat-list-item routerLink="/seasons" routerLinkActive="active"
