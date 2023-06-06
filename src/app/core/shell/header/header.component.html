@@ -1,11 +1,25 @@
 <mat-toolbar class="header" fxFill>
   <div fxFill fxLayout="row">
+
+    <div fxFlex="50">
+      <div fxFlex="12" class="logo-container" style=" height: 100%;">
+        <img style="width: 100%; height: 98%;" [src]="sportLogo" alt="logo" />
+      </div>
+      <div fxFlex="20">
+        <span class="nameHeading">Sport: {{
+          storedVal.super_cur_sportName
+            ? storedVal.super_cur_sportName
+            : 'Sport Name'
+        }}</span>
+      </div>
+    </div>
+
     <div fxFlex="50">
       <div fxFlex="12" class="logo-container" style=" height: 100%;">
         <img style=" width: 100%; height: 98%;" [src]="clubLogo" alt="logo" />
       </div>
       <div fxFlex="20">
-        <span class="nameHeading">{{
+        <span class="nameHeading">Club: {{
           storedVal.super_cur_clubName
             ? storedVal.super_cur_clubName
             : 'Club Name'
@@ -13,7 +27,7 @@
       </div>
     </div>
 
-    <div fxFlex="50" fxLayoutAlign="end">
+    <div fxFlex="50" fxLayoutAlign="end" class="select-dropdowns">
       <div fxLayout="row" fxFlex="40" fxLayoutAlign="space-between">
         <div
           fxFlex=""
@@ -30,17 +44,17 @@
           style="text-align: left; padding-left: 10px"
         >
           <mat-select
-            [value]="selectedClub"
+            [value]="selectedSport"
             style="width:100%"
-            placeholder="Select Club Here"
+            placeholder="Select sport here"
             (click)="getSportList()"
-            (selectionChange)="dropdownChange($event.value)"
+            (selectionChange)="dropdownSportChange($event.value)"
             required
           >
             <mat-option
               *ngFor="let sport of sportsList"
               [value]="sport._id"
-              (click)="clubSelected(sport)"
+              (click)="sportSelected(sport)"
               >{{ sport.sport_name }}</mat-option
             >
           </mat-select>
@@ -64,7 +78,7 @@
           <mat-select
             [value]="selectedClub"
             style="width:100%"
-            placeholder="Select Club Here"
+            placeholder="Select club here"
             (click)="getClubList()"
             (selectionChange)="dropdownChange($event.value)"
             required

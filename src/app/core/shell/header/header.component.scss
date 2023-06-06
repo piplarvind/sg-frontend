@@ -2,6 +2,7 @@
 .header {
   background: $header-grey;
   // padding: 10px 20px;
+  align-items: center;
 }
 
 .header-icon {
@@ -60,10 +61,19 @@
 
 .nameHeading {
   padding-left: 10px;
-  padding-top: 10px;
+  // padding-top: 10px;
   font-size: 30px;
   display: flex;
   justify-content: center;
   position: absolute;
   top: 15px;
+}
+
+.select-dropdowns{
+  align-items: center !important;
+}
+
+.m-sub-title{
+  font-weight: bold;
+  font-weight: 16px;
 }

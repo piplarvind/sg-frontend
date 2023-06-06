@@ -65,11 +65,11 @@
           </ng-container>
           <ng-container matColumnDef="package_type">
             <mat-header-cell *matHeaderCellDef mat-sort-header>
-              <span class="m-table-header">Package Type </span>
+              <span class="m-table-header">Event Type </span>
             </mat-header-cell>
             <mat-cell *matCellDef="let element" class="light-red m-pointer ">
               <!-- {{element.package_type?.package_name}}  -->
-              {{ element.package_type }}
+              {{ element.event_type?.event_type }}
             </mat-cell>
           </ng-container>
 

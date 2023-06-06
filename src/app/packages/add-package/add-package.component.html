@@ -23,8 +23,8 @@
                 <div class="field-container">
                   <mat-form-field [floatLabel]="'never'">
                     <mat-select matInput name="type" #type="ngModel" required placeholder="Select event type"
-                      [(ngModel)]="package.package_type">
-                      <mat-option *ngFor="let type of eventType" [value]="type.event_type">{{type.event_type}}
+                      [(ngModel)]="package.event_type">
+                      <mat-option *ngFor="let type of eventType" [value]="type._id">{{type.event_type}}
                       </mat-option>
                     </mat-select>
                   </mat-form-field>
