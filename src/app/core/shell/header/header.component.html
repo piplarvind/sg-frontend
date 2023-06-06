@@ -21,6 +21,38 @@
           *ngIf="isSuperAdmin"
           style="text-align: right; width: 70px; "
         >
+          Select Sport
+        </div>
+        <div
+          fxFlex=""
+          class="m-sub-title"
+          *ngIf="isSuperAdmin"
+          style="text-align: left; padding-left: 10px"
+        >
+          <mat-select
+            [value]="selectedClub"
+            style="width:100%"
+            placeholder="Select Club Here"
+            (click)="getSportList()"
+            (selectionChange)="dropdownChange($event.value)"
+            required
+          >
+            <mat-option
+              *ngFor="let sport of sportsList"
+              [value]="sport._id"
+              (click)="clubSelected(sport)"
+              >{{ sport.sport_name }}</mat-option
+            >
+          </mat-select>
+        </div>
+      </div>
+      <div fxLayout="row" fxFlex="40" fxLayoutAlign="space-between">
+        <div
+          fxFlex=""
+          class="m-sub-title"
+          *ngIf="isSuperAdmin"
+          style="text-align: right; width: 70px; "
+        >
           Select Club
         </div>
         <div
@@ -52,7 +84,7 @@
           <i class="fas fa-bell"></i>
         </span>
       </div>
-
+      
       <div>
         <div class="user-dropdown">
           <div class="button" (click)="showDropdown()">

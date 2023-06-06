@@ -1,21 +1,22 @@
-import { Title } from '@angular/platform-browser';
-import { Component, OnInit, Input, AfterViewInit } from '@angular/core';
-import { Router, ActivatedRoute } from '@angular/router';
-import { MatSidenav } from '@angular/material';
+import { Title } from "@angular/platform-browser";
+import { Component, OnInit, Input, AfterViewInit } from "@angular/core";
+import { Router, ActivatedRoute } from "@angular/router";
+import { MatSidenav } from "@angular/material";
 
-import { AuthenticationService } from '@app/core/authentication/authentication.service';
-import { I18nService } from '@app/core/i18n.service';
-import { ClubsService } from '@app/clubs/clubs.service';
-import { SharedService } from '@app/shared/shared.service';
+import { AuthenticationService } from "@app/core/authentication/authentication.service";
+import { I18nService } from "@app/core/i18n.service";
+import { SportsService } from "@app/sports/sports.service";
+import { ClubsService } from "@app/clubs/clubs.service";
+import { SharedService } from "@app/shared/shared.service";
 
-import { environment } from '../../../../environments/environment';
+import { environment } from "../../../../environments/environment";
 
 let ref = null;
 
 @Component({
-  selector: 'app-header',
-  templateUrl: './header.component.html',
-  styleUrls: ['./header.component.scss']
+  selector: "app-header",
+  templateUrl: "./header.component.html",
+  styleUrls: ["./header.component.scss"],
 })
 export class HeaderComponent implements OnInit, AfterViewInit {
   user_role: any;
@@ -25,11 +26,12 @@ export class HeaderComponent implements OnInit, AfterViewInit {
   sidenav: MatSidenav;
   coachClubId: any;
   quote: string;
-  clubLogo = './assets/ClubV_logo.png';
+  clubLogo = "./assets/ClubV_logo.png";
   isLoading: boolean;
   isSuperAdmin = false;
+  sportsList: Array<any>;
   clubsList: Array<any>;
-  selectedClub = '';
+  selectedClub = "";
   // selectedClub = localStorage.super_cur_clubName ? localStorage.super_cur_clubName : '';
 
   constructor(
@@ -37,6 +39,7 @@ export class HeaderComponent implements OnInit, AfterViewInit {
     private titleService: Title,
     private authenticationService: AuthenticationService,
     private i18nService: I18nService,
+    private sportService: SportsService,
     private clubService: ClubsService,
     private sharedService: SharedService
   ) {
@@ -45,26 +48,28 @@ export class HeaderComponent implements OnInit, AfterViewInit {
 
   ngOnInit() {
     const obj = JSON.parse(localStorage.userDetails);
-
+    console.log('obj', obj);
     this.id = obj._id;
     ref = this;
     this.selectedClub = localStorage.super_cur_clubId
       ? localStorage.super_cur_clubId
-      : '';
+      : "";
     this.clubLogo =
-      localStorage.getItem('super_cur_clubLogo') ||
-      localStorage.getItem('updatedLogo') ||
-      'assets/no_logo.png';
-    if (this.clubLogo === 'assets/no_logo.png') {
+      localStorage.getItem("super_cur_clubLogo") ||
+      localStorage.getItem("updatedLogo") ||
+      "assets/no_logo.png";
+    if (this.clubLogo === "assets/no_logo.png") {
       this.clubLogo = `${this.clubLogo}`;
     } else {
-      this.clubLogo = `${environment.imageUrl}/${this.clubLogo}`;
+      // this.clubLogo = `${environment.imageUrl}/${this.clubLogo}`;
+      this.clubLogo = `${environment.imageUrl}${this.clubLogo}`;
     }
 
     this.user_role = localStorage.user_role;
     this.storedVal = localStorage;
 
     this.sharedService.clubStatus.subscribe((res: any) => {
+      this.getAllSports();
       this.getAllCLubs();
     });
 
@@ -72,41 +77,61 @@ export class HeaderComponent implements OnInit, AfterViewInit {
     // });
 
     if (
-      localStorage.user_role === 'Super Admin' ||
-      localStorage.user_role === 'Platform Admin'
+      localStorage.user_role === "Super Admin" ||
+      localStorage.user_role === "Platform Admin"
     ) {
       this.isSuperAdmin = true;
+      this.getAllSports();
       this.getAllCLubs();
     }
 
-    if (localStorage.user_role === 'Club Admin') {
+    if (localStorage.user_role === "Club Admin") {
       const obj = JSON.parse(localStorage.userDetails);
       this.storedVal.super_cur_clubName = obj.club.club_name;
     }
 
     if (
-      localStorage.user_role === 'Coach' ||
-      localStorage.user_role === 'Club Admin'
+      localStorage.user_role === "Coach" ||
+      localStorage.user_role === "Club Admin"
     ) {
+      // sports
+      this.getAllSports();
+      this.sportService
+      .getSportList()
+      .then((e: any) => {
+        if (
+          localStorage.user_role === "Coach" ||
+          localStorage.user_role === "Club Admin"
+        ) {
+          const clubDetails = e.data.filter((club) => club._id === clubId);
+
+          this.clubLogo = `${environment.imageUrl}/${clubDetails[0].logo}`;
+        }
+      })
+      .catch((err) => {});
+
+      // club
       this.getAllCLubs();
       const obj = JSON.parse(localStorage.userDetails);
+
       this.storedVal.super_cur_clubName = obj.club.club_name;
       const clubId = obj.club._id;
       this.clubService
         .getClubList()
         .then((e: any) => {
           if (
-            localStorage.user_role === 'Coach' ||
-            localStorage.user_role === 'Club Admin'
+            localStorage.user_role === "Coach" ||
+            localStorage.user_role === "Club Admin"
           ) {
-            const clubDetails = e.data.filter(club => club._id === clubId);
+            const clubDetails = e.data.filter((club) => club._id === clubId);
 
             this.clubLogo = `${environment.imageUrl}/${clubDetails[0].logo}`;
           }
         })
-        .catch(err => {});
+        .catch((err) => {});
     }
 
+    // this.getSportList();
     this.getClubList();
   }
 
@@ -116,13 +141,31 @@ export class HeaderComponent implements OnInit, AfterViewInit {
 
   selectClub() {}
 
+  getSportList() {
+    this.sportService
+      .getSportList()
+      .then((e: any) => {
+        this.sportsList = e.data;
+      })
+      .catch((err) => {});
+  }
+
   getClubList() {
     this.clubService
       .getClubList()
       .then((e: any) => {
         this.clubsList = e.data;
       })
-      .catch(err => {});
+      .catch((err) => {});
+  }
+
+  getAllSports() {
+    this.sportService
+      .getSportList()
+      .then((e: any) => {
+        this.sportsList = e.data;
+      })
+      .catch((err) => {});
   }
 
   getAllCLubs() {
@@ -131,7 +174,7 @@ export class HeaderComponent implements OnInit, AfterViewInit {
       .then((e: any) => {
         this.clubsList = e.data;
       })
-      .catch(err => {});
+      .catch((err) => {});
   }
 
   clubSelected(club: any) {
@@ -139,10 +182,10 @@ export class HeaderComponent implements OnInit, AfterViewInit {
     localStorage.super_cur_club = club.db_name;
     localStorage.super_cur_clubName = club.club_name;
     localStorage.super_cur_clubLogo = club.logo;
-    if (club.logo !== '') {
+    if (club.logo !== "") {
       this.clubLogo = `${environment.imageUrl}/${club.logo}`;
     } else {
-      this.clubLogo = 'assets/no_logo.png';
+      this.clubLogo = "assets/no_logo.png";
     }
   }
 
@@ -156,32 +199,32 @@ export class HeaderComponent implements OnInit, AfterViewInit {
 
   dropdownChange(id: any) {
     localStorage.curentSelectedClub = id;
-    const clubData = this.clubsList.filter(f => f._id === id)[0];
+    const clubData = this.clubsList.filter((f) => f._id === id)[0];
     switch (this.router.url) {
-      case '/clubs/add':
-      case '/clubs/edit':
-      case '/users/add':
-      case '/users/edit':
-      case '/teams/add':
-      case '/teams/edit':
-      case '/coach/add':
-      case '/coach/edit':
-      case '/athletes/add':
-      case '/athletes/edit':
-      case '/resources/add':
-      case '/resources/edit':
-      case '/training/add':
-      case '/training/edit':
+      case "/clubs/add":
+      case "/clubs/edit":
+      case "/users/add":
+      case "/users/edit":
+      case "/teams/add":
+      case "/teams/edit":
+      case "/coach/add":
+      case "/coach/edit":
+      case "/athletes/add":
+      case "/athletes/edit":
+      case "/resources/add":
+      case "/resources/edit":
+      case "/training/add":
+      case "/training/edit":
         this.sharedService
-          .showDialog({ name: 'sdfaads' })
+          .showDialog({ name: "sdfaads" })
           .subscribe((response: any) => {
             if (response) {
-              this.router.navigate(['/clubs']);
+              this.router.navigate(["/clubs"]);
             }
           });
         break;
       default:
-        this.router.navigate(['/clubs']);
+        this.router.navigate(["/clubs"]);
     }
 
     localStorage.super_cur_clubId = clubData._id;
@@ -202,13 +245,13 @@ export class HeaderComponent implements OnInit, AfterViewInit {
     //   if (res) {
     this.authenticationService
       .logout()
-      .subscribe(() => this.router.navigate(['/login'], { replaceUrl: true }));
+      .subscribe(() => this.router.navigate(["/login"], { replaceUrl: true }));
     //   }
     // });
   }
   UpdatePassword() {
-    this.router.navigate(['/forgotPassword_Web'], {
-      queryParams: { user: this.id }
+    this.router.navigate(["/forgotPassword_Web"], {
+      queryParams: { user: this.id },
     });
     // this.router.navigate(['/forgotPassword', { id: this.id }]);
   }
@@ -230,24 +273,24 @@ export class HeaderComponent implements OnInit, AfterViewInit {
   }
 
   showDropdown() {
-    const dom: any = document.querySelector('.dropdown');
+    const dom: any = document.querySelector(".dropdown");
     const status: any = dom.style.display;
-    if (status === 'block') {
-      dom.style.display = 'none';
+    if (status === "block") {
+      dom.style.display = "none";
     } else {
-      dom.style.display = 'block';
+      dom.style.display = "block";
     }
   }
 
   getClubLogo() {
     if (
-      localStorage.user_role === 'Super Admin' ||
-      localStorage.user_role === 'Platform Admin'
+      localStorage.user_role === "Super Admin" ||
+      localStorage.user_role === "Platform Admin"
     ) {
       return (this.clubLogo =
-        localStorage.getItem('super_cur_clubLogo') || 'assets/no_logo.png');
+        localStorage.getItem("super_cur_clubLogo") || "assets/no_logo.png");
     } else {
-      return (this.clubLogo = 'assets/no_logo.png');
+      return (this.clubLogo = "assets/no_logo.png");
     }
   }
 }

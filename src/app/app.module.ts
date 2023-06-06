@@ -15,6 +15,7 @@ import { LoginModule } from '@app/login/login.module';
 import { AppComponent } from '@app/app.component';
 import { AppRoutingModule } from '@app/app-routing.module';
 import { UsersModule } from '@app/users/users.module';
+import { SportsModule } from '@app/sports/sports.module';
 import { ClubsModule } from '@app/clubs/clubs.module';
 import { TeamsModule } from '@app/teams/teams.module';
 import { CoachModule } from '@app/coach/coach.module';
@@ -64,6 +65,7 @@ import { JwtInterceptor } from './core/http/jwt.interceptor';
     LoginModule,
     AppRoutingModule,
     UsersModule,
+    SportsModule,
     ClubsModule,
     TeamsModule,
     CoachModule,
