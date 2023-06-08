@@ -4,8 +4,11 @@ import {
   MatDialog,
   MatPaginator,
   MatSort,
-  MatTableDataSource
+  MatTableDataSource,
+  MatSlideToggleChange,
+  MatSlideToggle
 } from '@angular/material';
+
 import { Routes, RouterModule, ActivatedRoute, Router } from '@angular/router';
 import { SharedService } from '../shared/shared.service';
 import { environment } from 'environments/environment';
@@ -37,10 +40,13 @@ export class ProfilesComponent implements OnInit {
 
     'Actions'
   ];
+  useDefault = false;
   @ViewChild(MatPaginator)
   paginator: MatPaginator;
   @ViewChild(MatSort)
   sort: MatSort;
+
+
   tabledataloaded: boolean = false;
   limit: number = 100;
   skip: number = 0;
@@ -313,18 +319,27 @@ export class ProfilesComponent implements OnInit {
       });
   }
 
-  InactiveUser(row: any) {
-    this.sharedService.showLoader = true;
-    let data = {
-      active: !row.active
-    };
-    this.sharedService.showLoader = true;
+  InactiveUser(event: MatSlideToggleChange, row: any) {
+    this.sharedService
+    .showDialog(
+      'This action will change the user status. Are you sure to continue?'
+    )
+    .subscribe(response => {
+      if (response !== '') {
+        this.useDefault = event.checked;
+        this.sharedService.showLoader = true;
+        let data = {
+          active: !row.active
+        };
+        this.sharedService.showLoader = true;
 
-    this.ProfileService.Profiledelete(row._id, data).then((e: any) => {
-      this.sharedService.showLoader = false;
-      this.buttontext = 'Show Inactive';
-      this.getProfiles(this.clubId);
-      this.sharedService.showMessage(e.message + ' successfully');
+        this.ProfileService.Profiledelete(row._id, data).then((e: any) => {
+          this.sharedService.showLoader = false;
+          this.buttontext = 'Show Inactive';
+          this.getProfiles(this.clubId);
+          this.sharedService.showMessage(e.message + ' successfully');
+        });
+      }
     });
   }
   getProfiles(Id) {
