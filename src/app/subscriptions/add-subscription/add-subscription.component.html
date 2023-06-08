@@ -1,0 +1,121 @@
+<div class="m-container">
+  <mat-card class="m-title">
+    <h3>{{title}}</h3>
+  </mat-card>
+
+  <form #subscriptionForm="ngForm">
+    <mat-card>
+      <mat-card-content>
+        <div fxLayout="row" fxLayoutAlign="center center"></div>
+
+        <mat-card>
+          <div class="input-container">
+            <div class="label-container">
+              <span class="label">Name</span>
+            </div>
+            <div class="field-container">
+              <mat-form-field [floatLabel]="'never'">
+                <input
+                  matInput
+                  name="fname"
+                  [(ngModel)]="subscription.name"
+                  #fname="ngModel"
+                  required
+                  placeholder="Name"
+                />
+              </mat-form-field>
+            </div>
+          </div>
+          <div class="input-container">
+            <div class="label-container">
+              <span class="label">Price <span> &#36;</span></span>
+            </div>
+            <div class="field-container">
+              <mat-form-field [floatLabel]="'never'">
+                <input
+                  matInput
+                  name="subscription_amount"
+                  [(ngModel)]="subscription.subscription_amount"
+                  #fname="ngModel"
+                  required
+                  placeholder="Price"
+                />
+              </mat-form-field>
+            </div>
+          </div>
+          <div class="input-container">
+            <div class="label-container">
+              <span class="label">Description</span>
+            </div>
+            <div class="field-container">
+              <mat-form-field [floatLabel]="'never'">
+                <input
+                  matInput
+                  name="description"
+                  [(ngModel)]="subscription.description"
+                  #description="ngModel"
+                  placeholder="description"
+                />
+              </mat-form-field>
+            </div>
+          </div>
+
+        </mat-card>
+
+        <!-- user info end -->
+
+        <mat-card>
+          <div fxLayout="row" fxLayoutAlign="center center" style="margin: 5px">
+            <div *ngIf="!isEdit">
+              <button
+                mat-raised-button
+                class="m-jumbo-button m-pointer"
+                *ngIf="subscriptionForm.form.valid"
+                (click)="createSubscription()"
+              >
+                Submit
+              </button>
+              <button
+                mat-raised-button
+                class="m-jumbo-button m-pointer"
+                *ngIf="!subscriptionForm.form.valid"
+                (click)="subscriptionSubmit()"
+              >
+                Submit
+              </button>
+            </div>
+
+            <div *ngIf="isEdit">
+              <button
+                mat-raised-button
+                class="m-jumbo-button m-pointer"
+                (click)="editProfiles()"
+                *ngIf="subscriptionForm.form.valid"
+              >
+                Update
+              </button>
+              <button
+                mat-raised-button
+                class="m-jumbo-button m-pointer"
+                (click)="updateEdit()"
+                *ngIf="!subscriptionForm.form.valid"
+              >
+                Update
+              </button>
+            </div>
+
+            <button
+              mat-raised-button
+              class="m-jumbo-button m-pointer"
+              (click)="cancelChanges()"
+            >
+              Cancel
+            </button>
+          </div>
+        </mat-card>
+      </mat-card-content>
+    </mat-card>
+  </form>
+</div>
+
+

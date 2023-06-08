@@ -398,6 +398,13 @@
           <i class="material-icons">class</i>&nbsp;&nbsp;
           <span>Seasons</span>
         </a>
+        <mat-divider *ngIf="user_role === 'Super Admin' || user_role === 'Platform Admin'"></mat-divider>
+        <a mat-list-item routerLink="/subscriptions" routerLinkActive="active"
+          *ngIf="user_role === 'Platform Admin' || user_role === 'Super Admin'">
+          <i class="material-icons">attach_money</i>
+          <span>Subscriptions</span>
+        </a>
+
         <mat-divider *ngIf="user_role === 'Club Admin' || user_role === 'Super Admin' || user_role === 'Platform Admin'">
         </mat-divider>
 

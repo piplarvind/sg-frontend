@@ -92,7 +92,11 @@ const routes: Routes = [
       path: 'reports',
       loadChildren: 'app/reports/reports.module#ReportsModule'
     },
-    { path: 'mail', loadChildren: '@app/mail/mail.module#MailModule' }
+    { path: 'mail', loadChildren: '@app/mail/mail.module#MailModule' },
+    {
+      path: 'subscriptions',
+      loadChildren: 'app/subscriptions/subscriptions.module#SubscriptionsModule'
+    },
   ]),
   // Fallback when no prior route is matched
   { path: '**', redirectTo: '', pathMatch: 'full' }
