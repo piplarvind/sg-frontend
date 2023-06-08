@@ -1,13 +1,11 @@
 <div class="m-container">
   <mat-card class="m-title">
-    <h3>{{title}}</h3>
+    <h3>{{ title }}</h3>
   </mat-card>
 
   <form #packageForm="ngForm">
     <mat-card>
-
       <mat-card-content>
-
         <div fxLayout="row" fxLayoutAlign="space-between">
           <!-- left card -->
           <div fxFlex="49">
@@ -17,14 +15,22 @@
                   Event type is required
                 </div>
                 <div class="label-container">
-
                   <span class="label">Event Type</span>
                 </div>
                 <div class="field-container">
                   <mat-form-field [floatLabel]="'never'">
-                    <mat-select matInput name="type" #type="ngModel" required placeholder="Select event type"
-                      [(ngModel)]="package.event_type">
-                      <mat-option *ngFor="let type of eventType" [value]="type._id">{{type.event_type}}
+                    <mat-select
+                      matInput
+                      name="type"
+                      #type="ngModel"
+                      required
+                      placeholder="Select event type"
+                      [(ngModel)]="package.event_type"
+                    >
+                      <mat-option
+                        *ngFor="let type of eventType"
+                        [value]="type._id"
+                        >{{ type.event_type }}
                       </mat-option>
                     </mat-select>
                   </mat-form-field>
@@ -32,17 +38,25 @@
                 </div>
               </div>
               <div class="input-container">
-                <div class="errortxt" [hidden]="packageName.valid || packageName.pristine">
+                <div
+                  class="errortxt"
+                  [hidden]="packageName.valid || packageName.pristine"
+                >
                   Event name is required
                 </div>
                 <div class="label-container">
-
                   <span class="label">Event Name</span>
                 </div>
                 <div class="field-container">
                   <mat-form-field [floatLabel]="'never'">
-                    <input matInput placeholder="Enter the event name" [(ngModel)]="package.name" name="packageName"
-                      #packageName="ngModel" required>
+                    <input
+                      matInput
+                      placeholder="Enter the event name"
+                      [(ngModel)]="package.name"
+                      name="packageName"
+                      #packageName="ngModel"
+                      required
+                    />
                   </mat-form-field>
                 </div>
               </div>
@@ -51,33 +65,54 @@
                   Total price is required
                 </div>
                 <div class="label-container">
-
                   <span class="label">Total Price <span> &#36;</span></span>
                 </div>
                 <div class="field-container">
                   <mat-form-field [floatLabel]="'never'">
                     <!-- <input matInput name="total" #total="ngModel" placeholder="Enter the Cost of Package" (keypress)="restrictMinus($event)" pattern="^$|^([0-9]|[1-9][0-9]|[1][0][0])?"  type="number" [(ngModel)]="package.package_amount" required> -->
-                    <input matInput name="total" #total="ngModel" placeholder="Enter the cost of event" min="0"  type="text"
-                      [(ngModel)]="package.package_amount"  (ngModelChange)="validateamount($event)" required>
+                    <input
+                      matInput
+                      name="total"
+                      #total="ngModel"
+                      placeholder="Enter the cost of event"
+                      min="0"
+                      type="text"
+                      [(ngModel)]="package.package_amount"
+                      (ngModelChange)="validateamount($event)"
+                      required
+                    />
                   </mat-form-field>
                 </div>
               </div>
               <div class="input-container">
-                <div class="errortxt" [hidden]="validity.valid || validity.pristine">
+                <div
+                  class="errortxt"
+                  [hidden]="validity.valid || validity.pristine"
+                >
                   Validity is required
                 </div>
                 <div class="label-container">
-
                   <span class="label">Validity From Date</span>
                 </div>
-                  <div class="field-container">
-                    <mat-form-field [floatLabel]="'never'">
-                      <input matInput [matDatepicker]="picker"  #validity="ngModel" [(ngModel)]="package.validity_from" style="width:inherit"
-                        name="validity" placeholder="Validity from date" required />
-                      <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-                      <mat-datepicker #picker></mat-datepicker>
-                    </mat-form-field>
-                  </div>
+                <div class="field-container">
+                  <mat-form-field [floatLabel]="'never'">
+                    <input
+                      matInput
+                      [matDatepicker]="picker"
+                      #validity="ngModel"
+                      [(ngModel)]="package.validity_from"
+                      style="width: inherit"
+                      name="validity"
+                      placeholder="Validity from date"
+                      required
+                    />
+                    <mat-datepicker-toggle
+                      matSuffix
+                      [for]="picker"
+                    ></mat-datepicker-toggle>
+                    <mat-datepicker #picker></mat-datepicker>
+                  </mat-form-field>
+                </div>
                 <!-- <div class="field-container">
                   <mat-form-field [floatLabel]="'never'">
                  
@@ -86,46 +121,62 @@
                   </mat-form-field>
                 </div> -->
               </div>
-  <div class="input-container">
-    <div class="errortxt" [hidden]="validitytill.valid || validitytill.pristine">
-     Till is required
-    </div>
-    <div class="label-container">
-  
-      <span class="label">Validity Till Date</span>
-    </div>
-    <div class="field-container">
-      <mat-form-field [floatLabel]="'never'">
-        <input matInput [matDatepicker]="picker2" #validitytill="ngModel" [(ngModel)]="package.validity_to" style="width:inherit"
-          name="validitytill" placeholder="Validity till date" required />
-        <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
-        <mat-datepicker #picker2></mat-datepicker>
-      </mat-form-field>
-    </div>
-
-  </div>
-
-
+              <div class="input-container">
+                <div
+                  class="errortxt"
+                  [hidden]="validitytill.valid || validitytill.pristine"
+                >
+                  Till is required
+                </div>
+                <div class="label-container">
+                  <span class="label">Validity Till Date</span>
+                </div>
+                <div class="field-container">
+                  <mat-form-field [floatLabel]="'never'">
+                    <input
+                      matInput
+                      [matDatepicker]="picker2"
+                      #validitytill="ngModel"
+                      [(ngModel)]="package.validity_to"
+                      style="width: inherit"
+                      name="validitytill"
+                      placeholder="Validity till date"
+                      required
+                    />
+                    <mat-datepicker-toggle
+                      matSuffix
+                      [for]="picker2"
+                    ></mat-datepicker-toggle>
+                    <mat-datepicker #picker2></mat-datepicker>
+                  </mat-form-field>
+                </div>
+              </div>
             </mat-card>
           </div>
 
           <!-- right card -->
           <div fxFlex="49">
             <mat-card class="childContainer">
-
-
               <div class="input-container">
-                <div class="errortxt" [hidden]="description.valid || description.pristine">
+                <div
+                  class="errortxt"
+                  [hidden]="description.valid || description.pristine"
+                >
                   Description is required
                 </div>
                 <div class="label-container">
-
                   <span class="label">Event Description</span>
                 </div>
                 <div class="field-container">
                   <mat-form-field [floatLabel]="'never'">
-                    <textarea matInput name="description" #description="ngModel" required placeholder="Enter event description" 
-                      [(ngModel)]="package.description"></textarea>
+                    <textarea
+                      matInput
+                      name="description"
+                      #description="ngModel"
+                      required
+                      placeholder="Enter event description"
+                      [(ngModel)]="package.description"
+                    ></textarea>
                   </mat-form-field>
                 </div>
               </div>
@@ -142,12 +193,8 @@
                             </div>
                           </div> -->
 
-
-
               <div class="input-container">
-
                 <div class="label-container">
-
                   <span class="label">Due Date (Date of month)</span>
                 </div>
                 <div class="field-container">
@@ -158,22 +205,41 @@
                     </mat-select>
                   </mat-form-field> -->
                   <mat-form-field [floatLabel]="'never'">
-                    <input matInput [matDatepicker]="pickerDueDate"  #dueDate="ngModel" [(ngModel)]="package.monthly_due_date" style="width:inherit"
-                      name="dueDate" placeholder="Due date" />
-                    <mat-datepicker-toggle matSuffix [for]="pickerDueDate"></mat-datepicker-toggle>
+                    <input
+                      matInput
+                      [matDatepicker]="pickerDueDate"
+                      #dueDate="ngModel"
+                      [(ngModel)]="package.monthly_due_date"
+                      style="width: inherit"
+                      name="dueDate"
+                      placeholder="Due date"
+                    />
+                    <mat-datepicker-toggle
+                      matSuffix
+                      [for]="pickerDueDate"
+                    ></mat-datepicker-toggle>
                     <mat-datepicker #pickerDueDate></mat-datepicker>
                   </mat-form-field>
                 </div>
               </div>
               <div class="input-container">
                 <div class="label-container">
-
-                  <span class="label">Late Payment Fee <span> &#36;</span></span>
+                  <span class="label"
+                    >Late Payment Fee <span> &#36;</span></span
+                  >
                 </div>
                 <div class="field-container">
                   <mat-form-field [floatLabel]="'never'">
-                    <input matInput name="latefee" #latefee="ngModel" placeholder="Late payment fee"  min="0"  type="text"
-                      [(ngModel)]="package.late_pay_fee"(ngModelChange)="validatelateFee($event)" >
+                    <input
+                      matInput
+                      name="latefee"
+                      #latefee="ngModel"
+                      placeholder="Late payment fee"
+                      min="0"
+                      type="text"
+                      [(ngModel)]="package.late_pay_fee"
+                      (ngModelChange)="validatelateFee($event)"
+                    />
                     <!-- <mat-select color="red" placeholder="Select City" ="user.city">
                     <mat-option *ngFor="let city of cityList" [value]="city.id">{{city.name}}</mat-option>
                   </mat-select> -->
@@ -189,38 +255,42 @@
                 </div>
                 <div class="field-container">
                   <mat-form-field [floatLabel]="'never'">
-                    <input matInput name="latePayDay" #latePayDay="ngModel" placeholder="No. of days beyond due date" type="text"
-                       min="0" [(ngModel)]="package.late_pay_days"(ngModelChange)=" validatelateFeeDay($event)">
+                    <input
+                      matInput
+                      name="latePayDay"
+                      #latePayDay="ngModel"
+                      placeholder="No. of days beyond due date"
+                      type="text"
+                      min="0"
+                      [(ngModel)]="package.late_pay_days"
+                      (ngModelChange)="validatelateFeeDay($event)"
+                    />
                     <!-- <mat-select color="red" placeholder="Select City" ="user.city">    pattern="^$|^([0-9]|[1-9][0-9]|[1][0][0])?"  
                     <mat-option *ngFor="let city of cityList" [value]="city.id">{{city.name}}</mat-option>
                   </mat-select> -->
                   </mat-form-field>
                 </div>
               </div>
-
             </mat-card>
           </div>
         </div>
         <mat-card style="min-height: 10vh" *ngIf="showInstallment">
           <mat-card-title>
             <div fxLayout="row" fxLayoutAlign="space-between">
-              <div fxFlex="50" class="m-sub-title">
-                Installment Details
-              </div>
+              <div fxFlex="50" class="m-sub-title">Installment Details</div>
             </div>
           </mat-card-title>
           <mat-card-content>
-
             <mat-divider class="m-divider"></mat-divider>
-            <br>
+            <br />
             <div fxLayout="row" fxLayoutAlign="space-between">
               <div fxFlex="70">
-                <div style="display:flex">
+                <div style="display: flex">
                   <div class="input-container">
                     <div *ngIf="errMsg" class="errortxt">
                       <span>Value cannot be zero</span>
                     </div>
-                    <div class="label-container" style='width: 30%;'>
+                    <div class="label-container" style="width: 30%">
                       <span class="label-icon">
                         <!-- <i class="far fa-list-alt"></i> -->
                       </span>
@@ -228,8 +298,15 @@
                     </div>
                     <div class="field-container">
                       <mat-form-field [floatLabel]="'never'">
-                        <input matInput placeholder="No. of installments" type="number" min="1" name="installNo"
-                          [(ngModel)]="tempInstall.installments_no" (keyup)="checkInstallment()">
+                        <input
+                          matInput
+                          placeholder="No. of installments"
+                          type="number"
+                          min="1"
+                          name="installNo"
+                          [(ngModel)]="tempInstall.installments_no"
+                          (keyup)="checkInstallment()"
+                        />
                         <!-- <mat-select color="red" placeholder="Select City" ="user.city">
                             <mat-option *ngFor="let city of cityList" [value]="city.id">{{city.name}}</mat-option>
                           </mat-select> -->
@@ -237,8 +314,14 @@
                     </div>
                   </div>
                   <div class="input-container">
-                    <div class="errortxt" *ngIf='tempInstall.down_pay_amount > package.package_amount'><span>Down
-                        Payment should be less than total price</span></div>
+                    <div
+                      class="errortxt"
+                      *ngIf="
+                        tempInstall.down_pay_amount > package.package_amount
+                      "
+                    >
+                      <span>Down Payment should be less than total price</span>
+                    </div>
                     <div *ngIf="errPayment" class="errortxt">
                       <span>Value cannot be Zero</span>
                     </div>
@@ -246,12 +329,21 @@
                       <span class="label-icon">
                         <!-- <i class="far fa-list-alt"></i> -->
                       </span>
-                      <span class="label">Down Payment <span> &#36;</span></span>
+                      <span class="label"
+                        >Down Payment <span> &#36;</span></span
+                      >
                     </div>
                     <div class="field-container">
                       <mat-form-field [floatLabel]="'never'">
-                        <input matInput placeholder="Down payment" type="number" name="downPay" min="1" [(ngModel)]="tempInstall.down_pay_amount"
-                          (keyup)="checkPayment()">
+                        <input
+                          matInput
+                          placeholder="Down payment"
+                          type="number"
+                          name="downPay"
+                          min="1"
+                          [(ngModel)]="tempInstall.down_pay_amount"
+                          (keyup)="checkPayment()"
+                        />
                         <!-- <mat-select color="red" placeholder="Select City" ="user.city">
                               <mat-option *ngFor="let city of cityList" [value]="city.id">{{city.name}}</mat-option>
                             </mat-select> -->
@@ -267,60 +359,93 @@
                 </div>
               </div>
               <div fxFlex="30" fxLayoutAlign="end">
-
-                <button mat-raised-button class="m-button m-pointer" (click)="addInstallment()">Add
-                  Installments&nbsp;&nbsp;+</button>
+                <button
+                  mat-raised-button
+                  class="m-button m-pointer"
+                  (click)="addInstallment()"
+                >
+                  Add Installments&nbsp;&nbsp;+
+                </button>
               </div>
             </div>
 
-            <div>
-
-            </div>
+            <div></div>
 
             <div class="m-table-container">
               <mat-table #table [dataSource]="dataSource" matSort>
-
                 <ng-container matColumnDef="installments">
                   <mat-header-cell *matHeaderCellDef mat-sort-header>
                     <span class="m-table-header">Installments </span>
                   </mat-header-cell>
-                  <mat-cell *matCellDef="let element" class="light-red m-pointer textCenter">
-                    <span [hidden]="showSave">{{element.installments_no}}</span>
+                  <mat-cell
+                    *matCellDef="let element"
+                    class="light-red m-pointer textCenter"
+                  >
+                    <span [hidden]="showSave">{{
+                      element.installments_no
+                    }}</span>
                   </mat-cell>
                   <!-- <mat-cell *matCellDef="let element" *ngIf="!showSave" class="light-red m-pointer textCenter"><input matInput [(ngModel)]="element.installments_no"> </mat-cell> -->
                 </ng-container>
 
                 <ng-container matColumnDef="downPay">
                   <mat-header-cell *matHeaderCellDef mat-sort-header>
-                    <span class="m-table-header">Down Payment Amount <span> &#36;</span></span>
+                    <span class="m-table-header"
+                      >Down Payment Amount <span> &#36;</span></span
+                    >
                   </mat-header-cell>
                   <!-- <mat-cell *matCellDef="let element" class="textCenter"> {{element.down_pay_amount}} </mat-cell> -->
                   <mat-cell *matCellDef="let element" class="textCenter">
-                    <span [hidden]="showSave">{{element.down_pay_amount}}</span>
+                    <span [hidden]="showSave">{{
+                      element.down_pay_amount
+                    }}</span>
                   </mat-cell>
                 </ng-container>
 
-
-
                 <ng-container matColumnDef="emi">
                   <mat-header-cell *matHeaderCellDef mat-sort-header>
-                    <span class="m-table-header">Installment Amount <span> &#36;</span></span>
+                    <span class="m-table-header"
+                      >Installment Amount <span> &#36;</span></span
+                    >
                   </mat-header-cell>
                   <mat-cell *matCellDef="let element" class="textCenter">
-                    {{getComputedAmount(element.installments_no,element.down_pay_amount,element) | number}} </mat-cell>
+                    {{
+                      getComputedAmount(
+                        element.installments_no,
+                        element.down_pay_amount,
+                        element
+                      ) | number
+                    }}
+                  </mat-cell>
                 </ng-container>
                 <ng-container matColumnDef="Actions">
-                  <mat-header-cell *matHeaderCellDef style="text-align: center;"> Actions </mat-header-cell>
-                  <mat-cell *matCellDef="let element" style="text-align: center;">
-                    <span class="table-icon m-pointer" (click)="deleteInstallment(element)">
+                  <mat-header-cell *matHeaderCellDef style="text-align: center">
+                    Actions
+                  </mat-header-cell>
+                  <mat-cell
+                    *matCellDef="let element"
+                    style="text-align: center"
+                  >
+                    <span
+                      class="table-icon m-pointer"
+                      (click)="deleteInstallment(element)"
+                    >
                       <i class="fas fa-trash"></i>
                     </span>
                   </mat-cell>
                 </ng-container>
-                <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-                <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+                <mat-header-row
+                  *matHeaderRowDef="displayedColumns"
+                ></mat-header-row>
+                <mat-row
+                  *matRowDef="let row; columns: displayedColumns"
+                ></mat-row>
               </mat-table>
-              <mat-paginator [length]="100" [pageSize]="100" [pageSizeOptions]="[25, 50, 75, 100]">
+              <mat-paginator
+                [length]="100"
+                [pageSize]="100"
+                [pageSizeOptions]="[25, 50, 75, 100]"
+              >
               </mat-paginator>
             </div>
           </mat-card-content>
@@ -332,20 +457,51 @@
               ePackage()" *ngIf="!isEdit" [disabled]="!packageForm.valid">Submit</button> -->
             <!-- <button mat-raised-button class="m-jumbo-button m-pointer" (click)="editPackage()" *ngIf="isEdit" [disabled]="!packageForm.valid">Update</button> -->
             <div *ngIf="!isEdit">
-              <button mat-raised-button class="m-jumbo-button m-pointer" *ngIf="packageForm.form.valid" (click)="createPackage()">Submit</button>
-              <button mat-raised-button class="m-jumbo-button m-pointer" *ngIf="!packageForm.form.valid" (click)="packageSubmit()">Submit</button>
+              <button
+                mat-raised-button
+                class="m-jumbo-button m-pointer"
+                *ngIf="packageForm.form.valid"
+                (click)="createPackage()"
+              >
+                Submit
+              </button>
+              <button
+                mat-raised-button
+                class="m-jumbo-button m-pointer"
+                *ngIf="!packageForm.form.valid"
+                (click)="packageSubmit()"
+              >
+                Submit
+              </button>
             </div>
             <div *ngIf="isEdit">
-              <button mat-raised-button class="m-jumbo-button m-pointer" (click)="editPackage()" *ngIf="packageForm.form.valid">Update</button>
-              <button mat-raised-button class="m-jumbo-button m-pointer" (click)="updateEdit()" *ngIf="!packageForm.form.valid">Update</button>
+              <button
+                mat-raised-button
+                class="m-jumbo-button m-pointer"
+                (click)="editPackage()"
+                *ngIf="packageForm.form.valid"
+              >
+                Update
+              </button>
+              <button
+                mat-raised-button
+                class="m-jumbo-button m-pointer"
+                (click)="updateEdit()"
+                *ngIf="!packageForm.form.valid"
+              >
+                Update
+              </button>
             </div>
-            <button mat-raised-button class="m-jumbo-button m-pointer" (click)="cancelChange()">Cancel</button>
+            <button
+              mat-raised-button
+              class="m-jumbo-button m-pointer"
+              (click)="cancelChange()"
+            >
+              Cancel
+            </button>
           </div>
         </mat-card>
-
       </mat-card-content>
     </mat-card>
   </form>
 </div>
-
-

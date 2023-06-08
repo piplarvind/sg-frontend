@@ -60,62 +60,28 @@
               class="light-red m-pointer "
               style="margin-left: 2% !important"
             >
-              {{ element.name ? element.name : '' }}
+              {{ element?.name ? element?.name : '' }}
             </mat-cell>
           </ng-container>
-          <ng-container matColumnDef="subscription_type">
+          <ng-container matColumnDef="club_name">
             <mat-header-cell *matHeaderCellDef mat-sort-header>
-              <span class="m-table-header">Event Type </span>
+              <span class="m-table-header">Club </span>
             </mat-header-cell>
             <mat-cell *matCellDef="let element" class="light-red m-pointer ">
-              <!-- {{element.subscription_type?.subscription_name}}  -->
-              {{ element.event_type?.event_type }}
+              {{ element?.club?.club_name }}
             </mat-cell>
           </ng-container>
 
-          <ng-container matColumnDef="subscription_amount">
+          <ng-container matColumnDef="package_amount">
             <mat-header-cell *matHeaderCellDef mat-sort-header>
               <span class="m-table-header"
                 >Total Price <span> &#36;</span></span
               >
             </mat-header-cell>
             <mat-cell *matCellDef="let element">
-              <!-- {{element.subscription_amount}}  -->
-              {{ element.subscription_amount }}
+              {{ element?.package_amount }}
             </mat-cell>
           </ng-container>
-
-          <ng-container matColumnDef="validity_from">
-            <mat-header-cell *matHeaderCellDef mat-sort-header>
-              <span class="m-table-header">Validity From </span>
-            </mat-header-cell>
-            <mat-cell *matCellDef="let element">
-              {{ element.validity_from | date: 'MM/dd/yyyy' }}
-            </mat-cell>
-          </ng-container>
-
-          <ng-container matColumnDef="late_pay_fee">
-            <mat-header-cell *matHeaderCellDef mat-sort-header>
-              <span class="m-table-header"
-                >Late Payment Fee <span> &#36;</span></span
-              >
-            </mat-header-cell>
-            <mat-cell *matCellDef="let element">
-              <!-- {{element.late_pay_fee}}  -->
-              {{ element.late_pay_fee }}
-            </mat-cell>
-          </ng-container>
-          <!-- 
-          <ng-container matColumnDef="createdBy">
-            <mat-header-cell *matHeaderCellDef mat-sort-header>
-              <span class="m-table-header">Created By</span>
-            </mat-header-cell>
-            <mat-cell *matCellDef="let element" >
-              {{element.createdBy ?
-              element.createdBy.spit("T")[0] : "Super Admin"}}-->
-          <!-- {{element.createdBy}} -->
-          <!-- </mat-cell>
-          </ng-container> -->
 
           <ng-container matColumnDef="createdBy">
             <mat-header-cell *matHeaderCellDef mat-sort-header>

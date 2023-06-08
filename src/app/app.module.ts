@@ -47,6 +47,7 @@ import { FeedsModule } from '@app/feeds/feeds.module';
 // import { ProfileTypeComponent } from './profile-type/profile-type.component';
 import { ProfilesModule } from '@app/profiles/profiles.module';
 import { ProfileTypeModule } from '@app/profile-type/profile-type.module';
+import { SubscriptionsModule } from '@app/subscriptions/subscriptions.module';
 
 import { JwtInterceptor } from './core/http/jwt.interceptor';
 
@@ -96,6 +97,7 @@ import { JwtInterceptor } from './core/http/jwt.interceptor';
     FormsModule,
     ProfilesModule,
     ProfileTypeModule,
+    SubscriptionsModule,
     HttpClientModule
   ],
   declarations: [AppComponent],

@@ -25,6 +25,7 @@ export class SubscriptionsService {
       this.getPlans +
         '?club=' +
         credentials +
+        '&planType=subscription' +
         '&skip=' +
         skip +
         '&limit=' +
@@ -33,17 +34,18 @@ export class SubscriptionsService {
   }
   getClubSubscriptionallPlans(credentials: any, Subscriptiontype) {
     return this.http.get(
-      this.getPlans + '?club=' + credentials + '&type=' + Subscriptiontype
+      this.getPlans + '?club=' + credentials + '&planType=subscription' + '&type=' + Subscriptiontype
     );
   }
   getfilterSubscription(credentials: any, value) {
-    return this.http.get(this.getPlans + '?club=' + credentials + value);
+    return this.http.get(this.getPlans + '?club=' + '&planType=subscription' + credentials + value);
   }
   getSortedSubscription(credentials: any, skip, limit, sort) {
     return this.http.get(
       this.getPlans +
         '?club=' +
         credentials +
+        '&planType=subscription' + 
         '&skip=' +
         skip +
         '&limit=' +

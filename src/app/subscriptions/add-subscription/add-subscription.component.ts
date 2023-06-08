@@ -1,180 +1,143 @@
-import { Component, OnInit, AfterViewInit, ViewChild } from '@angular/core';
-import { SubscriptionsService } from '@app/subscriptions/subscriptions.service';
-import { Router } from '@angular/router';
-import { SharedService } from '@app/shared/shared.service';
-import { environment } from '../../../environments/environment';
-import { EventsService } from '@app/events/events.service';
-import {
-  MatDialog,
-  MatDialogRef,
-  MAT_DIALOG_DATA,
-  MatPaginator,
-  MatSort,
-  MatTableDataSource,
-  MatTableModule
-} from '@angular/material';
-import * as moment from 'moment';
+import { Component, OnInit } from "@angular/core";
+import { ResourceService } from "@app/resource/resource.service";
+import { Router, RouterModule } from "@angular/router";
+import { SharedService } from "@app/shared/shared.service";
+import { UsersService } from "@app/users/users.service";
+import { SubscriptionsService } from "@app/subscriptions/subscriptions.service";
+import { ProfilesService } from "@app/profiles/profiles.service";
+import { TeamsService } from "@app/teams/teams.service";
+
+// import { SearchSelectComponent } from '@app/shared/search-select/search-select.component';
 @Component({
-  selector: 'app-add-subscription',
-  templateUrl: './add-subscription.component.html',
-  styleUrls: ['./add-subscription.component.scss']
+  selector: "app-add-subscription",
+  templateUrl: "./add-subscription.component.html",
+  styleUrls: ["./add-subscription.component.scss"],
 })
-export class AddSubscriptionComponent implements OnInit, AfterViewInit {
-  localStorage = localStorage;
-  showForm = false;
-  subscription_id: any;
-  tempId: any;
-  temp: any;
-  getsubscriptiondata: any;
-  subscriptionType: Array<any> = [];
-  eventType: Array<any> = [];
-  showInstallment: Boolean;
+export class AddSubscriptionComponent implements OnInit {
+  curClub: string;
+  title = "Create Subscription";
+  rolesList: Array<any> = [];
+  roleUserList: Array<any>;
   subscription: any = {
-    name: '',
-    createdBy: '',
-    subscription_amount: '',
-    description: ''
+    club: "",
+    name: "",
+    createdBy: "",
+    package_amount: "",
+    description: "",
+    profile_type: "",
+    plan_type: '',
+    late_pay_fee: 0,
   };
-  errMsg: Boolean;
-  errPayment: Boolean;
-
-  tempInstall = {
-    installments_no: '',
-    installment_amount: '',
-    down_pay_amount: ''
-  };
-  title: any = 'Create Event with Associated Fees';
-  curClubId: any;
-  isEdit = false;
-  displayedColumns: any = ['installments', 'downPay', 'emi', 'Actions'];
   dataSource: Array<any> = [];
-  showSave = false;
-
-  dates = [
-    1,
-    2,
-    3,
-    4,
-    5,
-    6,
-    7,
-    8,
-    9,
-    10,
-    11,
-    12,
-    13,
-    14,
-    15,
-    16,
-    17,
-    18,
-    19,
-    20,
-    21,
-    22,
-    23,
-    24,
-    25,
-    26,
-    27,
-    28
-  ];
-
+  isEdit = false;
+  showSubmit: Boolean = true;
   constructor(
-    private subscriptionservice: SubscriptionsService,
-    private router: Router,
+    public resourceService: ResourceService,
     public sharedService: SharedService,
-    private eventService: EventsService,
+    public subscriptionService: SubscriptionsService,
+    public userService: UsersService,
+    public teamService: TeamsService,
+    private router: Router,
+    public ProfilesService: ProfilesService
   ) {}
 
   ngOnInit() {
-    // this.dataSource = this.subscription.installments;
-    this.getPlantypes();
+    this.getAllRoles();
     if (
-      localStorage.user_role === `${environment.Super_Admin}` ||
-      localStorage.user_role === `${environment.Platform_Admin}`
+      localStorage.user_role === "Super Admin" ||
+      localStorage.user_role === "Platform Admin"
     ) {
-      this.temp = localStorage.super_cur_club;
-      this.tempId = localStorage.super_cur_clubId;
+      this.curClub = localStorage.super_cur_clubId;
     } else {
-      this.temp = localStorage.dbName;
-      this.tempId = localStorage.club_id;
+      this.curClub = localStorage.club_id;
     }
-    this.getEventtypes();
-    if (
-      this.router.url === '/subscriptions/edit' &&
-      sessionStorage.selected_subscription
-    ) {
-      this.sharedService.showLoader = true;
-      this.title = 'Edit Event with Associated Fees';
+    if (this.router.url === "/subscriptions/add") {
+    }
 
-      this.getsubscriptiondata = JSON.parse(sessionStorage.selected_subscription);
-      this.subscription_id = this.getsubscriptiondata._id;
-      this.getOnePayment(this.subscription_id);
-      //  console.log('this.subscription', this.subscription);
-      //  this.getSubscriptionType(this.subscription.subscription_type);
-      //  this.dataSource = this.subscription.installments;
-      // // this.isEdit = true;
-      // this.showForm = true;
-      // if (this.subscription.subscription_type._id) {
-      //   this.subscription.subscription_type = this.subscription.subscription_type._id;
-      // }
-      this.sharedService.showLoader = false;
+    if (this.router.url === '/subscriptions/edit') {
+      this.title = 'Edit Subscription';
+      this.isEdit = true;
+      this.showSubmit = false;
+      let getSubs = JSON.parse(sessionStorage.selected_subscription);
+      this.subscription._id = getSubs._id;
+      this.fetchOneSubscription(this.subscription._id);
     }
   }
 
-  ngAfterViewInit() {
-    // this.dataSource.paginator = this.paginator;
-    // this.dataSource.sort = this.sort;
-  }
-  getOnePayment(id: any) {
+  fetchOneSubscription(subId) {
     this.sharedService.showLoader = true;
-    this.subscriptionservice.getOneSubscription(id).then(
-      (res: any) => {
-        this.sharedService.showLoader = false;
+    this.isEdit = true;
+
+    this.title = 'Edit Subscription';
+    this.subscriptionService
+      .getOneSubscription(subId)
+      .then((res: any) => {
         this.subscription = res.data;
-        this.getSubscriptionType(this.subscription.subscription_type);
-        this.dataSource = this.subscription.installments;
-        this.isEdit = true;
-        this.showForm = true;
-        if (this.subscription.subscription_type._id) {
-          this.subscription.subscription_type = this.subscription.subscription_type._id;
-        }
-      },
-      (err: any) => {
-        console.log('error occured', err);
-      }
-    );
+        // if (res.data.start_date) {
+        //   var date = res.data.start_date.split('T')[0];
+
+        //   this.season.start_date = moment(date);
+        // }
+        // if (res.data.end_date) {
+        //   var date = res.data.end_date.split('T')[0];
+        //   this.season.end_date = moment(date);
+        // }
+        this.sharedService.showLoader = false;
+      })
+      .catch((err: any) => {
+        console.log(err);
+      });
   }
+
+  getAllRoles() {
+    this.ProfilesService.getRoles()
+      .then((res: any) => {
+        this.rolesList = res.data;
+      })
+      .catch((err: any) => {
+        console.log("err happened", err);
+      });
+  }
+
+  selectRole(role: any) {
+    let temp = {
+      hashedId: "",
+      //
+      role: role._id,
+    };
+    if (
+      localStorage.user_role === "Super Admin" ||
+      localStorage.user_role === "Platform Admin"
+    ) {
+      temp.hashedId = localStorage.super_cur_club;
+    } else {
+      temp.hashedId = localStorage.dbName;
+    }
+    this.userService
+      .getAthleteList(temp)
+      .then((res: any) => {
+        this.roleUserList = res.data;
+      })
+      .catch((err: any) => {
+        console.log("error occured in fetching data for this role");
+      });
+  }
+
   createSubscription(credentials: any) {
     this.sharedService.showLoader = true;
     const obj = JSON.parse(localStorage.userDetails);
-
-    if (
-      localStorage.user_role === `${environment.Super_Admin}` ||
-      localStorage.user_role === `${environment.Platform_Admin}`
-    ) {
-      this.subscription.club = localStorage.super_cur_clubId;
-    } else {
-      this.subscription.club = localStorage.club_id;
-    }
-    this.subscription.validity_from = moment(this.subscription.validity_from).format(
-      'YYYY-MM-DD HH:mm'
-    );
-    this.subscription.validity_to = moment(this.subscription.validity_to).format(
-      'YYYY-MM-DD HH:mm'
-    );
+    
+    this.subscription.club = this.curClub; 
     this.subscription.createdBy = obj._id;
-    this.subscription.installments = this.dataSource;
-    this.subscriptionservice.newPlan(this.subscription).subscribe(
+    this.subscription.plan_type = 'subscription';
+    this.subscriptionService.newPlan(this.subscription).subscribe(
       (res: any) => {
         this.sharedService.showLoader = false;
-        this.sharedService.showMessage('plan created  successfully');
-        this.router.navigate(['/subscriptions']);
+        this.sharedService.showMessage("Subscription plan created  successfully");
+        this.router.navigate(["/subscriptions"]);
       },
       (err: any) => {
-        console.log('error occured', err);
+        console.log("error occured", err);
       }
     );
   }
@@ -185,9 +148,9 @@ export class AddSubscriptionComponent implements OnInit, AfterViewInit {
         `Unsaved data, if any will be lost if you cancel this action.
       Confirm if you want to leave this page?`
       )
-      .subscribe(response => {
+      .subscribe((response) => {
         if (response === true) {
-          this.router.navigate(['/subscriptions']);
+          this.router.navigate(["/subscriptions"]);
         }
       });
   }
@@ -198,9 +161,9 @@ export class AddSubscriptionComponent implements OnInit, AfterViewInit {
         `Fields cannot be empty,
     senter data in all the fields and then click on update.`
       )
-      .subscribe(response => {
-        if (response === '') {
-          this.router.navigateByUrl('/subscriptions');
+      .subscribe((response) => {
+        if (response === "") {
+          this.router.navigateByUrl("/subscriptions");
         }
       });
   }
@@ -208,11 +171,11 @@ export class AddSubscriptionComponent implements OnInit, AfterViewInit {
   subscriptionSubmit() {
     this.sharedService
       .showDialog(
-        'Fields cannot be empty, enter data in all the fields and then click on submit.'
+        "Fields cannot be empty, enter data in all the fields and then click on submit."
       )
-      .subscribe(response => {
-        if (response === '') {
-          this.router.navigateByUrl('/subscriptions');
+      .subscribe((response) => {
+        if (response === "") {
+          this.router.navigateByUrl("/subscriptions");
         }
       });
   }
@@ -223,186 +186,15 @@ export class AddSubscriptionComponent implements OnInit, AfterViewInit {
 
     const temp = this.subscription;
 
-    this.subscriptionservice.updatingPlan(temp).subscribe(
+    this.subscriptionService.updatingPlan(temp).subscribe(
       (res: any) => {
         this.sharedService.showLoader = false;
-        this.sharedService.showMessage('Plan updated successfully');
-        this.router.navigate(['/subscriptions']);
+        this.sharedService.showMessage("Plan updated successfully");
+        this.router.navigate(["/subscriptions"]);
       },
       (err: any) => {
-        console.log('error occured', err);
+        console.log("error occured", err);
       }
     );
-  }
-
-  checkInstallment() {
-    if (this.tempInstall.installments_no < '1') {
-      //   this.errMsg = true;
-      // } else {
-      //   this.errMsg = false;
-      this.sharedService.loginDialog('Value cannot be less than 1');
-    }
-  }
-
-  checkPayment() {
-    if (this.tempInstall.down_pay_amount < '1') {
-      //   this.errPayment = true;
-      // } else {
-      //   this.errPayment = false;
-      this.sharedService.loginDialog('Value cannot be less than 1');
-    }
-  }
-  validatevalidity(text) {
-    var phoneNo = '';
-    for (let i = 0; i < text.length; i++) {
-      var ch = text.charAt(i);
-      if (ch >= '0' && ch <= '9') {
-        phoneNo += ch;
-      }
-    }
-    setTimeout(() => {
-      this.subscription.validity = phoneNo;
-    }, 0);
-  }
-  validateamount(text) {
-    var phoneNo = '';
-    for (let i = 0; i < text.length; i++) {
-      var ch = text.charAt(i);
-      if (ch >= '0' && ch <= '9') {
-        phoneNo += ch;
-      }
-    }
-    setTimeout(() => {
-      this.subscription.subscription_amount = phoneNo;
-    }, 0);
-  }
-  validatelateFee(text) {
-    var phoneNo = '';
-    for (let i = 0; i < text.length; i++) {
-      var ch = text.charAt(i);
-      if (ch >= '0' && ch <= '9') {
-        phoneNo += ch;
-      }
-    }
-
-    setTimeout(() => {
-      this.subscription.late_pay_fee = phoneNo;
-    }, 0);
-  }
-  validatelateFeeDay(text) {
-    var phoneNo = '';
-    for (let i = 0; i < text.length; i++) {
-      var ch = text.charAt(i);
-      if (ch >= '0' && ch <= '9') {
-        phoneNo += ch;
-      }
-    }
-    setTimeout(() => {
-      this.subscription.late_pay_days = phoneNo;
-    }, 0);
-  }
-
-  addInstallment() {
-    if (
-      !this.tempInstall.installments_no &&
-      !this.tempInstall.down_pay_amount
-    ) {
-      this.sharedService.loginDialog(
-        'Enter value in fields to add Installments'
-      );
-    }
-    if (!this.tempInstall.installments_no && this.tempInstall.down_pay_amount) {
-      this.sharedService.loginDialog('Enter No. of Installments');
-    }
-    if (this.tempInstall.installments_no && !this.tempInstall.down_pay_amount) {
-      this.sharedService.loginDialog('Enter Down Payment');
-    }
-    if (
-      this.tempInstall.down_pay_amount !== '' &&
-      this.tempInstall.down_pay_amount > '0' &&
-      this.tempInstall.installments_no !== '' &&
-      this.tempInstall.installments_no > '0' &&
-      this.tempInstall.down_pay_amount < this.subscription.subscription_amount
-    ) {
-      const updatedArray = this.dataSource;
-      this.dataSource = updatedArray.concat(this.tempInstall);
-      this.tempInstall = {
-        installments_no: '',
-        down_pay_amount: '',
-        installment_amount: ''
-      };
-    }
-  }
-
-  saveInstall(elem: any) {
-    this.showSave = true;
-  }
-
-  getComputedAmount(number: any, amount: any, element: any) {
-    /*element.installment_amount = Math.round(
-      (this.subscription.subscription_amount - amount) / number
-    );*/
-    element.installment_amount = ((this.subscription.subscription_amount - amount) / number).toFixed(2)
-    return element.installment_amount;
-  }
-
-  deleteInstallment(element: any) {
-    this.dataSource = this.updateArray(this.dataSource, element);
-    this.sharedService.showMessage('Installment Deleted Successfully');
-  }
-
-  updateArray(curArrray: any, element: any) {
-    return curArrray.filter(ele => {
-      return (
-        ele.installments_no !== element.installments_no ||
-        ele.down_pay_amount !== element.down_pay_amount
-      );
-    });
-  }
-
-  restrictMinus(event: any) {
-    const pattern = /^[+]?([0-9]+(?:[\.][0-9]*)?|\.[0-9]+)$/;
-    const inputChar = String.fromCharCode(event.charCode);
-    if (!pattern.test(inputChar)) {
-      event.preventDefault();
-    }
-  }
-
-  getPlantypes() {
-    // const temp: any = {
-    //   clubId: ''
-    // };
-    // if (localStorage.user_role === 'Super Admin' || localStorage.user_role === 'Platform Admin') {
-    //   temp.clubId = localStorage.super_cur_clubId;
-    // } else {
-    //   temp.clubId = localStorage.club_id;
-    // }
-    this.subscriptionservice.planTypes().subscribe(
-      (res: any) => {
-        this.subscriptionType = res.data;
-      },
-      (err: any) => {
-        console.log('error this');
-      }
-    );
-  }
-
-  getEventtypes() {
-    this.eventService.getEventTypes(this.tempId).subscribe(
-      (res: any) => {
-        this.eventType = res.data;
-      },
-      (err: any) => {
-        console.log(err);
-      }
-    );
-  }
-
-  getSubscriptionType(subscriptionType: any) {
-    if (subscriptionType.subscription_name === 'Club Subscription') {
-      this.showInstallment = true;
-    } else {
-      this.showInstallment = false;
-    }
   }
 }

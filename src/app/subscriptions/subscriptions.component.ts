@@ -22,10 +22,8 @@ export class SubscriptionsComponent implements OnInit, AfterViewInit {
   dataSource = new MatTableDataSource();
   displayedColumns: any = [
     'name',
-    'subscription_type',
-    'subscription_amount',
-    'validity_from',
-    'late_pay_fee',
+    'club_name',
+    'package_amount',
     'createdBy',
     'Actions'
   ];
@@ -70,47 +68,8 @@ export class SubscriptionsComponent implements OnInit, AfterViewInit {
     }
     if (this.curSelectClub) {
       // this.getAllEvents();
-      this.getSeasons();
+      this.getAllPlans(this.curSelectClub);
     }
-  }
-  getSeasons() {
-    this.sharedService.showLoader = true;
-    this.seasonService
-      .getSeasonList(this.curSelectClub)
-      .then((e: any) => {
-        if (!e.data.length) {
-          this.sharedService
-            .loginDialog('Please create a season before proceeding')
-            .subscribe(() => this.router.navigateByUrl('/seasons'));
-        }
-        for (let i = 0; i < e.data.length; i++) {
-          if (e.data[i].status === 1) {
-            localStorage.curRunningSeason = JSON.stringify(e.data[i]);
-            this.getAllPlans(this.curSelectClub);
-            if (
-              !localStorage.curRunningSeason ||
-              localStorage.curRunningSeason === 'undefined' ||
-              localStorage.curRunningSeason === 'null'
-            ) {
-              this.sharedService
-                .loginDialog('Please create a season before proceeding')
-                .subscribe(() => this.router.navigateByUrl('/seasons'));
-            }
-          }
-        }
-        this.sharedService.showLoader = false;
-      })
-      .catch((err: any) => {
-        this.sharedService.showLoader = false;
-        console.log(err);
-        if (err) {
-          {
-            this.sharedService
-              .loginDialog('Please create a season before proceeding')
-              .subscribe(() => this.router.navigateByUrl('/seasons'));
-          }
-        }
-      });
   }
   ngAfterViewInit() {
     // this.dataSource.paginator = this.paginator;
@@ -259,7 +218,7 @@ export class SubscriptionsComponent implements OnInit, AfterViewInit {
     this.subscriptionService.allPlans(credentials, this.skip, this.limit).subscribe(
       (result: any) => {
         this.sharedService.showLoader = false;
-
+        console.log('result', result);
         const newres = result.data.map(prop => {
           let created = {
               fname: '',

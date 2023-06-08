@@ -1,6 +1,6 @@
 <div class="m-container">
   <mat-card class="m-title">
-    <h3>{{title}}</h3>
+    <h3>{{ title }}</h3>
   </mat-card>
 
   <form #subscriptionForm="ngForm">
@@ -9,6 +9,38 @@
         <div fxLayout="row" fxLayoutAlign="center center"></div>
 
         <mat-card>
+          <div class="input-container">
+            <div class="label-container">
+              <span class="label">Select Role</span>
+            </div>
+            <div class="field-container">
+              <!-- <mat-form-field [floatLabel]="'never'">
+                <mat-select
+                  placeholder="Select role"
+                  (selectionChange)="getUsersbyRole($event)"
+                >
+                  <mat-option *ngFor="let role of rolesList" [value]="role">{{
+                    role.name
+                  }}</mat-option>
+                </mat-select>
+              </mat-form-field> -->
+
+              <mat-form-field [floatLabel]="'never'">
+                <mat-select
+                  matInput
+                  name="profile_type"
+                  #type="ngModel"
+                  required
+                  placeholder="Select event type"
+                  [(ngModel)]="subscription.profile_type"
+                >
+                  <mat-option *ngFor="let role of rolesList" [value]="role._id"
+                    >{{ role.name }}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+          </div>
           <div class="input-container">
             <div class="label-container">
               <span class="label">Name</span>
@@ -34,8 +66,8 @@
               <mat-form-field [floatLabel]="'never'">
                 <input
                   matInput
-                  name="subscription_amount"
-                  [(ngModel)]="subscription.subscription_amount"
+                  name="package_amount"
+                  [(ngModel)]="subscription.package_amount"
                   #fname="ngModel"
                   required
                   placeholder="Price"
@@ -48,18 +80,16 @@
               <span class="label">Description</span>
             </div>
             <div class="field-container">
-              <mat-form-field [floatLabel]="'never'">
-                <input
-                  matInput
-                  name="description"
-                  [(ngModel)]="subscription.description"
-                  #description="ngModel"
-                  placeholder="description"
-                />
-              </mat-form-field>
+              <app-ngx-editor
+                [placeholder]="'Enter content here...'"
+                [spellcheck]="true"
+                height="200px"
+                minHeight="200px"
+                [(ngModel)]="subscription.description"
+                name="description"
+              ></app-ngx-editor>
             </div>
           </div>
-
         </mat-card>
 
         <!-- user info end -->
@@ -84,12 +114,11 @@
                 Submit
               </button>
             </div>
-
             <div *ngIf="isEdit">
               <button
                 mat-raised-button
                 class="m-jumbo-button m-pointer"
-                (click)="editProfiles()"
+                (click)="editSubscription()"
                 *ngIf="subscriptionForm.form.valid"
               >
                 Update
@@ -107,7 +136,7 @@
             <button
               mat-raised-button
               class="m-jumbo-button m-pointer"
-              (click)="cancelChanges()"
+              (click)="cancelSubscription()"
             >
               Cancel
             </button>
@@ -117,5 +146,3 @@
     </mat-card>
   </form>
 </div>
-
-
