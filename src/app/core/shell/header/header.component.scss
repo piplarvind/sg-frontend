@@ -48,7 +48,8 @@
 }
 
 .logo-container {
-  display: inline-block; // border: 1px solid black;
+  display: flex; // border: 1px solid black;
+  align-items: center;
   height: 98%;
   overflow: hidden;
   // border-radius: 50%;

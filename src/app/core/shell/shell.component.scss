@@ -36,6 +36,8 @@ mat-divider {
 .title {
   font-weight: bold;
   font-size: 2em;
+  display: flex;
+  align-items: center;
 }
 
 .bars-icon {
@@ -95,5 +97,6 @@ mat-expansion-panel-header {
 }
 
 .logo-container{
-  max-width:25% !important;
+  max-width: 40% !important;
+  display: flex;
 }
