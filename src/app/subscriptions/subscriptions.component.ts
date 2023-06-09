@@ -23,6 +23,7 @@ export class SubscriptionsComponent implements OnInit, AfterViewInit {
   displayedColumns: any = [
     'name',
     'club_name',
+    'profile_type',
     'package_amount',
     'createdBy',
     'Actions'

@@ -75,6 +75,45 @@
               </mat-form-field>
             </div>
           </div>
+          <div class="input-container" style="margin-bottom: 15px; margin-top:10px;">
+            <div class="label-container">
+              <span class="label-icon">
+              </span>
+              <span class="label">Highlight(i.e. Best Value)</span>
+            </div>
+            <div class="field-container">
+              <mat-form-field [floatLabel]="'never'">
+                <input
+                  matInput
+                  name="highlight_text"
+                  [(ngModel)]="subscription.highlight_text"
+                  #fname="ngModel"
+                  required
+                  placeholder="Highlighted Text(i.e. Best Value)"
+                />
+              </mat-form-field>
+            </div>
+          </div>
+          <div class="input-container" style="margin-bottom: 15px; margin-top:10px;">
+            <div class="label-container">
+              <span class="label-icon">
+              </span>
+              <span class="label">Trial Period (Days)</span>
+            </div>
+            <div class="field-container">
+              <mat-form-field [floatLabel]="'never'">
+                <input
+                  matInput
+                  name="trial_period"
+                  [(ngModel)]="subscription.trial_period"
+                  #fname="ngModel"
+                  required
+                  placeholder="Trial Period"
+                  (keyup)="checkTrialInput()"
+                />
+              </mat-form-field>
+            </div>
+          </div>
           <div class="input-container">
             <div class="label-container">
               <span class="label">Description</span>

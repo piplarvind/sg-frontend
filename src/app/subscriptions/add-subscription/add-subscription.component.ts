@@ -25,6 +25,8 @@ export class AddSubscriptionComponent implements OnInit {
     package_amount: "",
     description: "",
     profile_type: "",
+    highlight_text: '',
+    trial_period: '',
     plan_type: '',
     late_pay_fee: 0,
   };
@@ -123,6 +125,15 @@ export class AddSubscriptionComponent implements OnInit {
       });
   }
 
+  checkTrialInput() {
+    if (this.subscription.trial_period < 0) {
+      //   this.errPayment = true;
+      // } else {
+      //   this.errPayment = false;
+      this.sharedService.loginDialog('Value cannot be less than 0');
+    }
+  }
+
   createSubscription(credentials: any) {
     this.sharedService.showLoader = true;
     const obj = JSON.parse(localStorage.userDetails);
@@ -142,7 +153,7 @@ export class AddSubscriptionComponent implements OnInit {
     );
   }
 
-  cancelChange() {
+  cancelSubscription() {
     this.sharedService
       .showDialog(
         `Unsaved data, if any will be lost if you cancel this action.
