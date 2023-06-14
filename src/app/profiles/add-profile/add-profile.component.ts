@@ -117,6 +117,7 @@ export class AddProfileComponent implements OnInit {
 
   ngOnInit() {
     this.getAllRoles();
+    this.getGender();
     if (this.router.url === '/clubs/add') {
     }
     this.getCountries();
@@ -124,7 +125,6 @@ export class AddProfileComponent implements OnInit {
     this.getAllRegions();
     this.getAllAthletes();
     this.fetchPosition();
-    this.getGender();
     this.getStatus();
 
     if (this.router.url !== '/profiles/add') {
@@ -145,12 +145,14 @@ export class AddProfileComponent implements OnInit {
   getGender() {
     this.ProfilesService.getGenderList().then((res: any) => {
       this.GenderList = [...res.data];
+      console.log('this.GenderList', this.GenderList);
     });
   }
 
-  getAllAge(Id) {
+  getAllAge(Id:any) {
     this.ProfilesService.getAgeListfilterGender(Id).then((res: any) => {
       this.ageList = [...res.data];
+
     });
   }
   getStatus() {
@@ -1186,8 +1188,8 @@ export class AddProfileComponent implements OnInit {
       (res: any) => {
         this.sharedService.showLoader = false;
         this.athleteList = res.data;
-
-        const newres = res.data.map(prop => {
+        
+        const newres = res.data.map((prop:any) => {
           let name: any = {
             fname: '',
             lname: ''
@@ -1208,7 +1210,6 @@ export class AddProfileComponent implements OnInit {
             name: name.fname + ' ' + name.lname
           };
         });
-        this.athleteList = newres;
       }
     );
   }

@@ -563,7 +563,7 @@
                 </div>
                   <div *ngSwitchCase="'dropdownChecked'">
                     <!-- <mat-option *ngFor="let athlete of athleteList" [value]="athlete._id" multiple>{{ athlete.name }}</mat-option> -->
-                    <app-search-select [isDefault]="true" [dropdownList]="athleteList" placeHolder="Select Athlete" [alreadySel]="selectedAthleteId"
+                    <app-search-select [isDefault]="false" [dropdownList]="athleteList" placeHolder="Select Athlete" [alreadySel]="selectedAthleteId"
                       [isMultiple]="true" (valueUpdated)="getAthlete($event)">
                     </app-search-select>
                   </div>
@@ -578,9 +578,10 @@
                             country.name }}</mat-option>
                         </div>
             
+                        
                           <div *ngIf="field.field.name === 'gender'">
-                            <mat-option *ngFor="let gen of GenderList" [value]="gen._id" (click)="gender(gen._id)">{{
-                                                                                                  gen.name }}</mat-option>
+                           
+                            <mat-option *ngFor="let gen of GenderList" [value]="gen._id" (click)="gender(gen._id)">{{gen.name }}</mat-option>
                           </div>
                         <div *ngIf="field.field.name === 'region'">
                           <mat-option *ngFor="let region of regionsList" [value]="region._id">{{ region.name }}
@@ -592,9 +593,7 @@
                               }}</mat-option>
                           </div>
                             <div *ngIf="field.field.name === 'position'">
-                              <mat-option *ngFor="let position of positionList" [value]="position._id">{{
-                                                           position.name
-                                                          }}</mat-option>
+                              <mat-option *ngFor="let position of positionList" [value]="position._id">{{ position.name  }}</mat-option>
                             </div>
                               <div *ngIf="field.field.name === 'status'">
                                 <mat-option *ngFor="let st of StatusList" [value]="st._id">{{

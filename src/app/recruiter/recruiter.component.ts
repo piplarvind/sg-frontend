@@ -103,7 +103,7 @@ export class RecruiterComponent implements OnInit {
       (res: any) => {
         this.sharedService.showLoader = false;
 
-        this.athleteList = res.data.map(prop => {
+        this.athleteList = res.data.map((prop:any) => {
           let name: any = {
             fname: '',
             lname: ''

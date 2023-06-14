@@ -40,7 +40,7 @@ export class OfflinePaymentService {
         .get(
           this.allPayments +
             clubId +
-            '&is_offline=true&skip=' +
+            '&is_offline=false&skip=' +
             skip +
             '&limit=' +
             limit

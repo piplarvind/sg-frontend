@@ -7,16 +7,68 @@
       <div>
         Successful Transaction Details
       </div>
+      <form #paymentSearchForm="ngForm" name="paymentSearch">
       <div>
-        <mat-form-field>
-          <input
-            matInput
-            type="text"
-            (keyup)="doFilter($event)"
-            [placeholder]="keyup ? 'Please Press Enter key' : 'Search by Name'"
-          />
+        <div class="">
+          <mat-form-field>
+          <mat-select
+          [(ngModel)]="paymentSearch.club"
+          name="club" #club="ngModel"
+            style="width:100%"
+            placeholder="Select club here"
+          >
+            <mat-option
+              *ngFor="let club of clubList"
+              [value]="club._id"
+              >{{ club.club_name }}</mat-option
+            >
+          </mat-select>
         </mat-form-field>
+        <mat-form-field>
+          <mat-select
+          [(ngModel)]="paymentSearch.behalf"
+          name="behalf" #behalf="ngModel"
+            style="width:100%"
+            placeholder="Select athlete here"
+          >
+            <mat-option
+              *ngFor="let athlete of athleteList"
+              [value]="athlete._id"
+              >{{ athlete.name }}</mat-option>
+          </mat-select>
+        </mat-form-field>
+        <mat-form-field>
+          <mat-select
+          [(ngModel)]="paymentSearch.payer"
+          name="payer" #payer="ngModel"
+            style="width:100%"
+            placeholder="Select parent here"
+          >
+            <mat-option
+              *ngFor="let parent of parentList"
+              [value]="parent._id"
+              >{{ parent.name }}</mat-option>
+          </mat-select>
+        </mat-form-field>
+          <mat-form-field>
+            <input matInput [matDatepicker]="fromPicker" [(ngModel)]="paymentSearch.fromDate" placeholder="From date" style="width:inherit" name="fromDate" #fromDate="ngModel">
+            <mat-datepicker-toggle matSuffix [for]="fromPicker"></mat-datepicker-toggle>
+            <mat-datepicker #fromPicker></mat-datepicker>
+          </mat-form-field> 
+          <mat-form-field>
+            <input matInput [matDatepicker]="toPicker" [(ngModel)]="paymentSearch.toDate" placeholder="To date" style="width:inherit" name="toDate" #toDate="ngModel">
+            <mat-datepicker-toggle matSuffix [for]="toPicker"></mat-datepicker-toggle>
+            <mat-datepicker #toPicker></mat-datepicker>
+          </mat-form-field>
+        
+          <mat-form-field>
+            <input matInput type="text" placeholder="Enter name"  [(ngModel)]="paymentSearch.searchBy" name="searchBy" #searchBy="ngModel">
+          </mat-form-field>
+        
+        <button mat-raised-button class="m-jumbo-button m-pointer" (click)="searchPayment()">Search</button>
       </div>
+      </div>
+    </form>
       <div>
         <mat-paginator
           #paginator
@@ -78,7 +130,7 @@
               <span class="m-table-header"> Amount </span>
             </mat-header-cell>
             <mat-cell *matCellDef="let element">
-              {{ element.amount ? element.amount : '' }}</mat-cell
+              $ {{ element.amount ? element.amount : '' }}</mat-cell
             >
           </ng-container>
 
@@ -95,7 +147,7 @@
             <mat-header-cell *matHeaderCellDef mat-sort-header>
               <span class="m-table-header"> Payment Method</span>
             </mat-header-cell>
-            <mat-cell *matCellDef="let element"> </mat-cell>
+            <mat-cell *matCellDef="let element">{{ element.type.label }} </mat-cell>
           </ng-container>
           <ng-container matColumnDef="transacationId">
             <mat-header-cell *matHeaderCellDef mat-sort-header>

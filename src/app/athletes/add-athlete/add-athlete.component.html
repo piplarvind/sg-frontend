@@ -726,7 +726,7 @@
               </mat-grid-tile>
               <mat-grid-tile>
                 <span class="ct-left-heading">Package Amount: </span>&nbsp;
-                {{planData.planId.package_amount | currency:'USD':true:'1.2-2'}}
+                {{planData.planId?.package_amount | currency:'USD':true:'1.2-2'}}
               </mat-grid-tile>
               <mat-grid-tile>
                 <span class="ct-left-heading">Package Name: </span>&nbsp;{{planData.planId.name}}

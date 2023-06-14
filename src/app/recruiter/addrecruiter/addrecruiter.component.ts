@@ -268,6 +268,7 @@ export class AddrecruiterComponent implements OnInit {
         });
       }
       if (this.fields[i].field.name === 'athlete_of_interest') {
+        //console.log('this.selectedAthleteId', this.selectedAthleteId[0]); return;
         this.createfield.push({
           field: this.fields[i].field._id,
           value: this.selectedAthleteId

@@ -17,8 +17,10 @@ export class ProfilesService {
   getOneUser = 'profiles/';
   update = 'profiles/';
   getoneroleList = 'profiles/?club=';
+  getProfileListRole = 'profiles/byrole';
   check = 'check/';
   Groups = 'profiles/groups/';
+  getAllAge = 'lookup/allage';
   getAge = 'lookup/age';
 
   // headers = new HttpHeaders({
@@ -360,6 +362,18 @@ export class ProfilesService {
       );
     });
   }
+  getAgeAllList() {
+    return new Promise((resolve, reject) => {
+      this.http.get(this.getAllAge).subscribe(
+        (res: any) => {
+          resolve(res);
+        },
+        err => {
+          reject(err);
+        }
+      );
+    });
+  }
   getSortedProfiles(url) {
     return new Promise((resolve, reject) => {
       this.http.get(this.getProfile + url).subscribe(
@@ -400,6 +414,23 @@ export class ProfilesService {
         );
     });
   }
+
+  getProfileListByRole(clubId, role) {
+    return new Promise((resolve, reject) => {
+      this.http
+        .get(this.getProfileListRole + '?clubId='+clubId+'&role='+ role)
+        .subscribe(
+          (res: any) => {
+            // let temp = res.toArray();
+            resolve(res);
+          },
+          err => {
+            reject(err);
+          }
+        );
+    });
+  }
+
   getAgeListfilterGender(Id) {
     return new Promise((resolve, reject) => {
       this.http.get(this.getAge + '?filter=' + Id).subscribe(

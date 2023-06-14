@@ -5,7 +5,8 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 const routes = {
   getAgeingReports: 'reports',
-  getUnpaidReports: 'payments/reports/'
+  getUnpaidReports: 'payments/reports/',
+  getAllPaymentReports: 'payments/reports/alltransactions'
 };
 const userType = localStorage.user_role;
 const tenantId = localStorage.super_cur_clubId || '';
@@ -89,9 +90,14 @@ export class ReportsService {
     );
   }
 
-  getSuccessTransReportfilter(ageingReportData: any, value) {
+  getSuccessTransReportfilter(ageingReportData: any, value:any) {
     return this.http.get(
       routes.getUnpaidReports + ageingReportData + '/transactions/' + value
+    );
+  }
+  getAllPaymentSuccessTransReportFilter(value:any) {
+    return this.http.get(
+      routes.getAllPaymentReports + value
     );
   }
   getSuccessTransReports(credentials: any, skip, limit) {

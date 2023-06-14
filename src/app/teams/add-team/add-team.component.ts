@@ -194,7 +194,7 @@ export class AddTeamComponent implements OnInit {
       }
     );
   }
-  getAllAge(Id) {
+  getAllAge(Id:any) {
     this.ProfilesService.getAgeListfilterGender(Id).then((res: any) => {
       this.ageList = [...res.data];
       this.ageChanged(this.team.age);
@@ -476,7 +476,8 @@ export class AddTeamComponent implements OnInit {
 
   getClubPlans() {
     this.packageService
-      .getClubPackageallPlans(this.clubId, 'Club_Package')
+      //.getClubPackageallPlans(this.clubId, 'Club_Package')
+      .getClubPackageallPlans(this.clubId, 'subscription')
       .subscribe(
         (res: any) => {
           this.packageList = res.data;

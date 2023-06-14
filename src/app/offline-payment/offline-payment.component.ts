@@ -303,7 +303,7 @@ export class OfflinePaymentComponent implements OnInit, AfterViewInit {
     this.offlinePaymentService
       .getAllPayments(this.curClub, this.skip, this.limit)
       .then((e: any) => {
-        let newres: any = e.data.map(prop => {
+        let newres: any = e.data.map((prop:any) => {
           // if (prop.validity_from) {
           //   var date = prop.validity_from.split('T')[0];
           //   prop.createdAt = moment(date).format('MM/DD/YYYY');
@@ -319,7 +319,7 @@ export class OfflinePaymentComponent implements OnInit, AfterViewInit {
             comments = '',
             type = '';
           if (prop.behalf) {
-            if (prop.behalf.profile_fields)
+            if (prop.behalf.profile_fields) {
               for (let i = 0; i < prop.behalf.profile_fields.length; i++) {
                 if (prop.behalf.profile_fields[i].field) {
                   if (
@@ -332,12 +332,13 @@ export class OfflinePaymentComponent implements OnInit, AfterViewInit {
                   }
                 }
               }
+            }
           }
           if (prop.payer) {
             if (prop.payer.profile_fields) {
               for (let i = 0; i < prop.payer.profile_fields.length; i++) {
                 if (prop.payer.profile_fields[i].field) {
-                  if (prop.payer.profile_fields[i].field.name === 'first_name') {
+                  if (prop.payer.profile_fields[i].field.value === 'first_name') {
                     pfname = prop.payer.profile_fields[i].value;
                   }
                   if (prop.payer.profile_fields[i].field.name === 'last_name') {
