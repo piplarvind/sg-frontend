@@ -92,7 +92,8 @@ export class AddSubscriptionComponent implements OnInit {
   }
 
   getAllRoles() {
-    this.ProfilesService.getRoles()
+    const fetch = 'level5'; //fetch only GEN & ATH
+    this.ProfilesService.getSpecificRoles(fetch)
       .then((res: any) => {
         this.rolesList = res.data;
       })

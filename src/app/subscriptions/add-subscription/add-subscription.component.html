@@ -88,7 +88,6 @@
                   name="highlight_text"
                   [(ngModel)]="subscription.highlight_text"
                   #fname="ngModel"
-                  required
                   placeholder="Highlighted Text(i.e. Best Value)"
                 />
               </mat-form-field>
@@ -107,7 +106,6 @@
                   name="trial_period"
                   [(ngModel)]="subscription.trial_period"
                   #fname="ngModel"
-                  required
                   placeholder="Trial Period"
                   (keyup)="checkTrialInput()"
                 />

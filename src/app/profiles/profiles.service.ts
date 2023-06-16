@@ -9,6 +9,7 @@ export class ProfilesService {
   getGender = 'lookup/gender';
   getProfile = 'profiles/';
   getRole = 'profiles/types/';
+  getSpecificRole = 'profiles/types/';
   getOneRoleFiled = 'profiles/types/';
   profile = 'profiles/';
   fields = 'profiles/onboard?screen=cms_profile';
@@ -100,6 +101,20 @@ export class ProfilesService {
       );
     });
   }
+
+  getSpecificRoles(level5) {
+    return new Promise((resolve, reject) => {
+      this.http.get(this.getSpecificRole+'?fetch='+level5).subscribe(
+        (res: any) => {
+          resolve(res);
+        },
+        err => {
+          reject(err);
+        }
+      );
+    });
+  }
+
   fatchFields(role) {
     return new Promise((resolve, reject) => {
       this.http.get(this.getOneRoleFiled + role).subscribe(

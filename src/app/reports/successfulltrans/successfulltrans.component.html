@@ -3,13 +3,25 @@
     <h3>Successful Transaction</h3>
   </mat-card>
   <mat-card style="min-height: 77vh">
-    <div fxLayout="row" fxLayoutAlign="space-between" class="m-table-container">
+    <div fxLayout="row" fxLayoutAlign="space-between" class="m-table-container top-head">
+      <div>Filter Options</div>
       <div>
-        Successful Transaction Details
+        <mat-paginator
+          #paginator
+          [length]="totalLength"
+          [pageSize]="limit"
+          [pageSizeOptions]="pageLimit"
+          (page)="changePage($event)"
+        >
+        </mat-paginator>
       </div>
-      <form #paymentSearchForm="ngForm" name="paymentSearch">
+    </div>
+    <mat-card-content>
+      <div fxLayout="row" fxLayoutAlign="space-between">
+        <div fxFlex="49">
+    <form #paymentSearchForm="ngForm" name="paymentSearch">
       <div>
-        <div class="">
+        <div class="" fxLayout="row">
           <mat-form-field>
           <mat-select
           [(ngModel)]="paymentSearch.club"
@@ -61,25 +73,17 @@
             <mat-datepicker #toPicker></mat-datepicker>
           </mat-form-field>
         
-          <mat-form-field>
+          <!-- <mat-form-field>
             <input matInput type="text" placeholder="Enter name"  [(ngModel)]="paymentSearch.searchBy" name="searchBy" #searchBy="ngModel">
-          </mat-form-field>
+          </mat-form-field> -->
         
         <button mat-raised-button class="m-jumbo-button m-pointer" (click)="searchPayment()">Search</button>
       </div>
       </div>
     </form>
-      <div>
-        <mat-paginator
-          #paginator
-          [length]="totalLength"
-          [pageSize]="limit"
-          [pageSizeOptions]="pageLimit"
-          (page)="changePage($event)"
-        >
-        </mat-paginator>
-      </div>
     </div>
+    </div>
+    </mat-card-content>
 
     <mat-card-content>
       <mat-divider class="m-divider"></mat-divider>
