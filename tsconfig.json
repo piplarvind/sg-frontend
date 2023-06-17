@@ -1,27 +1,32 @@
 {
   "compileOnSave": false,
   "compilerOptions": {
+    "baseUrl": "./src",
+    "downlevelIteration": true,
     "outDir": "./dist/out-tsc",
-    "strict": false,
     "sourceMap": true,
     "declaration": false,
+    "module": "esnext",
     "moduleResolution": "node",
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
-    "noImplicitAny": false,
-    "strictPropertyInitialization": false,
-    "target": "es5",
-    "typeRoots": ["node_modules/@types"],
-    "lib": ["es2017", "dom", "esnext"],
-    "baseUrl": "src",
+    "target": "es2015",
+    "typeRoots": [
+      "node_modules/@types"
+    ],
+    "lib": [
+      "es2018",
+      "dom"
+    ],
     "paths": {
-      "@app/*": ["app/*"],
-      "@env/*": ["environments/*"]
+      "@app/*": [
+        "app/*"
+      ],
+      "@env/*": [
+        "environments/*"
+      ]
     },
-    "module": "es2015",
-    "skipLibCheck": true
-  },
-  "angularCompilerOptions": {
-    "preserveWhitespaces": false
+    "skipLibCheck": true,
+    "resolveJsonModule": true
   }
 }

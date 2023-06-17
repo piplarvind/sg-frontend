@@ -5,7 +5,6 @@ import { SharedService } from '@app/shared/shared.service';
 import { ClubsService } from '@app/clubs/clubs.service';
 import * as moment from 'moment';
 import { FormControl } from '@angular/forms';
-import { leave } from '@angular/core/src/profile/wtf_impl';
 
 @Component({
   selector: 'app-add-user',

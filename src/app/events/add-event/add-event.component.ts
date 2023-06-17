@@ -18,7 +18,7 @@ import { ResourceService } from '@app/resource/resource.service';
 import { environment } from '../../../environments/environment';
 import { DomSanitizer } from '@angular/platform-browser';
 import { ProfilesService } from '@app/profiles/profiles.service';
-import { MatTableDataSource } from '@angular/material';
+import { MatTableDataSource } from '@angular/material/table';
 import { MatDialog } from '@angular/material/dialog';
 import { EventRepeatedDialogComponent } from '../event-repeated-dialog/event-repeated-dialog.component';
 

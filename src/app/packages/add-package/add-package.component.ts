@@ -4,15 +4,10 @@ import { Router } from '@angular/router';
 import { SharedService } from '@app/shared/shared.service';
 import { environment } from '../../../environments/environment';
 import { EventsService } from '@app/events/events.service';
-import {
-  MatDialog,
-  MatDialogRef,
-  MAT_DIALOG_DATA,
-  MatPaginator,
-  MatSort,
-  MatTableDataSource,
-  MatTableModule
-} from '@angular/material';
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatSort } from '@angular/material/sort';
+import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import * as moment from 'moment';
 @Component({
   selector: 'app-add-package',

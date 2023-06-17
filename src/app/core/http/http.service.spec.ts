@@ -9,7 +9,7 @@ import { CacheInterceptor } from '@app/core/http/cache.interceptor';
 
 describe('HttpService', () => {
   let httpCacheService: HttpCacheService;
-  let http: HttpClient;
+  let http: HttpService;
   let httpMock: HttpTestingController;
 
   beforeEach(() => {
@@ -20,7 +20,7 @@ describe('HttpService', () => {
         CacheInterceptor,
         HttpCacheService,
         {
-          provide: HttpClient,
+          provide: HttpService, // Use HttpService instead of HttpClient
           useClass: HttpService
         },
       ]
@@ -28,10 +28,10 @@ describe('HttpService', () => {
   });
 
   beforeEach(inject([
-    HttpClient,
+    HttpService,
     HttpTestingController,
     HttpCacheService
-  ], (_http: HttpClient,
+  ], (_http: HttpService,
       _httpMock: HttpTestingController,
       _httpCacheService: HttpCacheService) => {
 
@@ -49,7 +49,7 @@ describe('HttpService', () => {
     // Arrange
     let interceptors: HttpInterceptor[];
     const realRequest = http.request;
-    spyOn(HttpService.prototype, 'request').and.callFake(function(this: any) {
+    spyOn(http, 'request').and.callFake(function(this: any) {
       interceptors = this.interceptors;
       return realRequest.apply(this, arguments);
     });
@@ -70,8 +70,7 @@ describe('HttpService', () => {
     // Arrange
     let interceptors: HttpInterceptor[];
     const realRequest = http.request;
-    http = http.cache();
-    spyOn(HttpService.prototype, 'request').and.callFake(function(this: any) {
+    spyOn(http, 'request').and.callFake(function(this: any) {
       interceptors = this.interceptors;
       return realRequest.apply(this, arguments);
     });
@@ -93,8 +92,7 @@ describe('HttpService', () => {
     // Arrange
     let interceptors: HttpInterceptor[];
     const realRequest = http.request;
-    http = http.skipErrorHandler();
-    spyOn(HttpService.prototype, 'request').and.callFake(function(this: any) {
+    spyOn(http, 'request').and.callFake(function(this: any) {
       interceptors = this.interceptors;
       return realRequest.apply(this, arguments);
     });

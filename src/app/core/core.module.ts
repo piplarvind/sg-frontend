@@ -46,10 +46,10 @@ import { CacheInterceptor } from '@app/core/http/cache.interceptor';
       useClass: ApiPrefixInterceptor,
       multi: true
     },
-    {
-      provide: HttpClient,
-      useClass: HttpService
-    },
+    // {
+    //   provide: HttpClient,
+    //   useClass: HttpService
+    // },
     {
       provide: RouteReuseStrategy,
       useClass: RouteReusableStrategy

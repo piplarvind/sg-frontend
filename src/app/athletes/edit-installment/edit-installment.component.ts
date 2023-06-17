@@ -5,15 +5,10 @@ import { environment } from '../../../environments/environment';
 import { ChangeDetectorRef } from '@angular/core';
 import { OfflinePaymentService } from '@app/offline-payment/offline-payment.service';
 import { ProfilesService } from '@app/profiles/profiles.service';
-import {
-  MatDialog,
-  MatDialogRef,
-  MAT_DIALOG_DATA,
-  MatPaginator,
-  MatSort,
-  MatTableDataSource,
-  MatTableModule
-} from '@angular/material';
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatSort } from '@angular/material/sort';
+import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import * as moment from 'moment';
 import { AthletesService } from '@app/athletes/athletes.service';
 

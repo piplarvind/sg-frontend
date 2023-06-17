@@ -7,12 +7,10 @@ import {
 } from '@angular/core';
 import { Routes, RouterModule, ActivatedRoute, Router } from '@angular/router';
 import { UsersService } from '@app/users/users.service';
-import {
-  MatDialog,
-  MatPaginator,
-  MatSort,
-  MatTableDataSource
-} from '@angular/material';
+import { MatDialog } from '@angular/material/dialog';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatSort } from '@angular/material/sort';
+import { MatTableDataSource } from '@angular/material/table';
 import { ClubsService } from '@app/clubs/clubs.service';
 import { SharedService } from '@app/shared/shared.service';
 import { ProfilesService } from '@app/profiles/profiles.service';

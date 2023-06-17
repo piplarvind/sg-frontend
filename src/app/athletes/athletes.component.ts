@@ -7,12 +7,10 @@ import {
   AfterViewInit
 } from '@angular/core';
 import { Router } from '@angular/router';
-import {
-  MatDialog,
-  MatPaginator,
-  MatSort,
-  MatTableDataSource
-} from '@angular/material';
+import { MatDialog } from '@angular/material/dialog';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatSort } from '@angular/material/sort';
+import { MatTableDataSource } from '@angular/material/table';
 import { environment } from 'environments/environment';
 import { AthletesService } from '@app/athletes/athletes.service';
 import { take } from 'rxjs/operators';
@@ -106,7 +104,7 @@ export class AthletesComponent implements OnInit, AfterViewInit {
     }
   }
   getAllAge() {
-    this.ProfilesService.getAgeAllList().then((res: any) => {
+    this.ProfilesService.getAgeList().then((res: any) => {
       this.ageList = [...res.data];
     });
   }
@@ -166,7 +164,7 @@ export class AthletesComponent implements OnInit, AfterViewInit {
       //  value can't be send with white space in url
       let value = event.target['value'];
       value = value.split(' ').join('_');
-      let sdata:any;
+      let sdata;
       this.ProfilesService.getFilterProfilesRole(
         this.curSelectClub,
         `${environment.Athlete}`,
@@ -211,9 +209,7 @@ export class AthletesComponent implements OnInit, AfterViewInit {
               if (prop.profile_fields[i].field.name === 'team') {
                 team = prop.profile_fields[i].value;
               }
-           
               if (prop.profile_fields[i].field.name === 'age') {
-                
                 if (prop.profile_fields[i].value) {
                   let Selectedage = this.ageList.filter(
                     t => t._id === prop.profile_fields[i].value
@@ -394,7 +390,7 @@ export class AthletesComponent implements OnInit, AfterViewInit {
 
   getAllAthletes() {
     this.sharedService.showLoader = true;
-    let data:any;
+    let data;
     let tempValue: any;
     if (
       localStorage.user_role === `${environment.Super_Admin}` ||
@@ -450,13 +446,11 @@ export class AthletesComponent implements OnInit, AfterViewInit {
             if (prop.profile_fields[i].field.name === 'team') {
               team = prop.profile_fields[i].value;
             }
-            
             if (prop.profile_fields[i].field.name === 'age') {
               if (prop.profile_fields[i].value) {
                 let Selectedage = this.ageList.filter(
                   t => t._id === prop.profile_fields[i].value
                 );
-                
                 if (Selectedage[0]) {
                   age = Selectedage[0].label;
                 }

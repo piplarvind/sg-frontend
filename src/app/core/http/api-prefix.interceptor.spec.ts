@@ -21,7 +21,7 @@ describe('ApiPrefixInterceptor', () => {
   });
 
   beforeEach(inject([
-    HttpClient,
+    // HttpClient,
     HttpTestingController
   ], (_http: HttpClient,
       _httpMock: HttpTestingController) => {

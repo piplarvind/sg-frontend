@@ -26,7 +26,7 @@ describe('ErrorHandlerInterceptor', () => {
   });
 
   beforeEach(inject([
-    HttpClient,
+    // HttpClient,
     HttpTestingController
   ], (_http: HttpClient,
       _httpMock: HttpTestingController) => {

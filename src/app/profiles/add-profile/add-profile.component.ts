@@ -20,6 +20,7 @@ import {
   templateUrl: './add-profile.component.html',
   styleUrls: ['./add-profile.component.scss']
 })
+  
 export class AddProfileComponent implements OnInit {
   username_pattern: boolean = true;
   GenderList: any = [];

@@ -7,15 +7,11 @@ import {
 } from '@angular/core';
 // import { Croppie } from 'croppie/croppie';
 import { Router } from '@angular/router';
-import {
-  MatDialog,
-  MatDialogRef,
-  MAT_DIALOG_DATA,
-  MatPaginator,
-  MatSort,
-  MatTableDataSource,
-  MatSelect
-} from '@angular/material';
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatSelect } from '@angular/material/select';
+import { MatSort } from '@angular/material/sort';
+import { MatTableDataSource } from '@angular/material/table';
 import { take, takeUntil } from 'rxjs/operators';
 // import { CroppieDirective } from 'angular-croppie-module';
 import { ReplaySubject, Subject } from 'rxjs';

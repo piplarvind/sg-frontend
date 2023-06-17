@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { MediaChange, ObservableMedia } from '@angular/flex-layout';
-import { MatSidenav, MatExpansionPanelTitle } from '@angular/material';
+import { MatExpansionPanelTitle } from '@angular/material/expansion';
+import { MatSidenav } from '@angular/material/sidenav';
 import { filter } from 'rxjs/operators';
 import { SharedService } from '../../shared/shared.service';
 import { environment } from "../../../environments/environment";
@@ -21,7 +21,6 @@ export class ShellComponent implements OnInit {
   sportLogo = "./assets/ClubV_logo.png";
 
   constructor(
-    private media: ObservableMedia,
     private sharedService: SharedService,
     private sportService: SportsService,
   ) {

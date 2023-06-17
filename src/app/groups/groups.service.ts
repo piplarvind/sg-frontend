@@ -2,9 +2,10 @@ import { Injectable, EventEmitter } from '@angular/core';
 import { Subject, BehaviorSubject } from 'rxjs';
 import { TestBed } from '@angular/core/testing';
 
-@Injectable({
-  providedIn: 'root'
-})
+// @Injectable({
+//   providedIn: 'root'
+// })
+@Injectable()
 export class GroupsService {
   constructor() {}
 

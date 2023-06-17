@@ -1,6 +1,6 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { MatDialog, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { MatDialogRef } from '@angular/material';
+import { MatDialogRef } from '@angular/material/dialog';
 import { RegisterUser } from '../model/registerUser';
 import { EventsService } from '../events.service';
 import { AthletesService } from '@app/athletes/athletes.service';

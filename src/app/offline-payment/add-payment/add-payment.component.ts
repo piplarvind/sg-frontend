@@ -4,7 +4,8 @@ import { OfflinePaymentService } from '@app/offline-payment/offline-payment.serv
 import { Router, ActivatedRoute } from '@angular/router';
 import { SharedService } from '@app/shared/shared.service';
 
-import { MatPaginator, MatTableDataSource } from '@angular/material';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatTableDataSource } from '@angular/material/table';
 import { ProfilesService } from '@app/profiles/profiles.service';
 import { environment } from '../../../environments/environment';
 import { ChangeDetectorRef } from '@angular/core';

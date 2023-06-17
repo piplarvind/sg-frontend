@@ -24,14 +24,12 @@ import { DomSanitizer } from '@angular/platform-browser';
 import { environment } from '../../../environments/environment';
 import * as moment from 'moment';
 
-import {
-  MatDialog,
-  MatPaginator,
-  MatSort,
-  MatTableDataSource,
-  MatGridListModule
-} from '@angular/material';
-import { breakStatement } from 'babel-types';
+import { MatDialog } from '@angular/material/dialog';
+import { MatGridListModule } from '@angular/material/grid-list';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatSort } from '@angular/material/sort';
+import { MatTableDataSource } from '@angular/material/table';
+import { breakStatement } from '@babel/types';
 
 @Component({
   selector: 'app-add-athlete',

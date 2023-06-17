@@ -1,4 +1,3 @@
-import { BooleanLiteral } from 'babel-types';
 
 export class ProfileField {
   order: string;

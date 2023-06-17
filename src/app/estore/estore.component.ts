@@ -3,14 +3,10 @@ import { Routes, RouterModule, ActivatedRoute, Router } from '@angular/router';
 import { ColorService } from '@app/estore/color.service';
 import { environment } from 'environments/environment';
 import { SharedService } from '@app/shared/shared.service';
-import {
-  MatDialog,
-  MatDialogRef,
-  MAT_DIALOG_DATA,
-  MatPaginator,
-  MatSort,
-  MatTableDataSource
-} from '@angular/material';
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatSort } from '@angular/material/sort';
+import { MatTableDataSource } from '@angular/material/table';
 
 @Component({
   selector: 'app-estore',

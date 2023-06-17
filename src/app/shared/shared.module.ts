@@ -30,12 +30,12 @@ import { EstoreDateComponent } from './estore-date/estore-date.component';
     EstoreDateComponent
   ],
   exports: [LoaderComponent, FormsModule, ReactiveFormsModule],
-  entryComponents: [
-    DialogComponent,
-    LoginDialogComponent,
-    ImageUploadComponent,
-    EstoreDateComponent
-  ],
+  // entryComponents: [
+  //   DialogComponent,
+  //   LoginDialogComponent,
+  //   ImageUploadComponent,
+  //   EstoreDateComponent
+  // ],
   providers: [SharedService]
 })
 export class SharedModule {}

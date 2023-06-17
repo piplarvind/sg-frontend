@@ -43,7 +43,7 @@ describe('CacheInterceptor', () => {
     });
 
     beforeEach(inject([
-      HttpClient,
+      // HttpClient,
       HttpTestingController,
       HttpCacheService
     ], (_http: HttpClient,
@@ -100,7 +100,7 @@ describe('CacheInterceptor', () => {
     });
 
     beforeEach(inject([
-      HttpClient,
+      // HttpClient,
       HttpTestingController,
       HttpCacheService
     ], (_http: HttpClient,

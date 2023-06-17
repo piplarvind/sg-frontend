@@ -3,12 +3,10 @@ import { SubscriptionsService } from './subscriptions.service';
 import { Router } from '@angular/router';
 import { SharedService } from '../shared/shared.service';
 import { SeasonsService } from '@app/seasons/seasons.service';
-import {
-  MatDialog,
-  MatPaginator,
-  MatSort,
-  MatTableDataSource
-} from '@angular/material';
+import { MatDialog } from '@angular/material/dialog';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatSort } from '@angular/material/sort';
+import { MatTableDataSource } from '@angular/material/table';
 
 import { environment } from 'environments/environment';
 

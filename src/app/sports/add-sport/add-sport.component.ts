@@ -8,7 +8,7 @@ import {
 } from '@angular/core';
 import { SportsService } from '@app/sports/sports.service';
 import { Router, ActivatedRoute } from '@angular/router';
-import { MatTableDataSource } from '@angular/material';
+import { MatTableDataSource } from '@angular/material/table';
 // import { UsersService } from '@app/users/users.service';
 import { SharedService } from '@app/shared/shared.service';
 import { headerCompRef } from '@app/core/shell/header/header.component';

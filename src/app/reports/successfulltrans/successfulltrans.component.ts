@@ -1,10 +1,12 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import * as moment from 'moment';
-import { Router } from '@angular/router';
-import { MatTableDataSource, MatPaginator, MatSort } from '@angular/material';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatSort } from '@angular/material/sort';
+import { MatTableDataSource } from '@angular/material/table';
 import { SharedService } from '@app/shared/shared.service';
-import { ClubsService } from '@app/clubs/clubs.service';
+import { Router } from '@angular/router';
+import * as moment from 'moment';
 import { ReportsService } from '../reports.service';
+import { ClubsService } from '@app/clubs/clubs.service';
 import { ProfilesService } from '@app/profiles/profiles.service';
 
 @Component({
@@ -83,54 +85,22 @@ export class SuccessfulltransComponent implements OnInit {
         .subscribe(() => this.router.navigateByUrl('/home'));
     }
     this.clubService
-      .getClubList()
-      .then((res: any) => {
-        this.clubList = res['data'];
-      })
-      .catch((err: any) => { });
-    
-    this.getAthleteList();
+    .getClubList()
+    .then((res: any) => {
+      this.clubList = res['data'];
+    })
+    .catch((err: any) => { });
+
+  this.getAthleteList();
     this.getParentList();
     
     this.getSuccessFullTransaction();
   }
 
   private getAthleteList = () => {
-    
-    
-      this.profilesService.getProfileListByRole('6485561beadeb63f8ce8b311','64855543eadeb63f8ce8965e')
-      .then((res: any) => {
-        const newres = res.data.map(prop => {
-          let name: any = {
-            fname: '',
-            lname: ''
-          };
-          for (let i = 0; i < prop.profile_fields.length; i++) {
-            if (prop.profile_fields[i].field) {
-              if (prop.profile_fields[i].field.name === 'first_name') {
-                name.fname = prop.profile_fields[i].value;
-              }
-              if (prop.profile_fields[i].field.name === 'last_name') {
-                name.lname = prop.profile_fields[i].value;
-              }
-            }
-          }
-          return {
-            ...prop,
-            name: name.fname + ' ' + name.lname
-          };
-        });
-        this.athleteList = newres;
-        console.log('this.athleteList', this.athleteList);
-      })
-      .catch((err: any) => {
-        console.log(err);
-      });
-  }
 
-  private getParentList = () => {
-    
-    this.profilesService.getProfileListByRole('6485561beadeb63f8ce8b311','64855543eadeb63f8ce89660')
+
+    this.profilesService.getProfileListByRole('6485561beadeb63f8ce8b311','64855543eadeb63f8ce8965e')
     .then((res: any) => {
       const newres = res.data.map(prop => {
         let name: any = {
@@ -152,100 +122,133 @@ export class SuccessfulltransComponent implements OnInit {
           name: name.fname + ' ' + name.lname
         };
       });
-      this.parentList = newres;
-      console.log('this.parentList', this.parentList);
+      this.athleteList = newres;
+      console.log('this.athleteList', this.athleteList);
     })
     .catch((err: any) => {
       console.log(err);
     });
 }
 
+private getParentList = () => {
 
-  public searchPayment = () => {
-    this.sharedService.showLoader = true;
-    let tmp = this.paymentSearch;
-    console.log('asaa', tmp);
-    
-    let value = tmp.searchBy;
-    value = value.split(' ').join('_');
-    let data:any;
-      let url = '?clubId='+tmp.club+'&payer='+tmp.payer+'&behalf='+tmp.behalf+'&searchBy=name&values=' + value+'&startDate='+moment(tmp.fromDate).format('YYYY-MM-DD')+'&endDate='+moment(tmp.toDate).format('YYYY-MM-DD');
-      this.reportService
-        .getAllPaymentSuccessTransReportFilter(url)
-        .subscribe((res: any) => {
-          data = res;
-          const newres = res.data.map(prop => {
-            let name: any = {
-              fname: '',
-              lname: '',
-              moblie: ''
-            };
+  this.profilesService.getProfileListByRole('6485561beadeb63f8ce8b311','64855543eadeb63f8ce89660')
+  .then((res: any) => {
+    const newres = res.data.map(prop => {
+      let name: any = {
+        fname: '',
+        lname: ''
+      };
+      for (let i = 0; i < prop.profile_fields.length; i++) {
+        if (prop.profile_fields[i].field) {
+          if (prop.profile_fields[i].field.name === 'first_name') {
+            name.fname = prop.profile_fields[i].value;
+          }
+          if (prop.profile_fields[i].field.name === 'last_name') {
+            name.lname = prop.profile_fields[i].value;
+          }
+        }
+      }
+      return {
+        ...prop,
+        name: name.fname + ' ' + name.lname
+      };
+    });
+    this.parentList = newres;
+    console.log('this.parentList', this.parentList);
+  })
+  .catch((err: any) => {
+    console.log(err);
+  });
+}
 
-            if (prop.payer) {
-              for (let i = 0; i < prop.payer.profile_fields.length; i++) {
-                if (prop.behalf.profile_fields) {
-                  if (prop.payer.profile_fields[i].field.name === 'first_name') {
-                    name.fname = prop.payer.profile_fields[i].value;
-                  }
-                  if (prop.payer.profile_fields[i].field.name === 'last_name') {
-                    name.lname = prop.payer.profile_fields[i].value;
-                  }
-                  if (
-                    prop.payer.profile_fields[i].field.name === 'mobile_phone'
-                  ) {
-                    name.moblie = prop.payer.profile_fields[i].value;
-                  }
+
+public searchPayment = () => {
+  this.sharedService.showLoader = true;
+  let tmp = this.paymentSearch;
+  console.log('asaa', tmp);
+
+  let value = tmp.searchBy;
+  value = value.split(' ').join('_');
+  let data:any;
+    let url = '?clubId='+tmp.club+'&payer='+tmp.payer+'&behalf='+tmp.behalf+'&searchBy=name&values=' + value+'&startDate='+moment(tmp.fromDate).format('YYYY-MM-DD')+'&endDate='+moment(tmp.toDate).format('YYYY-MM-DD');
+    this.reportService
+      .getAllPaymentSuccessTransReportFilter(url)
+      .subscribe((res: any) => {
+        data = res;
+        const newres = res.data.map(prop => {
+          let name: any = {
+            fname: '',
+            lname: '',
+            moblie: ''
+          };
+
+          if (prop.payer) {
+            for (let i = 0; i < prop.payer.profile_fields.length; i++) {
+              if (prop.behalf.profile_fields) {
+                if (prop.payer.profile_fields[i].field.name === 'first_name') {
+                  name.fname = prop.payer.profile_fields[i].value;
+                }
+                if (prop.payer.profile_fields[i].field.name === 'last_name') {
+                  name.lname = prop.payer.profile_fields[i].value;
+                }
+                if (
+                  prop.payer.profile_fields[i].field.name === 'mobile_phone'
+                ) {
+                  name.moblie = prop.payer.profile_fields[i].value;
                 }
               }
             }
+          }
 
-            let Afname = '',
-              Alname = '',
-              Amoblie = '';
-            if (prop.behalf) {
-              for (let i = 0; i < prop.behalf.profile_fields.length; i++) {
-                if (prop.behalf.profile_fields) {
-                  if (
-                    prop.behalf.profile_fields[i].field.name === 'first_name'
-                  ) {
-                    Afname = prop.behalf.profile_fields[i].value;
-                  }
-                  if (prop.behalf.profile_fields[i].field.name === 'last_name') {
-                    Alname = prop.behalf.profile_fields[i].value;
-                  }
-                  if (
-                    prop.behalf.profile_fields[i].field.name === 'mobile_phone'
-                  ) {
-                    Amoblie = prop.behalf.profile_fields[i].value;
-                  }
+          let Afname = '',
+            Alname = '',
+            Amoblie = '';
+          if (prop.behalf) {
+            for (let i = 0; i < prop.behalf.profile_fields.length; i++) {
+              if (prop.behalf.profile_fields) {
+                if (
+                  prop.behalf.profile_fields[i].field.name === 'first_name'
+                ) {
+                  Afname = prop.behalf.profile_fields[i].value;
+                }
+                if (prop.behalf.profile_fields[i].field.name === 'last_name') {
+                  Alname = prop.behalf.profile_fields[i].value;
+                }
+                if (
+                  prop.behalf.profile_fields[i].field.name === 'mobile_phone'
+                ) {
+                  Amoblie = prop.behalf.profile_fields[i].value;
                 }
               }
             }
+          }
 
-            return {
-              ...prop,
-              date: new Date(prop.created_on),
-              card: prop.ccnum,
-              athlete: Afname + ' ' + Alname,
-              contact_no_athlete: Amoblie,
-              payer: name.fname + ' ' + name.lname,
-              contact_no_payer: name.moblie
-            };
-          });
-          this.tabledata = newres;
-
-          // this.tabledata.length = res.pagination;
-          // this.paginator.length = res.pagination;
-          // this.tabledata = newres;
-          res.data = this.tabledata;
-
-          data = res;
-          // this.totalLength = res.pagination;
-          // setTimeout(() => {
-
-          this.dataSource.data = data['data'];
+          return {
+            ...prop,
+            date: new Date(prop.created_on),
+            card: prop.ccnum,
+            athlete: Afname + ' ' + Alname,
+            contact_no_athlete: Amoblie,
+            payer: name.fname + ' ' + name.lname,
+            contact_no_payer: name.moblie
+          };
         });
-  }
+        this.tabledata = newres;
+
+        // this.tabledata.length = res.pagination;
+        // this.paginator.length = res.pagination;
+        // this.tabledata = newres;
+        res.data = this.tabledata;
+
+        data = res;
+        // this.totalLength = res.pagination;
+        // setTimeout(() => {
+
+        this.dataSource.data = data['data'];
+      });
+}
+  
   public doFilter = (event: Event) => {
     if (event['keyCode'] === 13) {
       //  value can't be send with white space in url

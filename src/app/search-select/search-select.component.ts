@@ -11,7 +11,7 @@ import {
   SimpleChanges
 } from '@angular/core';
 import { SharedService } from '@app/shared/shared.service';
-import { MatSelect } from '@angular/material';
+import { MatSelect } from '@angular/material/select';
 import { take, takeUntil } from 'rxjs/operators';
 import { ReplaySubject, Subject } from 'rxjs';
 import { FormControl } from '@angular/forms';

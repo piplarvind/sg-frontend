@@ -1,13 +1,9 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 
-import {
-  MatDialog,
-  MatDialogRef,
-  MAT_DIALOG_DATA,
-  MatPaginator,
-  MatSort,
-  MatTableDataSource
-} from '@angular/material';
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatSort } from '@angular/material/sort';
+import { MatTableDataSource } from '@angular/material/table';
 import { UsersService } from '@app/users/users.service';
 import { ReportsService } from '@app/reports/reports.service';
 import { Router } from '@angular/router';

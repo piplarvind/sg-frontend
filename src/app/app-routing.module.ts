@@ -6,96 +6,96 @@ const routes: Routes = [
   Route.withShell([
     {
       path: 'profiles',
-      loadChildren: 'app/profiles/profiles.module#ProfilesModule'
+      loadChildren: () => import('app/profiles/profiles.module').then(m => m.ProfilesModule)
     },
     {
       path: 'profile_type',
-      loadChildren: 'app/profile-type/profile-type.module#ProfileTypeModule'
+      loadChildren: () => import('app/profile-type/profile-type.module').then(m => m.ProfileTypeModule)
     },
-    { path: 'about', loadChildren: 'app/about/about.module#AboutModule' },
-    { path: 'users', loadChildren: 'app/users/users.module#UsersModule' },
-    { path: 'clubs', loadChildren: 'app/clubs/clubs.module#ClubsModule' },
-    { path: 'sports', loadChildren: 'app/sports/sports.module#SportsModule' },
-    { path: 'teams', loadChildren: 'app/teams/teams.module#TeamsModule' },
-    { path: 'coach', loadChildren: 'app/coach/coach.module#CoachModule' },
-    { path: 'groups', loadChildren: 'app/groups/groups.module#GroupsModule' },
+    { path: 'about', loadChildren: () => import('app/about/about.module').then(m => m.AboutModule) },
+    { path: 'users', loadChildren: () => import('app/users/users.module').then(m => m.UsersModule) },
+    { path: 'clubs', loadChildren: () => import('app/clubs/clubs.module').then(m => m.ClubsModule) },
+    { path: 'sports', loadChildren: () => import('app/sports/sports.module').then(m => m.SportsModule) },
+    { path: 'teams', loadChildren: () => import('app/teams/teams.module').then(m => m.TeamsModule) },
+    { path: 'coach', loadChildren: () => import('app/coach/coach.module').then(m => m.CoachModule) },
+    { path: 'groups', loadChildren: () => import('app/groups/groups.module').then(m => m.GroupsModule) },
     {
       path: 'athletes',
-      loadChildren: 'app/athletes/athletes.module#AthletesModule'
+      loadChildren: () => import('app/athletes/athletes.module').then(m => m.AthletesModule)
     },
-    { path: 'parent', loadChildren: 'app/parent/parent.module#ParentModule' },
+    { path: 'parent', loadChildren: () => import('app/parent/parent.module').then(m => m.ParentModule) },
     {
       path: 'recruiter',
-      loadChildren: 'app/recruiter/recruiter.module#RecruiterModule'
+      loadChildren: () => import('app/recruiter/recruiter.module').then(m => m.RecruiterModule)
     },
     {
       path: 'training',
-      loadChildren: 'app/training/training.module#TrainingModule'
+      loadChildren: () => import('app/training/training.module').then(m => m.TrainingModule)
     },
     {
       path: 'training_assign',
       loadChildren:
-        'app/training-assign/training-assign.module#TrainingAssignModule'
+        () => import('app/training-assign/training-assign.module').then(m => m.TrainingAssignModule)
     },
     {
       path: 'resources',
-      loadChildren: 'app/resource/resource.module#ResourceModule'
+      loadChildren: () => import('app/resource/resource.module').then(m => m.ResourceModule)
     },
-    { path: 'review', loadChildren: 'app/review/review.module#ReviewModule' },
+    { path: 'review', loadChildren: () => import('app/review/review.module').then(m => m.ReviewModule) },
     {
       path: 'leaderboard',
-      loadChildren: 'app/leaderboard/leaderboard.module#LeaderboardModule'
+      loadChildren: () => import('app/leaderboard/leaderboard.module').then(m => m.LeaderboardModule)
     },
-    { path: 'events', loadChildren: 'app/events/events.module#EventsModule' },
-    { path: 'event', loadChildren: 'app/events/events.module#EventsModule' },
-    { path: 'estore', loadChildren: 'app/estore/estore.module#EStoreModule' },
+    { path: 'events', loadChildren: () => import('app/events/events.module').then(m => m.EventsModule) },
+    { path: 'event', loadChildren: () => import('app/events/events.module').then(m => m.EventsModule) },
+    { path: 'estore', loadChildren: () => import('app/estore/estore.module').then(m => m.EStoreModule) },
     {
       path: 'brand',
-      loadChildren: 'app/estore-brand/brand.module#BrandModule'
+      loadChildren: () => import('app/estore-brand/brand.module').then(m => m.BrandModule)
     },
     {
       path: 'category',
-      loadChildren: 'app/estore-categories/category.module#CategoryModule'
+      loadChildren: () => import('app/estore-categories/category.module').then(m => m.CategoryModule)
     },
     {
       path: 'products',
-      loadChildren: 'app/estore-products/products.module#ProductsModule'
+      loadChildren: () => import('app/estore-products/products.module').then(m => m.ProductsModule)
     },
     {
       path: 'transaction',
       loadChildren:
-        'app/estore-transaction/transaction.module#TransactionModule'
+        () => import('app/estore-transaction/transaction.module').then(m => m.TransactionModule)
     },
     {
       path: 'order',
-      loadChildren: 'app/estore-orders/orders.module#OrdersModule'
+      loadChildren: () => import('app/estore-orders/orders.module').then(m => m.OrdersModule)
     },
     {
       path: 'seasons',
-      loadChildren: 'app/seasons/seasons.module#SeasonsModule'
+      loadChildren: () => import('app/seasons/seasons.module').then(m => m.SeasonsModule)
     },
     {
       path: 'offlinePayment',
       loadChildren:
-        'app/offline-payment/offlinePayment.module#OfflinePaymentModule'
+        () => import('app/offline-payment/offlinePayment.module').then(m => m.OfflinePaymentModule)
     },
-    { path: 'feeds', loadChildren: 'app/feeds/feeds.module#FeedsModule' },
+    { path: 'feeds', loadChildren: () => import('app/feeds/feeds.module').then(m => m.FeedsModule) },
     {
       path: 'packages',
-      loadChildren: 'app/packages/packages.module#PackagesModule'
+      loadChildren: () => import('app/packages/packages.module').then(m => m.PackagesModule)
     },
     {
       path: 'profile',
-      loadChildren: 'app/profile/profile.module#ProfileModule'
+      loadChildren: () => import('app/profile/profile.module').then(m => m.ProfileModule)
     },
     {
       path: 'reports',
-      loadChildren: 'app/reports/reports.module#ReportsModule'
+      loadChildren: () => import('app/reports/reports.module').then(m => m.ReportsModule)
     },
-    { path: 'mail', loadChildren: '@app/mail/mail.module#MailModule' },
+    { path: 'mail', loadChildren: () => import('@app/mail/mail.module').then(m => m.MailModule) },
     {
       path: 'subscriptions',
-      loadChildren: 'app/subscriptions/subscriptions.module#SubscriptionsModule'
+      loadChildren: () => import('app/subscriptions/subscriptions.module').then(m => m.SubscriptionsModule)
     },
   ]),
   // Fallback when no prior route is matched

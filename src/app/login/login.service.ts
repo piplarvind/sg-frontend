@@ -4,9 +4,10 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 import { environment } from '@env/environment';
 
-@Injectable({
-  providedIn: 'root'
-})
+// @Injectable({
+//   providedIn: 'root'
+// })
+@Injectable()
 export class LoginService {
   passwordForgot = 'forget/';
   resetEmail = 'password/';

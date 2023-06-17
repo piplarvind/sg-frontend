@@ -1,11 +1,9 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import {
-  MatInputModule,
-  MatFormFieldModule,
-  MatSelectModule,
-  MatChipsModule
-} from '@angular/material';
+import { MatChipsModule } from '@angular/material/chips';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { MatSelectModule } from '@angular/material/select';
 import { TranslateModule } from '@ngx-translate/core';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { SeasonsService } from '@app/seasons/seasons.service';
@@ -50,7 +48,7 @@ import { RegisterUserEditComponent } from './register-user-edit/register-user-ed
     EventRepeatedDialogComponent,
     RegisterUserEditComponent
   ],
-  entryComponents: [EventRepeatedDialogComponent, RegisterUserEditComponent],
+  //entryComponents: [EventRepeatedDialogComponent, RegisterUserEditComponent],
   providers: [EventsService, SeasonsService]
 })
 export class EventsModule {}

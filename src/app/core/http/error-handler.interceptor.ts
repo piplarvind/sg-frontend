@@ -3,9 +3,10 @@ import {
   HttpEvent,
   HttpInterceptor,
   HttpHandler,
-  HttpRequest
+  HttpRequest,
+  HttpErrorResponse
 } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 
 import { environment } from '@env/environment';
@@ -25,19 +26,19 @@ export class ErrorHandlerInterceptor implements HttpInterceptor {
     request: HttpRequest<any>,
     next: HttpHandler
   ): Observable<HttpEvent<any>> {
-    return next
-      .handle(request)
-      .pipe(catchError(error => this.errorHandler(error)));
+    return next.handle(request).pipe(
+      catchError((error: HttpErrorResponse) => this.errorHandler(error))
+    );
   }
 
   // Customize the default error handler here if needed
-  private errorHandler(response: HttpEvent<any>): Observable<HttpEvent<any>> {
+  private errorHandler(error: HttpErrorResponse): Observable<HttpEvent<any>> {
     if (!environment.production) {
       // Do something with the error
-      log.error('Request error', response);
+      log.error('Request error', error);
     }
-    let res: any = response;
-    if (res.status === 404) {
+
+    if (error.status === 404) {
       const message = {
         code: 'Expired',
         message: 'Session Expired. Please login again'
@@ -45,6 +46,7 @@ export class ErrorHandlerInterceptor implements HttpInterceptor {
 
       this.router.navigate(['/login', message]);
     }
-    throw response;
+
+    return throwError(error);
   }
 }

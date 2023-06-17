@@ -1,7 +1,7 @@
 import { Title } from "@angular/platform-browser";
 import { Component, OnInit, Input, AfterViewInit } from "@angular/core";
 import { Router, ActivatedRoute } from "@angular/router";
-import { MatSidenav } from "@angular/material";
+import { MatSidenav } from "@angular/material/sidenav";
 
 import { AuthenticationService } from "@app/core/authentication/authentication.service";
 import { I18nService } from "@app/core/i18n.service";

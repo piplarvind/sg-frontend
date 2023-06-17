@@ -2,9 +2,10 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 import { environment } from '@env/environment';
-@Injectable({
-  providedIn: 'root'
-})
+// @Injectable({
+//   providedIn: 'root'
+// })
+@Injectable()
 export class ProfilesService {
   getGender = 'lookup/gender';
   getProfile = 'profiles/';
@@ -101,7 +102,6 @@ export class ProfilesService {
       );
     });
   }
-
   getSpecificRoles(level5) {
     return new Promise((resolve, reject) => {
       this.http.get(this.getSpecificRole+'?fetch='+level5).subscribe(
@@ -114,7 +114,7 @@ export class ProfilesService {
       );
     });
   }
-
+  
   fatchFields(role) {
     return new Promise((resolve, reject) => {
       this.http.get(this.getOneRoleFiled + role).subscribe(
@@ -285,6 +285,8 @@ export class ProfilesService {
     });
   }
 
+  
+
   Profiledelete(id, data) {
     return new Promise((resolve, reject) => {
       this.http.patch(this.getProfile + id, data).subscribe(
@@ -429,7 +431,6 @@ export class ProfilesService {
         );
     });
   }
-
   getProfileListByRole(clubId, role) {
     return new Promise((resolve, reject) => {
       this.http
@@ -445,7 +446,6 @@ export class ProfilesService {
         );
     });
   }
-
   getAgeListfilterGender(Id) {
     return new Promise((resolve, reject) => {
       this.http.get(this.getAge + '?filter=' + Id).subscribe(
