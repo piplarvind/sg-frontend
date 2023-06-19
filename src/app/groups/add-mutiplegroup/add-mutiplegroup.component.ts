@@ -10,7 +10,8 @@ import { skip } from 'rxjs/operators';
 @Component({
   selector: 'app-add-mutiplegroup',
   templateUrl: './add-mutiplegroup.component.html',
-  styleUrls: ['./add-mutiplegroup.component.scss']
+  styleUrls: ['./add-mutiplegroup.component.scss'],
+  providers:[ProfileTypeService, GroupsService, SharedService, ProfilesService]
 })
 export class AddMutiplegroupComponent implements OnInit {
   groupname: string = '';

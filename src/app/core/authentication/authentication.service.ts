@@ -114,13 +114,12 @@ export class AuthenticationService {
             this.highestRole[0].name === `${environment.Platform_Admin}` ||
             this.highestRole[0].name === `${environment.Club_Admin}`
           ) {
-            this.router.navigate(['/home'], { replaceUrl: true });
+            //this.router.navigate(['/home'], { replaceUrl: true });
+            window.location.href = "/";
           } else {
             // if (   this.highestRole[0].name === ' ${ environment.Coach}') {
-
-            this.router.navigate(['/Coach'], {
-              replaceUrl: true
-            });
+            //this.router.navigate(['/coach'], { replaceUrl: true });
+            window.location.href = "/coach";
           }
           // });
         } else {

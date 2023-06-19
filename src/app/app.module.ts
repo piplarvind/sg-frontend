@@ -1,13 +1,12 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { TranslateModule } from '@ngx-translate/core';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MaterialModule } from '@app/material.module';
 import { environment } from '../environments/environment';
 import { CoreModule } from '@app/core';
-
 //
 import { SharedModule } from '@app/shared';
 import { HomeModule } from '@app/home/home.module';
@@ -101,7 +100,7 @@ import { JwtInterceptor } from './core/http/jwt.interceptor';
     HttpClientModule
   ],
   declarations: [AppComponent],
-  providers: [MessagingService, JwtInterceptor],
+  providers: [MessagingService, { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },],
 
   bootstrap: [AppComponent]
 })

@@ -11,7 +11,7 @@ import { SharedModule } from '@app/shared/shared.module';
 
 import { FormsModule } from '@angular/forms';
 import { SearchSelectModule } from '@app/search-select/search-select.module'
-import { AddrecruiterComponent } from '@app/recruiter/addrecruiter/addrecruiter.component.ts';
+import { AddrecruiterComponent } from '@app/recruiter/addrecruiter/addrecruiter.component';
 import { RecruiterRoutingModule } from './recruiter-routing.module';
 import { RecruiterComponent } from './recruiter.component';
 

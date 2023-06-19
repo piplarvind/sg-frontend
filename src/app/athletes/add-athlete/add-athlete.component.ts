@@ -1,7 +1,7 @@
 import { Component, OnInit, AfterViewInit, ViewChild } from '@angular/core';
 import {
-  FormGroup,
-  FormControl,
+  UntypedFormGroup,
+  UntypedFormControl,
   FormBuilder,
   Validators
 } from '@angular/forms';
@@ -78,7 +78,7 @@ export class AddAthleteComponent implements OnInit {
   tempFile: any;
   finalData: any = [];
   name: any = [];
-  form: FormGroup;
+  form: UntypedFormGroup;
   isChecked: boolean = false;
   activeRouteSubscriber: any;
   fields: any = [];
@@ -218,7 +218,7 @@ export class AddAthleteComponent implements OnInit {
         let i = 0;
         let nullgrad_year: boolean = false;
         for (let prop of this.name) {
-          formGroup[prop] = new FormControl(this.fields[i].value || '');
+          formGroup[prop] = new UntypedFormControl(this.fields[i].value || '');
 
           if (prop === 'country' && this.fields[i].value) {
             const countryId = this.fields[i].value;
@@ -291,7 +291,7 @@ export class AddAthleteComponent implements OnInit {
           i++;
         }
 
-        this.form = new FormGroup(formGroup);
+        this.form = new UntypedFormGroup(formGroup);
         if (this.form.get('mobile_phone')) {
           this.form.get('mobile_phone').setValue(this.mobile);
         }

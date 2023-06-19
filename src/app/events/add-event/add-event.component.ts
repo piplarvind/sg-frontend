@@ -7,7 +7,7 @@ import {
 } from '@angular/core';
 import { EventsService } from '@app/events/events.service';
 import { TeamsService } from '@app/teams/teams.service';
-import { FormControl } from '@angular/forms';
+import { UntypedFormControl } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { map, startWith } from 'rxjs/operators';
 import { SharedService } from '@app/shared/shared.service';
@@ -86,7 +86,7 @@ export class AddEventComponent implements OnInit, OnChanges {
   ];
   frequency_details: any;
   selected: String = '';
-  teamCtrl = new FormControl();
+  teamCtrl = new UntypedFormControl();
   isLoading = true;
   ageList: any;
   ageList2: any;

@@ -1,0 +1,125 @@
+Arguments: 
+  C:\Program Files\nodejs\node.exe C:\Users\akumar\AppData\Roaming\npm\node_modules\yarn\bin\yarn.js add resolve-url-loader --dev
+
+PATH: 
+  C:\Program Files\Git\mingw64\bin;C:\Program Files\Git\usr\bin;C:\Users\akumar\bin;C:\Program Files\Common Files\Oracle\Java\javapath;C:\Program Files\Microsoft MPI\Bin;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0;C:\WINDOWS\System32\OpenSSH;C:\Program Files\Git\cmd;C:\ProgramData\ComposerSetup\bin;C:\Program Files (x86)\Intel\Intel(R) Management Engine Components\DAL;C:\Program Files\Intel\Intel(R) Management Engine Components\DAL;C:\Program Files\Azure Data Studio\bin;C:\Program Files\PuTTY;C:\Program Files\Java\jdk-11.0.11\bin;C:\openssl;D:\wamp64\bin\php\php8.1.6;C:\ProgramData\chocolatey\bin;C:\Users\akumar\AppData\Roaming\nvm;C:\Program Files\nodejs;C:\Program Files\Amazon\AWSCLIV2;C:\Users\akumar\AppData\Local\Programs\Python\Python311\Scripts;C:\Users\akumar\AppData\Local\Programs\Python\Python311;C:\Users\akumar\AppData\Local\Microsoft\WindowsApps;C:\Users\akumar\AppData\Roaming\Composer\vendor\bin;C:\Program Files\MongoDB\Server\4.4\bin;C:\Users\akumar\AppData\Local\Programs\Microsoft VS Code\bin;C:\sonar-scanner-cli-4.7.0.2747-windows\sonar-scanner-4.7.0.2747-windows\bin;C:\Users\akumar\AppData\Roaming\npm;C:\Users\akumar\AppData\Local\Android\Sdk\platform-tools
+
+Yarn version: 
+  1.22.10
+
+Node version: 
+  14.21.3
+
+Platform: 
+  win32 x64
+
+Trace: 
+  Error: https://registry.yarnpkg.com/rxjs/-/rxjs-6.6.2.tgz: ESOCKETTIMEDOUT
+      at ClientRequest.<anonymous> (C:\Users\akumar\AppData\Roaming\npm\node_modules\yarn\lib\cli.js:141289:19)
+      at Object.onceWrapper (events.js:519:28)
+      at ClientRequest.emit (events.js:400:28)
+      at TLSSocket.emitRequestTimeout (_http_client.js:790:9)
+      at Object.onceWrapper (events.js:519:28)
+      at TLSSocket.emit (events.js:412:35)
+      at TLSSocket.Socket._onTimeout (net.js:495:8)
+      at listOnTimeout (internal/timers.js:557:17)
+      at processTimers (internal/timers.js:500:7)
+
+npm manifest: 
+  {
+    "name": "sportsgrit",
+    "version": "1.0.0",
+    "private": true,
+    "scripts": {
+      "ng": "ng",
+      "build": "npm run env -s && ng build --prod",
+      "start": "npm run env -s && ng serve --aot --proxy-config proxy.conf.js",
+      "lint": "ng lint --type-check && stylelint \"src/**/*.scss\" --syntax scss && htmlhint \"src\" --config .htmlhintrc",
+      "test": "npm run env -s && ng test",
+      "test:ci": "npm run env -s && npm run lint -s && ng test --single-run --code-coverage",
+      "e2e": "npm run env -s && ng e2e",
+      "translations:extract": "ngx-translate-extract --input ./src --output ./src/translations/template.json --format=json --clean -sort --marker extract",
+      "docs": "hads ./docs -o",
+      "env": "ngx-scripts env npm_package_version",
+      "generate": "ng generate"
+    },
+    "dependencies": {
+      "@angular/animations": "^10.0.14",
+      "@angular/cdk": "^10.0.2",
+      "@angular/common": "^10.0.14",
+      "@angular/compiler": "^10.0.14",
+      "@angular/core": "^10.0.14",
+      "@angular/flex-layout": "^9.0.0-beta.29",
+      "@angular/forms": "^10.0.14",
+      "@angular/localize": "^10.0.14",
+      "@angular/material": "^10.0.2",
+      "@angular/material-moment-adapter": "^9.2.4",
+      "@angular/platform-browser": "^10.0.14",
+      "@angular/platform-browser-dynamic": "^10.0.14",
+      "@angular/platform-server": "^10.0.14",
+      "@angular/router": "^10.0.14",
+      "@nguniversal/express-engine": "^9.1.1",
+      "@ngx-translate/core": "^10.0.2",
+      "angular-font-awesome": "^3.1.2",
+      "angularfire2": "^5.0.2",
+      "chroma-js": "^1.4.1",
+      "core-js": "^2.5.2",
+      "exif-js": "^2.3.0",
+      "firebase": "^9.21.0",
+      "font-awesome": "^4.7.0",
+      "jquery": "^3.3.1",
+      "lodash": "^4.17.11",
+      "material-design-icons-iconfont": "^3.0.3",
+      "moment": "^2.22.2",
+      "ngx-bootstrap": "^4.0.1",
+      "ngx-editor": "^4.1.1",
+      "ngx-google-places-autocomplete": "^2.0.1",
+      "ngx-image-cropper": "^1.4.1",
+      "ngx-mat-select-search": "3.3.0",
+      "node-sass": "^4.14.1",
+      "rxjs": "^6.5.5",
+      "rxjs-tslint": "^0.1.8",
+      "tslib": "^1.10.0",
+      "zone.js": "~0.10.2"
+    },
+    "devDependencies": {
+      "@angular-devkit/build-angular": "^0.1001.7",
+      "@angular/cli": "^10.0.8",
+      "@angular/compiler-cli": "^10.0.14",
+      "@angular/language-service": "^10.0.14",
+      "@babel/types": "^7.22.5",
+      "@biesbjerg/ngx-translate-extract": "^7.0.4",
+      "@ngx-rocket/scripts": "^3.0.1",
+      "@types/jasmine": "^2.8.3",
+      "@types/jasminewd2": "^2.0.3",
+      "@types/lodash": "4.14.186",
+      "@types/node": "14.6.2",
+      "codelyzer": "^5.1.2",
+      "hads": "^3.0.3",
+      "htmlhint": "^1.1.4",
+      "https-proxy-agent": "^2.0.0",
+      "jasmine-core": "~3.2.1",
+      "jasmine-spec-reporter": "^4.1.0",
+      "karma": "^6.4.2",
+      "karma-chrome-launcher": "^2.2.0",
+      "karma-cli": "~1.0.1",
+      "karma-coverage-istanbul-reporter": "^2.0.4",
+      "karma-jasmine": "^1.1.0",
+      "karma-junit-reporter": "^1.2.0",
+      "protractor": "~5.4.1",
+      "puppeteer": "^1.9.0",
+      "stylelint": "^15.6.0",
+      "stylelint-config-recommended-scss": "~3.2.0",
+      "stylelint-config-standard": "~18.2.0",
+      "stylelint-scss": "~3.3.1",
+      "ts-node": "^10.8.1",
+      "tslint": "~5.11.0",
+      "typescript": "^3.9.10"
+    }
+  }
+
+yarn manifest: 
+  No manifest
+
+Lockfile: 
+  No lockfile

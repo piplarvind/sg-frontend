@@ -1,5 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { FormGroup, FormControl, FormBuilder } from '@angular/forms';
+import { UntypedFormGroup, UntypedFormControl, FormBuilder } from '@angular/forms';
 import { ClubsService } from '@app/clubs/clubs.service';
 import { SharedService } from '@app/shared/shared.service';
 import { ProfilesService } from '@app/profiles/profiles.service';
@@ -78,7 +78,7 @@ export class AddProfileComponent implements OnInit {
   tempFile: any;
   finalData: any = [];
   gernarlRolelist: any = [];
-  form: FormGroup;
+  form: UntypedFormGroup;
   isChecked: boolean = false;
   storePreviousData;
   objectProps;
@@ -466,7 +466,7 @@ export class AddProfileComponent implements OnInit {
         let i = 0;
         let nullgrad_year: boolean = false;
         for (let prop of this.name) {
-          formGroup[prop] = new FormControl(this.fields[i].value || '');
+          formGroup[prop] = new UntypedFormControl(this.fields[i].value || '');
           if (prop === 'country') {
             const countryId = this.fields[i].value;
             this.getStates(countryId);
@@ -537,7 +537,7 @@ export class AddProfileComponent implements OnInit {
           i++;
         }
 
-        this.form = new FormGroup(formGroup);
+        this.form = new UntypedFormGroup(formGroup);
 
         if (this.form.get('mobile_phone')) {
           this.form.get('mobile_phone').setValue(this.mobile);
@@ -1256,9 +1256,9 @@ export class AddProfileComponent implements OnInit {
               this.storePreviousData = this.form.value;
               let formControl = {};
               for (let x in this.storePreviousData) {
-                formControl[x] = new FormControl(this.storePreviousData[x]);
+                formControl[x] = new UntypedFormControl(this.storePreviousData[x]);
               }
-              this.form = new FormGroup(formControl);
+              this.form = new UntypedFormGroup(formControl);
             }
 
             this.length = this.fields.length;
@@ -1266,7 +1266,7 @@ export class AddProfileComponent implements OnInit {
             const formGroup = {};
             let i = 0;
             for (let prop of this.name) {
-              formGroup[prop] = new FormControl(
+              formGroup[prop] = new UntypedFormControl(
                 this.storePreviousData
                   ? this.storePreviousData[prop]
                   : prop === 'country'
@@ -1277,7 +1277,7 @@ export class AddProfileComponent implements OnInit {
               i++;
             }
 
-            this.form = new FormGroup(formGroup);
+            this.form = new UntypedFormGroup(formGroup);
           });
         }
       }

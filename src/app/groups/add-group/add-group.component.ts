@@ -20,7 +20,8 @@ import { first } from 'rxjs/operators';
 @Component({
   selector: 'app-add-group',
   templateUrl: './add-group.component.html',
-  styleUrls: ['./add-group.component.scss']
+  styleUrls: ['./add-group.component.scss'],
+  providers:[ProfilesService, ProfileTypeService, GroupsService]
 })
 export class AddGroupComponent implements OnInit {
   @Input() group: Group;

@@ -9,7 +9,8 @@ import { SharedService } from '../shared/shared.service';
 @Component({
   selector: 'app-profile-type',
   templateUrl: './profile-type.component.html',
-  styleUrls: ['./profile-type.component.scss']
+  styleUrls: ['./profile-type.component.scss'],
+  providers:[ProfileTypeService]
 })
 export class ProfileTypeComponent implements OnInit {
   keyup: boolean = false;

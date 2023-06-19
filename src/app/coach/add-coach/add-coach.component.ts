@@ -4,7 +4,7 @@ import { ClubsService } from '@app/clubs/clubs.service';
 import { UsersService } from '@app/users/users.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { SharedService } from '@app/shared/shared.service';
-import { FormGroup, FormControl, FormBuilder } from '@angular/forms';
+import { UntypedFormGroup, UntypedFormControl, FormBuilder } from '@angular/forms';
 import { ProfilesService } from '@app/profiles/profiles.service';
 import { ResourceService } from '@app/resource/resource.service';
 import { DomSanitizer } from '@angular/platform-browser';
@@ -47,7 +47,7 @@ export class AddCoachComponent implements OnInit {
   school_image_logo: any = '';
   tempFile: any;
   club_img: any;
-  form: FormGroup;
+  form: UntypedFormGroup;
   fields: any = [];
   mobile: any = '';
   home: any = '';
@@ -118,7 +118,7 @@ export class AddCoachComponent implements OnInit {
         let i = 0;
 
         for (let prop of this.name) {
-          formGroup[prop] = new FormControl(this.fields[i].value || '');
+          formGroup[prop] = new UntypedFormControl(this.fields[i].value || '');
           if (prop === 'country' && this.fields[i].value) {
             const countryId = this.fields[i].value;
             this.getStates(countryId);
@@ -151,7 +151,7 @@ export class AddCoachComponent implements OnInit {
           i++;
         }
         this.isEdit = true;
-        this.form = new FormGroup(formGroup);
+        this.form = new UntypedFormGroup(formGroup);
 
         if (this.form.get('mobile_phone')) {
           this.form.get('mobile_phone').setValue(this.mobile);

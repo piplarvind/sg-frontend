@@ -11,7 +11,8 @@ import { ProfilesService } from '@app/profiles/profiles.service';
 @Component({
   selector: 'app-groups',
   templateUrl: './groups.component.html',
-  styleUrls: ['./groups.component.scss']
+  styleUrls: ['./groups.component.scss'],
+  providers:[GroupsService]
 })
 export class GroupsComponent implements OnInit {
   keyup: boolean = false;

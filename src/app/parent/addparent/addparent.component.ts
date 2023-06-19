@@ -7,7 +7,7 @@ import { SharedService } from '@app/shared/shared.service';
 import { ResourceService } from '@app/resource/resource.service';
 import { DomSanitizer } from '@angular/platform-browser';
 import { environment } from '../../../environments/environment';
-import { FormGroup, FormControl, FormBuilder } from '@angular/forms';
+import { UntypedFormGroup, UntypedFormControl, FormBuilder } from '@angular/forms';
 import { ProfilesService } from '@app/profiles/profiles.service';
 import {
   HttpClient,
@@ -45,7 +45,7 @@ export class AddparentComponent implements OnInit {
   districtList: any;
   regionsList: Array<any> = [];
   name: any = [];
-  form: FormGroup;
+  form: UntypedFormGroup;
   logo: any = '';
   club_img: any;
   tempFile: any;
@@ -122,7 +122,7 @@ export class AddparentComponent implements OnInit {
         let i = 0;
 
         for (let prop of this.name) {
-          formGroup[prop] = new FormControl(this.fields[i].value || '');
+          formGroup[prop] = new UntypedFormControl(this.fields[i].value || '');
           if (prop === 'country' && this.fields[i].value) {
             const countryId = this.fields[i].value;
             this.getStates(countryId);
@@ -161,7 +161,7 @@ export class AddparentComponent implements OnInit {
           i++;
         }
 
-        this.form = new FormGroup(formGroup);
+        this.form = new UntypedFormGroup(formGroup);
 
         if (this.form.get('mobile_phone')) {
           this.form.get('mobile_phone').setValue(this.mobile);

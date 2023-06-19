@@ -18,9 +18,13 @@ export const environment = {
 
 
   // production
-  serverUrl: 'http://54.185.76.175:8000/api/v2/',
-  imageUrl: 'http://54.185.76.175:8000/',
-  resetpasswordurl: 'http://54.185.76.175:8000/manage/forgotPassword',
+  // serverUrl: 'http://54.185.76.175:8000/api/v2/',
+  // imageUrl: 'http://54.185.76.175:8000/',
+  // resetpasswordurl: 'http://54.185.76.175:8000/manage/forgotPassword',
+
+  serverUrl: 'https://api.sportgrit.com/api/v2/',
+  imageUrl: 'https://api.sportgrit.com/',
+  resetpasswordurl: 'https://api.sportgrit.com/manage/forgotPassword',
 
   Platform_Admin: 'Platform Admin',
   General_User: 'General User',

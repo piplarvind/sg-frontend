@@ -18,7 +18,8 @@ import { SharedService } from '@app/shared/shared.service';
 @Component({
   selector: 'app-add-section',
   templateUrl: './add-section.component.html',
-  styleUrls: ['./add-section.component.scss']
+  styleUrls: ['./add-section.component.scss'],
+  providers:[GroupsService, SharedService]
 })
 export class AddSectionComponent implements OnInit, OnChanges {
   @Input() section: Section;

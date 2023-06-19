@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync   } from '@angular/core/testing';
 
 import { AddMutiplegroupComponent } from './add-mutiplegroup.component';
 
@@ -6,7 +6,7 @@ describe('AddMutiplegroupComponent', () => {
   let component: AddMutiplegroupComponent;
   let fixture: ComponentFixture<AddMutiplegroupComponent>;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [ AddMutiplegroupComponent ]
     })

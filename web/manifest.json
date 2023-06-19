@@ -1,0 +1,6 @@
+{
+    "short_name": "Sportsgrit",
+    "name": "Sportsgrit App",
+    "start_url": "/?utm_source=homescreen",
+    "gcm_sender_id": "103953800507"
+}

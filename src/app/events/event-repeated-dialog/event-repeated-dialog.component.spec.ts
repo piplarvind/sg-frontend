@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync   } from '@angular/core/testing';
 
 import { EventRepeatedDialogComponent } from './event-repeated-dialog.component';
 
@@ -6,7 +6,7 @@ describe('EventRepeatedDialogComponent', () => {
   let component: EventRepeatedDialogComponent;
   let fixture: ComponentFixture<EventRepeatedDialogComponent>;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [ EventRepeatedDialogComponent ]
     })

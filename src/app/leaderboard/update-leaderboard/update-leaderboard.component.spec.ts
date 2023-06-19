@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync   } from '@angular/core/testing';
 
 import { UpdateLeaderboardComponent } from '@app/leaderboard/update-leaderboard/update-leaderboard.component';
 
@@ -6,7 +6,7 @@ describe('UpdateLeaderboardComponent', () => {
   let component: UpdateLeaderboardComponent;
   let fixture: ComponentFixture<UpdateLeaderboardComponent>;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [ UpdateLeaderboardComponent ]
     })

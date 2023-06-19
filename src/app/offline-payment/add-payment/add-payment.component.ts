@@ -15,7 +15,8 @@ import * as moment from 'moment';
 @Component({
   selector: 'app-add-payment',
   templateUrl: './add-payment.component.html',
-  styleUrls: ['./add-payment.component.scss']
+  styleUrls: ['./add-payment.component.scss'],
+  providers:[ProfilesService, SharedService, OfflinePaymentService]
 })
 export class AddPaymentComponent implements OnInit {
   @ViewChild(MatPaginator) paginator: MatPaginator;

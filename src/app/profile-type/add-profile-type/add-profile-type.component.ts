@@ -5,7 +5,8 @@ import { SharedService } from '@app/shared/shared.service';
 @Component({
   selector: 'app-add-profile-type',
   templateUrl: './add-profile-type.component.html',
-  styleUrls: ['./add-profile-type.component.scss']
+  styleUrls: ['./add-profile-type.component.scss'],
+  providers:[ProfileTypeService]
 })
 export class AddProfileTypeComponent implements OnInit {
   isEdit: Boolean = false;

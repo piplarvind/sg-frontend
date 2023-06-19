@@ -16,10 +16,10 @@ export class ClubsService {
   getSportsList = "sports/";
   clubadminRoles = "profiles/?club=5";
   getAllAthleteClubFees = "clubs/athleteclubfee/";
-  // headers = new HttpHeaders({
-  //   'Content-Type': 'application/json',
-  //   Authorization: localStorage.token
-  // });
+  headers = new HttpHeaders({
+    'Content-Type': 'application/json',
+    Authorization: localStorage.token
+  });
 
   constructor(public http: HttpClient) {}
 
@@ -50,9 +50,10 @@ export class ClubsService {
     });
   }
   getClubList1(skip, limit) {
+    console.log('this.headers', this.headers);
     return new Promise((resolve, reject) => {
       this.http
-        .get(this.getClubs + "?skip=" + skip + "&limit=" + limit)
+        .get(this.getClubs + "?skip=" + skip + "&limit=" + limit, {headers:this.headers})
         .subscribe(
           (res: any) => {
             resolve(res);

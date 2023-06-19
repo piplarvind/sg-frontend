@@ -16,7 +16,8 @@ import { AthletesService } from '@app/athletes/athletes.service';
 @Component({
   selector: 'app-edit-installment',
   templateUrl: './edit-installment.component.html',
-  styleUrls: ['./edit-installment.component.scss']
+  styleUrls: ['./edit-installment.component.scss'],
+  providers:[ProfilesService, OfflinePaymentService, AthletesService, SharedService]
 })
 export class EditInstallmentComponent implements OnInit, AfterViewInit {
   title = "Edit Installment";

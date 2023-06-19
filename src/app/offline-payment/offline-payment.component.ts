@@ -18,7 +18,8 @@ import * as moment from 'moment';
 @Component({
   selector: 'app-offline-payment',
   templateUrl: './offline-payment.component.html',
-  styleUrls: ['./offline-payment.component.scss']
+  styleUrls: ['./offline-payment.component.scss'],
+  providers:[OfflinePaymentService, SeasonsService, SharedService]
 })
 export class OfflinePaymentComponent implements OnInit, AfterViewInit {
   keyup: boolean = false;

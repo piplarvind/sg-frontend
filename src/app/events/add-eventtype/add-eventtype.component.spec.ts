@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync   } from '@angular/core/testing';
 
 import { AddEventtypeComponent } from './add-eventtype.component';
 
@@ -6,7 +6,7 @@ describe('AddEventtypeComponent', () => {
   let component: AddEventtypeComponent;
   let fixture: ComponentFixture<AddEventtypeComponent>;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [ AddEventtypeComponent ]
     })

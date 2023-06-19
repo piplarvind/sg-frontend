@@ -14,7 +14,7 @@ import { SharedService } from '@app/shared/shared.service';
 import { MatSelect } from '@angular/material/select';
 import { take, takeUntil } from 'rxjs/operators';
 import { ReplaySubject, Subject } from 'rxjs';
-import { FormControl } from '@angular/forms';
+import { UntypedFormControl } from '@angular/forms';
 
 @Component({
   selector: 'app-search-select',
@@ -23,7 +23,7 @@ import { FormControl } from '@angular/forms';
 })
 export class SearchSelectComponent
   implements OnInit, AfterViewInit, OnDestroy, OnChanges {
-  public bankCtrl: FormControl = new FormControl();
+  public bankCtrl: UntypedFormControl = new UntypedFormControl();
   @Input() variable: any;
   @Input() isTeam: Boolean = false;
   @Input() isClub: Boolean = false;
@@ -39,7 +39,7 @@ export class SearchSelectComponent
   @Input() islabel: Boolean = false;
   @Input() isRegion: Boolean = false;
   @Input() placeHolder: any;
-  public bankFilterCtrl: FormControl = new FormControl();
+  public bankFilterCtrl: UntypedFormControl = new UntypedFormControl();
   public filteredBanks: ReplaySubject<any[]> = new ReplaySubject<any[]>(1);
   @Input() dropdownList: Array<any> = [];
   @Output() valueUpdated: EventEmitter<any> = new EventEmitter();

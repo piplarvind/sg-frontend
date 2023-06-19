@@ -16,10 +16,10 @@ class HttpInterceptorHandler implements HttpHandler {
 
 export const HTTP_DYNAMIC_INTERCEPTORS = new InjectionToken<HttpInterceptor[]>('HTTP_DYNAMIC_INTERCEPTORS');
 
-// @Injectable({
-//   providedIn: 'root'
-// })
-@Injectable()
+@Injectable({
+  providedIn: 'root'
+})
+//@Injectable()
 export class HttpService extends HttpClient {
   constructor(
     private httpHandler: HttpHandler,

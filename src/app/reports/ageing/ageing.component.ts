@@ -15,7 +15,7 @@ import { MatTableDataSource } from '@angular/material/table';
 import { take, takeUntil } from 'rxjs/operators';
 // import { CroppieDirective } from 'angular-croppie-module';
 import { ReplaySubject, Subject } from 'rxjs';
-import { FormControl } from '@angular/forms';
+import { UntypedFormControl } from '@angular/forms';
 import { ReportsService } from '@app/reports/reports.service';
 import { UsersService } from '@app/users/users.service';
 import { SharedService } from '@app/shared/shared.service';
@@ -28,12 +28,13 @@ import { SharedService } from '@app/shared/shared.service';
 @Component({
   selector: 'app-ageing',
   templateUrl: './ageing.component.html',
-  styleUrls: ['./ageing.component.scss']
+  styleUrls: ['./ageing.component.scss'],
+  providers:[ReportsService, SharedService, UsersService]
 })
 export class AgeingComponent implements OnInit {
   keyup: boolean = true;
-  public bankCtrl: FormControl = new FormControl();
-  public bankFilterCtrl: FormControl = new FormControl();
+  public bankCtrl: UntypedFormControl = new UntypedFormControl();
+  public bankFilterCtrl: UntypedFormControl = new UntypedFormControl();
   dataSource = new MatTableDataSource();
   limit: number = 100;
   skip: number = 0;
@@ -52,7 +53,8 @@ export class AgeingComponent implements OnInit {
     'thirtydays',
     'sixtydays'
   ];
-  @ViewChild('croppie')
+  //@ViewChild('croppie')
+
   @ViewChild(MatPaginator)
   paginator: MatPaginator;
 

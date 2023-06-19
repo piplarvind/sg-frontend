@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { UntypedFormGroup, UntypedFormBuilder, Validators } from '@angular/forms';
 import { SharedService } from '@app/shared/shared.service';
 import { environment } from '@env/environment';
 import { AuthenticationService } from '@app/core';
@@ -9,12 +9,13 @@ import { Router } from '@angular/router';
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
-  styleUrls: ['./login.component.scss']
+  styleUrls: ['./login.component.scss'],
+  providers: [LoginService]
 })
 export class LoginComponent implements OnInit {
   version: string = environment.version;
   error: string;
-  loginForm: FormGroup;
+  loginForm: UntypedFormGroup;
   isLoading = false;
   hide = true;
   invalidUsername = false;
@@ -23,7 +24,7 @@ export class LoginComponent implements OnInit {
   constructor(
     public sharedService: SharedService,
     private router: Router,
-    private formBuilder: FormBuilder,
+    private formBuilder: UntypedFormBuilder,
     private authenticationService: AuthenticationService,
     private loginService: LoginService
   ) {
