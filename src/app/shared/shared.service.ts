@@ -16,7 +16,7 @@ export class SharedService {
     public snackBar: MatSnackBar,
     public dialog: MatDialog
   ) {}
-  message;
+  message:any;
   private clubInitial = new Subject();
   clubStatus = this.clubInitial.asObservable();
   private clubUpdateData = new Subject();
