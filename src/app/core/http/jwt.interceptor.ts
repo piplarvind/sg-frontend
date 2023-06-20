@@ -15,7 +15,7 @@ export class JwtInterceptor implements HttpInterceptor {
     // }
 
     const currentUser: any = localStorage;
-    console.log('currentUser', currentUser);
+
     if (currentUser && currentUser.token) {
       request = request.clone({
         setHeaders: {

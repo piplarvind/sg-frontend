@@ -35,9 +35,9 @@ export class BarChartComponent implements OnInit, AfterViewInit {
   barChartPlugins = [];
 
   barChartData = [
-    { data: [65, 59, 80, 81, 56, 55], label: "Category A" },
-    { data: [28, 48, 40, 19, 86, 27], label: "Category B" },
-    { data: [45, 25, 16, 36, 67, 18], label: "Category C" },
+    { data: [65, 59, 80, 81, 56, 55], label: "Athlete" },
+    { data: [28, 48, 40, 19, 86, 27], label: "Parent" },
+    { data: [45, 25, 16, 36, 67, 18], label: "Coach" },
   ];
 
   constructor() {}

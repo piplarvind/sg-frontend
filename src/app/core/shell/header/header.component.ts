@@ -51,7 +51,7 @@ export class HeaderComponent implements OnInit, AfterViewInit {
   ngOnInit() {
     const obj = JSON.parse(localStorage.userDetails);
     
-    console.log('obj', obj);
+  //  console.log('obj', obj);
     this.id = obj._id;
     ref = this;
     this.selectedClub = localStorage.super_cur_clubId
@@ -152,7 +152,7 @@ export class HeaderComponent implements OnInit, AfterViewInit {
         })
         .catch((err) => {});
     }
-    console.log('header sportLogo', this.sportLogo);
+    //console.log('header sportLogo', this.sportLogo);
     // this.getSportList();
     this.getClubList();
     

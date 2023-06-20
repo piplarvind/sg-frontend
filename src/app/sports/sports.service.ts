@@ -137,7 +137,7 @@ export class SportsService {
   }
 
   removeSport(credentials: any, obj: any) {
-    console.log('obj', obj);
+    //console.log('obj', obj);
     return new Promise((resolve, reject) => {
       this.http.patch(this.deleteSport + credentials, obj).subscribe(
         (res: any) => {
