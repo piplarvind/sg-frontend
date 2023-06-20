@@ -14,6 +14,13 @@ export class HomeComponent implements OnInit {
   isLoading: boolean;
   isSuperAdmin: Boolean = false;
   clubsList: Array<any>;
+  dashboardStates = [
+    { name: 'Profiles Types', userCount: 100 },
+    { name: 'No. of Profiles', userCount: 200 },
+    { name: 'No. of Atheletes', userCount: 150 },
+    { name: 'No. of Coachs', userCount: 75 },
+    // Add more states with user count
+  ];
 
   constructor(
     private quoteService: QuoteService,

@@ -1,0 +1,12 @@
+<div class="chart-container" #chartContainer>
+  <div class="custom-chart-container">
+    <canvas baseChart
+            [datasets]="barChartData"
+            [labels]="barChartLabels"
+            [options]="barChartOptions"
+            [plugins]="barChartPlugins"
+            [legend]="barChartLegend"
+            [chartType]="barChartType"
+            (resize)="resizeChart()"></canvas>
+  </div>
+</div>

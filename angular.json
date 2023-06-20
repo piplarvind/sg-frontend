@@ -27,7 +27,8 @@
 
               "node_modules/font-awesome/scss/font-awesome.scss"
             ],
-            "scripts": [],
+            "scripts": [
+            ],
             "allowedCommonJsDependencies": ["lodash", "rxjs"],
             "aot": false,
             "vendorChunk": true,
@@ -128,6 +129,9 @@
     }
   },
   "cli": {
-    "analytics": false
+    "analytics": false,
+    "cache": {
+      "enabled": false
+    }
   }
 }

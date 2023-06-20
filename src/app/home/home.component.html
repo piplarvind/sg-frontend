@@ -15,4 +15,30 @@
     </div>
   </mat-card-title>
 </mat-card>
-<h1 style="text-align: center; margin: 20%;">Under Development</h1>
+<!-- <h1 style="text-align: center; margin: 20%;">Under Development</h1> -->
+
+<mat-card>
+  <!-- <mat-card-header>
+    <mat-card-title>Dashboard</mat-card-title>
+  </mat-card-header> -->
+  <mat-card-content>
+    <div class="card-container">
+      <mat-card *ngFor="let state of dashboardStates" class="card-item">
+        <mat-card-content>
+          <div class="card-label">{{ state.name }}</div>
+          <div class="user-count">{{ state.userCount }}</div>
+        </mat-card-content>
+      </mat-card>
+    </div>
+  </mat-card-content>
+</mat-card>
+
+<mat-card>
+  <mat-card-content>
+    <div class="card-container">
+      <app-bar-chart></app-bar-chart>
+    </div>
+  </mat-card-content>
+</mat-card>
+
+
