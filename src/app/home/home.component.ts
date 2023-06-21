@@ -3,6 +3,7 @@ import { finalize } from 'rxjs/operators';
 import { ClubsService } from '@app/clubs/clubs.service';
 import { SharedService } from '@app/shared/shared.service';
 import { QuoteService } from '@app/home/quote.service';
+import { DashboardService } from './dashboard.service';
 
 @Component({
   selector: 'app-home',
@@ -10,6 +11,7 @@ import { QuoteService } from '@app/home/quote.service';
   styleUrls: ['./home.component.scss']
 })
 export class HomeComponent implements OnInit {
+  staticsData: any;
   quote: string;
   isLoading: boolean;
   isSuperAdmin: Boolean = false;
@@ -23,12 +25,21 @@ export class HomeComponent implements OnInit {
   ];
 
   constructor(
+    private dashboardService: DashboardService,
     private quoteService: QuoteService,
     private clubService: ClubsService,
     public sharedService: SharedService
   ) {}
 
   ngOnInit() {
+    this.dashboardService.getStaticsData()
+      .then((e: any) => {
+        this.staticsData = e.data;
+        this.dashboardStates = e.data;
+      })
+      .catch((err: any) => {
+        console.log('err in statics data', err);
+      });
     if (
       localStorage.user_role === 'Super Admin' ||
       localStorage.user_role === 'Platform Admin'

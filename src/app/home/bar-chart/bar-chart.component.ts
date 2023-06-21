@@ -6,6 +6,7 @@ import {
   ElementRef,
 } from "@angular/core";
 import { BaseChartDirective } from "ng2-charts";
+import { DashboardService } from "../dashboard.service";
 
 @Component({
   selector: "app-bar-chart",
@@ -13,6 +14,8 @@ import { BaseChartDirective } from "ng2-charts";
   styleUrls: ["./bar-chart.component.scss"],
 })
 export class BarChartComponent implements OnInit, AfterViewInit {
+  graphData: any;
+
   barChartOptions = {
     responsive: true,
     maintainAspectRatio: false,
@@ -40,9 +43,18 @@ export class BarChartComponent implements OnInit, AfterViewInit {
     { data: [45, 25, 16, 36, 67, 18], label: "Coach" },
   ];
 
-  constructor() {}
+  constructor(private dashboardService: DashboardService) {}
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.dashboardService.getGraphData()
+      .then((e: any) => {
+        this.graphData = e.data;
+        this.barChartData = e.data;
+      })
+      .catch((err: any) => {
+        console.log('err in graph data', err);
+      });
+  }
 
   @ViewChild("chartContainer") chartContainer: ElementRef;
   @ViewChild(BaseChartDirective) chart: BaseChartDirective;

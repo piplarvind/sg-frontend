@@ -9,6 +9,7 @@ import { SharedModule } from '@app/shared';
 import { MaterialModule } from '@app/material.module';
 import { HomeRoutingModule } from '@app/home/home-routing.module';
 import { HomeComponent } from '@app/home/home.component';
+import { DashboardService } from '@app/home/dashboard.service';
 import { QuoteService } from '@app/home/quote.service';
 import { BarChartComponent } from './bar-chart/bar-chart.component';
 
@@ -28,6 +29,7 @@ import { BarChartComponent } from './bar-chart/bar-chart.component';
     BarChartComponent
   ],
   providers: [
+    DashboardService,
     QuoteService
   ]
 })
