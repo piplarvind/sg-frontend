@@ -122,7 +122,7 @@ export class AddGroupComponent implements OnInit {
   }
 
   addSection() {
-    this.group.sections.push(new Section(this.selectedProfileType.fields));
+    this.group.sections.push(new Section(this.selectedProfileType?.fields));
   }
 
   changeDropdown(selectedpf) {

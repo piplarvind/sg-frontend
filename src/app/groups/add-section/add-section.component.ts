@@ -6,7 +6,8 @@ import {
   OnChanges,
   EventEmitter,
   Output,
-  ViewChild
+  ViewChild,
+  HostListener,
 } from '@angular/core';
 import { Section } from '../models/section.model';
 import { ProfileField } from '../models/profile-field.model';
@@ -34,24 +35,31 @@ export class AddSectionComponent implements OnInit, OnChanges {
   ) {}
   @ViewChild('gridView') gridView;
 
-  columnNum = 1;
+  columnNum = 2;
 
   divSize;
 
   setColNum(div) {
-    // console.log(div);
-    if (this.gridView.nativeElement.offsetWidth < 950) {
+    // console.log('sssssddd', div);
+    if (this.gridView?.nativeElement.offsetWidth < 950) {
       this.columnNum = 2;
     }
 
-    if (this.gridView.nativeElement.offsetWidth > 950) {
+    if (this.gridView?.nativeElement.offsetWidth > 950) {
       this.columnNum = 3;
     }
 
-    if (this.gridView.nativeElement.offsetWidth < 750) {
+    if (this.gridView?.nativeElement.offsetWidth < 750) {
       this.columnNum = 1;
     }
+    // console.log('sssssddd', this.columnNum);
   }
+  
+  @HostListener('window:resize', ['$event'])
+  onWindowResize(event: Event) {
+    this.setColNum(1);
+  }
+
   ngOnInit() {}
   ngOnChanges(changes: SimpleChanges) {
     this.selectedProfileFields = new Array<SectionProfileField>();

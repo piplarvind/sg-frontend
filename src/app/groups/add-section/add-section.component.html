@@ -82,11 +82,13 @@
         />
       </li>
     </ul> -->
+    
     <div
       #gridView
       [ngStyle]="{ 'width.px': divSize }"
-      [fxShow]="setColNum(gridView.style.width)"
+      
     >
+    <!-- [fxShow]="setColNum(gridView.style.width)" -->
       <mat-grid-list [cols]="columnNum" rowHeight="2.5rem">
         <mat-grid-tile
           *ngFor="let field of section.profile_fields; let i = index"
