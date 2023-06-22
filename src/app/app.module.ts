@@ -47,6 +47,7 @@ import { FeedsModule } from '@app/feeds/feeds.module';
 import { ProfilesModule } from '@app/profiles/profiles.module';
 import { ProfileTypeModule } from '@app/profile-type/profile-type.module';
 import { SubscriptionsModule } from '@app/subscriptions/subscriptions.module';
+import { FeesCollectionModule } from './fees-collection/fees-collection.module';
 
 import { JwtInterceptor } from './core/http/jwt.interceptor';
 
@@ -88,6 +89,7 @@ import { JwtInterceptor } from './core/http/jwt.interceptor';
     ProfileModule,
     OfflinePaymentModule,
     FeedsModule,
+    FeesCollectionModule,
     // AngularFireModule.initializeApp(environment.firebase),
     // AngularFireDatabaseModule,
     // AngularFireAuthModule,

@@ -1,0 +1,87 @@
+<div class="m-container">
+    <mat-card class="m-title">
+        <h3>Fees Collection</h3>
+    </mat-card>
+    <mat-card style="min-height: 77vh">
+        <div fxLayout="row" fxLayoutAlign="space-between" class="m-table-container top-head">
+            <div fxLayout="row">
+                <div class="container">
+                    <div class="column">
+                        <div class="fees-title">Fees Shared with Club</div>
+                        <button mat-raised-button class="fees-btn fees-btn-active">Subscriptions</button>
+                        <button mat-raised-button class="fees-btn">Store</button>
+                    </div>
+                    <div class="column">
+                        <div class="fees-title">Event Payment Collections</div>
+                        <button mat-raised-button class="fees-evnt-btn fees-evnt-btn-active">Tryouts</button>
+                        <button mat-raised-button class="fees-evnt-btn">Uniforms</button>
+                        <button mat-raised-button class="fees-evnt-btn">Tournaments</button>
+                        <button mat-raised-button class="fees-evnt-btn">Events</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <mat-card-content>
+            <div class="fees-tbl-title">Subscriptions Revenue Share</div>
+            <div class="m-table-container" *ngIf="tabledataloaded">
+                <mat-table #table [dataSource]="dataSource" matSort>
+                    <ng-container matColumnDef="season_name">
+                        <mat-header-cell *matHeaderCellDef mat-sort-header>
+                            <span class="m-table-header">Season Name</span>
+                        </mat-header-cell>
+                        <mat-cell *matCellDef="let element" class="light-red m-pointer"
+                            style="text-transform: capitalize; padding-left: 24px !important; ">
+                            {{ element.season_name }}
+                        </mat-cell>
+                    </ng-container>
+
+                    <ng-container matColumnDef="pro">
+                        <mat-header-cell *matHeaderCellDef mat-sort-header>
+                            <span class="m-table-header"> Pro</span>
+                        </mat-header-cell>
+                        <mat-cell *matCellDef="let element">
+                            {{ element.pro }}
+                        </mat-cell>
+                    </ng-container>
+
+                    <ng-container matColumnDef="basic">
+                        <mat-header-cell *matHeaderCellDef mat-sort-header>
+                            <span class="m-table-header">Basic</span>
+                        </mat-header-cell>
+                        <mat-cell *matCellDef="let element">
+                            {{ element.basic }}
+                        </mat-cell>
+                    </ng-container>
+
+                    <ng-container matColumnDef="fff">
+                        <mat-header-cell *matHeaderCellDef mat-sort-header>
+                            <span class="m-table-header">FFF</span>
+                        </mat-header-cell>
+                        <mat-cell *matCellDef="let element">
+                            {{ element.fff }}
+                        </mat-cell>
+                    </ng-container>
+
+                    <ng-container matColumnDef="total">
+                        <mat-header-cell *matHeaderCellDef mat-sort-header>
+                            <span class="m-table-header">total</span>
+                        </mat-header-cell>
+                        <mat-cell *matCellDef="let element">
+                            <strong>{{ element.total }}</strong>
+                        </mat-cell>
+                    </ng-container>
+
+                    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+                    <mat-row *matRowDef="let row; columns: displayedColumns" style="cursor: pointer;"></mat-row>
+
+                    <!-- Row shown when there is no matching data. -->
+                    <tr class="mat-row" *matNoDataRow>
+                        <td class="mat-cell" colspan="5">No record</td>
+                    </tr>
+                </mat-table>
+                <!-- <mat-paginator [length]="100" [pageSize]="100" [pageSizeOptions]="[25, 50, 75, 100]">
+                </mat-paginator> -->
+            </div>
+        </mat-card-content>
+    </mat-card>
+</div>

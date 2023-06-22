@@ -1,0 +1,109 @@
+@import 'src/variables';
+mat-header-cell,
+mat-cell,
+.mat-cell {
+  display: block; // flex prevents padding from working
+  min-height: auto; // overrides the 'inherit' that set the min height of the row
+  margin: auto !important;
+}
+
+.mat-form-field{
+  margin: 5px;
+}
+.m-jumbo-button{
+  padding: 5px !important;
+}
+.top-head{
+  align-items: center !important;
+}
+.container {
+    display: flex;
+}
+
+.column {
+    flex: 1;
+    padding: 10px 10px 10px 0;
+}
+
+.fees-btn {
+    border-radius: 20px;
+    background: #FFF !important;
+    margin: 10px 10px 10px 0 !important;
+    color: $primary !important;
+    padding: 10px 50px !important;
+    font-weight: 600;
+    font-size: 18px;
+    border: 3px solid $primary;
+    cursor: pointer;
+}
+
+.fees-btn:hover {
+    color: #FFF !important;
+    background: $primary !important;
+}
+
+.fees-btn-active {
+    color: #FFF !important;
+    background: rgb(24, 68, 137) !important;
+}
+
+.fees-evnt-btn {
+    border-radius: 20px;
+    background: #FFF !important;
+    margin: 10px 10px 10px 0 !important;
+    color: $red !important;
+    padding: 10px 50px !important;
+    font-weight: 600;
+    font-size: 18px;
+    border: 3px solid $red;
+    cursor: pointer;
+}
+
+.fees-evnt-btn:hover {
+    color: #FFF !important;
+    background: $red !important;
+}
+
+.fees-evnt-btn-active {
+    color: #FFF !important;
+    background: $red !important;
+}
+
+.fees-title {
+    font-size: 18px;
+    color: $primary;
+}
+
+.fees-tbl-title {
+    font-size: 18px;
+    padding-top: 20px;
+    color: $primary;
+
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+th,
+td {
+    padding: 8px;
+    border-bottom: 1px solid #ddd;
+    text-align: left;
+}
+
+th {
+    background-color: #f2f2f2;
+}
+
+tr:nth-child(even) {
+    background: #f5f5f5;
+}
+
+tr:nth-child(odd) {
+    background: #FFF;
+}
+tr:last-child {
+    font-weight: bold !important;
+  }

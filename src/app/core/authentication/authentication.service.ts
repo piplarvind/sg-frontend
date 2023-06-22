@@ -116,6 +116,7 @@ export class AuthenticationService {
           ) {
             //this.router.navigate(['/home'], { replaceUrl: true });
             window.location.href = "/";
+            //this.router.navigateByUrl('home');
           } else {
             // if (   this.highestRole[0].name === ' ${ environment.Coach}') {
             //this.router.navigate(['/coach'], { replaceUrl: true });

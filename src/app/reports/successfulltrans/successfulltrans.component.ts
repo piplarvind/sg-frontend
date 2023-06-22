@@ -246,6 +246,7 @@ public searchPayment = () => {
         // setTimeout(() => {
 
         this.dataSource.data = data['data'];
+        
       });
 }
   
@@ -489,6 +490,7 @@ public searchPayment = () => {
           data = res;
 
           this.dataSource.data = data['data'];
+          console.log('this.dataSource', this.dataSource.data);
 
           if (
             this.totalLength === 0 ||

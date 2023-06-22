@@ -86,24 +86,29 @@
               <span>Profiles</span>
             </a>
           </mat-expansion-panel-header>
-          <mat-divider *ngIf="user_role === 'Platform Admin'  "></mat-divider>
 
+          <mat-divider *ngIf="user_role === 'Platform Admin'  "></mat-divider>
           <a mat-list-item routerLink="/profile_type" routerLinkActive="active">
             <i class="material-icons">portrait</i>&nbsp;&nbsp;
             <span class="subPanelText">Profile Type</span>
           </a>
-          <mat-divider *ngIf="user_role === 'Platform Admin'  "></mat-divider>
 
+          <mat-divider *ngIf="user_role === 'Platform Admin'  "></mat-divider>
           <a mat-list-item routerLink="/groups" routerLinkActive="active">
             <i class="material-icons">portrait</i>&nbsp;&nbsp;
             <span>Profile Group</span>
           </a>
 
           <mat-divider *ngIf="user_role === 'Platform Admin'"></mat-divider>
-
           <a mat-list-item routerLink="/profiles" routerLinkActive="active">
             <i class="material-icons">portrait</i>&nbsp;&nbsp;
             <span>Profiles</span>
+          </a>
+
+          <mat-divider *ngIf="user_role === 'Platform Admin'"></mat-divider>
+          <a mat-list-item routerLink="/club-profiles" routerLinkActive="active">
+            <i class="material-icons">portrait</i>&nbsp;&nbsp;
+            <span>Club Profile Title</span>
           </a>
         </mat-expansion-panel>
         <!----=========================================-->
@@ -404,6 +409,13 @@
           *ngIf="user_role === 'Platform Admin' || user_role === 'Super Admin'">
           <i class="material-icons">attach_money</i>
           <span>Subscriptions</span>
+        </a>
+
+        <mat-divider *ngIf="user_role === 'Club Admin' || user_role === 'Super Admin' || user_role === 'Platform Admin'"></mat-divider>
+        <a mat-list-item routerLink="/fees-collection" routerLinkActive="active"
+          *ngIf="user_role === 'Club Admin' || user_role === 'Platform Admin' || user_role === 'Super Admin'">
+          <i class="material-icons">attach_money</i>
+          <span>Fees Collection</span>
         </a>
 
         <mat-divider *ngIf="user_role === 'Club Admin' || user_role === 'Super Admin' || user_role === 'Platform Admin'">

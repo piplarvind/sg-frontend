@@ -1,0 +1,48 @@
+<div class="m-container">
+    <mat-card class="m-title">
+      <h3>{{title}}</h3>
+    </mat-card>
+    <form #clubProfileTitleFrm=ngForm>
+      <mat-card>
+        <!-- <div *ngIf="isLoading">Loading</div> *ngIf="!isLoading" -->
+        <mat-card-content>
+          <div fxLayout="row" fxLayoutAlign="space-between">
+            <div fxFlex="49">
+              <mat-card class="childContainer">
+                <div class="input-container">
+                  <div class="label-container">
+                    <span class="label-icon">
+                    </span>
+                    <span class="label">Club Profile Title</span>
+                  </div>
+                  <div class="field-container">
+                    <mat-form-field [floatLabel]="'never'">
+                      <input matInput [(ngModel)]="clubProfileTitle.club_profile_title" name="club_profile_title" #club_profile_title="ngModel" maxlength="40"
+                        placeholder="Club profile title" required>
+                    </mat-form-field>
+                    <div class="errortxt" [hidden]="club_profile_title.valid || club_profile_title.pristine">
+                        Club profile title is required
+                    </div>
+                  </div>
+                </div>
+              </mat-card>
+            </div>
+            
+          </div>
+          <mat-card>
+            <div fxLayout="row" fxLayoutAlign="center center" style="margin: 5px">
+              <div *ngIf="!isEdit">
+                <button mat-raised-button class="m-jumbo-button m-pointer" *ngIf="clubProfileTitleFrm.form.valid" (click)="createClubProfileTitle()">Submit</button>
+                <button mat-raised-button class="m-jumbo-button m-pointer" *ngIf="!clubProfileTitleFrm.form.valid" (click)="clubProfileTitleSubmit()">Submit</button>
+              </div>
+              <div *ngIf="isEdit">
+                <button mat-raised-button class="m-jumbo-button m-pointer" (click)="updateClubProfileTitle()" *ngIf="clubProfileTitleFrm.form.valid">Update</button>
+                <button mat-raised-button class="m-jumbo-button m-pointer" (click)="updateClubProfileTitle()" *ngIf="!clubProfileTitleFrm.form.valid">Update</button>
+              </div>
+              <button mat-raised-button class="m-jumbo-button m-pointer" (click)="cancelClubProfileTitle()">Cancel</button>
+            </div>
+          </mat-card>
+        </mat-card-content>
+      </mat-card>
+    </form>
+  </div>
