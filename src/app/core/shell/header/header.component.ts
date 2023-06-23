@@ -128,7 +128,6 @@ export class HeaderComponent implements OnInit, AfterViewInit {
           localStorage.user_role === "Club Admin"
         ) {
           const sportDetails = e.data.filter((sport) => sport._id === obj.club.sport);
-          console.log('sportDetails', sportDetails);
           this.sportLogo = `${environment.imageUrl}${sportDetails[0].logo}`;
         }
       })

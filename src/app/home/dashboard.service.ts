@@ -1,14 +1,15 @@
-import { Injectable } from '@angular/core';
+import { Injectable } from "@angular/core";
 
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from "@angular/common/http";
 
 // @Injectable({
 //   providedIn: 'root'
 // })
 @Injectable()
 export class DashboardService {
-  staticsUrl = 'get-statics/';
-  graphDataUrl = 'get-graph-data/';
+  staticsUrl = "get-statics/";
+  graphDataUrl = "get-graph-data/";
+  paymentGraphDataUrl = "get-payment-graph/";
 
   constructor(public http: HttpClient) {}
 
@@ -18,7 +19,7 @@ export class DashboardService {
         (res: any) => {
           resolve(res);
         },
-        err => {
+        (err) => {
           reject(err);
         }
       );
@@ -31,7 +32,20 @@ export class DashboardService {
         (res: any) => {
           resolve(res);
         },
-        err => {
+        (err) => {
+          reject(err);
+        }
+      );
+    });
+  }
+
+  getPaymentGraphData(data) {
+    return new Promise((resolve, reject) => {
+      this.http.get(this.paymentGraphDataUrl + data).subscribe(
+        (res: any) => {
+          resolve(res);
+        },
+        (err) => {
           reject(err);
         }
       );

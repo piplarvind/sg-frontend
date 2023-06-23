@@ -1,9 +1,7 @@
 <mat-card>
   <mat-card-title>
     <div fxLayout="row" fxLayoutAlign="space-between">
-      <div fxFlex="50" class="m-sub-title">
-        Dashboard
-      </div>
+      <div fxFlex="50" class="m-sub-title">Dashboard</div>
       <!-- <div fxFlex="20" class="m-sub-title" *ngIf="isSuperAdmin" style="text-align: right">
             Select Club
           </div>
@@ -34,11 +32,22 @@
 </mat-card>
 
 <mat-card>
+  <mat-card-header>
+    <mat-card-title>Users</mat-card-title>
+  </mat-card-header>
   <mat-card-content>
     <div class="card-container">
       <app-bar-chart></app-bar-chart>
     </div>
   </mat-card-content>
 </mat-card>
-
-
+<mat-card>
+  <mat-card-header>
+      <mat-card-title>Transactions Histories</mat-card-title>
+  </mat-card-header>
+  <mat-card-content>
+    <div class="card-container">
+      <app-payment-bar-chart></app-payment-bar-chart>
+    </div>
+  </mat-card-content>
+</mat-card>

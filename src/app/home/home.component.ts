@@ -1,14 +1,14 @@
-import { Component, OnInit } from '@angular/core';
-import { finalize } from 'rxjs/operators';
-import { ClubsService } from '@app/clubs/clubs.service';
-import { SharedService } from '@app/shared/shared.service';
-import { QuoteService } from '@app/home/quote.service';
-import { DashboardService } from './dashboard.service';
+import { Component, OnInit } from "@angular/core";
+import { finalize } from "rxjs/operators";
+import { ClubsService } from "@app/clubs/clubs.service";
+import { SharedService } from "@app/shared/shared.service";
+import { QuoteService } from "@app/home/quote.service";
+import { DashboardService } from "./dashboard.service";
 
 @Component({
-  selector: 'app-home',
-  templateUrl: './home.component.html',
-  styleUrls: ['./home.component.scss']
+  selector: "app-home",
+  templateUrl: "./home.component.html",
+  styleUrls: ["./home.component.scss"],
 })
 export class HomeComponent implements OnInit {
   staticsData: any;
@@ -17,10 +17,10 @@ export class HomeComponent implements OnInit {
   isSuperAdmin: Boolean = false;
   clubsList: Array<any>;
   dashboardStates = [
-    { name: 'Profiles Types', userCount: 100 },
-    { name: 'No. of Profiles', userCount: 200 },
-    { name: 'No. of Atheletes', userCount: 150 },
-    { name: 'No. of Coachs', userCount: 75 },
+    { name: "Profiles Types", userCount: 100 },
+    { name: "No. of Profiles", userCount: 200 },
+    { name: "No. of Atheletes", userCount: 150 },
+    { name: "No. of Coachs", userCount: 75 },
     // Add more states with user count
   ];
 
@@ -32,17 +32,18 @@ export class HomeComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.dashboardService.getStaticsData()
+    this.dashboardService
+      .getStaticsData()
       .then((e: any) => {
         this.staticsData = e.data;
         this.dashboardStates = e.data;
       })
       .catch((err: any) => {
-        console.log('err in statics data', err);
+        console.log("err in statics data", err);
       });
     if (
-      localStorage.user_role === 'Super Admin' ||
-      localStorage.user_role === 'Platform Admin'
+      localStorage.user_role === "Super Admin" ||
+      localStorage.user_role === "Platform Admin"
     ) {
       this.isSuperAdmin = true;
       let tempVal;

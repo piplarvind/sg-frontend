@@ -12,6 +12,7 @@ import { HomeComponent } from '@app/home/home.component';
 import { DashboardService } from '@app/home/dashboard.service';
 import { QuoteService } from '@app/home/quote.service';
 import { BarChartComponent } from './bar-chart/bar-chart.component';
+import { PaymentBarChartComponent } from './payment-bar-chart/payment-bar-chart.component';
 
 @NgModule({
   imports: [
@@ -26,7 +27,8 @@ import { BarChartComponent } from './bar-chart/bar-chart.component';
   ],
   declarations: [
     HomeComponent,
-    BarChartComponent
+    BarChartComponent,
+    PaymentBarChartComponent
   ],
   providers: [
     DashboardService,

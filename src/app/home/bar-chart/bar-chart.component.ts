@@ -49,7 +49,7 @@ export class BarChartComponent implements OnInit, AfterViewInit {
     this.dashboardService.getGraphData()
       .then((e: any) => {
         this.graphData = e.data;
-        this.barChartData = e.data;
+        this.barChartData = [...e.data];
       })
       .catch((err: any) => {
         console.log('err in graph data', err);

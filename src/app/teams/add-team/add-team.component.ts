@@ -546,7 +546,7 @@ export class AddTeamComponent implements OnInit {
     this.team.age = event;
     if (this.ageList) {
       let ageselected = this.ageList.filter(t => t._id === event);
-      let agese = ageselected[0].name + '&gender=' + this.team.gender;
+      let agese = ageselected[0]?.name + '&gender=' + this.team.gender;
       this.ProfilesService.getAthleteListByage(this.clubId, 'Athlete', agese)
         .then((res: any) => {
           const newres = res.data.map(prop => {

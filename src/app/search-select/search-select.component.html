@@ -10,13 +10,19 @@
     [required]="isRequired"
     (ngModelChange)="getResultVal($event)"
   >
-    <ngx-mat-select-search
+  
+    <!-- <ngx-mat-select-search
+      [formControl]="bankFilterCtrl"
+      [placeholderLabel]="'Search'"
+      [noEntriesFoundLabel]="'No Entry Found'"
+    ></ngx-mat-select-search> -->
+    <div *ngIf="!isMAIL">
+      <mat-option *ngFor="let bank of filteredBanks | async" [value]="bank._id">
+        <ngx-mat-select-search
       [formControl]="bankFilterCtrl"
       [placeholderLabel]="'Search'"
       [noEntriesFoundLabel]="'No Entry Found'"
     ></ngx-mat-select-search>
-    <div *ngIf="!isMAIL">
-      <mat-option *ngFor="let bank of filteredBanks | async" [value]="bank._id">
         <span *ngIf="isTeam">{{ bank.name }}</span>
         <span *ngIf="isUser">{{ bank.first_name }} {{ bank.last_name }}</span>
         <span *ngIf="isPackage">{{ bank.package_name }}</span>
