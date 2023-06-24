@@ -13,12 +13,7 @@
     </div>
   </mat-card-title>
 </mat-card>
-<!-- <h1 style="text-align: center; margin: 20%;">Under Development</h1> -->
-
 <mat-card>
-  <!-- <mat-card-header>
-    <mat-card-title>Dashboard</mat-card-title>
-  </mat-card-header> -->
   <mat-card-content>
     <div class="card-container">
       <mat-card *ngFor="let state of dashboardStates" class="card-item">
@@ -32,22 +27,22 @@
 </mat-card>
 
 <mat-card>
-  <mat-card-header>
-    <mat-card-title>Users</mat-card-title>
-  </mat-card-header>
-  <mat-card-content>
-    <div class="card-container">
-      <app-bar-chart></app-bar-chart>
+  <div fxLayout="row" fxLayoutAlign="normal" class="m-table-container top-head">
+    <div class="column">
+      <h3>Users</h3>
+      <mat-card-content>
+        <div class="card-container">
+          <app-bar-chart></app-bar-chart>
+        </div>
+      </mat-card-content>
     </div>
-  </mat-card-content>
-</mat-card>
-<mat-card>
-  <mat-card-header>
-      <mat-card-title>Transactions Histories</mat-card-title>
-  </mat-card-header>
-  <mat-card-content>
-    <div class="card-container">
-      <app-payment-bar-chart></app-payment-bar-chart>
+    <div class="column">
+      <h3>Transaction Histories</h3>
+      <mat-card-content>
+        <div class="card-container">
+          <app-payment-bar-chart></app-payment-bar-chart>
+        </div>
+      </mat-card-content>
     </div>
-  </mat-card-content>
+  </div>
 </mat-card>

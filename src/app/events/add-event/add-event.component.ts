@@ -244,6 +244,7 @@ export class AddEventComponent implements OnInit, OnChanges {
       this.temp = localStorage.dbName;
       this.tempId = localStorage.club_id;
     }
+
     this.getCountries();
     this.getGender();
     // this.getAllAge();

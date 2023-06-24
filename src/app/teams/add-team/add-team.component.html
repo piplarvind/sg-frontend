@@ -295,7 +295,7 @@
                   <span class="label">Athlete</span>
                 </div>
                 <div class="field-container">
-                  <app-search-select
+                  <!-- <app-search-select
                     [dropdownList]="athleteList"
                     placeHolder="Select athletes"
                     [isTeam]="true"
@@ -303,7 +303,10 @@
                     [alreadySel]="team.athletes"
                     (valueUpdated)="getTeamAthletes($event)"
                   >
-                  </app-search-select>
+                  </app-search-select> -->
+                  <mat-select [(value)]="team.athletes" multiple (valueUpdated)="getTeamAthletes($event)" placeHolder="Select Athletes">
+                    <mat-option *ngFor="let athlete of athleteList" [value]="athlete._id">{{athlete.name}}</mat-option>
+                  </mat-select>
                 </div>
               </div>
               <mat-card>

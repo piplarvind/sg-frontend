@@ -14,32 +14,28 @@ q {
 }
 
 .card-container {
+  width: 100%;
   display: flex;
   flex-wrap: wrap;
-  justify-content: space-between;
+  justify-content: normal;
 }
-
+.column{
+  padding: 0 10px;
+}
 .card-item {
   width: calc(25% - 20px);
-  margin-bottom: 20px;
-  position: relative;
+  margin: 10px;
 }
 
 .card-label {
-  position: absolute;
-  bottom: 0;
-  left: 50%;
-  transform: translateX(-50%);
+ 
   text-align: center;
   width: 100%;
-  font-weight: bold;
   font-size: 18px; /* Adjust the font size as needed */
 }
 
-
 .user-count {
-  font-size: 36px;
+  font-size: 18px;
   text-align: center;
-  margin-top: 10px;
+  font-weight: bold;
 }
-

@@ -20,7 +20,7 @@
               <div class="field-container">
                 <mat-form-field [floatLabel]="'never'">
                   <mat-select placeholder="Select the event type" (selectionChange)="getType($event.value)"
-                    [(ngModel)]="this.event.event_type.event_type"  name=" event_type"required>
+                    [(ngModel)]="this.event.event_type.event_type" name=" event_type" required>
                     <mat-option *ngFor="let type of eventTypes" [value]="type.event_type">{{type.event_type}}
                     </mat-option>
                   </mat-select>
@@ -329,10 +329,14 @@
               </div>
               <!-- |agepipe:event.team1Age -->
               <div class="field-container">
-                <app-search-select [isDefault]="true" [dropdownList]="team1List| agepipe:selectedTeam1Age "
+                <!-- <app-search-select [isDefault]="true" [dropdownList]="team1List| agepipe:selectedTeam1Age "
                   placeHolder="Select home team" [alreadySel]="selectedTeam1Id" (valueUpdated)="getHomeTeam($event)">
-                </app-search-select>
-
+                </app-search-select> -->
+                <mat-form-field [floatLabel]="'never'">
+                <mat-select [(value)]="selectedTeam1Id" (selectionChange)="getHomeTeam($event)" placeHolder="Select home team">
+                  <mat-option *ngFor="let homeTeam of team1List | agepipe:selectedTeam1Age" [value]="homeTeam._id">{{homeTeam.name}}</mat-option>
+                </mat-select>
+              </mat-form-field>
               </div>
 
             </div>
@@ -367,10 +371,15 @@
                       {{club.club_name}}</mat-option>
                   </mat-select>
                 </mat-form-field> -->
-                  <app-search-select [isClub]="true" [dropdownList]="clubList"
+                  <!-- <app-search-select [isClub]="true" [dropdownList]="clubList"
                     placeHolder="Select other club" [alreadySel]="selectedClub"
                     (valueUpdated)="otherClubChanged($event.value)">
-                  </app-search-select>
+                  </app-search-select> -->
+                  <mat-form-field [floatLabel]="'never'">
+                  <mat-select [(value)]="selectedClub" (selectionChange)="otherClubChanged($event.value)" placeHolder="Select other club">
+                    <mat-option *ngFor="let clubLst of clubList" [value]="clubLst._id">{{clubLst.name}}</mat-option>
+                  </mat-select>
+                </mat-form-field>
               </div>
             </div>
 <div class="input-container">
@@ -415,9 +424,14 @@
         <span *ngIf='isOtherClub'> (Opposing)</span>
       </div>
       <div class="field-container">
-        <app-search-select [isDefault]="true"   [dropdownList]="team2List|agepipe:selectedTeam2Ageotherclub "
+        <!-- <app-search-select [isDefault]="true"   [dropdownList]="team2List|agepipe:selectedTeam2Ageotherclub "
           placeHolder="Select opponent team" [alreadySel]="selectedTeam2Idotherclub" (valueUpdated)="getOpponentTeamotherclub($event)">
-        </app-search-select>
+        </app-search-select> -->
+        <mat-form-field [floatLabel]="'never'">
+        <mat-select [(value)]="selectedTeam2Idotherclub" (selectionChange)="getOpponentTeamotherclub($event)" placeHolder="Select opponent team">
+          <mat-option *ngFor="let team22 of team2List|agepipe:selectedTeam2Ageotherclub" [value]="team22._id">{{team22.name}}</mat-option>
+        </mat-select>
+      </mat-form-field>
       </div>
     </div>
 
@@ -448,9 +462,14 @@
                 <span *ngIf='isOtherClub'> (Opposing)</span>
               </div>
               <div class="field-container" >
-                <app-search-select [isDefault]="true" [dropdownList]="team2List|agepipe:selectedTeam2Age" 
+                <!-- <app-search-select [isDefault]="true" [dropdownList]="team2List|agepipe:selectedTeam2Age" 
                   placeHolder="Select opponent team" [alreadySel]="selectedTeam2Id"
-                  (valueUpdated)="getOpponentTeam($event)"></app-search-select>
+                  (valueUpdated)="getOpponentTeam($event)"></app-search-select> -->
+                  <mat-form-field [floatLabel]="'never'">
+                  <mat-select [(value)]="selectedTeam2Id" (selectionChange)="getOpponentTeam($event)" placeHolder="Select opponent team">
+                    <mat-option *ngFor="let opponentTeam of team2List|agepipe:selectedTeam2Age" [value]="opponentTeam._id">{{opponentTeam.name}}</mat-option>
+                  </mat-select>
+                </mat-form-field>
               </div>
             </div>
             <!-- |agepipe:event.team2Age -->

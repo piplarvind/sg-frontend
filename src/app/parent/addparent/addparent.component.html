@@ -371,9 +371,12 @@
   <div class="input-container">
     <div class="label-container"><span class="label-icon"> </span> <span class="label">Parent Of</span></div>
     <div class="field-container">
-      <app-search-select [dropdownList]="athleteList" placeHolder="Select Athletes" [isTeam]="true" [isMultiple]="true"
+      <!-- <app-search-select [dropdownList]="athleteList" placeHolder="Select Athletes" [isTeam]="true" [isMultiple]="true"
         [alreadySel]="data.child" (valueUpdated)="getAthlete($event)">
-      </app-search-select>
+      </app-search-select> -->
+      <mat-select [(value)]="data.child" multiple (valueUpdated)="getAthlete($event)" placeHolder="Select Athletes">
+        <mat-option *ngFor="let athlete of athleteList" [value]="athlete._id">{{athlete.name}}</mat-option>
+      </mat-select>
     </div>
   </div>
   </mat-card>

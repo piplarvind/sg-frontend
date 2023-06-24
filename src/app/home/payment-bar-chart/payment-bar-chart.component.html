@@ -1,52 +1,27 @@
-<div>
-  <form #paymentSearchForm="ngForm" name="paymentSearch">
-    <div class="" fxLayout="row" fxLayoutAlign="space-between">
-      <mat-form-field>
-        <mat-select
-          [(ngModel)]="searchForm.club"
-          name="club"
-          #club="ngModel"
-          style="width: 100%"
-          placeholder="Select club here"
-          (ngModelChange)="changeClub($event)"
-        >
-          <mat-option *ngFor="let club of clubList" [value]="club?._id"
-            >{{ club?.club_name }}
-          </mat-option>
-        </mat-select>
-      </mat-form-field>
-      &nbsp;
-      &nbsp;
-      &nbsp;
-      &nbsp;
-      <mat-form-field>
-        <mat-select
-          [(ngModel)]="searchForm.year"
-          name="year"
-          #year="ngModel"
-          style="width: 100%"
-          placeholder="Select year"
-          (ngModelChange)="changeYear($event)"
-        >
-          <mat-option *ngFor="let year of yearRange" [value]="year"
-            >{{ year }}
-          </mat-option>
-        </mat-select>
-      </mat-form-field>
-    </div>
-  </form>
-
-  <div class="chart-container" #chartContainer>
-    <div class="custom-chart-container">
-      <canvas
-        baseChart
-        [datasets]="barChartData"
-        [labels]="barChartLabels"
-        [options]="barChartOptions"
-        [plugins]="barChartPlugins"
-        [legend]="barChartLegend"
-        (resize)="resizeChart()"
-      ></canvas>
-    </div>
+<form #paymentSearchForm="ngForm" name="paymentSearch">
+  <div fxLayout="row" fxLayoutAlign="space-between">
+    <mat-form-field>
+      <mat-select [(ngModel)]="searchForm.club" name="club" #club="ngModel" style="width: 100%"
+        placeholder="Select club here" (ngModelChange)="changeClub($event)">
+        <mat-option *ngFor="let club of clubList" [value]="club?._id">{{ club?.club_name }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+    &nbsp;
+    &nbsp;
+    &nbsp;
+    &nbsp;
+    <mat-form-field>
+      <mat-select [(ngModel)]="searchForm.year" name="year" #year="ngModel" style="width: 100%"
+        placeholder="Select year" (ngModelChange)="changeYear($event)">
+        <mat-option *ngFor="let year of yearRange" [value]="year">{{ year }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
   </div>
+</form>
+
+<div class="chart-container" #chartContainer>
+  <canvas baseChart [datasets]="barChartData" [labels]="barChartLabels" [options]="barChartOptions"
+    [plugins]="barChartPlugins" [legend]="barChartLegend" (resize)="resizeChart()"></canvas>
 </div>

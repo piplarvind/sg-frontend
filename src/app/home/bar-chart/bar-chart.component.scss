@@ -1,17 +1,9 @@
 .chart-container {
-    width: 100%;
-    height: 100%;
-    position: relative;
-  }
-  
-  .custom-chart-container {
-    width: 100%;
-    height: 100%;
-  }
-  
-  .custom-chart-container canvas {
-    width: 100% !important;
-    height: 100% !important;
-    min-width: 899px;
-  }
-  
+  position: relative;
+}
+
+canvas {
+  width: 100% !important;
+  height: 100% !important;
+  min-width: 610px;
+}

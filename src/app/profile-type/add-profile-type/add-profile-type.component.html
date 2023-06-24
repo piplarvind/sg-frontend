@@ -101,7 +101,7 @@
               <span class="label">Fields</span>
             </div>
             <div class="field-container">
-              <app-search-select
+              <!-- <app-search-select
                 [islabel]="true"
                 [dropdownList]="fieldList"
                 placeHolder="Select field"
@@ -109,7 +109,10 @@
                 [isMultiple]="true"
                 (valueUpdated)="getfield($event.value)"
               >
-              </app-search-select>
+              </app-search-select> -->
+              <mat-select [(value)]="this.profile_type.fields" multiple (valueUpdated)="getfield($event.value)">
+                <mat-option *ngFor="let topping of fieldList" [value]="topping._id">{{topping.label}}</mat-option>
+              </mat-select>
             </div>
           </div>
         </mat-card>
