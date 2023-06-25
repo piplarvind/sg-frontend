@@ -2,11 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
-import { SharedService } from '@app/shared/shared.service';
-import { Router } from '@angular/router';
-import * as moment from 'moment';
-import { ClubsService } from '@app/clubs/clubs.service';
-import { ProfilesService } from '@app/profiles/profiles.service';
+import { FeeCollectionService } from '@app/fees-collection/fee-collection.service';
 
 @Component({
   selector: 'app-fees-collection',
@@ -22,7 +18,8 @@ export class FeesCollectionComponent implements OnInit {
 
   tabledataloaded: boolean = true;
   dataSource = new MatTableDataSource();
-
+  eventTypes: Array<any>;
+  activeEvent = 0;
   displayedColumns: any = [
     'season_name',
     'pro',
@@ -37,12 +34,23 @@ export class FeesCollectionComponent implements OnInit {
     { season_name: 'Total', pro: '$5456.45', basic: '$334.43', fff:'$453', total:'$9876.45' },
   ];
 
-  constructor() { }
+  constructor(private feeCollectionService: FeeCollectionService) { }
 
   ngOnInit(): void {
     this.tabledata = this.tnbColumns;
     this.dataSource.data = this.tabledata;
     console.log('this.dataSource', this.dataSource.data);
+
+    this.feeCollectionService
+      .getEventTypes()
+      .then((e: any) => {
+        this.eventTypes = e.data;
+        console.log('e.data', e.data);
+      })
+      .catch((err: any) => {
+        console.log("err in statics data", err);
+      });
+
   }
 
 }
