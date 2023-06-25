@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { SharedService } from '@app/shared/shared.service';
+import { ClubProfileService } from '../club-profile.service';
 
 @Component({
   selector: 'app-add-club-profile',
@@ -18,7 +19,7 @@ export class AddClubProfileComponent implements OnInit {
   invalidNumber: Boolean;
   clubProfileTitle: any = {
     club_profile_title: '',
-    label:''
+    active:''
   };
   
   selectedValidity: any;
@@ -30,21 +31,74 @@ export class AddClubProfileComponent implements OnInit {
   constructor(
     private router: Router,
     public sharedService: SharedService,
+    public clubProfileService: ClubProfileService,
+    public activatedRoute: ActivatedRoute,
   ) { }
 
   ngOnInit(): void {
+    if (this.router.url !== '/club-profiles/add') {
+      this.activeRouteSubscriber = this.activatedRoute.queryParams.subscribe(
+        param => {
+          this.editSportId = param.editSportId;
+        }
+      );
+      this.getOneClubProfileTitle(this.editSportId);
+    }
   }
 
-  createClubProfileTitle() {
-    
+  getOneClubProfileTitle(id: any) {
+    this.sharedService.showLoader = true;
+    this.isEdit = true;
+    this.showImage = true;
+    this.title = 'Edit club profile title';
+    this.clubProfileService
+      .getOneClubProfileTitle(id)
+      .then((res: any) => {
+        this.clubProfileTitle = res.data; 
+        this.sharedService.showLoader = false;
+      })
+      .catch((err: any) => {});
   }
 
   clubProfileTitleSubmit() {
-    
+    this.sharedService
+      .showDialog(
+        'Fields cannot be empty, enter data in all the fields and then click on submit.'
+      )
+      .subscribe(response => {
+        if (response === '') {
+          this.router.navigateByUrl('/club-profiles');
+        }
+      });
+  }
+
+  createClubProfileTitle() {
+    this.sharedService.showLoader = true;
+    this.clubProfileService
+      .newClubTitle(this.clubProfileTitle)
+      .then((e: any) => {
+        this.sharedService.showLoader = false;
+        this.sharedService.showMessage('club profile title created successfully.');
+        this.router.navigateByUrl('/club-profiles');
+      })
+      .catch((err: any) => {
+        this.sharedService.loginDialog(err.error.message);
+      });
   }
 
   updateClubProfileTitle() {
-    
+    this.sharedService.showLoader = true;
+    this.clubProfileService
+      .updateClubTitle(this.editSportId, this.clubProfileTitle)
+      .then((e: any) => {
+        this.sharedService.showLoader = false;
+        this.sharedService
+          .showMessage('club profile title updated successfully')
+          .subscribe(() => this.router.navigate(['/club-profiles']));
+      })
+      .catch((err: any) => {
+        this.sharedService.loginDialog(err.error.message);
+      });
   }
 
   cancelClubProfileTitle() {

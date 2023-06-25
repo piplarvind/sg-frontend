@@ -18,7 +18,7 @@ export class ClubProfileComponent implements OnInit {
   keyup: boolean = false;
   dataSource = new MatTableDataSource();
 
-  displayedColumns: any = ['title', 'Actions'];
+  displayedColumns: any = ['title', 'active', 'Actions'];
   @ViewChild(MatPaginator)
   paginator: MatPaginator;
   @ViewChild(MatSort)
@@ -30,13 +30,18 @@ export class ClubProfileComponent implements OnInit {
   pageIndex: number = 0;
   pageLimit: number[] = [5, 10, 25, 50, 100];
   tabledata: any = [];
+  buttontext: any;
+  user_role: any;
 
   constructor(
-    public clubProfileServe: ClubProfileService,
+    private router: Router,
+    public clubProfileService: ClubProfileService,
     public sharedService: SharedService,
   ) { }
 
   ngOnInit() {
+    this.buttontext = 'Show Inactive';
+    this.user_role = localStorage.user_role;
     this.getAllClubProfileTitle();
   }
   ngAfterViewInit() {
@@ -51,7 +56,7 @@ export class ClubProfileComponent implements OnInit {
       let value = event.target['value'];
       value = value.split(' ').join('_');
       let data;
-      this.clubProfileServe.getClubProfileTitleList(
+      this.clubProfileService.getClubProfileTitleList(
         '?searchBy=label&values=' + value
       ).then((res: any) => {
         this.sharedService.showLoader = false;
@@ -72,7 +77,7 @@ export class ClubProfileComponent implements OnInit {
   getAllClubProfileTitle() {
     this.sharedService.showLoader = true;
     let data;
-    this.clubProfileServe.getClubProfileTitleList('?',this.skip, this.limit).then(
+    this.clubProfileService.getClubProfileTitleList('?',this.skip, this.limit).then(
       (res: any) => {
         this.sharedService.showLoader = false;
         
@@ -115,8 +120,99 @@ export class ClubProfileComponent implements OnInit {
     
   }
 
-  deleteClubTitle(event) {
-    
+  editClubProfileTitle(row:any) {
+    this.router.navigate(['club-profiles/edit/{{row._id}}'], {
+      queryParams: { editSportId: row._id }
+    });
+  }
+  chnageStatusClubTitle(row:any) {
+    this.sharedService
+      .showDialog('Are you sure you want to change this club profile title status?')
+      .subscribe(response => {
+        if (response !== '') {
+          this.sharedService.showLoader = true;
+          const reqObj = {
+            active: !row.active
+          };
+          this.clubProfileService.chnageStatusClubTitle(row._id, reqObj).then((e: any) => {
+            this.sharedService.showLoader = false;
+            this.getAllClubProfileTitle();
+            this.buttontext = 'Show Inactive';
+            this.sharedService.showMessage(e.message);
+          });
+        }
+      });
+  }
+  deleteClubTitle(row:any) {
+    this.sharedService
+      .showDialog('Are you sure you want to delete this club profile title, operation is not reversible?')
+      .subscribe(response => {
+        if (response !== '') {
+          this.sharedService.showLoader = true;
+          const reqObj = {
+            active: !row.active
+          };
+          this.clubProfileService.removeClubTitle(row._id, reqObj).then((e: any) => {
+            this.sharedService.showLoader = false;
+            this.getAllClubProfileTitle();
+            this.buttontext = 'Show Inactive';
+            this.sharedService.showMessage(e.message);
+          });
+        }
+      });
   }
 
+  getStatus(status: boolean) {
+    if (status) {
+      return 'ACTIVE';
+    } else {
+      return 'INACTIVE';
+    }
+  }
+  ShowAll(event: any) {
+    if (this.buttontext === 'Show Inactive') {
+      this.buttontext = 'Show Active';
+
+      this.getInactiveClubProfileTitle();
+    } else {
+      this.getAllClubProfileTitle();
+      this.buttontext = 'Show Inactive';
+    }
+  }
+
+  getInactiveClubProfileTitle() {
+    this.sharedService.showLoader = true;
+    const hashedId = localStorage.dbName;
+
+    this.clubProfileService
+      .getInactiveClubProfileTitleList(this.skip, this.limit)
+      .then((res: any) => {
+        this.dataSource.data = res['data'];
+        if (this.totalLength === 0 || this.totalLength !== res['pagination']) {
+          this.totalLength = res['pagination'];
+        }
+
+        this.sharedService.showLoader = false;
+      })
+      .catch((err: any) => {});
+  }
+
+  changeStatus(row: any) {
+    this.sharedService
+      .showDialog('Are you sure you want to change status?')
+      .subscribe(response => {
+        if (response !== '') {
+          this.sharedService.showLoader = true;
+          const reqObj = {
+            active: !row.active
+          };
+          this.clubProfileService.chnageStatusClubTitle(row._id, reqObj).then((e: any) => {
+            this.sharedService.showLoader = false;
+            this.getAllClubProfileTitle();
+            this.buttontext = 'Show Inactive';
+            this.sharedService.showMessage(e.message);
+          });
+        }
+      });
+  }
 }

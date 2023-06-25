@@ -492,6 +492,13 @@
           <i class="material-icons">class</i>&nbsp;&nbsp;
           <span> Feeds</span>
         </a>
+
+        <mat-divider *ngIf="user_role === 'Super Admin' || user_role === 'Platform Admin'"></mat-divider>
+        <a mat-list-item routerLink="/cms-pages" routerLinkActive="active"
+          *ngIf="user_role === 'Club Admin' || user_role === 'Platform Admin' || user_role === 'Super Admin'">
+          <i class="material-icons">class</i>&nbsp;&nbsp;
+          <span> CMS Pages</span>
+        </a>
       </mat-list>
     </nav>
   </div>

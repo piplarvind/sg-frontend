@@ -50,6 +50,7 @@ import { SubscriptionsModule } from '@app/subscriptions/subscriptions.module';
 import { FeesCollectionModule } from './fees-collection/fees-collection.module';
 
 import { JwtInterceptor } from './core/http/jwt.interceptor';
+import { CmsPageModule } from './cms-page/cms-page.module';
 
 @NgModule({
   imports: [
@@ -99,6 +100,7 @@ import { JwtInterceptor } from './core/http/jwt.interceptor';
     ProfilesModule,
     ProfileTypeModule,
     SubscriptionsModule,
+    CmsPageModule,
     HttpClientModule
   ],
   declarations: [AppComponent],

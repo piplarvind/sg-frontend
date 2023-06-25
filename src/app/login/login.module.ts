@@ -12,6 +12,7 @@ import { PolicyComponent } from './policy/policy.component';
 import { PrivacyPolicyComponent } from './privacy-policy/privacy-policy.component';
 import { EualIosComponent } from './eual-ios/eual-ios.component';
 import { MessageComponent } from './message/message.component';
+import { PublicCmsPageComponent } from './public-cms-page/public-cms-page.component';
 
 @NgModule({
   imports: [
@@ -23,6 +24,6 @@ import { MessageComponent } from './message/message.component';
     MaterialModule,
     LoginRoutingModule
   ],
-  declarations: [LoginComponent, ResetPasswordComponent, PolicyComponent, EualIosComponent, PrivacyPolicyComponent, MessageComponent]
+  declarations: [LoginComponent, ResetPasswordComponent, PolicyComponent, EualIosComponent, PrivacyPolicyComponent, MessageComponent, PublicCmsPageComponent]
 })
 export class LoginModule {}

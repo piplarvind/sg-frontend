@@ -14,7 +14,13 @@ import { ClubsService } from "@app/clubs/clubs.service";
   templateUrl: "./payment-bar-chart.component.html",
   styleUrls: ["./payment-bar-chart.component.scss"],
 })
+  
+  
 export class PaymentBarChartComponent implements OnInit {
+
+  @ViewChild("chartContainer") chartContainer: ElementRef;
+  @ViewChild(BaseChartDirective) chart: BaseChartDirective;
+
   graphData: any;
   clubList: any = [];
   // club: string = "";
@@ -96,11 +102,6 @@ export class PaymentBarChartComponent implements OnInit {
         console.log("err in graph data", err);
       });
   }
-
-  @ViewChild("chartContainer") chartContainer: ElementRef;
-  @ViewChild(BaseChartDirective) chart: BaseChartDirective;
-
-  // ...
 
   ngAfterViewInit() {
     this.resizeChart(); // Resize the chart initially

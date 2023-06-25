@@ -99,6 +99,10 @@ const routes: Routes = [
       path: 'subscriptions',
       loadChildren: () => import('app/subscriptions/subscriptions.module').then(m => m.SubscriptionsModule)
     },
+    {
+      path: 'cms-pages',
+      loadChildren: () => import('app/cms-page/cms-page.module').then(m => m.CmsPageModule)
+    },
   ]),
   // Fallback when no prior route is matched
   { path: '**', redirectTo: '', pathMatch: 'full' }

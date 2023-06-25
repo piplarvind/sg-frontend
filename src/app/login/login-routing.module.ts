@@ -8,6 +8,8 @@ import { PolicyComponent } from './policy/policy.component';
 import { PrivacyPolicyComponent } from './privacy-policy/privacy-policy.component';
 import { EualIosComponent } from './eual-ios/eual-ios.component';
 import { MessageComponent} from './message/message.component';
+import { CmsPageComponent } from '@app/cms-page/cms-page.component';
+import { PublicCmsPageComponent } from './public-cms-page/public-cms-page.component';
 
 const routes: Routes = [
  
@@ -17,7 +19,9 @@ const routes: Routes = [
   { path: 'forgotPassword_Web', component: ResetPasswordComponent, data: { title: extract('Reset Passsword') } },
   { path: 'androidPrivacyPolicy', component: PolicyComponent, data: { title: extract('Android Privacy Policy') } },
   { path: 'privacyPolicy', component: PrivacyPolicyComponent, data: { title: extract('Privacy Policy') } },
-  { path: 'eula_ios', component: EualIosComponent, data: { title: extract('End User License Agreement') } }
+  { path: 'eula_ios', component: EualIosComponent, data: { title: extract('End User License Agreement') } },
+
+  { path: 'cms-page/:slug', component: PublicCmsPageComponent, data: { title: extract('CMS Page') } },
 ];
 
 @NgModule({

@@ -50,7 +50,7 @@ export class ClubsService {
     });
   }
   getClubList1(skip, limit) {
-    console.log('this.headers', this.headers);
+    //console.log('this.headers', this.headers);
     return new Promise((resolve, reject) => {
       this.http
         .get(this.getClubs + "?skip=" + skip + "&limit=" + limit, {headers:this.headers})
@@ -138,7 +138,7 @@ export class ClubsService {
   }
 
   removeClub(credentials: any, obj: any) {
-    console.log("obj", obj);
+    //console.log("obj", obj);
     return new Promise((resolve, reject) => {
       this.http.patch(this.deleteClub + credentials, obj).subscribe(
         (res: any) => {
