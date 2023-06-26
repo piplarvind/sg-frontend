@@ -16,7 +16,7 @@
   background-color: #d1cfcf;
   margin-bottom: 1px;
   &:hover {
-    background: linear-gradient(to left, #2a61b6, #b7172b);
+    background: linear-gradient(to left, $primary, #b7172b);
     i,
     span {
       color: #fff;
@@ -52,7 +52,7 @@ mat-divider {
 }
 
 .active {
-  background: linear-gradient(to left, #2a61b6, #b7172b);
+  background: linear-gradient(to left, $primary, #b7172b);
   i,
   span {
     color: #fff !important;

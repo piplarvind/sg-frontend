@@ -1,11 +1,11 @@
 <div fxFlex fxLayout="row">
   <div fxFlex="15" fxLayout="column">
-    <div style="background: #FFF; position: relative; margin:5px;">
+    <div style="background: #303437; position: relative;">
       <div fxLayoutAlign="center center" class="title">
         <div fxFlex="12" class="logo-container" style=" height: 100%;" *ngIf="user_role === 'Club Admin'">
           <img style="width: 100%; height: 98%;" [src]="sportLogo" alt="logo" />
         </div>
-        <img style="width: 100%; height: 100% ; padding: 2%" src="assets/sportgrit_logo.png" alt="SportGrit" *ngIf="user_role !== 'Club Admin'" />
+        <img style="width: 100%; height: 100% ; padding: 2%" src="assets/SportGrit.png" alt="SportGrit" *ngIf="user_role !== 'Club Admin'" />
       </div>
     </div>
 

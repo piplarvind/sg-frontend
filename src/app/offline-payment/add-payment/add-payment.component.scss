@@ -1,3 +1,4 @@
+@import 'src/variables';
 mat-form-field {
   // mat input container
 }
@@ -27,9 +28,9 @@ mat-form-field {
 .btn_save{
   padding: 10px 50px !important;
   margin: 10px !important;
-  background: #184489 !important;
+  background: $primary !important;
   color: #FFF !important;
-  border: 1px solid #184489;
+  border: 1px solid $primary;
   font-size: 18px;
   position: absolute;
   right: 15px;
