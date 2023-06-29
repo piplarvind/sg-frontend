@@ -108,6 +108,8 @@ export class AddPackageComponent implements OnInit, AfterViewInit {
     ) {
       this.sharedService.showLoader = true;
       this.title = 'Edit Event with Associated Fees';
+      
+      this.isEdit = true;
 
       this.getpackagedata = JSON.parse(sessionStorage.selected_package);
       this.package_id = this.getpackagedata._id;
@@ -138,7 +140,7 @@ export class AddPackageComponent implements OnInit, AfterViewInit {
         this.dataSource = this.package.installments;
         this.isEdit = true;
         this.showForm = true;
-        if (this.package.package_type._id) {
+        if (this.package.package_type?._id) {
           this.package.package_type = this.package.package_type._id;
         }
       },
@@ -399,7 +401,7 @@ export class AddPackageComponent implements OnInit, AfterViewInit {
   }
 
   getPackageType(packageType: any) {
-    if (packageType.package_name === 'Club Package') {
+    if (packageType?.package_name === 'Club Package') {
       this.showInstallment = true;
     } else {
       this.showInstallment = false;
