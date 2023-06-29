@@ -46,7 +46,7 @@ export class UsersComponent implements OnInit, AfterViewInit {
       this.isSuperAdmin = true;
       this.curSelectClub = localStorage.super_cur_clubId;
       if (!this.curSelectClub) {
-        this.sharedService.loginDialog('Select the club').subscribe(() => this.router.navigateByUrl('/home'));
+        this.sharedService.loginDialog('Please select sport & club from header').subscribe(() => this.router.navigateByUrl('/home'));
       }
       this.getUsers();
       this.buttontext = 'Show All';

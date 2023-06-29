@@ -73,7 +73,7 @@ export class TeamsComponent implements OnInit, AfterViewInit {
     }
     if (!this.curSelectClub) {
       this.sharedService
-        .loginDialog('Select the club')
+        .loginDialog('Please select sport & club from header')
         .subscribe(() => this.router.navigateByUrl('/home'));
     }
     if (this.curSelectClub) {

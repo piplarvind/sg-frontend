@@ -355,7 +355,7 @@ export class ProfilesService {
         );
     });
   }
-  getfields(path) {
+  getfields(path:any) {
     return new Promise((resolve, reject) => {
       this.http.get(this.fields + path).subscribe(
         (res: any) => {

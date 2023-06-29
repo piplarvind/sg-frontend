@@ -51,7 +51,7 @@ export class EventtypeComponent implements OnInit {
     }
     if (!this.curclub) {
       this.sharedService
-        .loginDialog('Select the club')
+        .loginDialog('Please select sport & club from header')
         .subscribe(() => this.router.navigateByUrl('/home'));
     }
   }

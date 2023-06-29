@@ -1,5 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
+import { HashLocationStrategy, LocationStrategy } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { TranslateModule } from '@ngx-translate/core';
@@ -104,8 +105,12 @@ import { CmsPageModule } from './cms-page/cms-page.module';
     HttpClientModule
   ],
   declarations: [AppComponent],
-  providers: [MessagingService, { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },],
+  providers: [
+    MessagingService,
+    { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
+    //{ provide: LocationStrategy, useClass: HashLocationStrategy },
+  ],
 
   bootstrap: [AppComponent]
 })
-export class AppModule {}
+export class AppModule { }

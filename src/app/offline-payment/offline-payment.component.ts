@@ -69,7 +69,7 @@ export class OfflinePaymentComponent implements OnInit, AfterViewInit {
       this.curClub = localStorage.super_cur_clubId;
       if (!this.curClub) {
         this.sharedService
-          .loginDialog('Select the club')
+          .loginDialog('Please select sport & club from header')
           .subscribe(() => this.router.navigateByUrl('/home'));
       }
     }

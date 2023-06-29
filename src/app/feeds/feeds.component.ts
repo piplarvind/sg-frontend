@@ -63,7 +63,7 @@ export class FeedsComponent implements OnInit {
     this.fetchAllFeeds();
     if (!this.curclub) {
       this.sharedService
-        .loginDialog('Select the club')
+        .loginDialog('Please select sport & club from header')
         .subscribe(() => this.router.navigateByUrl('/home'));
     }
   }

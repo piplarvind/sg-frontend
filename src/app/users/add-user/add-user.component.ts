@@ -157,7 +157,7 @@ export class AddUserComponent implements OnInit {
         if (
           localStorage.user_role === 'Athlete' ||
           localStorage.user_role === 'Parent' ||
-          localStorage.user_role === 'General User'
+          localStorage.user_role === 'Family-Friends-Fans'
         ) {
           this.rolesList = e.obj.filter(result => {
             return result.user_role !== 'Platform Admin';
@@ -166,7 +166,7 @@ export class AddUserComponent implements OnInit {
         if (
           localStorage.user_role === 'Athlete' ||
           localStorage.user_role === 'Parent' ||
-          localStorage.user_role === 'General User'
+          localStorage.user_role === 'Family-Friends-Fans'
         ) {
           this.rolesList = e.obj.filter(result => {
             return result.user_role !== 'Super Admin';
@@ -175,7 +175,7 @@ export class AddUserComponent implements OnInit {
         if (
           localStorage.user_role === 'Athlete' ||
           localStorage.user_role === 'Parent' ||
-          localStorage.user_role === 'General User'
+          localStorage.user_role === 'Family-Friends-Fans'
         ) {
           this.rolesList = e.obj.filter(result => {
             return result.user_role !== 'Club Admin';
@@ -184,7 +184,7 @@ export class AddUserComponent implements OnInit {
         if (
           localStorage.user_role === 'Athlete' ||
           localStorage.user_role === 'Parent' ||
-          localStorage.user_role === 'General User'
+          localStorage.user_role === 'Family-Friends-Fans'
         ) {
           this.rolesList = e.obj.filter(result => {
             return result.user_role !== 'Coach';
@@ -287,10 +287,10 @@ console.log('---->',this.childId);
       this.service
       .getAllRoles1(this.level)
         .then((res: any) => {
-          if (this.selectedUserRoleName !== 'General User') {
-            this.rolesList = res.obj.filter(role => role.user_role !== 'General User');
+          if (this.selectedUserRoleName !== 'Family-Friends-Fans') {
+            this.rolesList = res.obj.filter(role => role.user_role !== 'Family-Friends-Fans');
           }
-          if (this.selectedUserRoleName === 'General User') {
+          if (this.selectedUserRoleName === 'Family-Friends-Fans') {
             // this.selectedUserRole = this.user.role._id;
             this.rolesList = res.obj;
           }
@@ -303,11 +303,11 @@ console.log('---->',this.childId);
     this.service
       .getAllRoles1(this.level)
       .then((e: any) => {
-        // if (this.selectedUserRoleName !== 'General User') {
-        //   this.rolesList = e.obj.filter(role => role.user_role !== 'General User');
+        // if (this.selectedUserRoleName !== 'Family-Friends-Fans') {
+        //   this.rolesList = e.obj.filter(role => role.user_role !== 'Family-Friends-Fans');
         //   console.log('roles list', this.rolesList);
         // }
-        // if (this.selectedUserRoleName === 'General User') {
+        // if (this.selectedUserRoleName === 'Family-Friends-Fans') {
         // this.selectedUserRole = this.user.role._id;
         this.rolesList = e.obj;
         // }
@@ -463,8 +463,8 @@ console.log('---->',this.childId);
     delete temp._id;
     delete temp.role;
     delete temp.dob;
-    if (this.selectedUserRoleName === 'General User') {
-      if (this.selectedUserRoleName === 'General User') {
+    if (this.selectedUserRoleName === 'Family-Friends-Fans') {
+      if (this.selectedUserRoleName === 'Family-Friends-Fans') {
         temp.generic_role_change = false;
       }
       if (this.selectedUserType) {

@@ -45,7 +45,7 @@ export const environment = {
   // resetpasswordurl: 'http://54.185.76.175:8000/manage/forgotPassword',
 
   Platform_Admin: 'Platform Admin',
-  General_User: 'General User',
+  General_User: 'Family-Friends-Fans',
   Club_Admin: 'Club Admin',
   Super_Admin: 'Super Admin',
   Coach: 'Coach',

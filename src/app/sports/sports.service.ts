@@ -115,14 +115,14 @@ export class SportsService {
     return formDataTemp;
   }
 
-  updateSport(club, credentials: any) {
+  updateSport(sport, credentials: any) {
     const tempHeaders = {
       Authorization: localStorage.getItem('token')
     };
     const newFormData = this.transformRequest(credentials);
     return new Promise((resolve, reject) => {
       this.http
-        .put(this.editSport + club, newFormData, {
+        .put(this.editSport + sport, newFormData, {
           headers: tempHeaders
         })
         .subscribe(

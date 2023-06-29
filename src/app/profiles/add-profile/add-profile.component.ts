@@ -8,6 +8,7 @@ import { DomSanitizer } from '@angular/platform-browser';
 import { environment } from '../../../environments/environment';
 import { ResourceService } from '@app/resource/resource.service';
 import { AthletesService } from '@app/athletes/athletes.service';
+import { ClubProfileService } from '@app/club-profile/club-profile.service';
 import {
   HttpClient,
   HttpHeaders,
@@ -33,6 +34,7 @@ export class AddProfileComponent implements OnInit {
   getIsEdit: boolean = false;
   rolechangeWithisEdit: boolean = false;
   ageList: any;
+  clubRoleList: any;
   mobile: string = '';
   home: String = '';
   invalidNumber: boolean;
@@ -113,7 +115,8 @@ export class AddProfileComponent implements OnInit {
     private clubService: ClubsService,
     public resourceService: ResourceService,
     public _DomSanitizationService: DomSanitizer,
-    public athletesService: AthletesService
+    public athletesService: AthletesService,
+    public clubProfileService: ClubProfileService
   ) {}
 
   ngOnInit() {
@@ -127,6 +130,7 @@ export class AddProfileComponent implements OnInit {
     this.getAllAthletes();
     this.fetchPosition();
     this.getStatus();
+    this.getAllClubRole();
 
     if (this.router.url !== '/profiles/add') {
       // this.coach = JSON.parse(sessionStorage.curCoach);
@@ -146,7 +150,6 @@ export class AddProfileComponent implements OnInit {
   getGender() {
     this.ProfilesService.getGenderList().then((res: any) => {
       this.GenderList = [...res.data];
-      console.log('this.GenderList', this.GenderList);
     });
   }
 
@@ -156,6 +159,13 @@ export class AddProfileComponent implements OnInit {
 
     });
   }
+
+  getAllClubRole() {
+    this.clubProfileService.getClubProfileTitleList('?').then((res: any) => {
+      this.clubRoleList = [...res.data];
+    });
+  }
+
   getStatus() {
     this.athletesService
       .fetchStatus()
@@ -166,6 +176,7 @@ export class AddProfileComponent implements OnInit {
         console.log('error while fetching handed', err);
       });
   }
+  
   fetchPosition() {
     this.athletesService
       .fetchPosition()
@@ -434,7 +445,7 @@ export class AddProfileComponent implements OnInit {
     }
     return s;
   }
-  getOneProfile(id) {
+  getOneProfile(id:any) {
     this.sharedService.showLoader = true;
     this.isEdit = true;
     this.title = 'Edit Profile Type';
@@ -560,7 +571,7 @@ export class AddProfileComponent implements OnInit {
         if (e.data.types[0].name === 'Athlete') {
           this.is_parents = true;
           let ath = this.rolesList.filter(t => t._id === e.data.types[0]._id);
-          let gr = this.rolesList.filter(t => t.name === 'General User');
+          let gr = this.rolesList.filter(t => t.name === 'Family-Friends-Fans');
           this.rolesList = ath.concat(gr);
           this.matcard_height = 1100;
           if (e.data.parents) {
@@ -586,7 +597,7 @@ export class AddProfileComponent implements OnInit {
 
         if (e.data.types[0].name === 'Recruiter') {
           let rec = this.rolesList.filter(t => t._id === e.data.types[0]._id);
-          let grn = this.rolesList.filter(t => t.name === 'General User');
+          let grn = this.rolesList.filter(t => t.name === 'Family-Friends-Fans');
           this.rolesList = rec.concat(grn);
         }
         for (let k = 0; k < e.data.types.length; k++) {
@@ -1030,9 +1041,9 @@ export class AddProfileComponent implements OnInit {
       });
   }
 
-  onSubmit() {
+  onSubmit = async () => {
     this.createfield = [];
-    const obj = JSON.parse(localStorage.userDetails);
+    const obj = await JSON.parse(localStorage.userDetails);
 
     if (
       localStorage.user_role === `${environment.Super_Admin}` ||
@@ -1283,6 +1294,7 @@ export class AddProfileComponent implements OnInit {
       }
     });
   }
+
   stopUncheck(event, item) {
     if (this.finalData.length === 1 && this.finalData[0] === item._id) {
       event.preventDefault();
@@ -1295,19 +1307,19 @@ export class AddProfileComponent implements OnInit {
       this.getIsEdit = true;
     }
 
-    let gen: any = this.rolesList.filter(t => t.name === 'General User');
+    let gen: any = this.rolesList.filter(t => t.name === 'Family-Friends-Fans');
     let is_parent: any;
     if (e.checked) {
       if (user.name === 'Athlete') {
         let ath = this.rolesList.filter(t => t._id === user._id);
-        let gr = this.rolesList.filter(t => t.name === 'General User');
+        let gr = this.rolesList.filter(t => t.name === 'Family-Friends-Fans');
         this.rolesList = ath.concat(gr);
         this.seletected_parent = false;
         this.is_parents = true;
         this.matcard_height = 1100;
         this.finalData = [];
       }
-      if (user.name === 'General User') {
+      if (user.name === 'Family-Friends-Fans') {
         this.rolesList = this.gernarlRolelist;
         this.finalData = [];
         this.finalData.push(user._id);
@@ -1318,14 +1330,15 @@ export class AddProfileComponent implements OnInit {
         this.seletected_parent = true;
         this.role_parent = user._id;
       }
+      
       if (user.name === 'Recruiter') {
         let rec = this.rolesList.filter(t => t._id === user._id);
-        let grn = this.rolesList.filter(t => t.name === 'General User');
+        let grn = this.rolesList.filter(t => t.name === 'Family-Friends-Fans');
         this.rolesList = rec.concat(grn);
 
         this.finalData = [];
       }
-      if (user.name !== 'General User') {
+      if (user.name !== 'Family-Friends-Fans') {
         for (let i = 0; i < this.finalData.length; i++) {
           if (this.finalData[i] === gen[0]._id) {
             this.finalData.splice(i, 1);

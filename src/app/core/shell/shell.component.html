@@ -1,6 +1,6 @@
 <div fxFlex fxLayout="row">
-  <div fxFlex="15" fxLayout="column">
-    <div style="background: #303437; position: relative;">
+  <div fxFlex="15" fxLayout="column" style="background: #EBEBEB;">
+    <div style="background: #303437; position: relative; margin: 10px;">
       <div fxLayoutAlign="center center" class="title">
         <div fxFlex="12" class="logo-container" style=" height: 100%;" *ngIf="user_role === 'Club Admin'">
           <img style="width: 100%; height: 98%;" [src]="sportLogo" alt="logo" />
@@ -502,8 +502,8 @@
       </mat-list>
     </nav>
   </div>
-  <div class="content" fxFlex="85" fxLayout="column">
-    <div>
+  <div class="content" fxFlex="85" fxLayout="column" style="background: #EBEBEB;">
+    <div style="margin: 6px 0;">
       <app-header></app-header>
     </div>
 

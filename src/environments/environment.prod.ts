@@ -27,7 +27,7 @@ export const environment = {
   resetpasswordurl: 'https://api.sportgrit.com/manage/forgotPassword',
 
   Platform_Admin: 'Platform Admin',
-  General_User: 'General User',
+  General_User: 'Family-Friends-Fans',
   Club_Admin: 'Club Admin',
   Super_Admin: 'Super Admin',
   Coach: 'Coach',

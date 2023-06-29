@@ -69,7 +69,7 @@ export class TrainingComponent implements OnInit {
     }
     if (!this.curClub) {
       this.sharedService
-        .loginDialog('Select the club')
+        .loginDialog('Please select sport & club from header')
         .subscribe(() => this.router.navigateByUrl('/home'));
     }
     if (this.curClub) {

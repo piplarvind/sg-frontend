@@ -18,7 +18,7 @@ export class BarChartComponent implements OnInit, AfterViewInit {
 
   barChartOptions = {
     responsive: true,
-    maintainAspectRatio: false,
+    maintainAspectRatio: true,
     scales: {
       x: {
         grid: {
@@ -37,11 +37,7 @@ export class BarChartComponent implements OnInit, AfterViewInit {
   barChartLegend = true;
   barChartPlugins = [];
 
-  barChartData = [
-    { data: [65, 59, 80, 81, 56, 55], label: "Athlete" },
-    { data: [28, 48, 40, 19, 86, 27], label: "Parent" },
-    { data: [45, 25, 16, 36, 67, 18], label: "Coach" },
-  ];
+  barChartData = [];
 
   constructor(private dashboardService: DashboardService) {}
 
@@ -59,7 +55,6 @@ export class BarChartComponent implements OnInit, AfterViewInit {
   @ViewChild("chartContainer") chartContainer: ElementRef;
   @ViewChild(BaseChartDirective) chart: BaseChartDirective;
 
-  // ...
 
   ngAfterViewInit() {
     this.resizeChart(); // Resize the chart initially
@@ -76,6 +71,5 @@ export class BarChartComponent implements OnInit, AfterViewInit {
       this.chart.chart.update();
     }
   }
-
-  // ...
+  
 }

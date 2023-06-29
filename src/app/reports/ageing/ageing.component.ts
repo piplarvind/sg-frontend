@@ -87,7 +87,7 @@ export class AgeingComponent implements OnInit {
     this.getAgeing();
     if (!this.curclub) {
       this.sharedService
-        .loginDialog('Select the club')
+        .loginDialog('Please select sport & club from header')
         .subscribe(() => this.router.navigateByUrl('/home'));
     }
   }

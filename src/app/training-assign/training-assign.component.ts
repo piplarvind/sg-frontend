@@ -74,7 +74,7 @@ export class TrainingAssignComponent implements OnInit, AfterViewInit {
     }
     if (!this.curClub) {
       this.sharedService
-        .loginDialog('Select the club')
+        .loginDialog('Please select sport & club from header')
         .subscribe(() => this.router.navigateByUrl('/home'));
     }
 

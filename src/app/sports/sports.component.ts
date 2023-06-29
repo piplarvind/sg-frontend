@@ -137,13 +137,12 @@ export class SportsComponent implements OnInit, AfterViewInit {
         if (this.totalLength === 0 || this.totalLength !== res['pagination']) {
           this.totalLength = res['pagination'];
         }
-
         this.sharedService.showLoader = false;
       })
       .catch((err: any) => {});
   }
 
-  changePage(event) {
+  changePage(event:any) {
     if (
       this.totalLength > this.dataSource.data.length ||
       event.pageSize !== this.limit
@@ -182,6 +181,31 @@ export class SportsComponent implements OnInit, AfterViewInit {
       queryParams: { editSportId: row._id }
     });
   }
+  
+  chnageSportStatus(row: any) {
+    this.sharedService
+      .showDialog('Are you sure you want to change this sport status?')
+      .subscribe(response => {
+        if (response !== '') {
+          this.sharedService.showLoader = true;
+          const reqObj = {
+            active: !row.active
+          };
+          this.sportService.updateSport(row._id, reqObj).then((e: any) => {
+            this.sharedService.showLoader = false;
+            if (row.active) {
+              this.getAllSports();
+              this.buttontext = 'Show Inactive';
+            } else {
+              this.getActiveSports();
+              this.buttontext = 'Show Active';
+            }
+            this.sharedService.showMessage(e.message);
+          });
+        }
+      });
+  }
+
   deleteSport(row: any) {
     this.sharedService
       .showDialog('Are you sure you want to delete this sport?')
@@ -213,7 +237,6 @@ export class SportsComponent implements OnInit, AfterViewInit {
   ShowAll(event: any) {
     if (this.buttontext === 'Show Inactive') {
       this.buttontext = 'Show Active';
-
       this.getAllSports();
     } else {
       this.getActiveSports();

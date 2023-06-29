@@ -98,6 +98,7 @@
               <button
                 [class]="element.active ? 'inactive' : 'active'"
                 ng-hide="element.active=false"
+                (click)="chnageSportStatus(element)"
               >
                 <div ng-hide="element.active">
                   {{ getStatus(element.active) }}

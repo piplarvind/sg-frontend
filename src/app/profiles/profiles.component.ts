@@ -71,7 +71,7 @@ export class ProfilesComponent implements OnInit {
     this.tabledata = [];
     if (!this.clubId) {
       this.sharedService
-        .loginDialog('Select the club')
+        .loginDialog('Please select sport & club from header')
         .subscribe(() => this.router.navigateByUrl('/home'));
     }
 

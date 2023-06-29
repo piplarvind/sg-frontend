@@ -33,7 +33,7 @@ export class PaymentBarChartComponent implements OnInit {
   };
   barChartOptions = {
     responsive: true,
-    maintainAspectRatio: false,
+    maintainAspectRatio: true,
     scales: {
       x: {
         grid: {
@@ -64,17 +64,8 @@ export class PaymentBarChartComponent implements OnInit {
   barChartType = "bar";
   barChartLegend = true;
   barChartPlugins = [];
+  barChartData = [];
 
-  barChartData = [
-    { data: [], label: "Suceess" },
-    { data: [], label: "Fail" },
-  ];
-
-  public barChartColors: Array<any>  = [
-    { backgroundColor: 'green' },
-    { backgroundColor: 'red' },
-  ]
-  
   constructor(
     private clubService: ClubsService,
     private dashboardService: DashboardService
@@ -119,7 +110,7 @@ export class PaymentBarChartComponent implements OnInit {
     }
   }
 
-  changeClub = (club) => {
+  changeClub = (club:string) => {
     this.searchForm.club = club;
     let url = "?club=" + club + "&year="+this.searchForm.year;
     this.dashboardService
@@ -131,7 +122,7 @@ export class PaymentBarChartComponent implements OnInit {
         console.log("err in statics data", err);
       });
   };
-  changeYear = (year) => {
+  changeYear = (year:number) => {
     this.searchForm.year = year;
     let url = "?club=" + this.searchForm.club + "&year="+year;
     this.dashboardService
