@@ -232,3 +232,12 @@ mat-cell,
   min-height: auto; // overrides the 'inherit' that set the min height of the row
   margin: auto !important;
 }
+
+
+::ng-deep .mat-slide-toggle .mat-slide-toggle-bar {
+  background-color: green !important;
+}
+
+::ng-deep .mat-slide-toggle .mat-slide-toggle-thumb {
+  background-color: green !important;
+}

@@ -1,6 +1,6 @@
 <div fxFlex fxLayout="row">
-  <div fxFlex="15" fxLayout="column" style="background: #ebebeb">
-    <div style="background: #303437; position: relative; margin: 10px">
+  <div fxFlex="15" fxLayout="column" style="background: #f7f7f7;">
+    <div style="position: relative; margin: 10px;">
       <div fxLayoutAlign="center center" class="title">
         <div
           fxFlex="12"
@@ -10,15 +10,9 @@
         >
           <img style="width: 100%; height: 98%" [src]="sportLogo" alt="logo" />
         </div>
-        <img
-          style="width: 100%; height: 100%; padding: 2%"
-          src="assets/SportGrit.png"
-          alt="SportGrit"
-          *ngIf="user_role !== 'Club Admin'"
-        />
+        <img style="width: 100%; height: 100% ; padding: 2%;" src="assets/sportgrit_light.jpeg" alt="SportGrit" *ngIf="user_role !== 'Club Admin'" />
       </div>
     </div>
-
     <nav>
       <mat-list>
         <a
@@ -60,7 +54,6 @@
           <span *ngIf="user_role !== 'Coach'">Sports</span>
         </a>
         <mat-divider *ngIf="user_role !== 'Coach'"></mat-divider>
-
         <!--=================================== -->
         <a
           mat-list-item
@@ -72,36 +65,22 @@
           <i class="material-icons">local_play</i>&nbsp;&nbsp;
           <span>Club</span>
         </a>
-
-        <a
-          mat-list-item
-          routerLink="/profile"
-          routerLinkActive="active"
-          (click)="panelClose(panel1, panel2)"
-          *ngIf="user_role === 'Club Admin'"
-        >
+        <a mat-list-item routerLink="/profile" routerLinkActive="active" (click)="panelClose(panel1, panel2)"
+          *ngIf="user_role === 'Club Admin'">
           <i class="material-icons">local_play</i>&nbsp;&nbsp;
           <span>Club</span>
         </a>
         <!-- ================================== -->
-
-        <mat-divider
-          *ngIf="user_role === 'Super Admin' || user_role === 'Club Admin'"
-        >
-        </mat-divider>
-        <a
-          mat-list-item
-          *ngIf="user_role === 'Super Admin' || user_role === 'Club Admin'"
-          routerLink="/profiles"
-          routerLinkActive="active"
-          (click)="panelClose(panel1, panel2)"
-        >
-          <i class="material-icons">portrait</i>&nbsp;&nbsp;
-          <span>Profiles</span>
-        </a>
-        <mat-divider *ngIf="user_role === 'Platform Admin'"></mat-divider>
-
-        <!--
+      <mat-divider *ngIf="  user_role === 'Super Admin' || user_role === 'Club Admin'">
+      </mat-divider>
+  <a mat-list-item   *ngIf=" user_role === 'Super Admin'  || user_role === 'Club Admin'"routerLink="/profiles" routerLinkActive="active" (click)="panelClose(panel1, panel2)"
+   >
+    <i class="material-icons">portrait</i>&nbsp;&nbsp;
+    <span>Profiles</span>
+  </a>
+  <mat-divider *ngIf=" user_role === 'Platform Admin'"></mat-divider>
+     
+<!--
 <mat-expansion-panel #panel1 class="sidenavPanel" (opened)="panelOpenState = true" (closed)="panelOpenState = false"
   routerLinkActive="active" *ngIf=" user_role === 'Super Admin' || user_role === 'Platform Admin'">
   <mat-expansion-panel-header class="insidePanel" routerLink="/profiles">

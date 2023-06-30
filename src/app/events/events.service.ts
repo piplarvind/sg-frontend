@@ -221,6 +221,24 @@ export class EventsService {
     });
   }
 
+  updateEventStatus(id:any, data: any) {
+    const tempHeaders = {
+      Authorization: localStorage.getItem('token')
+    };
+  
+    return new Promise((resolve, reject) => {
+      const url = this.editEvent + id;
+      this.http.put(url, data, { headers: tempHeaders }).subscribe(
+        (res: any) => {
+          resolve(res);
+        },
+        err => {
+          reject(err);
+        }
+      );
+    });
+  }
+  
   removeEvent(credentials: any) {
     return new Promise((resolve, reject) => {
       const objBody = {

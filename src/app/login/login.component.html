@@ -1,6 +1,6 @@
 <div class="container">
   <div class="banner">
-    <div style="height: 100vh; width: 100vw; margin: 0; overflow: hidden">
+    <div style="height: 100vh; width: 100vw; margin: 0; overflow: hidden;">
       <!-- <img src="assets/backcover.jpg" style="background-size: cover;" /> -->
       <div
         fxFill
@@ -13,12 +13,11 @@
         <div class="login-container" fxLayout="row" fxLayoutAlign="center">
           <div fxFlex="90%" class="login-box">
             <div class="image-container">
-              <img src="assets/sportgrit_logo.png" />
+              <img src="assets/sportgrit_light.jpeg" />
             </div>
             <!-- <div class="errText"> {{message}}  </div> -->
             <form (ngSubmit)="login()" [formGroup]="loginForm" novalidate>
-              <h3>Login to your account</h3>
-
+              <h3><strong>Login to your account</strong></h3>
               <div class="login-error" [hidden]="!error || isLoading">
                 Username or password incorrect.
               </div>
@@ -33,7 +32,6 @@
                     (keyup)="validateUsername($event.target.value)"
                     type="text"
                   />
-
                   <!-- <mat-error *ngIf="loginForm.controls.username.valid || loginForm.controls.username.untouched">
                 <span>Username is required</span>
               </mat-error> -->

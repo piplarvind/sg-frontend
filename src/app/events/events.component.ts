@@ -18,7 +18,7 @@ export class EventsComponent implements OnInit {
   keyup: boolean = false;
   eventsList: Array<any> = [];
   user_role: any;
-
+  active: any = false;
   hashedId: any = 'tg_wehsVbUNydLP';
   curclub: String;
   eventLocation: string;
@@ -36,6 +36,7 @@ export class EventsComponent implements OnInit {
     'start_date',
     'location',
     'team',
+    'active',
     'Actions'
   ];
 
@@ -329,5 +330,30 @@ export class EventsComponent implements OnInit {
     this.eventService.curEvent = updateStats;
     sessionStorage.curClub = JSON.stringify(updateStats);
     this.router.navigate(['events/stats']);
+  }
+
+  getStatus(status: boolean) {
+    if (status) {
+      return 'ACTIVE';
+    } else {
+      return 'INACTIVE';
+    }
+  }
+  changeEventStatus(row: any) {
+    this.sharedService
+      .showDialog('Are you sure you want to change the status of this event?')
+      .subscribe(response => {
+        if (response !== '') {
+          this.sharedService.showLoader = true;
+          const reqObj = {
+            active: !row.active
+          };
+          this.eventService.updateEventStatus(row._id, reqObj).then((e: any) => {
+            this.sharedService.showLoader = false;
+            this.getAllEvents();
+            this.sharedService.showMessage(e.message);
+          });
+        }
+      });
   }
 }
