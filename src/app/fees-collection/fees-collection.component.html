@@ -48,7 +48,9 @@
               <button
                 mat-raised-button
                 class="fees-evnt-btn"
-                [class.fees-evnt-btn-active]=" eventType?._id === activeEventType"
+                [class.fees-evnt-btn-active]="
+                  eventType?._id === activeEventType
+                "
                 (click)="toggleEventType(eventType?._id)"
               >
                 {{ eventType?.event_type }}
@@ -65,12 +67,16 @@
         <mat-table #table [dataSource]="dataSource" matSort>
           <!-- Static Column -->
           <ng-container matColumnDef="staticColumn">
-            <mat-header-cell *matHeaderCellDef>{{
-              staticColumn
-            }}</mat-header-cell>
-            <mat-cell *matCellDef="let element">{{
-              element[staticColumn]
-            }}</mat-cell>
+            <mat-header-cell *matHeaderCellDef>
+              <ng-container *ngIf="hasData()">
+                {{ staticColumn }}
+              </ng-container>
+            </mat-header-cell>
+            <mat-cell *matCellDef="let element">
+              <ng-container *ngIf="hasData()">
+                {{ element[staticColumn] }}
+              </ng-container>
+            </mat-cell>
           </ng-container>
 
           <!-- Dynamic Column Headers -->
@@ -84,10 +90,14 @@
 
           <!-- Total Column -->
           <ng-container matColumnDef="Total">
-            <mat-header-cell *matHeaderCellDef>Total</mat-header-cell>
-            <mat-cell *matCellDef="let element">{{
-              element["Total"]
-            }}</mat-cell>
+            <mat-header-cell *matHeaderCellDef>
+              <ng-container *ngIf="hasData()">Total</ng-container>
+            </mat-header-cell>
+            <mat-cell *matCellDef="let element">
+              <ng-container *ngIf="hasData()">{{
+                element["Total"]
+              }}</ng-container>
+            </mat-cell>
           </ng-container>
 
           <!-- Table Header -->
@@ -97,13 +107,15 @@
             "
           ></mat-header-row>
           <mat-header-row>
-            <mat-header-cell *matHeaderCellDef>{{
-              staticColumn
-            }}</mat-header-cell>
+            <mat-header-cell *matHeaderCellDef>
+              <ng-container *ngIf="hasData()">{{ staticColumn }}</ng-container>
+            </mat-header-cell>
             <ng-container *ngFor="let column of dynamicColumns">
               <mat-header-cell *matHeaderCellDef>{{ column }}</mat-header-cell>
             </ng-container>
-            <mat-header-cell *matHeaderCellDef>Total</mat-header-cell>
+            <mat-header-cell *matHeaderCellDef>
+              <ng-container *ngIf="hasData()">Total</ng-container>
+            </mat-header-cell>
           </mat-header-row>
 
           <!-- Table Rows -->

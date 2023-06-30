@@ -20,7 +20,7 @@ export class FeesCollectionComponent implements OnInit {
   tabledataloaded: boolean = true;
   dataSource = new MatTableDataSource();
   eventTypes: Array<any>;
-  activeEventType = 0;
+  activeEventType: string = "";
   displayedColumns: string[] = [];
   // displayedColumns: any = ["season_name", "pro", "basic", "fff", "total"];
   dynamicColumns: string[] = [];
@@ -50,44 +50,77 @@ export class FeesCollectionComponent implements OnInit {
   ngOnInit(): void {
     // this.tabledata = this.tnbColumns;
     this.dataSource.data = this.tabledata;
-    console.log("this.dataSource", this.dataSource.data);
 
     let url = `?club=${localStorage.curentSelectedClub}&type=${this.planType}`;
     this.feeCollectionService
       .getEventTypes(url)
       .then((e: any) => {
         this.eventTypes = e.data;
-        this.activeEventType = e?.data[0]?._id
+        this.activeEventType = e?.data[0]?._id;
         console.log("e.data", e.data);
+        let dataUrl = `?club=${localStorage.curentSelectedClub}&type=${this.planType}&event_type=${e?.data[0]?._id}`;
+        // Fetch fee collections
+        this.getFeeCollections(dataUrl);
       })
       .catch((err: any) => {
         console.log("err in statics data", err);
       });
+    
+  }
 
+  toggleActive(tab: string) {
+    this.planType = tab;
+
+    let url = `?club=${localStorage.curentSelectedClub}&type=${tab}&event_type=${this.activeEventType}`;
+    // Fetch fee collections
+    this.getFeeCollections(url);
+  }
+
+  toggleEventType(tab: string) {
+    this.activeEventType = tab;
+    let url = `?club=${localStorage.curentSelectedClub}&type=${this.planType}&event_type=${tab}`;
+    // Fetch fee collections
+    this.getFeeCollections(url);
+  }
+
+  hasData(): boolean {
+    return this.dataSource.data.length > 0;
+  }
+
+  getFeeCollections(url: string) {
     this.feeCollectionService
       .getFeeCollections(url)
       .then((e: any) => {
-        // this.eventTypes = e.data;
         let jsonData = e.data;
+
+        // Set the values for dynamic columns and calculate the total
+        let total = 0;
+        this.dynamicColumns = [];
+        jsonData.forEach((item) => {
+          const column = item.name;
+          if (!this.dynamicColumns.includes(column)) {
+            this.dynamicColumns.push(column);
+          }
+          total += item.total_package_amount;
+        });
+
         // Create an empty row object
         const row: any = {};
 
         // Set the value for the static column
-        row[this.staticColumn] = this.staticValue;
+        row["Season Name"] = this.staticValue;
 
-        // Set the values for dynamic columns and calculate the total
-        let total = 0;
+        // Set the values for dynamic columns
         jsonData.forEach((item) => {
           const column = item.name;
           row[column] = item.total_package_amount;
-          this.dynamicColumns.push(column);
-          total += item.total_package_amount;
         });
 
         // Set the value for the total column and total row
         row["Total"] = total;
+
         const totalRow: any = {};
-        totalRow[this.staticColumn] = "";
+        totalRow["Season Name"] = "";
         this.dynamicColumns.forEach((column) => {
           totalRow[column] = jsonData.reduce(
             (acc, item) =>
@@ -101,63 +134,17 @@ export class FeesCollectionComponent implements OnInit {
         );
 
         // Create an array with the row data
-        const rowData = [row, totalRow];
-
-        // Set the data source with the row array
-        this.dataSource = new MatTableDataSource(rowData);
-      })
-      .catch((err: any) => {
-        console.log("err in statics data", err);
-      });
-  }
-
-  toggleActive(tab: string) {
-    this.planType = tab;
-
-    let url = `?club=${localStorage.curentSelectedClub}&type=${tab}`;
-    this.feeCollectionService
-      .getFeeCollections(url)
-      .then((e: any) => {
-        // this.eventTypes = e.data;
-        let jsonData = e.data;
-        // Create an empty row object
-        const row: any = {};
-        console.log('jsonData.length', jsonData.length);
-        if (jsonData.length > 0) {
-          // Set the value for the static column
-          row[this.staticColumn] = this.staticValue;
-
-          // Set the values for dynamic columns and calculate the total
-          let total = 0;
-          jsonData.forEach((item) => {
-            const column = item.name;
-            row[column] = item.total_package_amount;
-            this.dynamicColumns.push(column);
-            total += item.total_package_amount;
-          });
-
-          // Set the value for the total column and total row
-          row["Total"] = total;
-          const totalRow: any = {};
-          totalRow[this.staticColumn] = "";
-          this.dynamicColumns.forEach((column) => {
-            totalRow[column] = jsonData.reduce(
-              (acc, item) =>
-                acc + (item.name === column ? item.total_package_amount : 0),
-              0
-            );
-          });
-          totalRow["Total"] = jsonData.reduce(
-            (acc, item) => acc + item.total_package_amount,
-            0
-          );
-
-          // Create an array with the row data
+        if (totalRow.Total > 0) {
           const rowData = [row, totalRow];
+
           // Set the data source with the row array
-          this.dataSource = new MatTableDataSource(rowData);
+          this.dataSource.data = rowData; // Assign data to the existing dataSource
+
+          // Paginator and sort
+          this.dataSource.paginator = this.paginator;
+          this.dataSource.sort = this.sort;
         } else {
-          this.dataSource = new MatTableDataSource([]);
+          this.dataSource.data = [];
         }
       })
       .catch((err: any) => {
@@ -165,8 +152,6 @@ export class FeesCollectionComponent implements OnInit {
       });
   }
 
-  toggleEventType(tab: string) {
-    this.planType = tab;
+  
 
-  }
 }
