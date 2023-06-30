@@ -12,7 +12,6 @@
 
   <mat-card style="min-height: 77vh">
     <div fxLayout="row" fxLayoutAlign="space-between" class="m-table-container">
-      <div>Setting Library <br />Details</div>
       <div>
         <button
           mat-raised-button
@@ -29,7 +28,7 @@
             matInput
             type="text"
             (keyup)="doFilter($event)"
-            [placeholder]="keyup ? 'Please Press Enter key' : 'Search by Name'"
+            [placeholder]="keyup ? 'Please Press Enter key' : 'Search by Key'"
           />
         </mat-form-field>
       </div>
@@ -99,7 +98,7 @@
               <span class="m-table-header"> Active </span>
             </mat-header-cell>
             <mat-cell *matCellDef="let element">
-              {{ element.active }}
+              {{ element.status }}
             </mat-cell>
           </ng-container>
 

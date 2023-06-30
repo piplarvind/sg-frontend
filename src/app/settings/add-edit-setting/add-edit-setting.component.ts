@@ -36,12 +36,9 @@ export class AddEditSettingComponent implements OnInit {
   curSelectClub: any;
   title = "CREATE SETTINGS";
   setting: any = {
-    assignment_type: "",
-    task_type: "",
-    created_by: "",
-    task_name: "",
-    task_description: "",
-    resources: [],
+    key: "",
+    value: "",
+    active: ""
   };
   editSettingId: any;
   constructor(
@@ -67,7 +64,7 @@ export class AddEditSettingComponent implements OnInit {
     if (this.router.url !== "/settings/add") {
       this.activeRouteSubscriber = this.activatedRoute.queryParams.subscribe(
         (param) => {
-          this.editSettingId = param.editTrainId;
+          this.editSettingId = param.id;
         }
       );
       this.fetchSingleSetting(this.editSettingId);
@@ -146,29 +143,17 @@ export class AddEditSettingComponent implements OnInit {
   }
   fetchSingleSetting(id) {
     this.isEdit = true;
-    this.title = "EDIT SETTINGS";
+    this.title = "EDIT SETTING";
     this.sharedService.showLoader = true;
-
     this.settingsServ
       .fetchSingleSetting(id)
       .then((e: any) => {
         const obj = e.data;
-        obj.resources.forEach((item) => {
-          this.setting.resources.push(item._id);
-        });
 
         this.setting._id = obj._id;
-        this.setting.task_name = obj.task_name;
-        this.setting.task_description = obj.task_description;
-        this.setting.task_type = obj.task_type._id;
-        this.setting.assignment_type = obj.assignment_type._id;
-        this.setting.created_by = obj.created_by ? obj.created_by._id : "";
-        this.setting.task_type = obj.task_type._id;
-
-        // this.setting.task_description = obj.task_description;
-        this.setting.start_date = new Date(obj.start_date);
-        this.setting.end_date = new Date(obj.end_date);
-        this.resource();
+        this.setting.key = obj.key;
+        this.setting.value = obj.value;
+        this.setting.active = obj.active;
         this.sharedService.showLoader = false;
       })
       .catch((err) => {
@@ -281,10 +266,7 @@ export class AddEditSettingComponent implements OnInit {
 
   updateSetting() {
     this.sharedService.showLoader = true;
-      const reqObj = {
-        clubId: this.clubId,
-        // name: this.brandName
-      };
+    
     this.settingsServ
       .updateSetting(this.setting, this.editSettingId)
       .then((e: any) => {

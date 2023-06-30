@@ -2,350 +2,69 @@
   <mat-card class="m-title">
     <h3>{{ title }}</h3>
   </mat-card>
+
   <form #settingForm="ngForm">
     <mat-card>
       <mat-card-content>
-        <div fxLayout="row" fxLayoutAlign="space-between">
-          <!-- left card -->
-          <div fxFlex="49">
-            <mat-card class="childContainer">
-              <div class="input-container">
-                <div
-                  class="errortxt"
-                  [hidden]="taskname.valid || taskname.pristine"
-                >
-                  Task name is required
-                </div>
-                <div class="label-container">
-                  <span class="label-icon"> </span>
-                  <span class="label">Site Title</span>
-                </div>
-                <div class="field-container">
-                  <mat-form-field [floatLabel]="'never'">
-                    <input
-                      matInput
-                      [(ngModel)]="setting.task_name"
-                      placeholder="Enter task name"
-                      name="taskname"
-                      #taskname="ngModel"
-                      required
-                    />
-                  </mat-form-field>
-                </div>
-              </div>
-
-              <div class="input-container">
-                <div
-                  class="errortxt"
-                  [hidden]="description.valid || description.pristine"
-                >
-                  Description is required
-                </div>
-                <div class="label-container">
-                  <span class="label-icon"> </span>
-                  <span class="label">Task Description</span>
-                </div>
-                <div class="field-container">
-                  <mat-form-field [floatLabel]="'never'">
-                    <textarea
-                      matInput
-                      [(ngModel)]="setting.task_description"
-                      placeholder="Enter task description"
-                      name="description"
-                      #description="ngModel"
-                      required
-                    ></textarea>
-                  </mat-form-field>
-                </div>
-              </div>
-
-              <!-- <div class="input-container">
-              <div class="label-container">
-                <span class="label-icon">
-
-                </span>
-                <span class="label">Team Name (S)</span>
-              </div>
-              <div class="field-container">
-                <mat-form-field [floatLabel]="'never'">
-                  <mat-select placeholder="Select Team(s)" [(ngModel)]="setting.team_name">
-                    <mat-option *ngFor="let team of teamsList" [value]="team._id">{{team.name}}</mat-option>
-                  </mat-select>
-                </mat-form-field>
-              </div>
+        <div fxLayout="row" fxLayoutAlign="center center"></div>
+        <mat-card>
+          <div class="input-container">
+            <div class="label-container">
+              <span class="label">Key</span>
             </div>
-
-            <div class="input-container">
-              <div class="label-container">
-                <span class="label-icon">
-
-                </span>
-                <span class="label">Select Athlete</span>
-              </div>
-              <div class="field-container">
-                <mat-form-field [floatLabel]="'never'">
-                  <mat-select placeholder="Select Athlete(s)" [(ngModel)]="setting.atheletes" multiple>
-                    <mat-option *ngFor="let athlete of athleteList" [value]="athlete._id">{{athlete.first_name}} {{athlete.last_name}}</mat-option>
-
-                  </mat-select>
-                </mat-form-field>
-              </div>
-            </div> -->
-
-              <div class="input-container">
-                <div class="errortxt" [hidden]="type.valid || type.untouched">
-                  Task type is required
-                </div>
-                <div class="label-container">
-                  <span class="label-icon"> </span>
-                  <span class="label">Assigment Type</span>
-                </div>
-                <div class="field-container">
-                  <mat-form-field [floatLabel]="'never'">
-                    <mat-select
-                      matInput
-                      placeholder="Select assignment"
-                      name="type"
-                      #type="ngModel"
-                      required
-                      [(ngModel)]="setting.assignment_type"
-                      (change)="getTaskNameByAssignment($event.value)"
-                    >
-                      <mat-option
-                        *ngFor="let assign of assignTypes"
-                        [value]="assign._id"
-                        >{{ assign.AssignmentType }}</mat-option
-                      >
-                    </mat-select>
-                  </mat-form-field>
-                </div>
-              </div>
-            </mat-card>
+            <div class="field-container">
+              <mat-form-field [floatLabel]="'never'">
+                <input
+                  matInput
+                  name="key"
+                  [(ngModel)]="setting.key"
+                  #key="ngModel"
+                  required
+                  placeholder="Key"
+                  readonly
+                />
+              </mat-form-field>
+            </div>
           </div>
 
-          <!-- right card -->
-          <div fxFlex="49">
-            <mat-card class="childContainer">
-              <div class="input-container">
-                <div
-                  class="errortxt"
-                  [hidden]="interval.valid || interval.untouched"
-                >
-                  Interval is required
-                </div>
-                <div class="label-container">
-                  <span class="label-icon"> </span>
-                  <span class="label">Task Interval</span>
-                </div>
-                <div class="field-container">
-                  <mat-form-field [floatLabel]="'never'">
-                    <mat-select
-                      matInput
-                      name="interval"
-                      #interval="ngModel"
-                      required
-                      placeholder="Select activity"
-                      [(ngModel)]="setting.task_type"
-                    >
-                      <mat-option
-                        *ngFor="let activity of activityTypes"
-                        [value]="activity._id"
-                        >{{ activity.task_type }}</mat-option
-                      >
-                    </mat-select>
-                  </mat-form-field>
-                </div>
-              </div>
-
-              <!-- <div class="input-container">
-              <div class="label-container">
-                <span class="label-icon">
-
-                </span>
-                <span class="label">Task Description</span>
-              </div>
-              <div class="field-container">
-                <mat-form-field [floatLabel]="'never'">
-                  <textarea matInput [(ngModel)]="setting.task_description"></textarea>
-                </mat-form-field>
-              </div>
-            </div> -->
-
-              <!-- <div class="input-container">
-              <div class="label-container">
-                <span class="label-icon">
-
-                </span>
-                <span class="label">Start Date</span>
-              </div>
-              <div class="field-container">
-                <mat-form-field [floatLabel]="'never'">
-                  <input matInput [matDatepicker]="picker" placeholder="Start date" [(ngModel)]="setting.start_date">
-                  <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-                  <mat-datepicker #picker></mat-datepicker>
-                </mat-form-field>
-              </div>
+          <div class="input-container">
+            <div class="label-container">
+              <span class="label">Value</span>
             </div>
-            <div class="input-container">
-              <div class="label-container">
-                <span class="label-icon">
-
-                </span>
-                <span class="label">End Date</span>
-              </div>
-              <div class="field-container">
-                <mat-form-field [floatLabel]="'never'">
-                  <input matInput [matDatepicker]="endpicker" placeholder="End date" [(ngModel)]="setting.end_date">
-                  <mat-datepicker-toggle matSuffix [for]="endpicker"></mat-datepicker-toggle>
-                  <mat-datepicker #endpicker></mat-datepicker>
-                </mat-form-field>
-              </div>
-            </div> -->
-              <div class="input-container" *ngIf="!showCoachName">
-                <div
-                  class="errortxt"
-                  [hidden]="created.valid || created.untouched"
-                >
-                  Created by is required
-                </div>
-                <div class="label-container">
-                  <span class="label-icon"> </span>
-                  <span class="label">Created By</span>
-                </div>
-                <div class="field-container">
-                  <mat-form-field [floatLabel]="'never'">
-                    <mat-select
-                      matInput
-                      name="created"
-                      #created="ngModel"
-                      required
-                      placeholder="Select user"
-                      [(ngModel)]="setting.created_by"
-                      [disabled]="isEdit"
-                    >
-                      <mat-option
-                        *ngFor="let coach of coachList"
-                        [value]="coach._id"
-                        >{{ coach.name }}</mat-option
-                      >
-                    </mat-select>
-                  </mat-form-field>
-                </div>
-              </div>
-              <div class="input-container" *ngIf="showCoachName">
-                <div class="label-container">
-                  <span class="label-icon"> </span>
-                  <span class="label">Created By</span>
-                </div>
-
-                <div class="field-container">
-                  <mat-form-field [floatLabel]="'never'">
-                    <input
-                      matInput
-                      [value]="coachName"
-                      placeholder="Enter coach name"
-                      name="coach"
-                    />
-                  </mat-form-field>
-                </div>
-              </div>
-
-              <div class="input-container">
-                <!-- <div class="errortxt" [hidden]="resource.valid || resource.untouched">
-                Resource is required
-              </div> -->
-                <div class="label-container">
-                  <span class="label">Resources</span>
-                </div>
-                <div class="field-container" *ngIf="taskList">
-                  <!-- <mat-form-field [floatLabel]="'never'">
-                  <mat-select matInput name="resource" #resource = "ngModel" required placeholder="Select Resources" [(ngModel)]="setting.resources" multiple>
-                    <mat-option *ngFor="let task of taskList" [value]="task._id">{{task.resource_name}}</mat-option>
-                  </mat-select>
-                </mat-form-field> -->
-                  <app-search-select
-                    [isRes]="true"
-                    [dropdownList]="taskList"
-                    placeHolder="Select resources"
-                    [isMultiple]="true"
-                    [alreadySel]="setting.resources"
-                    (valueUpdated)="getResources($event)"
-                  ></app-search-select>
-                </div>
-              </div>
-            </mat-card>
+            <div class="field-container">
+              <mat-form-field [floatLabel]="'never'">
+                <input
+                  matInput
+                  name="value"
+                  [(ngModel)]="setting.value"
+                  #value="ngModel"
+                  required
+                  placeholder="Value"
+                />
+              </mat-form-field>
+            </div>
           </div>
-        </div>
 
-        <mat-card class="resources" *ngIf="isEdit">
-          <mat-tab-group>
-            <mat-tab label="Videos">
-              <!-- <p *ngFor="let resource of curTrainVideos"><a [href]="resource.video.vimeoData?.links[1].link" target="_blank">{{resource.video.name}}</a></p> -->
-              <!-- <p *ngFor="let resource of curTrainVideos" (click)="playVideo(resource)">
-                <a href='{{link}}' target="_blank">{{resource.video.name}}</a></p> -->
-              <p
-                *ngFor="let resource of curTrainVideos"
-                style="cursor:pointer;color:blue;text-decoration: underline;"
-                (click)="playVideo(resource)"
+          <div class="input-container">
+            <div class="label-container">
+              <span class="label">Status</span>
+            </div>
+            <div class="field-container">
+              <mat-checkbox
+                [(ngModel)]="setting.active"
+                name="active"
+                #active="ngModel"
               >
-                {{ resource.video.name }}
-              </p>
-            </mat-tab>
-            <!-- <mat-tab label="Images">
-              <p *ngFor="let resource of curTrainImages"><a [href]="resource.image" target="_blank">{{resource.image?.split('/')[1]}}</a></p>
-            </mat-tab> -->
-            <mat-tab label="Images">
-              <p *ngFor="let resource of curTrainImages">
-                <a
-                  style="cursor:pointer;color:blue;text-decoration: underline;"
-                  (click)="showImage(resource)"
-                  >{{ resource.image?.split('/')[1] }}</a
-                >
-              </p>
-            </mat-tab>
-            <mat-tab label="Documents">
-              <!-- [href]="resource.doc.filepath" target="_blank" -->
-              <p *ngFor="let resource of curTrainDocs">
-                <a
-                  style="cursor:pointer;color:blue;text-decoration: underline;"
-                  (click)="openDocument(resource)"
-                  >{{ resource.doc.name }}
-                </a>
-              </p>
-            </mat-tab>
-            <mat-tab label="Quiz">
-              <span *ngFor="let resource of curTrainQuiz">
-                <p *ngFor="let question of resource.quiz">
-                  {{ question.Question }}
-                </p>
-              </span>
-            </mat-tab>
-          </mat-tab-group>
+                Active
+              </mat-checkbox>
+            </div>
+          </div>
         </mat-card>
+
+        <!-- user info end -->
 
         <mat-card>
           <div fxLayout="row" fxLayoutAlign="center center" style="margin: 5px">
-            <!-- <button mat-raised-button class="m-jumbo-button m-pointer" (click)="createSetting()" *ngIf="!isEdit" [disabled]="!settingForm.valid">Submit</button> -->
-            <!-- <button mat-raised-button class="m-jumbo-button m-pointer" (click)="updateSetting()" *ngIf="isEdit" [disabled]="!settingForm.valid">Update</button> -->
-
-            <div *ngIf="!isEdit">
-              <button
-                mat-raised-button
-                class="m-jumbo-button m-pointer"
-                *ngIf="settingForm.form.valid"
-                (click)="createSetting()"
-              >
-                Submit
-              </button>
-              <button
-                mat-raised-button
-                class="m-jumbo-button m-pointer"
-                *ngIf="!settingForm.form.valid"
-                (click)="settingSubmit()"
-              >
-                Submit
-              </button>
-            </div>
             <div *ngIf="isEdit">
               <button
                 mat-raised-button

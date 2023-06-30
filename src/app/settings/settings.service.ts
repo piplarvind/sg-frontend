@@ -54,9 +54,9 @@ export class SettingsService {
         );
     });
   }
-  getFilterSetting(data: any, value) {
+  getFilterSetting(data: any) {
     return new Promise((resolve, reject) => {
-      this.http.get(this.fetchSetting + data + value).subscribe(
+      this.http.get(this.fetchSetting + data).subscribe(
         (res: any) => {
           resolve(res);
         },

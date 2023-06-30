@@ -71,14 +71,14 @@ export class SettingsComponent implements OnInit {
       //  value can't be send with white space in url
       let value = event.target["value"];
 
-      value = value.split(" ").join("_");
-      let url = "&searchBy=task_name&values=";
+      // value = value.split(" ").join("_");
+      let url = `?key=${value}`;
       if (this.buttontext === "Show Active") {
-        url = "&active=false&searchBy=task_name&values=";
+        url = `?active=false&key=${value}`;
       }
       let data;
       this.settingsService
-        .getFilterSetting(this.curClub, url + value)
+        .getFilterSetting(url)
         .then((res: any) => {
           data = res;
           const newres = res.data.map((prop) => {
@@ -229,8 +229,8 @@ export class SettingsComponent implements OnInit {
       .catch((err: any) => {});
   }
   editSetting(row: any) {
-    this.router.navigate(["setting/edit/{{row._id}}"], {
-      queryParams: { editTrainId: row._id },
+    this.router.navigate(["settings/edit/{{row._id}}"], {
+      queryParams: { id: row._id },
     });
 
     // sessionStorage.selected_setting = JSON.stringify(row);
