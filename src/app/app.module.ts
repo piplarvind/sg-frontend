@@ -49,6 +49,7 @@ import { ProfilesModule } from '@app/profiles/profiles.module';
 import { ProfileTypeModule } from '@app/profile-type/profile-type.module';
 import { SubscriptionsModule } from '@app/subscriptions/subscriptions.module';
 import { FeesCollectionModule } from './fees-collection/fees-collection.module';
+import { SettingsModule } from '@app/settings/settings.module';
 
 import { JwtInterceptor } from './core/http/jwt.interceptor';
 import { CmsPageModule } from './cms-page/cms-page.module';
@@ -92,6 +93,7 @@ import { CmsPageModule } from './cms-page/cms-page.module';
     OfflinePaymentModule,
     FeedsModule,
     FeesCollectionModule,
+    SettingsModule,
     // AngularFireModule.initializeApp(environment.firebase),
     // AngularFireDatabaseModule,
     // AngularFireAuthModule,

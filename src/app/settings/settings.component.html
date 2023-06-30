@@ -1,0 +1,145 @@
+<div class="m-container">
+  <mat-card class="m-title" fxLayout="row" fxLayoutAlign="space-between">
+    <h3>SETTINGS</h3>
+    <!-- <button
+      mat-raised-button
+      class="m-button m-pointer"
+      routerLink="/settings/add"
+    >
+      Add Setting&nbsp;&nbsp;+
+    </button> -->
+  </mat-card>
+
+  <mat-card style="min-height: 77vh">
+    <div fxLayout="row" fxLayoutAlign="space-between" class="m-table-container">
+      <div>Setting Library <br />Details</div>
+      <div>
+        <button
+          mat-raised-button
+          ng-init="buttontext='Show All'"
+          (click)="ShowAll($event)"
+          style="margin-left: 2% !important"
+        >
+          {{ buttontext }}
+        </button>
+      </div>
+      <div>
+        <mat-form-field>
+          <input
+            matInput
+            type="text"
+            (keyup)="doFilter($event)"
+            [placeholder]="keyup ? 'Please Press Enter key' : 'Search by Name'"
+          />
+        </mat-form-field>
+      </div>
+
+      <div></div>
+      <div>
+        <mat-paginator
+          #paginator
+          [length]="totalLength"
+          [pageSize]="limit"
+          [pageSizeOptions]="pageLimit"
+          (page)="changePage($event)"
+        >
+        </mat-paginator>
+      </div>
+    </div>
+
+    <mat-card-content>
+      <mat-divider class="m-divider"></mat-divider>
+      <br />
+
+      <div class="m-table-container">
+        <mat-table
+          #table
+          [dataSource]="dataSource"
+          matSort
+          (matSortChange)="namesort($event)"
+        >
+          <ng-container matColumnDef="type">
+            <mat-header-cell *matHeaderCellDef mat-sort-header>
+              <span class="m-table-header"> Type</span>
+            </mat-header-cell>
+            <mat-cell
+              *matCellDef="let element"
+              class="light-red m-pointer "
+              style="text-transform: capitalize; margin-left: 2% !important"
+            >
+              {{ element.type }}
+            </mat-cell>
+          </ng-container>
+
+          <ng-container matColumnDef="key">
+            <mat-header-cell *matHeaderCellDef mat-sort-header>
+              <span class="m-table-header"> Key</span>
+            </mat-header-cell>
+            <mat-cell
+              *matCellDef="let element"
+              style="text-transform: capitalize "
+            >
+              {{ element.key }}
+            </mat-cell>
+          </ng-container>
+
+          <ng-container matColumnDef="value">
+            <mat-header-cell *matHeaderCellDef mat-sort-header>
+              <span class="m-table-header"> Value</span>
+            </mat-header-cell>
+            <mat-cell
+              *matCellDef="let element"
+            >
+              {{ element.value }}
+            </mat-cell>
+          </ng-container>
+
+          <ng-container matColumnDef="active">
+            <mat-header-cell *matHeaderCellDef mat-sort-header>
+              <span class="m-table-header"> Active </span>
+            </mat-header-cell>
+            <mat-cell *matCellDef="let element">
+              {{ element.active }}
+            </mat-cell>
+          </ng-container>
+
+          <ng-container matColumnDef="createdAt">
+            <mat-header-cell *matHeaderCellDef mat-sort-header>
+              <span class="m-table-header">Created On</span>
+            </mat-header-cell>
+            <mat-cell *matCellDef="let element">
+              {{ element.createdAt.split('T')[0] | date: 'MM/dd/yyyy' }}
+            </mat-cell>
+          </ng-container>
+
+          <ng-container matColumnDef="Actions">
+            <mat-header-cell *matHeaderCellDef class="textCenter">
+              Actions
+            </mat-header-cell>
+            <mat-cell *matCellDef="let element">
+              <span
+                class="table-icon m-pointer"
+                (click)="editSetting(element)"
+                title="Edit Setting"
+              >
+                <i class="fas fa-pencil-alt"></i>
+              </span>
+              <span
+                class="table-icon m-pointer"
+                (click)="deleteSetting(element)"
+                title="Delete Setting"
+              >
+                <i class="fas fa-trash"></i>
+              </span>
+            </mat-cell>
+          </ng-container>
+
+          <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+          <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
+        </mat-table>
+        <!-- <mat-paginator [length]="100" [pageSize]="100" [pageSizeOptions]="[25, 50, 75, 100]">
+        </mat-paginator> -->
+      </div>
+    </mat-card-content>
+  </mat-card>
+</div>

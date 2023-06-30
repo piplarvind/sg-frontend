@@ -4,6 +4,7 @@ import { Route } from '@app/core';
 
 const routes: Routes = [
   Route.withShell([
+    { path: 'settings', loadChildren: () => import('app/settings/settings.module').then(m => m.SettingsModule) },
     {
       path: 'profiles',
       loadChildren: () => import('app/profiles/profiles.module').then(m => m.ProfilesModule)
