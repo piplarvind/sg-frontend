@@ -53,14 +53,13 @@
                 "
                 (click)="toggleEventType(eventType?._id)"
               >
-                {{ eventType?.event_type }}
+                {{ eventType?.event_type.charAt(0).toUpperCase() + eventType?.event_type.slice(1)  }}
               </button>
             </ng-container>
           </div>
         </div>
       </div>
     </div>
-
     <mat-card-content>
       <div class="fees-tbl-title">Subscriptions Revenue Share</div>
       <div class="m-table-container" *ngIf="tabledataloaded">
