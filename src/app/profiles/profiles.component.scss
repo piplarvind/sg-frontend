@@ -14,5 +14,11 @@ mat-cell,
   text-align: center;
 }
 .placeholder::after {
-  content: attr('Please Prss Enter ');
+  content: attr('Please Press Enter ');
+}
+mat-cell:first-of-type, mat-header-cell:first-of-type, mat-footer-cell:first-of-type{
+  padding-left: 0px;
+}
+mat-row, mat-header-row, mat-footer-row{
+  padding-left: 5px;
 }

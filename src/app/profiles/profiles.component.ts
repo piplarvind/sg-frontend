@@ -26,15 +26,12 @@ export class ProfilesComponent implements OnInit {
     'last_name',
     'type',
     'username',
-
     'email',
     'mobile_phone',
-
     'platform',
     'app_version',
     'last_used',
     'active',
-
     'Actions'
   ];
   useDefault = false;

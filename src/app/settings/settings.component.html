@@ -10,7 +10,7 @@
           mat-raised-button
           ng-init="buttontext='Show All'"
           (click)="ShowAll($event)"
-          style="margin-left: 2% !important"
+          
         >
           {{ buttontext }}
         </button>
@@ -57,7 +57,7 @@
             <mat-cell
               *matCellDef="let element"
               class="light-red m-pointer "
-              style="text-transform: capitalize; margin-left: 2% !important"
+              
             >
               {{ element.type }}
             </mat-cell>

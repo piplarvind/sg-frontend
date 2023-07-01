@@ -2,5 +2,5 @@ mat-cell,
 .mat-cell {
   display: block; // flex prevents padding from working
   min-height: auto; // overrides the 'inherit' that set the min height of the row
-  margin-left: 2% !important;
+  // margin-left: 2% !important;
 }
