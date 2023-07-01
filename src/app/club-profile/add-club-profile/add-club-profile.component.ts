@@ -10,7 +10,7 @@ import { ClubProfileService } from '../club-profile.service';
   styleUrls: ['./add-club-profile.component.scss']
 })
 export class AddClubProfileComponent implements OnInit {
-  title: any = 'Create Club Profle Title';
+  title: any = 'Create Club Admin Sub Role';
   sportLogo = '';
   tempFile: any = '';
   sport_img: any;
@@ -50,7 +50,7 @@ export class AddClubProfileComponent implements OnInit {
     this.sharedService.showLoader = true;
     this.isEdit = true;
     this.showImage = true;
-    this.title = 'Edit club profile title';
+    this.title = 'Edit Club Admin Sub Role';
     this.clubProfileService
       .getOneClubProfileTitle(id)
       .then((res: any) => {
@@ -78,7 +78,7 @@ export class AddClubProfileComponent implements OnInit {
       .newClubTitle(this.clubProfileTitle)
       .then((e: any) => {
         this.sharedService.showLoader = false;
-        this.sharedService.showMessage('club profile title created successfully.');
+        this.sharedService.showMessage('club admin sub role created successfully.');
         this.router.navigateByUrl('/club-profiles');
       })
       .catch((err: any) => {
@@ -93,7 +93,7 @@ export class AddClubProfileComponent implements OnInit {
       .then((e: any) => {
         this.sharedService.showLoader = false;
         this.sharedService
-          .showMessage('club profile title updated successfully')
+          .showMessage('club admin sub role updated successfully')
           .subscribe(() => this.router.navigate(['/club-profiles']));
       })
       .catch((err: any) => {

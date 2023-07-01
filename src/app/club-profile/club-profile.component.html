@@ -1,12 +1,12 @@
 <div class="m-container">
     <mat-card class="m-title" fxLayout="row" fxLayoutAlign="space-between">
-      <h3>Club Profiles</h3>
+      <h3>Club Admin Sub Role</h3>
       <button
         mat-raised-button
         class="m-button m-pointer"
         routerLink="/club-profiles/add"
       >
-        Add Club Profile&nbsp;&nbsp;+
+        Add Club Admin Sub Role&nbsp;&nbsp;+
       </button>
     </mat-card>
   
@@ -58,7 +58,7 @@
           >
             <ng-container matColumnDef="title">
               <mat-header-cell *matHeaderCellDef mat-sort-header>
-                <span class="m-table-header">Title</span>
+                <span class="m-table-header">Sub Role</span>
               </mat-header-cell>
               <mat-cell *matCellDef="let element" style="margin-left: 20px !important;">
                 {{ element.club_profile_title }}

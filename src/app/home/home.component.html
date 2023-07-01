@@ -1,48 +1,38 @@
-<mat-card>
-  <mat-card-title>
-    <div fxLayout="row" fxLayoutAlign="space-between">
-      <div fxFlex="50" class="m-sub-title">Dashboard</div>
-      <!-- <div fxFlex="20" class="m-sub-title" *ngIf="isSuperAdmin" style="text-align: right">
-            Select Club
-          </div>
-        <div fxFlex="30" class="m-sub-title" *ngIf="isSuperAdmin" style="text-align: center">  
-          <mat-select style="width:80%" placeholder="Select Club Here" (change)="dropdownChange($event)">
-            <mat-option *ngFor="let club of clubsList" [value]="club">{{club.club_name}}</mat-option>
-          </mat-select>
-        </div> -->
-    </div>
-  </mat-card-title>
-</mat-card>
-<mat-card>
-  <mat-card-content>
-    <div class="card-container">
-      <mat-card *ngFor="let state of dashboardStates" class="card-item">
-        <mat-card-content>
-          <div class="card-label">{{ state.name }}</div>
-          <div class="user-count">{{ state.userCount }}</div>
-        </mat-card-content>
-      </mat-card>
-    </div>
-  </mat-card-content>
-</mat-card>
+<div class="m-container">
+  <mat-card class="m-title" fxLayout="row" fxLayoutAlign="space-between">
+        <h3>Dashboard</h3>
+  </mat-card>
+  <mat-card>
+    <mat-card-content>
+      <div class="card-container">
+        <mat-card *ngFor="let state of dashboardStates" class="card-item">
+          <mat-card-content>
+            <div class="card-label">{{ state.name }}</div>
+            <div class="user-count">{{ state.userCount }}</div>
+          </mat-card-content>
+        </mat-card>
+      </div>
+    </mat-card-content>
+  </mat-card>
 
-<mat-card>
-  <div fxLayout="row" fxLayoutAlign="normal" class="m-table-container top-head">
-    <div class="column">
-      <h3>Users</h3>
-      <mat-card-content>
-        <div class="card-container">
-          <app-bar-chart></app-bar-chart>
-        </div>
-      </mat-card-content>
+  <mat-card>
+    <div fxLayout="row" fxLayoutAlign="normal" class="m-table-container top-head">
+      <div class="column">
+        <h3>Users</h3>
+        <mat-card-content>
+          <div class="card-container">
+            <app-bar-chart></app-bar-chart>
+          </div>
+        </mat-card-content>
+      </div>
+      <div class="column">
+        <h3>Transaction Histories</h3>
+        <mat-card-content>
+          <div class="card-container">
+            <app-payment-bar-chart></app-payment-bar-chart>
+          </div>
+        </mat-card-content>
+      </div>
     </div>
-    <div class="column">
-      <h3>Transaction Histories</h3>
-      <mat-card-content>
-        <div class="card-container">
-          <app-payment-bar-chart></app-payment-bar-chart>
-        </div>
-      </mat-card-content>
-    </div>
-  </div>
-</mat-card>
+  </mat-card>
+</div>

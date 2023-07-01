@@ -34,7 +34,7 @@ export class AddTrainingComponent implements OnInit {
   newEnv: any = environment;
   taskList: Array<any>;
   curSelectClub: any;
-  title = 'CREATE TRAINING';
+  title = 'Create Training';
   training: any = {
     assignment_type: '',
     task_type: '',
@@ -146,7 +146,7 @@ export class AddTrainingComponent implements OnInit {
   }
   getOneTraining(id) {
     this.isEdit = true;
-    this.title = 'EDIT TRAINING';
+    this.title = 'Edit Training';
     this.sharedService.showLoader = true;
 
     this.trainingServ

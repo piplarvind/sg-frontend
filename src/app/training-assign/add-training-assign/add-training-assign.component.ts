@@ -52,7 +52,7 @@ export class AddTrainingAssignComponent implements OnInit {
   taskList: Array<any>;
   curSelectClub: any;
   editTrainAssId: any;
-  title = 'TRAINING ASSIGNMENT';
+  title = 'Add Training Assignment';
   training: any = {
     coach: '',
     team_id: '',
@@ -152,7 +152,7 @@ export class AddTrainingAssignComponent implements OnInit {
   }
   getOneTraning(id: any) {
     this.isEdit = true;
-    this.title = 'TRAINING ASSIGNMENT';
+    this.title = 'Edit Training Assignment';
     this.teamsService
       .getTeamList(this.curSelectClub, '', '')
       .then((e: any) => {

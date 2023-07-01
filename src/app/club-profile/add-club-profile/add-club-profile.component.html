@@ -13,15 +13,15 @@
                   <div class="label-container">
                     <span class="label-icon">
                     </span>
-                    <span class="label">Club Profile Title</span>
+                    <span class="label">Club Admin Sub Role</span>
                   </div>
                   <div class="field-container">
                     <mat-form-field [floatLabel]="'never'">
                       <input matInput [(ngModel)]="clubProfileTitle.club_profile_title" name="club_profile_title" #club_profile_title="ngModel" maxlength="40"
-                        placeholder="Club profile title" required>
+                        placeholder="Club admin sub role" required>
                     </mat-form-field>
                     <div class="errortxt" [hidden]="club_profile_title.valid || club_profile_title.pristine">
-                        Club profile title is required
+                      Club admin sub role is required
                     </div>
                   </div>
                 </div>

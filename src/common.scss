@@ -233,6 +233,11 @@ mat-cell,
   margin: auto !important;
 }
 
+mat-card h3{
+  margin: 0 !important;
+  display: flex;
+  align-items: center;
+}
 
 ::ng-deep .mat-slide-toggle .mat-slide-toggle-bar {
   background-color: green !important;
