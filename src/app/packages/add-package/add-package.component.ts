@@ -1,18 +1,22 @@
-import { Component, OnInit, AfterViewInit, ViewChild } from '@angular/core';
-import { PackagesService } from '@app/packages/packages.service';
-import { Router } from '@angular/router';
-import { SharedService } from '@app/shared/shared.service';
-import { environment } from '../../../environments/environment';
-import { EventsService } from '@app/events/events.service';
-import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { MatPaginator } from '@angular/material/paginator';
-import { MatSort } from '@angular/material/sort';
-import { MatTableDataSource, MatTableModule } from '@angular/material/table';
-import * as moment from 'moment';
+import { Component, OnInit, AfterViewInit, ViewChild } from "@angular/core";
+import { PackagesService } from "@app/packages/packages.service";
+import { Router } from "@angular/router";
+import { SharedService } from "@app/shared/shared.service";
+import { environment } from "../../../environments/environment";
+import { EventsService } from "@app/events/events.service";
+import {
+  MatDialog,
+  MatDialogRef,
+  MAT_DIALOG_DATA,
+} from "@angular/material/dialog";
+import { MatPaginator } from "@angular/material/paginator";
+import { MatSort } from "@angular/material/sort";
+import { MatTableDataSource, MatTableModule } from "@angular/material/table";
+import * as moment from "moment";
 @Component({
-  selector: 'app-add-package',
-  templateUrl: './add-package.component.html',
-  styleUrls: ['./add-package.component.scss']
+  selector: "app-add-package",
+  templateUrl: "./add-package.component.html",
+  styleUrls: ["./add-package.component.scss"],
 })
 export class AddPackageComponent implements OnInit, AfterViewInit {
   localStorage = localStorage;
@@ -25,67 +29,42 @@ export class AddPackageComponent implements OnInit, AfterViewInit {
   eventType: Array<any> = [];
   showInstallment: Boolean;
   package: any = {
-    name: '',
-    createdBy: '',
-    package_amount: '',
-    validity_from: '',
-    validity_to: '',
-    description: '',
-    late_pay_fee: '',
-    late_pay_day: '',
-    installments: []
+    name: "",
+    plan_type: "",
+    createdBy: "",
+    package_amount: "",
+    validity_from: "",
+    validity_to: "",
+    description: "",
+    late_pay_fee: "",
+    late_pay_day: "",
+    installments: [],
   };
   errMsg: Boolean;
   errPayment: Boolean;
 
   tempInstall = {
-    installments_no: '',
-    installment_amount: '',
-    down_pay_amount: ''
+    installments_no: "",
+    installment_amount: "",
+    down_pay_amount: "",
   };
-  title: any = 'Create Event with Associated Fees';
+  title: any = "Create Event with Associated Fees";
   curClubId: any;
   isEdit = false;
-  displayedColumns: any = ['installments', 'downPay', 'emi', 'Actions'];
+  displayedColumns: any = ["installments", "downPay", "emi", "Actions"];
   dataSource: Array<any> = [];
   showSave = false;
 
   dates = [
-    1,
-    2,
-    3,
-    4,
-    5,
-    6,
-    7,
-    8,
-    9,
-    10,
-    11,
-    12,
-    13,
-    14,
-    15,
-    16,
-    17,
-    18,
-    19,
-    20,
-    21,
-    22,
-    23,
-    24,
-    25,
-    26,
-    27,
-    28
+    1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21,
+    22, 23, 24, 25, 26, 27, 28,
   ];
 
   constructor(
     private packageservice: PackagesService,
     private router: Router,
     public sharedService: SharedService,
-    private eventService: EventsService,
+    private eventService: EventsService
   ) {}
 
   ngOnInit() {
@@ -103,12 +82,12 @@ export class AddPackageComponent implements OnInit, AfterViewInit {
     }
     this.getEventtypes();
     if (
-      this.router.url === '/packages/edit' &&
+      this.router.url === "/packages/edit" &&
       sessionStorage.selected_package
     ) {
       this.sharedService.showLoader = true;
-      this.title = 'Edit Event with Associated Fees';
-      
+      this.title = "Edit Event with Associated Fees";
+
       this.isEdit = true;
 
       this.getpackagedata = JSON.parse(sessionStorage.selected_package);
@@ -129,6 +108,13 @@ export class AddPackageComponent implements OnInit, AfterViewInit {
   ngAfterViewInit() {
     // this.dataSource.paginator = this.paginator;
     // this.dataSource.sort = this.sort;
+    // console.log('package type:', this.packageType);
+    /* const activityPackage = this.packageType.find(
+      (pType) => pType.package_name === "Activity Package"
+    );
+    if (activityPackage) {
+      this.package.plan_type = activityPackage._id;
+    } */
   }
   getOnePayment(id: any) {
     this.sharedService.showLoader = true;
@@ -143,9 +129,15 @@ export class AddPackageComponent implements OnInit, AfterViewInit {
         if (this.package.package_type?._id) {
           this.package.package_type = this.package.package_type._id;
         }
+        const activityPackage = this.packageType.find(
+          (pType) => pType.package_name === "Activity Package"
+        );
+        if (activityPackage) {
+          this.package.plan_type = activityPackage._id;
+        }
       },
       (err: any) => {
-        console.log('error occured', err);
+        console.log("error occured", err);
       }
     );
   }
@@ -162,21 +154,22 @@ export class AddPackageComponent implements OnInit, AfterViewInit {
       this.package.club = localStorage.club_id;
     }
     this.package.validity_from = moment(this.package.validity_from).format(
-      'YYYY-MM-DD HH:mm'
+      "YYYY-MM-DD HH:mm"
     );
     this.package.validity_to = moment(this.package.validity_to).format(
-      'YYYY-MM-DD HH:mm'
+      "YYYY-MM-DD HH:mm"
     );
     this.package.createdBy = obj._id;
     this.package.installments = this.dataSource;
+    // console.log('this.package', this.package); return;
     this.packageservice.newPlan(this.package).subscribe(
       (res: any) => {
         this.sharedService.showLoader = false;
-        this.sharedService.showMessage('plan created  successfully');
-        this.router.navigate(['/packages']);
+        this.sharedService.showMessage("plan created  successfully");
+        this.router.navigate(["/packages"]);
       },
       (err: any) => {
-        console.log('error occured', err);
+        console.log("error occured", err);
       }
     );
   }
@@ -187,9 +180,9 @@ export class AddPackageComponent implements OnInit, AfterViewInit {
         `Unsaved data, if any will be lost if you cancel this action.
       Confirm if you want to leave this page?`
       )
-      .subscribe(response => {
+      .subscribe((response) => {
         if (response === true) {
-          this.router.navigate(['/packages']);
+          this.router.navigate(["/packages"]);
         }
       });
   }
@@ -200,9 +193,9 @@ export class AddPackageComponent implements OnInit, AfterViewInit {
         `Fields cannot be empty,
     senter data in all the fields and then click on update.`
       )
-      .subscribe(response => {
-        if (response === '') {
-          this.router.navigateByUrl('/packages');
+      .subscribe((response) => {
+        if (response === "") {
+          this.router.navigateByUrl("/packages");
         }
       });
   }
@@ -210,11 +203,11 @@ export class AddPackageComponent implements OnInit, AfterViewInit {
   packageSubmit() {
     this.sharedService
       .showDialog(
-        'Fields cannot be empty, enter data in all the fields and then click on submit.'
+        "Fields cannot be empty, enter data in all the fields and then click on submit."
       )
-      .subscribe(response => {
-        if (response === '') {
-          this.router.navigateByUrl('/packages');
+      .subscribe((response) => {
+        if (response === "") {
+          this.router.navigateByUrl("/packages");
         }
       });
   }
@@ -224,41 +217,40 @@ export class AddPackageComponent implements OnInit, AfterViewInit {
     this.package.installments = this.dataSource;
 
     const temp = this.package;
-
     this.packageservice.updatingPlan(temp).subscribe(
       (res: any) => {
         this.sharedService.showLoader = false;
-        this.sharedService.showMessage('Plan updated successfully');
-        this.router.navigate(['/packages']);
+        this.sharedService.showMessage("Plan updated successfully");
+        this.router.navigate(["/packages"]);
       },
       (err: any) => {
-        console.log('error occured', err);
+        console.log("error occured", err);
       }
     );
   }
 
   checkInstallment() {
-    if (this.tempInstall.installments_no < '1') {
+    if (this.tempInstall.installments_no < "1") {
       //   this.errMsg = true;
       // } else {
       //   this.errMsg = false;
-      this.sharedService.loginDialog('Value cannot be less than 1');
+      this.sharedService.loginDialog("Value cannot be less than 1");
     }
   }
 
   checkPayment() {
-    if (this.tempInstall.down_pay_amount < '1') {
+    if (this.tempInstall.down_pay_amount < "1") {
       //   this.errPayment = true;
       // } else {
       //   this.errPayment = false;
-      this.sharedService.loginDialog('Value cannot be less than 1');
+      this.sharedService.loginDialog("Value cannot be less than 1");
     }
   }
   validatevalidity(text) {
-    var phoneNo = '';
+    var phoneNo = "";
     for (let i = 0; i < text.length; i++) {
       var ch = text.charAt(i);
-      if (ch >= '0' && ch <= '9') {
+      if (ch >= "0" && ch <= "9") {
         phoneNo += ch;
       }
     }
@@ -267,10 +259,10 @@ export class AddPackageComponent implements OnInit, AfterViewInit {
     }, 0);
   }
   validateamount(text) {
-    var phoneNo = '';
+    var phoneNo = "";
     for (let i = 0; i < text.length; i++) {
       var ch = text.charAt(i);
-      if (ch >= '0' && ch <= '9') {
+      if (ch >= "0" && ch <= "9") {
         phoneNo += ch;
       }
     }
@@ -279,10 +271,10 @@ export class AddPackageComponent implements OnInit, AfterViewInit {
     }, 0);
   }
   validatelateFee(text) {
-    var phoneNo = '';
+    var phoneNo = "";
     for (let i = 0; i < text.length; i++) {
       var ch = text.charAt(i);
-      if (ch >= '0' && ch <= '9') {
+      if (ch >= "0" && ch <= "9") {
         phoneNo += ch;
       }
     }
@@ -292,10 +284,10 @@ export class AddPackageComponent implements OnInit, AfterViewInit {
     }, 0);
   }
   validatelateFeeDay(text) {
-    var phoneNo = '';
+    var phoneNo = "";
     for (let i = 0; i < text.length; i++) {
       var ch = text.charAt(i);
-      if (ch >= '0' && ch <= '9') {
+      if (ch >= "0" && ch <= "9") {
         phoneNo += ch;
       }
     }
@@ -310,28 +302,28 @@ export class AddPackageComponent implements OnInit, AfterViewInit {
       !this.tempInstall.down_pay_amount
     ) {
       this.sharedService.loginDialog(
-        'Enter value in fields to add Installments'
+        "Enter value in fields to add Installments"
       );
     }
     if (!this.tempInstall.installments_no && this.tempInstall.down_pay_amount) {
-      this.sharedService.loginDialog('Enter No. of Installments');
+      this.sharedService.loginDialog("Enter No. of Installments");
     }
     if (this.tempInstall.installments_no && !this.tempInstall.down_pay_amount) {
-      this.sharedService.loginDialog('Enter Down Payment');
+      this.sharedService.loginDialog("Enter Down Payment");
     }
     if (
-      this.tempInstall.down_pay_amount !== '' &&
-      this.tempInstall.down_pay_amount > '0' &&
-      this.tempInstall.installments_no !== '' &&
-      this.tempInstall.installments_no > '0' &&
+      this.tempInstall.down_pay_amount !== "" &&
+      this.tempInstall.down_pay_amount > "0" &&
+      this.tempInstall.installments_no !== "" &&
+      this.tempInstall.installments_no > "0" &&
       this.tempInstall.down_pay_amount < this.package.package_amount
     ) {
       const updatedArray = this.dataSource;
       this.dataSource = updatedArray.concat(this.tempInstall);
       this.tempInstall = {
-        installments_no: '',
-        down_pay_amount: '',
-        installment_amount: ''
+        installments_no: "",
+        down_pay_amount: "",
+        installment_amount: "",
       };
     }
   }
@@ -344,17 +336,20 @@ export class AddPackageComponent implements OnInit, AfterViewInit {
     /*element.installment_amount = Math.round(
       (this.package.package_amount - amount) / number
     );*/
-    element.installment_amount = ((this.package.package_amount - amount) / number).toFixed(2)
+    element.installment_amount = (
+      (this.package.package_amount - amount) /
+      number
+    ).toFixed(2);
     return element.installment_amount;
   }
 
   deleteInstallment(element: any) {
     this.dataSource = this.updateArray(this.dataSource, element);
-    this.sharedService.showMessage('Installment Deleted Successfully');
+    this.sharedService.showMessage("Installment Deleted Successfully");
   }
 
   updateArray(curArrray: any, element: any) {
-    return curArrray.filter(ele => {
+    return curArrray.filter((ele) => {
       return (
         ele.installments_no !== element.installments_no ||
         ele.down_pay_amount !== element.down_pay_amount
@@ -382,9 +377,16 @@ export class AddPackageComponent implements OnInit, AfterViewInit {
     this.packageservice.planTypes().subscribe(
       (res: any) => {
         this.packageType = res.data;
+        const activityPackage = this.packageType.find(
+          (pType) => pType.package_name === "Activity Package"
+        );
+        if (activityPackage) {
+          this.package.plan_type = activityPackage._id;
+        }
+        console.log('this.package', this.package);
       },
       (err: any) => {
-        console.log('error this');
+        console.log("error this");
       }
     );
   }
@@ -393,6 +395,7 @@ export class AddPackageComponent implements OnInit, AfterViewInit {
     this.eventService.getEventTypes(this.tempId).subscribe(
       (res: any) => {
         this.eventType = res.data;
+        // console.log('res.data', res.data);
       },
       (err: any) => {
         console.log(err);
@@ -401,10 +404,11 @@ export class AddPackageComponent implements OnInit, AfterViewInit {
   }
 
   getPackageType(packageType: any) {
-    if (packageType?.package_name === 'Club Package') {
+    if (packageType?.package_name === "Club Package") {
       this.showInstallment = true;
     } else {
       this.showInstallment = false;
     }
   }
+
 }

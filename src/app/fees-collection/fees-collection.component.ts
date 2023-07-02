@@ -4,6 +4,11 @@ import { MatSort } from "@angular/material/sort";
 import { MatTableDataSource } from "@angular/material/table";
 import { FeeCollectionService } from "@app/fees-collection/fee-collection.service";
 
+export interface SubscriptionData {
+  name: string;
+  [key: string]: number | string;
+}
+
 @Component({
   selector: "app-fees-collection",
   templateUrl: "./fees-collection.component.html",
@@ -18,14 +23,12 @@ export class FeesCollectionComponent implements OnInit {
   planType: string = "subscription";
 
   tabledataloaded: boolean = true;
-  dataSource = new MatTableDataSource();
+  // dataSource = new MatTableDataSource();
+  dataSource: MatTableDataSource<SubscriptionData>;
+  displayedColumns: string[] = []; // Initialize the array here
   eventTypes: Array<any>;
   activeEventType: string = "";
-  displayedColumns: string[] = [];
-  // displayedColumns: any = ["season_name", "pro", "basic", "fff", "total"];
   dynamicColumns: string[] = [];
-  staticColumn: string = "Season Name";
-  staticValue: any = "Subscriptions";
   tabledata: any = [];
   tnbColumns = [
     /* { season_name: "Subscriptions", pro: 25, basic: 434, fff: 322, total: 634 },
@@ -49,36 +52,37 @@ export class FeesCollectionComponent implements OnInit {
 
   ngOnInit(): void {
     // this.tabledata = this.tnbColumns;
-    this.dataSource.data = this.tabledata;
+    // this.dataSource.data = this.tabledata;
 
     let url = `?club=${localStorage.curentSelectedClub}&type=${this.planType}`;
     this.feeCollectionService
       .getEventTypes(url)
       .then((e: any) => {
         this.eventTypes = e.data;
-        this.activeEventType = e?.data[0]?._id;
+        // this.activeEventType = e?.data[0]?._id;
         console.log("e.data", e.data);
-        let dataUrl = `?club=${localStorage.curentSelectedClub}&type=${this.planType}&event_type=${e?.data[0]?._id}`;
+        // let dataUrl = `?club=${localStorage.curentSelectedClub}&type=${this.planType}&event_type=${e?.data[0]?._id}`;
+        let dataUrl = `?club=${localStorage.curentSelectedClub}&event_type=${e?.data[0]?._id}`;
         // Fetch fee collections
         this.getFeeCollections(dataUrl);
       })
       .catch((err: any) => {
         console.log("err in statics data", err);
       });
-    
   }
 
   toggleActive(tab: string) {
     this.planType = tab;
 
-    let url = `?club=${localStorage.curentSelectedClub}&type=${tab}&event_type=${this.activeEventType}`;
+    // let url = `?club=${localStorage.curentSelectedClub}&type=${tab}&event_type=${this.activeEventType}`;
+    let url = `?club=${localStorage.curentSelectedClub}&type=${tab}`;
     // Fetch fee collections
     this.getFeeCollections(url);
   }
 
   toggleEventType(tab: string) {
     this.activeEventType = tab;
-    let url = `?club=${localStorage.curentSelectedClub}&type=${this.planType}&event_type=${tab}`;
+    let url = `?club=${localStorage.curentSelectedClub}&event_type=${tab}`;
     // Fetch fee collections
     this.getFeeCollections(url);
   }
@@ -91,67 +95,59 @@ export class FeesCollectionComponent implements OnInit {
     this.feeCollectionService
       .getFeeCollections(url)
       .then((e: any) => {
-        let jsonData = e.data;
-
-        // Set the values for dynamic columns and calculate the total
-        let total = 0;
-        this.dynamicColumns = [];
-        jsonData.forEach((item) => {
-          const column = item.name;
-          if (!this.dynamicColumns.includes(column)) {
-            this.dynamicColumns.push(column);
-          }
-          total += item.total_package_amount;
-        });
-
-        // Create an empty row object
-        const row: any = {};
-
-        // Set the value for the static column
-        row["Season Name"] = this.staticValue;
-
-        // Set the values for dynamic columns
-        jsonData.forEach((item) => {
-          const column = item.name;
-          row[column] = item.total_package_amount;
-        });
-
-        // Set the value for the total column and total row
-        row["Total"] = total;
-
-        const totalRow: any = {};
-        totalRow["Season Name"] = "";
-        this.dynamicColumns.forEach((column) => {
-          totalRow[column] = jsonData.reduce(
-            (acc, item) =>
-              acc + (item.name === column ? item.total_package_amount : 0),
-            0
-          );
-        });
-        totalRow["Total"] = jsonData.reduce(
-          (acc, item) => acc + item.total_package_amount,
-          0
+        let apiData = e.data;
+        const dynamicColumns: string[] = apiData.map((data) =>
+          data.name.toLowerCase()
         );
+        const subscriptions: SubscriptionData = {
+          name: "Subscriptions",
+        };
+        const revenueShare: SubscriptionData = {
+          name: "Revenue Share",
+        };
+        const total: SubscriptionData = {
+          name: "Total",
+        };
 
-        // Create an array with the row data
-        if (totalRow.Total > 0) {
-          const rowData = [row, totalRow];
+        dynamicColumns.forEach((column) => {
+          subscriptions[column] = 0;
+          revenueShare[column] = 0;
+          total[column] = 0;
+        });
 
-          // Set the data source with the row array
-          this.dataSource.data = rowData; // Assign data to the existing dataSource
+        const transformedData: SubscriptionData[] = [
+          subscriptions,
+          revenueShare,
+          total,
+        ];
 
-          // Paginator and sort
-          this.dataSource.paginator = this.paginator;
-          this.dataSource.sort = this.sort;
-        } else {
-          this.dataSource.data = [];
-        }
+        apiData.forEach((data) => {
+          const columnName = data.name.toLowerCase();
+          subscriptions[columnName] = data.total_amount;
+          revenueShare[columnName] = this.roundToDecimal(
+            (data.total_amount as number) * 0.05,
+            2
+          ); // Calculate revenue share as 5% and round to 2 decimal places
+          total[columnName] = this.roundToDecimal(
+            (data.total_amount as number) +
+              (revenueShare[columnName] as number),
+            2
+          ); // Round the total to 2 decimal places
+        });
+
+        this.displayedColumns = ["name", ...dynamicColumns];
+        this.dataSource = new MatTableDataSource<SubscriptionData>(
+          transformedData
+        );
+        this.dataSource.data = transformedData;
       })
       .catch((err: any) => {
         console.log("err in statics data", err);
       });
   }
 
-  
-
+  roundToDecimal(value: number, decimalPlaces: number): number {
+    const factor = Math.pow(10, decimalPlaces);
+    return Math.round(value * factor) / factor;
+  }
 }

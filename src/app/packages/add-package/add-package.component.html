@@ -2,7 +2,6 @@
   <mat-card class="m-title">
     <h3>{{ title }}</h3>
   </mat-card>
-
   <form #packageForm="ngForm">
     <mat-card>
       <mat-card-content>
@@ -10,6 +9,15 @@
           <!-- left card -->
           <div fxFlex="49">
             <mat-card class="childContainer">
+                <input
+                  type="hidden"
+                  name="plan_type"
+                  #plan_type="ngModel"
+                  [value]="package.plan_type"
+                  [(ngModel)]="package.plan_type"
+                />
+                <!-- Other content within the mat-form-field -->
+                
               <div class="input-container">
                 <div class="errortxt" [hidden]="type.valid || type.untouched">
                   Event type is required

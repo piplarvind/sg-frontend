@@ -53,7 +53,10 @@
                 "
                 (click)="toggleEventType(eventType?._id)"
               >
-                {{ eventType?.event_type.charAt(0).toUpperCase() + eventType?.event_type.slice(1)  }}
+                {{
+                  eventType?.event_type.charAt(0).toUpperCase() +
+                    eventType?.event_type.slice(1)
+                }}
               </button>
             </ng-container>
           </div>
@@ -64,69 +67,25 @@
       <div class="fees-tbl-title">Subscriptions Revenue Share</div>
       <div class="m-table-container" *ngIf="tabledataloaded">
         <mat-table #table [dataSource]="dataSource" matSort>
-          <!-- Static Column -->
-          <ng-container matColumnDef="staticColumn">
-            <mat-header-cell *matHeaderCellDef>
-              <ng-container *ngIf="hasData()">
-                {{ staticColumn }}
-              </ng-container>
-            </mat-header-cell>
-            <mat-cell *matCellDef="let element">
-              <ng-container *ngIf="hasData()">
-                {{ element[staticColumn] }}
-              </ng-container>
-            </mat-cell>
+          <!-- Name Column -->
+          <ng-container matColumnDef="name">
+            <mat-header-cell *matHeaderCellDef>Season Name</mat-header-cell>
+            <mat-cell *matCellDef="let element">{{ element.name }}</mat-cell>
           </ng-container>
 
-          <!-- Dynamic Column Headers -->
+          <!-- Dynamic Columns -->
           <ng-container
-            *ngFor="let column of dynamicColumns"
-            matColumnDef="{{ column }}"
+            *ngFor="let column of displayedColumns.slice(1)"
+            [matColumnDef]="column"
           >
-            <mat-header-cell *matHeaderCellDef>{{ column }}</mat-header-cell>
+            <mat-header-cell *matHeaderCellDef>{{
+              column | uppercase
+            }}</mat-header-cell>
             <mat-cell *matCellDef="let element">{{ element[column] }}</mat-cell>
           </ng-container>
 
-          <!-- Total Column -->
-          <ng-container matColumnDef="Total">
-            <mat-header-cell *matHeaderCellDef>
-              <ng-container *ngIf="hasData()">Total</ng-container>
-            </mat-header-cell>
-            <mat-cell *matCellDef="let element">
-              <ng-container *ngIf="hasData()">{{
-                element["Total"]
-              }}</ng-container>
-            </mat-cell>
-          </ng-container>
-
-          <!-- Table Header -->
-          <mat-header-row
-            *matHeaderRowDef="
-              ['staticColumn'].concat(dynamicColumns).concat('Total')
-            "
-          ></mat-header-row>
-          <mat-header-row>
-            <mat-header-cell *matHeaderCellDef>
-              <ng-container *ngIf="hasData()">{{ staticColumn }}</ng-container>
-            </mat-header-cell>
-            <ng-container *ngFor="let column of dynamicColumns">
-              <mat-header-cell *matHeaderCellDef>{{ column }}</mat-header-cell>
-            </ng-container>
-            <mat-header-cell *matHeaderCellDef>
-              <ng-container *ngIf="hasData()">Total</ng-container>
-            </mat-header-cell>
-          </mat-header-row>
-
-          <!-- Table Rows -->
-          <mat-row
-            *matRowDef="
-              let row;
-              columns: ['staticColumn'].concat(dynamicColumns).concat('Total');
-              let lastRow = last
-            "
-            [ngClass]="{ 'bold-row': lastRow }"
-          >
-          </mat-row>
+          <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+          <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
         </mat-table>
 
         <!-- <mat-paginator [length]="100" [pageSize]="100" [pageSizeOptions]="[25, 50, 75, 100]">

@@ -5,7 +5,7 @@ import { HttpClient } from '@angular/common/http';
 @Injectable()
 export class FeeCollectionService {
   curEvent: any = {};
-  planType = 'plan/types';
+  planType = 'plans/types';
   eventType = 'events/types';
   feeCollection = 'fee-collections';
 
