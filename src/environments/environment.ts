@@ -52,8 +52,8 @@ export const environment = {
   Parent: 'Parent',
   Recruiter: 'Recruiter',
   Athlete: 'Athlete',
-  match: 'match',
-  tryouts: 'tryouts',
+  match: 'Match',
+  tryouts: 'Tryouts',
   // imageUrl: 'https://clubs.sportsgritinc.com:4000/sg',
   // serverUrl: 'https://api.sportsgritinc.com:4000',
   // 52.36.107.5
