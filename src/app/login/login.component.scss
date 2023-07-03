@@ -6,7 +6,7 @@
   width: 200px;
   // width: 18vw;
   // background: rgba($color: #f7f7f7, $alpha: 0.6);
-  background:#f7f7f7;
+  background:#FFFFFF;
   opacity:0.8;
 
   .login-box {
@@ -53,6 +53,7 @@
 }
 
 .banner {
-  background: url('/assets/backcover.jpg') no-repeat;
-  background-size: cover;
+  background: url('/assets/SportGrit_dark.png') no-repeat;
+  background-size: contain;
+  background-color: #303437;
 }
