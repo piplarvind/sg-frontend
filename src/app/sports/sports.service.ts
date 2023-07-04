@@ -1,21 +1,20 @@
-import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
-
+import { Injectable } from "@angular/core";
+import { HttpClient, HttpHeaders } from "@angular/common/http";
 
 @Injectable()
 export class SportsService {
   curSport: any = {};
-  createSport = 'sports/';
-  getSports = 'sports/';
-  editSport = 'sports/';
-  deleteSport = 'sports/';
-  fetchOneSport = 'sports/';
-  getCountries = 'lookup/country';
-  getAllState = 'lookup/state?filter=';
-  allregions = 'lookup/region';
-  getDistrictsList = 'lookup/district';
-  clubadminRoles = 'profiles/?club=5';
-  getAllAthleteSportFees = 'sports/athleteclubfee/';
+  createSport = "sports/";
+  getSports = "sports/";
+  editSport = "sports/";
+  deleteSport = "sports/";
+  fetchOneSport = "sports/";
+  getCountries = "lookup/country";
+  getAllState = "lookup/state?filter=";
+  allregions = "lookup/region";
+  getDistrictsList = "lookup/district";
+  clubadminRoles = "profiles/?club=5";
+  getAllAthleteSportFees = "sports/athleteclubfee/";
   // headers = new HttpHeaders({
   //   'Content-Type': 'application/json',
   //   Authorization: localStorage.token
@@ -29,7 +28,7 @@ export class SportsService {
         (res: any) => {
           resolve(res);
         },
-        err => {
+        (err) => {
           reject(err);
         }
       );
@@ -39,11 +38,13 @@ export class SportsService {
   newSport(credentials: any) {
     return new Promise((resolve, reject) => {
       console.log(credentials);
-      this.http.post(this.createSport, credentials).subscribe(
+      const newFormData = this.transformRequest(credentials);
+      // this.http.post(this.createSport, credentials).subscribe(
+      this.http.post(this.createSport, newFormData).subscribe(
         (res: any) => {
           resolve(res);
         },
-        err => {
+        (err) => {
           reject(err);
         }
       );
@@ -52,12 +53,12 @@ export class SportsService {
   getSportList1(skip, limit) {
     return new Promise((resolve, reject) => {
       this.http
-        .get(this.getSports + '?skip=' + skip + '&limit=' + limit)
+        .get(this.getSports + "?skip=" + skip + "&limit=" + limit)
         .subscribe(
           (res: any) => {
             resolve(res);
           },
-          err => {
+          (err) => {
             reject(err);
           }
         );
@@ -69,7 +70,7 @@ export class SportsService {
         (res: any) => {
           resolve(res);
         },
-        err => {
+        (err) => {
           reject(err);
         }
       );
@@ -81,7 +82,7 @@ export class SportsService {
         (res: any) => {
           resolve(res);
         },
-        err => {
+        (err) => {
           reject(err);
         }
       );
@@ -92,13 +93,13 @@ export class SportsService {
     return new Promise((resolve, reject) => {
       this.http
         .get(
-          this.getSports + '?' + 'active=false&skip=' + skip + '&limit=' + limit
+          this.getSports + "?" + "active=false&skip=" + skip + "&limit=" + limit
         )
         .subscribe(
           (res: any) => {
             resolve(res);
           },
-          err => {
+          (err) => {
             reject(err);
           }
         );
@@ -117,19 +118,19 @@ export class SportsService {
 
   updateSport(sport, credentials: any) {
     const tempHeaders = {
-      Authorization: localStorage.getItem('token')
+      Authorization: localStorage.getItem("token"),
     };
     const newFormData = this.transformRequest(credentials);
     return new Promise((resolve, reject) => {
       this.http
         .put(this.editSport + sport, newFormData, {
-          headers: tempHeaders
+          headers: tempHeaders,
         })
         .subscribe(
           (res: any) => {
             resolve(res);
           },
-          err => {
+          (err) => {
             reject(err);
           }
         );
@@ -143,7 +144,7 @@ export class SportsService {
         (res: any) => {
           resolve(res);
         },
-        err => {
+        (err) => {
           reject(err);
         }
       );
@@ -151,8 +152,8 @@ export class SportsService {
   }
 
   extraxtNo(e: any) {
-    if (e !== '') {
-      e = e.replace(/[^A-Z0-9]+/gi, '');
+    if (e !== "") {
+      e = e.replace(/[^A-Z0-9]+/gi, "");
       return e;
     }
   }
@@ -174,12 +175,12 @@ export class SportsService {
   getClubadmin(club_id) {
     return new Promise((resolve, reject) => {
       this.http
-        .post(this.clubadminRoles + club_id + '&type=Club_Admin', {})
+        .post(this.clubadminRoles + club_id + "&type=Club_Admin", {})
         .subscribe(
           (res: any) => {
             resolve(res);
           },
-          err => {
+          (err) => {
             reject(err);
           }
         );
@@ -192,14 +193,14 @@ export class SportsService {
         (res: any) => {
           resolve(res);
         },
-        err => {
+        (err) => {
           reject(err);
         }
       );
     });
   }
 
-  getAthleteSportFeeList(athleteId:any, type: any) {
+  getAthleteSportFeeList(athleteId: any, type: any) {
     return this.http.get(this.getAllAthleteSportFees + athleteId);
   }
 }

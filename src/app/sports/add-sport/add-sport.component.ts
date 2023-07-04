@@ -129,6 +129,9 @@ export class AddSportComponent implements OnInit {
   createSport() {
     this.sharedService.showLoader = true;
     const temp = this.sport;
+    delete temp.logo;
+    temp.logo = this.tempFile;
+    
     this.sportService
       .newSport(temp)
       .then((e: any) => {
@@ -146,7 +149,7 @@ export class AddSportComponent implements OnInit {
     const temp = this.sport;
     temp.logo = this.tempFile;
     delete temp.created_by;
-
+    // console.log('temp', temp); return;
     this.sportService
       .updateSport(this.editSportId, temp)
       .then((e: any) => {
