@@ -26,7 +26,7 @@ export class ImageUploadComponent implements OnInit {
   ngOnInit() {
     if (this.data.team !== true) {
       // this.ratio = 1 / 1;
-      this.ratio = 16 / 9;
+      this.ratio = 4 / 3;
     }
     if (this.data.title) {
       this.popupHeader = this.data.title;

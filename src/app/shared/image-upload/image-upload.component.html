@@ -3,11 +3,14 @@
 <image-cropper
   style="height:400px;width:450px"
   id="checkImg"
-  [aspectRatio]="this.ratio ? this.ratio : 16 / 9"
+  [aspectRatio]="this.ratio ? this.ratio : 4 / 3"
   [imageChangedEvent]="imageChangedEvent"
   format="png"
   (imageCropped)="imageCropped($event)"
   style="display:block !important;"
+  [maintainAspectRatio]="false"
+  [resizeToWidth]="320"
+  [cropperMinWidth]="200"
 ></image-cropper>
 
 <mat-dialog-actions>
