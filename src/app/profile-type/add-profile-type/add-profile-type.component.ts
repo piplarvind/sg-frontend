@@ -10,7 +10,7 @@ import { SharedService } from '@app/shared/shared.service';
 })
 export class AddProfileTypeComponent implements OnInit {
   isEdit: Boolean = false;
-  title: string = 'Add Profile Type';
+  title: string = 'Add User Type';
   editProfileId: any;
   activeRouteSubscriber: any;
 
@@ -107,7 +107,7 @@ export class AddProfileTypeComponent implements OnInit {
   getOneProfile(id: any) {
     this.sharedService.showLoader = true;
 
-    this.title = 'Edit Profile Type';
+    this.title = 'Edit User Type';
 
     this.ProfileTypeService.fetchOneProfile(id).then((e: any) => {
       this.profile_type = e.data;

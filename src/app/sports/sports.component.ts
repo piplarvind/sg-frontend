@@ -40,6 +40,7 @@ export class SportsComponent implements OnInit, AfterViewInit {
   dataSource = new MatTableDataSource();
   displayedColumns: any = [
     'sport_name',
+    'order',
     'created_at',
     'createdBy',
     'active',

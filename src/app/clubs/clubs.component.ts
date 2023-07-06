@@ -155,12 +155,7 @@ export class ClubsComponent implements OnInit, AfterViewInit {
         // next page
         this.limit = event.pageSize;
         this.skip = event.pageIndex * this.limit;
-
-        if (this.buttontext === 'Show Inactive') {
-          this.getActiveClubs();
-        } else {
-          this.getAllClubs();
-        }
+        this.getActiveClubs();        
       }
     }
   }

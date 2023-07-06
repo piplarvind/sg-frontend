@@ -119,7 +119,7 @@ export class AddClubComponent implements OnInit {
           this.editClubId = param.editClubId;
         }
       );
-      this.getOneClub(this.editClubId);
+      this.getClubById(this.editClubId);
       this.getAdmin(this.editClubId);
     }
   }
@@ -166,7 +166,7 @@ export class AddClubComponent implements OnInit {
       }
     );
   }
-  getOneClub(id: any) {
+  getClubById(id: any) {
     this.sharedService.showLoader = true;
     this.isEdit = true;
     this.showImage = true;
@@ -187,7 +187,6 @@ export class AddClubComponent implements OnInit {
         }
         this.getStates(this.selectedCountryId);
         this.sharedService.showLoader = false;
-        console.log(this.club);
       })
       .catch((err: any) => {});
   }

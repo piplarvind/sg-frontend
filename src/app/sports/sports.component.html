@@ -14,16 +14,6 @@
   <mat-card style="min-height: 77vh">
     <div class="m-table-container">
       <div fxLayout="row" fxLayoutAlign="space-between">
-        <div>Sport Details</div>
-        <div>
-          <button
-            mat-raised-button
-            ng-init="buttontext='Show All'"
-            (click)="ShowAll($event)"
-          >
-            {{ buttontext }}
-          </button>
-        </div>
         <div>
           <mat-form-field>
             <input
@@ -68,10 +58,19 @@
               *matCellDef="let element"
               class="light-red m-pointer"
               (click)="editSport(element)"
-              
             >
-              <!-- {{element.sport_name}}  -->
               <div>{{ element.sport_name }}</div>
+            </mat-cell>
+          </ng-container>
+          <ng-container matColumnDef="order">
+            <mat-header-cell *matHeaderCellDef mat-sort-header>
+              <span class="m-table-header"> Order </span>
+            </mat-header-cell>
+            <mat-cell
+              *matCellDef="let element"
+              class="light-red m-pointer"
+            >
+              <div>{{ element.order }}</div>
             </mat-cell>
           </ng-container>
           <ng-container matColumnDef="created_at">

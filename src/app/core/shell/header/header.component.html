@@ -5,8 +5,8 @@
       <div class="logo-container" style=" height:100%;">
         <img style="width: 85px; height:85px;" [src]="sportLogo" alt="logo" />
       </div>
-      <div fxFlex="20">
-        <span class="lblHeading"></span>
+      <div fxFlex="30">
+        <!-- <span class="lblHeading"></span> -->
         <span class="nameHeading">{{
           storedVal.super_cur_sportName
             ? storedVal.super_cur_sportName
@@ -17,10 +17,10 @@
 
     <div fxFlex="50" class="select-dropdowns">
       <div class="logo-container" style=" height: 100%;">
-        <img style="width: 85px; height:85px;" [src]="clubLogo" alt="logo" />
+        <img style="width: 120px; height:85px; object-fit: contain;" [src]="clubLogo" alt="logo" />
       </div>
-      <div fxFlex="20">
-        <span class="lblHeading"></span>
+      <div fxFlex="30">
+        <!-- <span class="lblHeading"></span> -->
         <span class="nameHeading">{{
           storedVal.super_cur_clubName
             ? storedVal.super_cur_clubName

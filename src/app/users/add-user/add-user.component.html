@@ -262,24 +262,12 @@
                 </div>
                 <div class="field-container">
                   <mat-form-field [floatLabel]="'never'">
-                    <input matInput [(ngModel)]="user.address_line_1" placeholder="Address Line 1" maxlength="40" name="userAddress"
+                    <input matInput [(ngModel)]="user.street_address" placeholder="Address Line 1" maxlength="40" name="userAddress"
                       #userAddress="ngModel" >
                   </mat-form-field>
                 </div>
               </div>
-              <div class="input-container" *ngIf="hideUserDetails">
-                <div class="label-container">
-                  <span class="label-icon">
-                  </span>
-                  <span class="label">Address Line 2</span>
-                </div>
-                <div class="field-container">
-                  <mat-form-field [floatLabel]="'never'">
-                    <input matInput [(ngModel)]="user.address_line_2" placeholder="Address Line 2" maxlength="40" name="userAddress2"
-                      #userAddress2="ngModel">
-                  </mat-form-field>
-                </div>
-              </div>
+             
               <div class="input-container">
                 <div class="errortxt" [hidden]="userCity.valid || userCity.pristine">
                   City is required

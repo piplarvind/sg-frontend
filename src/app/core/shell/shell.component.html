@@ -94,7 +94,7 @@
 
   <a mat-list-item routerLink="/profile_type" routerLinkActive="active"  *ngIf="user_role === 'Platform Admin'">
     <i class="material-icons">portrait</i>&nbsp;&nbsp;
-    <span class="subPanelText">Profile Type</span>
+    <span class="subPanelText">User Type</span>
   </a>
   <a mat-list-item routerLink="/groups" routerLinkActive="active" *ngIf="user_role === 'Platform Admin'">
     <i class="material-icons">portrait</i>&nbsp;&nbsp;
@@ -125,30 +125,30 @@
               *ngIf="user_role === 'Platform Admin'"
             >
               <i class="material-icons">portrait</i>&nbsp;&nbsp;
-              <span>Profiles</span>
+              <span>Users</span>
             </a>
           </mat-expansion-panel-header>
 
           <mat-divider *ngIf="user_role === 'Platform Admin'"></mat-divider>
           <a mat-list-item routerLink="/profile_type" routerLinkActive="active">
             <i class="material-icons">portrait</i>&nbsp;&nbsp;
-            <span class="subPanelText">Profile Type</span>
+            <span class="subPanelText">User Type</span>
           </a>
 
           
           <a mat-list-item routerLink="/groups" routerLinkActive="active">
             <i class="material-icons">portrait</i>&nbsp;&nbsp;
-            <span>Profile Group</span>
+            <span>User Group</span>
           </a>
 
           
           <a mat-list-item routerLink="/profiles" routerLinkActive="active">
             <i class="material-icons">portrait</i>&nbsp;&nbsp;
-            <span>Profiles</span>
+            <span>All Users</span>
           </a>
 
           
-          <a
+          <!-- <a
             mat-list-item
             routerLink="/club-profiles"
             routerLinkActive="active"
@@ -156,7 +156,7 @@
           >
             <i class="material-icons">portrait</i>&nbsp;&nbsp;
             <span>Club Admin Sub Role</span>
-          </a>
+          </a> -->
         </mat-expansion-panel>
         <!----=========================================-->
 

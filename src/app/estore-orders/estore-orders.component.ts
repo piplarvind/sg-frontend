@@ -174,9 +174,9 @@ export class EstoreOrdersComponent implements OnInit {
 
   getLocation(rowData: any) {
     this.order.location =
-      rowData.location.address_line_1 +
+      rowData.location.street_address +
       ' ' +
-      rowData.location.address_line_2 +
+ 
       ' ' +
       rowData.location.city +
       ' ' +

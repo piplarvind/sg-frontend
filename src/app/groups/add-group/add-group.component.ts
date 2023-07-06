@@ -49,26 +49,26 @@ export class AddGroupComponent implements OnInit {
     this.getAllProfileTypes();
   }
   ngOnChanges(changes: SimpleChanges) {
-    //  get one profile groups that time group type means profile type would be there
+    //  get one profile groups that time group type means User type would be there
     if (this.group) {
       if (this.group.type && this.group.type._id) {
         this.isEdit = true;
         let type_id: any = this.group.type._id;
         this.group.type = type_id;
-        //  calling api to get all type map with profile type list
+        //  calling api to get all type map with User type list
         this.ProfilesService.getRoles().then((res: any) => {
           this.profileTypes = res.data;
           let selectedpt = this.profileTypes.filter(
             item => item._id === type_id
           );
 
-          // get selected profile field and map with profile field list array based on profile field getting form profile type
+          // get selected profile field and map with profile field list array based on profile field getting form User type
           this.selectedProfileType = selectedpt[0];
 
           this.group.sections = this.group.sections.map((prop: Section) => {
             let profilefields: any = [];
             let selectedprofile_fields: any = prop.profile_fields;
-            // profile field from profile type  need that field  and mapping with already selected field set is selected true
+            // profile field from User type  need that field  and mapping with already selected field set is selected true
             for (let i = 0; i < this.selectedProfileType.fields.length; i++) {
               let isfieldsectionPf = false;
               let orderSection: string = '0';
@@ -180,7 +180,7 @@ export class AddGroupComponent implements OnInit {
   }
 
   /*
-   * Gets all profile types along with the profile fields for each type.
+   * Gets all User types along with the profile fields for each type.
    */
   getAllProfileTypes() {
     this.ProfilesService.getRoles().then((res: any) => {

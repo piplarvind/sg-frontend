@@ -143,8 +143,7 @@ export class AddEventComponent implements OnInit, OnChanges {
     location: {
       lat: '',
       long: '',
-      address_line_1: '',
-      address_line_2: ''
+      street_address: ''
     },
 
     frequency_details: {
@@ -174,8 +173,7 @@ export class AddEventComponent implements OnInit, OnChanges {
       name: '',
       age: '',
       outsideteamId: ',',
-      address_line_1: '',
-      address_line_2: '',
+      street_address: '',
       city: '',
       state: '',
       country: '',
@@ -370,9 +368,8 @@ export class AddEventComponent implements OnInit, OnChanges {
     this.event.location.long = e.geometry.location.lng();
     this.event.location.lat = e.geometry.location.lat();
 
-    this.event.location.address_line_1 = e.formatted_address;
+    this.event.location.street_address = e.formatted_address;
 
-    this.event.location.address_line_2 = e.formatted_address;
   }
 
   getOneEvent(id: any) {
@@ -675,7 +672,7 @@ export class AddEventComponent implements OnInit, OnChanges {
     this.sharedService.showLoader = true;
     const temp = this.event;
 
-    this.address = this.event.location.address_line_1;
+    this.address = this.event.location.street_address;
     if (this.event.start_time !== '') {
       const startDt = new Date();
       const startTime = this.event.start_time.split(':');
@@ -770,8 +767,7 @@ export class AddEventComponent implements OnInit, OnChanges {
       temp.home_team = this.team1Id;
       temp.opponent_team = {
         name: this.event.opponent_team.name,
-        address_line_1: this.event.opponent_team.address_line_1,
-        address_line_2: this.event.opponent_team.address_line_2,
+        street_address: this.event.opponent_team.street_address,
         city: this.event.opponent_team.city,
         state: this.selectedStateId,
         country: this.selectedCountryId,
@@ -952,8 +948,7 @@ export class AddEventComponent implements OnInit, OnChanges {
       temp.home_team = this.team1Id;
       temp.opponent_team = {
         name: this.event.opponent_team.name,
-        address_line_1: this.event.opponent_team.address_line_1,
-        address_line_2: this.event.opponent_team.address_line_2,
+        street_address: this.event.opponent_team.street_address,
         city: this.event.opponent_team.city,
         state: this.selectedStateId,
         country: this.selectedCountryId,
@@ -1180,8 +1175,7 @@ export class AddEventComponent implements OnInit, OnChanges {
           name: '',
           age: '',
           outsideteamId: ',',
-          address_line_1: '',
-          address_line_2: '',
+          street_address: '',
           city: '',
           state: '',
           country: '',

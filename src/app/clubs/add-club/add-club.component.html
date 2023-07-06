@@ -51,8 +51,8 @@
                 </div>
                 <div class="field-container">
                   <mat-form-field [floatLabel]="'never'">
-                    <mat-select matInput placeholder="Select the Sport" name="sportVal" #sportVal="ngModel"
-                      [(ngModel)]="selectedSportId">
+                    <mat-select matInput placeholder="Select the sport" name="sportVal" #sportVal="ngModel"
+                      [(ngModel)]="selectedSportId" required>
                       <mat-option *ngFor="let sport of sportList" [value]="sport._id" (click)='sportData(sport)'>{{sport.sport_name}}</mat-option>
                     </mat-select>
                   </mat-form-field>
@@ -275,24 +275,12 @@
                 </div>
                 <div class="field-container">
                   <mat-form-field [floatLabel]="'never'">
-                    <input matInput [(ngModel)]="club.address_line_1" name="address1" #address1="ngModel" placeholder="Enter Address"
+                    <input matInput [(ngModel)]="club.street_address" name="address1" #address1="ngModel" placeholder="Enter Address"
                       maxlength="40">
                   </mat-form-field>
                 </div>
               </div>
-              <div class="input-container">
-                <div class="label-container">
-                  <span class="label-icon">
-                  </span>
-                  <span class="label">Address Line 2</span>
-                </div>
-                <div class="field-container">
-                  <mat-form-field [floatLabel]="'never'">
-                    <input matInput [(ngModel)]="club.address_line_2" placeholder="Enter Address" name="address2"
-                      maxlength="40">
-                  </mat-form-field>
-                </div>
-              </div>
+              
               <div class="input-container">
                 <div class="errortxt" [hidden]="clubCity.valid || clubCity.pristine">
                   City is required

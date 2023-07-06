@@ -13,7 +13,7 @@ export class ClubsService {
   getAllState = "lookup/state?filter=";
   allregions = "lookup/region";
   getDistrictsList = "lookup/district";
-  getSportsList = "sports/";
+  getSportsList = "sports/active";
   clubadminRoles = "profiles/?club=5";
   getAllAthleteClubFees = "clubs/athleteclubfee/";
   headers = new HttpHeaders({
@@ -93,7 +93,7 @@ export class ClubsService {
     return new Promise((resolve, reject) => {
       this.http
         .get(
-          this.getClubs + "?" + "active=false&skip=" + skip + "&limit=" + limit
+          this.getClubs + "?" + "skip=" + skip + "&limit=" + limit
         )
         .subscribe(
           (res: any) => {

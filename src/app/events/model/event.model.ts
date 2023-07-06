@@ -7,8 +7,7 @@ export class Event {
   location: {
     lat: string;
     long: string;
-    address_line_1: string;
-    address_line_2: string;
+    street_address: string;
   };
   start_date: string;
   end_date: string;

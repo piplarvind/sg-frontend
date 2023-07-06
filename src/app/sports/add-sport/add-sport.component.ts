@@ -37,10 +37,9 @@ export class AddSportComponent implements OnInit {
   invalidEmail: any;
   invalidNumber: Boolean;
   sport: any = {
-    sport_code: '',
     sport_name: '',
     description: '',
-    color: ''
+    order: ''
   };
   
   selectedValidity: any;

@@ -39,8 +39,7 @@ export class ProfileComponent implements OnInit {
     password: '',
     mobile: '',
     home_phone: '',
-    address_line_1: '',
-    address_line_2: '',
+    street_address: '',
     city: '',
     state: '',
     country: '',
@@ -191,19 +190,13 @@ export class ProfileComponent implements OnInit {
               this.selectedStateId = state.name;
             }
             if (
-              this.userDetails.profile_fields[i].field.name === 'address_line_1'
+              this.userDetails.profile_fields[i].field.name === 'street_address'
             ) {
-              this.userDetails.address_line_1 = this.userDetails.profile_fields[
+              this.userDetails.street_address = this.userDetails.profile_fields[
                 i
               ].value;
             }
-            if (
-              this.userDetails.profile_fields[i].field.name === 'address_line_2'
-            ) {
-              this.userDetails.address_line_2 = this.userDetails.profile_fields[
-                i
-              ].value;
-            }
+           
             if (this.userDetails.profile_fields[i].field.name === 'zip') {
               this.userDetails.zip = this.userDetails.profile_fields[i].value;
             }

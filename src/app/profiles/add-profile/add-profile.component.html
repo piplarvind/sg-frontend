@@ -168,7 +168,7 @@
 
                     <div *ngSwitchCase="'boolean'">
                       <div class="field-container custom-input-padding">
-                        <mat-checkbox (change)="checkbox1($event)" [checked]="marked " name="isCaptain"></mat-checkbox>
+                        <mat-checkbox (change)="checkbox1($event)" [checked]="marked" name="isCaptain"></mat-checkbox>
                       </div>
                       <br>
                     </div>
@@ -274,10 +274,7 @@
                         <mat-select matInput class="form-control" [placeholder]="field.field.label"
                           [formControlName]="field.field.name" [required]="field.field.validation.required?true:false">
 
-                          <div *ngIf="field.field.name === 'club_role'">
-                            <mat-option *ngFor="let clb_role of clubRoleList" [value]="clb_role?._id">{{
-                              clb_role?.club_profile_title }}</mat-option>
-                          </div>
+                          
                           
                           <div *ngIf="field.field.name === 'country'">
                             <mat-option *ngFor="let country of countryList" [value]="country._id"
@@ -501,7 +498,7 @@
 
                     <div *ngSwitchCase="'boolean'">
                       <div class="field-container custom-input-padding">
-                        <mat-checkbox (change)="checkbox1($event)" [checked]="marked " name="isCaptain"></mat-checkbox>
+                        <mat-checkbox (change)="checkbox1($event)" [checked]="marked" name="isCaptain"></mat-checkbox>
                       </div>
                       <br>
                     </div>
@@ -607,11 +604,7 @@
                         <mat-select matInput class="form-control" [placeholder]="field.field.label"
                           [formControlName]="field.field.name" [required]="field.field.validation.required?true:false">
 
-                          <div *ngIf="field.field.name === 'club_role'">
-                            <mat-option *ngFor="let clb_role of clubRoleList" [value]="clb_role?._id">{{
-                              clb_role?.club_profile_title }}</mat-option>
-                          </div>
-
+                        
                           <div *ngIf="field.field.name === 'country'">
                             <mat-option *ngFor="let country of countryList" [value]="country._id"
                               (click)="countryData(country)">{{

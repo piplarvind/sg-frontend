@@ -8,23 +8,7 @@
       <mat-card-content>
         <div fxLayout="row" fxLayoutAlign="space-between">
           <div fxFlex="49">
-            <mat-card class="childContainer">
-              <div class="input-container">
-                <div class="errortxt" [hidden]="sportName.valid || sportName.pristine">
-                  Sport id is required
-                </div>
-                <div class="label-container">
-                  <span class="label-icon">
-                  </span>
-                  <span class="label">Sport Id#</span>
-                </div>
-                <div class="field-container">
-                  <mat-form-field [floatLabel]="'never'">
-                    <input matInput [(ngModel)]="sport.sport_code" name="sportID" #sportName="ngModel" 
-                      placeholder="Sport ID" >
-                  </mat-form-field>
-                </div>
-              </div>
+            <mat-card class="childContainer">             
               <div class="input-container">
                 <div class="errortxt" [hidden]="sportName.valid || sportName.pristine">
                   Sport name is required
@@ -58,17 +42,12 @@
                     </span>
                   </mat-form-field>
                 </div>
-                <!-- <button class="border-button" (click)="uploadBannerImage()"    class="table-icon m-pointer"
-                title="save image">Save</button> -->
               </div>
             </mat-card>
           </div>
           <!-- right card -->
           <div fxFlex="49">
             <mat-card class="childContainer">
-              <!-- <div class="errortxt" [hidden]="address1.valid || address1.pristine">
-                Address is required
-              </div> -->
               <div class="input-container">
                 <div class="errortxt" [hidden]="sportOrder.valid || sportOrder.pristine">
                   Order is required
@@ -81,7 +60,7 @@
                 <div class="field-container">
                   <mat-form-field [floatLabel]="'never'">
                     <input matInput [(ngModel)]="sport.order" name="sportOrder" #sportOrder="ngModel" 
-                      placeholder="Order No" >
+                      placeholder="Order No" required>
                   </mat-form-field>
                 </div>
               </div>
@@ -95,17 +74,6 @@
                   <mat-form-field [floatLabel]="'never'">
                       <textarea matInput [(ngModel)]="sport.description" name="sportDescription" #sportDescription="ngModel"></textarea>
                   </mat-form-field>
-                </div>
-              </div>
-
-              <div class="input-container" style="padding: 16px 0">
-                <div class="label-container">
-                  <span class="label-icon">
-                  </span>
-                  <span class="label">Set Theme Color</span>
-                </div>
-                <div class="field-container">
-                  <input type="color" [(ngModel)]="sport.color" name="sportTheme" style="width: 35%;">
                 </div>
               </div>
             </mat-card>

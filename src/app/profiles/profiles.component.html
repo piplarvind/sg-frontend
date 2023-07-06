@@ -1,12 +1,12 @@
 <div class="m-container">
   <mat-card class="m-title" fxLayout="row" fxLayoutAlign="space-between">
-    <h3>Profiles</h3>
+    <h3>Users</h3>
     <button
       mat-raised-button
       class="m-button m-pointer"
       routerLink="/profiles/add"
     >
-      Add Profile &nbsp;&nbsp;+
+      Add User &nbsp;&nbsp;+
     </button>
   </mat-card>
 
@@ -88,7 +88,7 @@
 
           <ng-container matColumnDef="type">
             <mat-header-cell *matHeaderCellDef class="textCenter">
-              <span class="m-table-header"> User Role(s)</span>
+              <span class="m-table-header"> User Role</span>
             </mat-header-cell>
             <mat-cell *matCellDef="let element">
               {{ element.type }}

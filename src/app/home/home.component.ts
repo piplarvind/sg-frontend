@@ -17,8 +17,8 @@ export class HomeComponent implements OnInit {
   isSuperAdmin: Boolean = false;
   clubsList: Array<any>;
   dashboardStates = [
-    { name: "Profiles Types", userCount: 0 },
-    { name: "No. of Profiles", userCount: 0 },
+    { name: "User Types", userCount: 0 },
+    { name: "No. of Users", userCount: 0 },
     { name: "No. of Atheletes", userCount: 0 },
     { name: "No. of Coachs", userCount: 0 },
     // Add more states with user count

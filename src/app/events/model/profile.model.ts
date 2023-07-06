@@ -5,8 +5,7 @@ export class Profile {
   last_name: string;
   age: Age;
   dob: Date;
-  address_line_1: string;
-  address_line_2: string;
+  street_address: string;
   position: string;
   mobile: string;
   email: string;
@@ -23,8 +22,7 @@ export class Profile {
     this.mobile = '';
     this.dob = null;
     this.city = '';
-    this.address_line_1 = '';
-    this.address_line_2 = '';
+    this.street_address = '';
     this.state = '';
     this.zip = '';
   }

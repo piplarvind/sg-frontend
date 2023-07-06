@@ -218,7 +218,7 @@
                 <mat-form-field [floatLabel]="'never'">
                   <input matInput placeholder="Enter Event Location" ngx-google-places-autocomplete
                     #placesRef="ngx-places" (onAddressChange)="handleAddressChange($event)"
-                    [(ngModel)]="event.location.address_line_1" name="location" #location="ngModel">
+                    [(ngModel)]="event.location.street_address" name="location" #location="ngModel">
                 </mat-form-field>
               </div>
             </div>
@@ -520,24 +520,12 @@
               </div>
               <div class="field-container">
                 <mat-form-field [floatLabel]="'never'">
-                  <textarea matInput placeholder="Enter address line 1" [(ngModel)]="event.opponent_team.address_line_1"
+                  <textarea matInput placeholder="Enter address line 1" [(ngModel)]="event.opponent_team.street_address"
                     required name="oppteam_add"></textarea>
                 </mat-form-field>
               </div>
             </div>
-            <div class="input-container">
-              <div class="label-container">
-                <span class="label-icon">
-                </span>
-                <span class="label">Address Line 2</span>
-              </div>
-              <div class="field-container">
-                <mat-form-field [floatLabel]="'never'">
-                  <textarea matInput placeholder="Enter address line 2"
-                    [(ngModel)]="event.opponent_team.address_line_2" name="oppteamaddd2"></textarea>
-                </mat-form-field>
-              </div>
-            </div>
+            
             <div class="input-container">
               <div class="label-container">
                 <span class="label-icon">

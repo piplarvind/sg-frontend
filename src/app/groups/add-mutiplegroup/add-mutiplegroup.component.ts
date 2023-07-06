@@ -105,7 +105,7 @@ export class AddMutiplegroupComponent implements OnInit {
       isduplicateProfile_type = true;
       this.sharedService
         .showDialog(
-          'Profile type  cannot be Duplicate, enter  correct data  and then click on submit.'
+          'User type  cannot be Duplicate, enter  correct data  and then click on submit.'
         )
         .subscribe(response => {
           if (response === '') {
@@ -185,7 +185,7 @@ export class AddMutiplegroupComponent implements OnInit {
     if (empty.length === 0) {
       is_empty = false;
     }
-    // check duplicate profile type
+    // check duplicate User type
     let findDuplicates = arr =>
       arr.filter((item, index) => arr.indexOf(item) !== index);
 
@@ -194,7 +194,7 @@ export class AddMutiplegroupComponent implements OnInit {
       isduplicateProfile_type = true;
       this.sharedService
         .showDialog(
-          'Profile type  cannot be Duplicate, enter  correct data  and then click on submit.'
+          'User type  cannot be Duplicate, enter  correct data  and then click on submit.'
         )
         .subscribe(response => {
           if (response === '') {

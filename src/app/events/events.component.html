@@ -81,8 +81,8 @@
               <span class="m-table-header">&nbsp; Place &nbsp; </span>
             </mat-header-cell>
             <mat-cell *matCellDef="let element">
-              <!-- {{element.location && element.location.address_line_1?
-              element.location.address_line_1 : ''}} -->
+              <!-- {{element.location && element.location.street_address?
+              element.location.street_address : ''}} -->
               {{ element.location }}
             </mat-cell>
           </ng-container>

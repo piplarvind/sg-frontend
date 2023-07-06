@@ -98,7 +98,7 @@ export class EventsComponent implements OnInit {
             // }
             let location1;
             if (prop.location) {
-              location1 = prop.location.address_line_1;
+              location1 = prop.location.street_address;
             }
             if (!prop.home_team) {
               return {
@@ -163,7 +163,7 @@ export class EventsComponent implements OnInit {
           // }
           let location1;
           if (prop.location) {
-            location1 = prop.location.address_line_1;
+            location1 = prop.location.street_address;
           }
           if (!prop.home_team) {
             return {
@@ -260,7 +260,7 @@ export class EventsComponent implements OnInit {
           // }
           let location1;
           if (prop.location) {
-            location1 = prop.location.address_line_1;
+            location1 = prop.location.street_address;
           }
           if (!prop.home_team) {
             return {

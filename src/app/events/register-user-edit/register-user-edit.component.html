@@ -37,7 +37,7 @@
                   </mat-form-field>
 
                   <mat-form-field>
-                    <input matInput class="form-control" [(ngModel)]="user.athlete.address_line_1" minlength="3"
+                    <input matInput class="form-control" [(ngModel)]="user.athlete.street_address" minlength="3"
                       maxlength="120" name="player_address_line_1" #player_address_line_1="ngModel"
                       placeholder="Address 1" [ngClass]="{
                         'is-invalid':
@@ -92,10 +92,6 @@
                     </div>
                   </mat-form-field>
 
-                  <mat-form-field>
-                    <input matInput class="form-control" [(ngModel)]="user.athlete.address_line_2"
-                      name="player_address_line_2" #player_address_line_2="ngModel" placeholder="Address 2" />
-                  </mat-form-field>
                   <mat-form-field>
                     <mat-select class="form-control" [(ngModel)]="user.athlete.state" name="player_state"
                       placeholder="State">
@@ -183,7 +179,7 @@
                   </mat-form-field>
 
                   <mat-form-field>
-                    <input matInput class="form-control" [(ngModel)]="user.parent.address_line_1" minlength="3"
+                    <input matInput class="form-control" [(ngModel)]="user.parent.street_address" minlength="3"
                       maxlength="120" name="parent_address_line_1" #parent_address_line_1="ngModel"
                       placeholder="Address 1" [ngClass]="{
                                       'is-invalid':
@@ -237,10 +233,7 @@
                     </div>
                   </mat-form-field>
 
-                  <mat-form-field>
-                    <input matInput class="form-control" [(ngModel)]="user.parent.address_line_2"
-                      name="parent_address_line_2" #parent_address_line_2="ngModel" placeholder="Address 2" />
-                  </mat-form-field>
+                  
                   <mat-form-field>
                     <mat-select class="form-control" [(ngModel)]="user.parent.state" name="parent_state"
                       placeholder="State">

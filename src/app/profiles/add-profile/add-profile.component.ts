@@ -94,7 +94,7 @@ export class AddProfileComponent implements OnInit {
   checkIfOthersAreSelected: boolean = false;
   isEdit: boolean = false;
   SeletedRole: any = [];
-  title: string = 'Add Profile';
+  title: string = 'Add User';
   fields: any = [];
   createfield: any = [];
   type: any = [];
@@ -274,7 +274,7 @@ export class AddProfileComponent implements OnInit {
       reader.readAsDataURL(image);
       reader.onload = function(event: any) {
         image = event.target.result;
-        const msg = 'Upload  Profile Photo';
+        const msg = 'Upload  User Photo';
         that.sharedService.showImageDialog(msg, e).subscribe(
           result => {
             let objectURL1 = URL.createObjectURL(result);
@@ -448,7 +448,7 @@ export class AddProfileComponent implements OnInit {
   getOneProfile(id:any) {
     this.sharedService.showLoader = true;
     this.isEdit = true;
-    this.title = 'Edit Profile Type';
+    this.title = 'Edit User Type';
     this.ProfilesService.fetchOneUser(id, 'cms_profile', this.usertype).then(
       (e: any) => {
         this.sharedService.showLoader = false;
@@ -1018,7 +1018,7 @@ export class AddProfileComponent implements OnInit {
     this.ProfilesService.editProfile(this.editProfilesId, this.data)
       .then((e: any) => {
         this.sharedService.showLoader = false;
-        this.sharedService.showMessage('Profile Updated Successfully');
+        this.sharedService.showMessage('User Updated Successfully');
 
         this.router.navigateByUrl('/profiles');
       })
@@ -1162,7 +1162,7 @@ export class AddProfileComponent implements OnInit {
           this.createfield = [];
         } else {
           this.router.navigateByUrl('/profiles');
-          this.sharedService.showMessage('Profile created successfully');
+          this.sharedService.showMessage('User created successfully');
         }
       })
       .catch((err: any) => {
