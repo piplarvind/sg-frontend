@@ -1080,7 +1080,7 @@ export class AddProfileComponent implements OnInit {
       }
       if (this.fields[i].field.name === 'approach_touch') {
         if (this.approch_feets && this.approch_inch) {
-          this.createfield[i].push({
+          this.createfield[i]?.push({
             field: this.fields[i].field._id,
             value: this.logo
           });
