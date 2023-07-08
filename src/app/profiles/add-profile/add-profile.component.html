@@ -7,11 +7,19 @@
               display: inline-flex;
                flex-wrap: wrap;
               justify-content: space-around;">
-      <div *ngFor="let item of rolesList">
+              <div class="grp_outer" *ngFor="let group of groupedRoles | keyvalue">
+                <div class="lbl">{{ (group.key)?group.key:'&nbsp;' }}</div>
+                <div class="role_div" *ngFor="let item of group.value">
+                  <!-- <div>{{ item.group_role }}</div> -->
+                  <mat-checkbox [checked]="item?.checked" (change)="toggleVisibility($event, item)"
+                    (click)="stopUncheck($event, item)">{{ item.name }}</mat-checkbox>
+                </div>
+              </div>
+      <!-- <div *ngFor="let item of rolesList">
+        <div>{{ item.group_role }}</div>
         <mat-checkbox [checked]="item?.checked" (change)="toggleVisibility($event, item)"
-          (click)="stopUncheck($event,item)">{{
-          item.name }}</mat-checkbox>
-      </div>
+          (click)="stopUncheck($event,item)">{{ item.name }}</mat-checkbox>
+      </div> -->
     </div>
   </mat-card>
   <form *ngIf="field" [formGroup]="form" class="form-horizontal">
@@ -65,10 +73,37 @@
                       </div>
 
                       <div *ngIf="field.field.name === 'mobile_phone'">
-                        <input matInput [value]="mobile" (keyup)="formatMobile($event.target.value)"
+                        <!-- <input matInput [value]="mobile" (keyup)="formatMobile($event.target.value)"
                           [placeholder]="field.field.label " pattern="^(\([0-9]{3}\) |[0-9]{3}-)[0-9]{3}-[0-9]{4}$"
                           type="tel" [required]="field.field.validation.required?true:false" maxlength="14"
+                          [formControlName]="field.field.name"> -->
+                         
+                          
+                              <ngx-intl-tel-input
+                                [cssClass]="'custom'"
+                                [preferredCountries]="preferredCountries"
+                                [enableAutoCountrySelect]="true"
+                                [enablePlaceholder]="true"
+                                [searchCountryFlag]="true"
+                                [searchCountryField]="[
+                                  SearchCountryField.Iso2,
+                                  SearchCountryField.Name
+                                ]"
+                                [selectFirstCountry]="false"
+                                [selectedCountryISO]="CountryISO.UnitedStates"
+                                [maxLength]="15"
+                                [phoneValidation]="true"
+                                [separateDialCode]="separateDialCode"
+                                [numberFormat]="PhoneNumberFormat.National"
+                                name="phone"
+                                formControlName="phone"
+                              >
+                              <input matInput [value]="mobile"
+                          type="tel" [required]="field.field.validation.required?true:false" maxlength="14"
                           [formControlName]="field.field.name">
+                              </ngx-intl-tel-input>
+                            
+
                       </div>
                       <div *ngIf="field.field.name === 'home_phone'">
                         <input matInput [value]="home" [placeholder]="field.field.label" type="tel"

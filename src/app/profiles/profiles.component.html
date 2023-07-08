@@ -173,7 +173,8 @@
                 {{ getStatus(element.active) }}
               </button> -->
               <mat-slide-toggle
-              [checked]="element.active ? 'false' : 'true'"
+              [(ngModel)]="element.active"
+              [checked]="element.active ? 'true' : 'false'"
               (click)="InactiveUser($event, element)"
               ></mat-slide-toggle>
             </mat-cell>

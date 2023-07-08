@@ -49,6 +49,9 @@ export class ProfilesComponent implements OnInit {
   pageIndex: number = 0;
   pageLimit: number[] = [5, 10, 25, 50, 100];
   tabledata: any = [];
+
+  toggleValue: boolean = true;
+
   constructor(
     public ProfileService: ProfilesService,
     public sharedService: SharedService,
@@ -314,28 +317,33 @@ export class ProfilesComponent implements OnInit {
   }
 
   InactiveUser(event: MatSlideToggleChange, row: any) {
-    this.sharedService
-    .showDialog(
-      'This action will change the user status. Are you sure to continue?'
-    )
-    .subscribe(response => {
-      if (response !== '') {
-        this.useDefault = event.checked;
-        this.sharedService.showLoader = true;
-        let data = {
-          active: !row.active
-        };
-        this.sharedService.showLoader = true;
-
-        this.ProfileService.Profiledelete(row._id, data).then((e: any) => {
+    const originalValue = row.active; // Store the original value of the toggle button
+    this.sharedService.showDialog('This action will change the user status. Are you sure to continue?')
+      .subscribe(response => {
+        if (response === true) {
+          this.useDefault = event.checked;
+          this.sharedService.showLoader = true;
+          let data = {
+            active: row.active
+          };
+          this.sharedService.showLoader = true;
+  
+          this.ProfileService.Profiledelete(row._id, data).then((e: any) => {
+            this.sharedService.showLoader = false;
+            this.buttontext = 'Show Inactive';
+            this.getProfiles(this.clubId);
+            this.sharedService.showMessage(e.message + ' successfully');
+          });
+        } else {
+          // Reset the toggle button to its original value
+          setTimeout(() => {
+            row.active = originalValue;
+          }, 0);
           this.sharedService.showLoader = false;
-          this.buttontext = 'Show Inactive';
-          this.getProfiles(this.clubId);
-          this.sharedService.showMessage(e.message + ' successfully');
-        });
-      }
-    });
+        }
+      });
   }
+  
   getProfiles(Id) {
     this.sharedService.showLoader = true;
     let data;

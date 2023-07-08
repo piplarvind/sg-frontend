@@ -2,152 +2,87 @@
   <div fxFlex="15" fxLayout="column" style="background: #303437;">
     <div style="position: relative;">
       <div fxLayoutAlign="center center" class="title">
-        <div
-          fxFlex="12"
-          class="logo-container"
-          style="height: 100%"
-          *ngIf="user_role === 'Club Admin'"
-        >
+        <div fxFlex="12" class="logo-container" style="height: 100%" *ngIf="user_role === 'Club Admin'">
           <img style="width: 100%; height: 98%" [src]="sportLogo" alt="logo" />
         </div>
-        <img style="width: 100%; height: 100%;" src="assets/SportGrit_dark.png" alt="SportGrit" *ngIf="user_role !== 'Club Admin'" />
+        <img style="width: 100%; height: 100%;" src="assets/SportGrit_dark.png" alt="SportGrit"
+          *ngIf="user_role !== 'Club Admin'" />
       </div>
     </div>
     <nav>
       <mat-list>
-        <a
-          mat-list-item
-          routerLink="/home"
-          routerLinkActive="active"
-          (click)="panelClose(panel1, panel2)"
-          *ngIf="user_role !== 'Coach'"
-        >
-          <i class="material-icons" *ngIf="user_role !== 'Coach'">dashboard</i
-          >&nbsp;&nbsp;
+        <a mat-list-item routerLink="/home" routerLinkActive="active" (click)="panelClose(panel1, panel2)"
+          *ngIf="user_role !== 'Coach'">
+          <i class="material-icons" *ngIf="user_role !== 'Coach'">dashboard</i>&nbsp;&nbsp;
           <span *ngIf="user_role !== 'Coach'">Dashboard</span>
         </a>
         <mat-divider *ngIf="user_role !== 'Coach'"></mat-divider>
 
-        <a
-          mat-list-item
-          routerLink="/settings"
-          routerLinkActive="active"
-          (click)="panelClose(panel1, panel2)"
-          *ngIf="user_role === 'Super Admin' || user_role === 'Platform Admin'"
-        >
+        <a mat-list-item routerLink="/settings" routerLinkActive="active" (click)="panelClose(panel1, panel2)"
+          *ngIf="user_role === 'Super Admin' || user_role === 'Platform Admin'">
           <i class="material-icons">settings</i>&nbsp;&nbsp;
           <span>Settings</span>
         </a>
-        <mat-divider
-          *ngIf="user_role === 'Super Admin' || user_role === 'Platform Admin'"
-        >
+        <mat-divider *ngIf="user_role === 'Super Admin' || user_role === 'Platform Admin'">
         </mat-divider>
 
-        <a
-          mat-list-item
-          routerLink="/sports"
-          routerLinkActive="active"
-          (click)="panelClose(panel1, panel2)"
-          *ngIf="user_role === 'Super Admin' || user_role === 'Platform Admin'"
-        >
+        <a mat-list-item routerLink="/sports" routerLinkActive="active" (click)="panelClose(panel1, panel2)"
+          *ngIf="user_role === 'Super Admin' || user_role === 'Platform Admin'">
           <i class="material-icons">local_play</i>&nbsp;&nbsp;
           <span *ngIf="user_role !== 'Coach'">Sports</span>
         </a>
         <mat-divider *ngIf="user_role !== 'Coach'"></mat-divider>
         <!--=================================== -->
-        <a
-          mat-list-item
-          routerLink="/clubs"
-          routerLinkActive="active"
-          (click)="panelClose(panel1, panel2)"
-          *ngIf="user_role === 'Super Admin' || user_role === 'Platform Admin'"
-        >
+        <a mat-list-item routerLink="/clubs" routerLinkActive="active" (click)="panelClose(panel1, panel2)"
+          *ngIf="user_role === 'Super Admin' || user_role === 'Platform Admin'">
           <i class="material-icons">local_play</i>&nbsp;&nbsp;
-          <span>Club</span>
+          <span>Clubs</span>
         </a>
         <a mat-list-item routerLink="/profile" routerLinkActive="active" (click)="panelClose(panel1, panel2)"
           *ngIf="user_role === 'Club Admin'">
           <i class="material-icons">local_play</i>&nbsp;&nbsp;
-          <span>Club</span>
+          <span>Clubs</span>
         </a>
-        <!-- ================================== -->
-      <mat-divider *ngIf="  user_role === 'Super Admin' || user_role === 'Club Admin'">
-      </mat-divider>
-  <a mat-list-item   *ngIf=" user_role === 'Super Admin'  || user_role === 'Club Admin'"routerLink="/profiles" routerLinkActive="active" (click)="panelClose(panel1, panel2)"
-   >
-    <i class="material-icons">portrait</i>&nbsp;&nbsp;
-    <span>Profiles</span>
-  </a>
-  <mat-divider *ngIf=" user_role === 'Platform Admin'"></mat-divider>
-     
-<!--
-<mat-expansion-panel #panel1 class="sidenavPanel" (opened)="panelOpenState = true" (closed)="panelOpenState = false"
-  routerLinkActive="active" *ngIf=" user_role === 'Super Admin' || user_role === 'Platform Admin'">
-  <mat-expansion-panel-header class="insidePanel" routerLink="/profiles">
-    <a mat-list-item class="matPanel">
-      <i class="material-icons">portrait</i>&nbsp;&nbsp;
-      <span>Profiles</span>
-    </a>
-  </mat-expansion-panel-header>
-
-
-
-  <a mat-list-item routerLink="/profile_type" routerLinkActive="active"  *ngIf="user_role === 'Platform Admin'">
-    <i class="material-icons">portrait</i>&nbsp;&nbsp;
-    <span class="subPanelText">User Type</span>
-  </a>
-  <a mat-list-item routerLink="/groups" routerLinkActive="active" *ngIf="user_role === 'Platform Admin'">
-    <i class="material-icons">portrait</i>&nbsp;&nbsp;
-    <span class="subPanelText">Groups</span>
-  </a>
-</mat-expansion-panel> -->
-
-        <!--  -->
 
         <!-- ================================== -->
-        <mat-expansion-panel
-          #panel1
-          class="sidenavPanel"
-          (opened)="panelOpenState = true"
-          (click)="panel2.close()"
-          (closed)="panelOpenState = false"
-          routerLinkActive="active"
-          *ngIf="user_role === 'Platform Admin'"
-        >
+        <mat-divider *ngIf="user_role === 'Super Admin' || user_role === 'Club Admin' || user_role === 'Platform Admin'">
+        </mat-divider>
+        <a mat-list-item *ngIf="user_role === 'Club Admin'" routerLink="/profiles"
+          routerLinkActive="active" (click)="panelClose(panel1, panel2)">
+          <i class="material-icons">portrait</i>&nbsp;&nbsp;
+          <span>Profiles</span>
+        </a>
+        <mat-divider *ngIf=" user_role === 'Platform Admin'"></mat-divider>
+
+        <!-- ================================== -->
+        <mat-expansion-panel #panel1 class="sidenavPanel" (opened)="panelOpenState = true" (click)="panel2.close()"
+          (closed)="panelOpenState = false" routerLinkActive="active" *ngIf="user_role === 'Super Admin' || user_role === 'Platform Admin'">
           <!-- <mat-panel-tite> -->
-          <mat-expansion-panel-header
-            class="insidePanel"
-            routerLink="/profile_type"
-          >
-            <a
-              mat-list-item
-              class="matPanel"
-              *ngIf="user_role === 'Platform Admin'"
-            >
+          <mat-expansion-panel-header class="insidePanel" routerLink="/profile_type">
+            <a mat-list-item class="matPanel" *ngIf="user_role === 'Super Admin' || user_role === 'Platform Admin'">
               <i class="material-icons">portrait</i>&nbsp;&nbsp;
               <span>Users</span>
             </a>
           </mat-expansion-panel-header>
 
-          <mat-divider *ngIf="user_role === 'Platform Admin'"></mat-divider>
           <a mat-list-item routerLink="/profile_type" routerLinkActive="active">
             <i class="material-icons">portrait</i>&nbsp;&nbsp;
             <span class="subPanelText">User Type</span>
           </a>
 
-          
+
           <a mat-list-item routerLink="/groups" routerLinkActive="active">
             <i class="material-icons">portrait</i>&nbsp;&nbsp;
             <span>User Group</span>
           </a>
 
-          
+
           <a mat-list-item routerLink="/profiles" routerLinkActive="active">
             <i class="material-icons">portrait</i>&nbsp;&nbsp;
             <span>All Users</span>
           </a>
 
-          
+
           <!-- <a
             mat-list-item
             routerLink="/club-profiles"
@@ -165,203 +100,201 @@
           <i class="material-icons">person</i>&nbsp;&nbsp;
           <span>Users</span> 
         </a>-->
-        
 
-        <a
-          mat-list-item
-          routerLink="/teams"
-          routerLinkActive="active"
-          (click)="panelClose(panel1, panel2)"
-          *ngIf="
-            user_role === 'Club Admin' ||
-            user_role === 'Super Admin' ||
-            user_role === 'Platform Admin'
-          "
-        >
-          <i class="material-icons">group</i>&nbsp;&nbsp;
-          <span>Team</span>
-        </a>
-        <mat-divider
-          *ngIf="
-            user_role === 'Club Admin' ||
-            user_role === 'Coach' ||
-            user_role === 'Super Admin' ||
-            user_role === 'Platform Admin'
-          "
-        ></mat-divider>
+        <mat-expansion-panel #panel1 class="sidenavPanel" (opened)="panelOpenState = true" (click)="panel2.close()"
+        (closed)="panelOpenState = false" routerLinkActive="active" *ngIf="user_role === 'Super Admin' || user_role === 'Platform Admin'">
+          <!-- <mat-panel-tite> -->
+          <mat-expansion-panel-header class="insidePanel">
+            <a mat-list-item class="matPanel" *ngIf="
+                user_role === 'Coach' ||
+                user_role === 'Club Admin' ||
+                user_role === 'Platform Admin' ||
+                user_role === 'Super Admin'
+              ">
+              <i class="material-icons">portrait</i>&nbsp;&nbsp;
+              <span>Roles</span>
+            </a>
+          </mat-expansion-panel-header>
 
-        <a
-          mat-list-item
-          routerLink="/coach"
-          routerLinkActive="active"
-          (click)="panelClose(panel1, panel2)"
-          *ngIf="
-            user_role === 'Coach' ||
-            user_role === 'Club Admin' ||
-            user_role === 'Super Admin' ||
-            user_role === 'Platform Admin'
-          "
-        >
-          <i class="material-icons">portrait</i>&nbsp;&nbsp;
-          <span>Coach</span>
-        </a>
-        <mat-divider
-          *ngIf="
-            user_role === 'Coach' ||
-            user_role === 'Club Admin' ||
-            user_role === 'Super Admin' ||
-            user_role === 'Platform Admin'
-          "
-        ></mat-divider>
-
-        <a
-          mat-list-item
-          routerLink="/athletes"
-          routerLinkActive="active"
-          (click)="panelClose(panel1, panel2)"
-          *ngIf="
-            user_role === 'Coach' ||
-            user_role === 'Club Admin' ||
-            user_role === 'Super Admin' ||
-            user_role === 'Platform Admin'
-          "
-        >
-          <i class="material-icons">directions_run</i>&nbsp;&nbsp;
-          <span>Athlete</span>
-        </a>
-        <mat-divider
-          *ngIf="
+          <mat-divider *ngIf="
             user_role === 'Coach' ||
             user_role === 'Club Admin' ||
             user_role === 'Platform Admin' ||
             user_role === 'Super Admin'
-          "
-        ></mat-divider>
+          "></mat-divider>
 
-        <a
-          mat-list-item
-          routerLink="/parent"
-          routerLinkActive="active"
-          (click)="panelClose(panel1, panel2)"
-          *ngIf="
+          <a mat-list-item routerLink="/athletes" routerLinkActive="active" *ngIf="
             user_role === 'Coach' ||
             user_role === 'Club Admin' ||
             user_role === 'Super Admin' ||
             user_role === 'Platform Admin'
-          "
-        >
-          <i class="material-icons">portrait</i>&nbsp;&nbsp;
-          <span>Parent</span>
-        </a>
-        <mat-divider
-          *ngIf="
+          ">
+            <i class="material-icons">directions_run</i>&nbsp;&nbsp;
+            <span>Athletes</span>
+          </a>
+
+          <mat-divider *ngIf="
             user_role === 'Coach' ||
             user_role === 'Club Admin' ||
             user_role === 'Platform Admin' ||
             user_role === 'Super Admin'
-          "
-        ></mat-divider>
-        <a
-          mat-list-item
-          routerLink="/recruiter"
-          routerLinkActive="active"
-          (click)="panelClose(panel1, panel2)"
-          *ngIf="
+          "></mat-divider>
+
+          <a mat-list-item routerLink="/parent" routerLinkActive="active" *ngIf="
             user_role === 'Coach' ||
             user_role === 'Club Admin' ||
             user_role === 'Super Admin' ||
             user_role === 'Platform Admin'
-          "
-        >
-          <i class="material-icons">portrait</i>&nbsp;&nbsp;
-          <span>Recruiter</span>
-        </a>
-        <mat-divider
-          *ngIf="
+          ">
+            <i class="material-icons">portrait</i>&nbsp;&nbsp;
+            <span>Parents</span>
+          </a>
+
+          <mat-divider *ngIf="
             user_role === 'Coach' ||
             user_role === 'Club Admin' ||
             user_role === 'Platform Admin' ||
             user_role === 'Super Admin'
-          "
-        ></mat-divider>
+          "></mat-divider>
 
-        <a
-          mat-list-item
-          routerLink="/resources"
-          routerLinkActive="active"
-          (click)="panelClose(panel1, panel2)"
-          *ngIf="
+          <a mat-list-item routerLink="/friends-family-fans" routerLinkActive="active" *ngIf="
             user_role === 'Coach' ||
             user_role === 'Club Admin' ||
             user_role === 'Super Admin' ||
             user_role === 'Platform Admin'
-          "
-        >
+          ">
+            <i class="material-icons">portrait</i>&nbsp;&nbsp;
+            <span>Friends-Family-Fans</span>
+          </a>
+
+          <mat-divider *ngIf="
+            user_role === 'Coach' ||
+            user_role === 'Club Admin' ||
+            user_role === 'Platform Admin' ||
+            user_role === 'Super Admin'
+          "></mat-divider>
+
+
+          <a mat-list-item routerLink="/coach" routerLinkActive="active" *ngIf="
+          user_role === 'Coach' ||
+          user_role === 'Club Admin' ||
+          user_role === 'Super Admin' ||
+          user_role === 'Platform Admin'
+        ">
+          <i class="material-icons">portrait</i>&nbsp;&nbsp;
+          <span>Coaches</span>
+        </a>
+        <mat-divider *ngIf="
+          user_role === 'Coach' ||
+          user_role === 'Club Admin' ||
+          user_role === 'Super Admin' ||
+          user_role === 'Platform Admin'
+        "></mat-divider>
+          
+
+          <a mat-list-item routerLink="/teams" routerLinkActive="active" *ngIf="
+            user_role === 'Club Admin' ||
+            user_role === 'Super Admin' ||
+            user_role === 'Platform Admin'
+          ">
+            <i class="material-icons">group</i>&nbsp;&nbsp;
+            <span>Teams</span>
+          </a>
+          <mat-divider *ngIf="
+            user_role === 'Club Admin' ||
+            user_role === 'Coach' ||
+            user_role === 'Super Admin' ||
+            user_role === 'Platform Admin'
+          "></mat-divider>
+
+          <a mat-list-item routerLink="/recruiter" routerLinkActive="active" *ngIf="
+            user_role === 'Coach' ||
+            user_role === 'Club Admin' ||
+            user_role === 'Super Admin' ||
+            user_role === 'Platform Admin'
+          ">
+            <i class="material-icons">portrait</i>&nbsp;&nbsp;
+            <span>Recruiters</span>
+          </a>
+          
+          <mat-divider *ngIf="
+            user_role === 'Club Admin' ||
+            user_role === 'Platform Admin' ||
+            user_role === 'Super Admin'
+          "></mat-divider>
+
+          <a mat-list-item routerLink="/club-admins" routerLinkActive="active" *ngIf="
+            user_role === 'Club Admin' ||
+            user_role === 'Super Admin' ||
+            user_role === 'Platform Admin'
+          ">
+            <i class="material-icons">portrait</i>&nbsp;&nbsp;
+            <span>Club Admins</span>
+          </a>
+          
+          <mat-divider *ngIf="
+            user_role === 'Platform Admin' ||
+            user_role === 'Super Admin'
+          "></mat-divider>
+
+          <a mat-list-item routerLink="/supper-admins" routerLinkActive="active" *ngIf="
+            user_role === 'Super Admin' ||
+            user_role === 'Platform Admin'
+          ">
+            <i class="material-icons">portrait</i>&nbsp;&nbsp;
+            <span>Super Admins</span>
+          </a>
+
+        </mat-expansion-panel>
+
+        <a mat-list-item routerLink="/resources" routerLinkActive="active" (click)="panelClose(panel1, panel2)" *ngIf="
+            user_role === 'Coach' ||
+            user_role === 'Club Admin' ||
+            user_role === 'Super Admin' ||
+            user_role === 'Platform Admin'
+          ">
           <i class="material-icons">archive</i>&nbsp;&nbsp;
           <span>Resource Library</span>
         </a>
-        <mat-divider
-          *ngIf="
+        <mat-divider *ngIf="
             user_role === 'Coach' ||
             user_role === 'Club Admin' ||
             user_role === 'Platform Admin' ||
             user_role === 'Super Admin'
-          "
-        ></mat-divider>
+          "></mat-divider>
 
-        <mat-expansion-panel
-          #panel1
-          class="sidenavPanel"
-          (opened)="panelOpenState = true"
-          (click)="panel2.close()"
-          (closed)="panelOpenState = false"
-          routerLinkActive="active"
-        >
-          <mat-expansion-panel-header
-            class="insidePanel"
-            routerLink="/training"
-          >
-            <a
-              mat-list-item
-              class="matPanel"
-              *ngIf="
+        <mat-expansion-panel #panel1 class="sidenavPanel" (opened)="panelOpenState = true" (click)="panel2.close()"
+          (closed)="panelOpenState = false" routerLinkActive="active">
+          <mat-expansion-panel-header class="insidePanel" routerLink="/training">
+            <a mat-list-item class="matPanel" *ngIf="
                 user_role === 'Coach' ||
                 user_role === 'Club Admin' ||
                 user_role === 'Super Admin' ||
                 user_role === 'Platform Admin'
-              "
-            >
+              ">
               <i class="material-icons">directions_bike</i>&nbsp;&nbsp;
               <span>Training</span>
             </a>
           </mat-expansion-panel-header>
-          <mat-divider
-            *ngIf="
+          <mat-divider *ngIf="
               user_role === 'Coach' ||
               user_role === 'Club Admin' ||
               user_role === 'Platform Admin' ||
               user_role === 'Super Admin'
-            "
-          ></mat-divider>
+            "></mat-divider>
           <!-- </mat-panel-tite> -->
           <a mat-list-item routerLink="/training" routerLinkActive="active">
             <i class="material-icons">library_books</i>&nbsp;&nbsp;
             <span class="subPanelText">Training Library</span>
           </a>
-          <mat-divider
-            *ngIf="
+          <mat-divider *ngIf="
               user_role === 'Coach' ||
               user_role === 'Club Admin' ||
               user_role === 'Platform Admin' ||
               user_role === 'Super Admin'
-            "
-          ></mat-divider>
+            "></mat-divider>
 
-          <a
-            mat-list-item
-            routerLink="/training_assign"
-            routerLinkActive="active"
-          >
+          <a mat-list-item routerLink="/training_assign" routerLinkActive="active">
             <i class="material-icons">assignment_ind</i>&nbsp;&nbsp;
             <span class="subPanelText">Training Assignments</span>
           </a>
@@ -386,88 +319,58 @@
             user_role === 'Super Admin'
           "
         ></mat-divider> -->
-        <mat-expansion-panel
-          #panel1
-          class="sidenavPanel"
-          (opened)="panelOpenState = true"
-          (click)="panel2.close()"
-          (closed)="panelOpenState = false"
-          routerLinkActive="active"
-          *ngIf="
+        <mat-expansion-panel #panel1 class="sidenavPanel" (opened)="panelOpenState = true" (click)="panel2.close()"
+          (closed)="panelOpenState = false" routerLinkActive="active" *ngIf="
             user_role === 'Coach' ||
             user_role === 'Club Admin' ||
             user_role === 'Platform Admin' ||
             user_role === 'Super Admin'
-          "
-        >
+          ">
           <!-- <mat-panel-tite> -->
-          <mat-expansion-panel-header
-            class="insidePanel"
-            routerLink="/event/eventtype"
-          >
-            <a
-              mat-list-item
-              class="matPanel"
-              *ngIf="
+          <mat-expansion-panel-header class="insidePanel" routerLink="/event/eventtype">
+            <a mat-list-item class="matPanel" *ngIf="
                 user_role === 'Coach' ||
                 user_role === 'Club Admin' ||
                 user_role === 'Platform Admin' ||
                 user_role === 'Super Admin'
-              "
-            >
+              ">
               <i class="material-icons">event</i>&nbsp;&nbsp;
               <span>Events</span>
             </a>
           </mat-expansion-panel-header>
-          <mat-divider
-            *ngIf="
+          <mat-divider *ngIf="
               user_role === 'Coach' ||
               user_role === 'Club Admin' ||
               user_role === 'Platform Admin' ||
               user_role === 'Super Admin'
-            "
-          ></mat-divider>
+            "></mat-divider>
 
-          <a
-            mat-list-item
-            routerLink="/event/eventtype"
-            routerLinkActive="active"
-          >
+          <a mat-list-item routerLink="/event/eventtype" routerLinkActive="active">
             <i class="material-icons">event</i>&nbsp;&nbsp;
             <span class="subPanelText">Event Type</span>
           </a>
-          <mat-divider
-            *ngIf="
+          <mat-divider *ngIf="
               user_role === 'Coach' ||
               user_role === 'Club Admin' ||
               user_role === 'Platform Admin' ||
               user_role === 'Super Admin'
-            "
-          ></mat-divider>
+            "></mat-divider>
 
           <a mat-list-item routerLink="/events" routerLinkActive="active">
             <i class="material-icons">event</i>&nbsp;&nbsp;
             <span>Events</span>
           </a>
-          <mat-divider
-          *ngIf="
+          <mat-divider *ngIf="
             user_role === 'Coach' ||
             user_role === 'Club Admin' ||
             user_role === 'Platform Admin' ||
             user_role === 'Super Admin'
-          "
-        ></mat-divider>
-          <a
-            mat-list-item
-            routerLink="/packages"
-            routerLinkActive="active"
-            (click)="panelClose(panel1, panel2)"
-            *ngIf="
+          "></mat-divider>
+          <a mat-list-item routerLink="/packages" routerLinkActive="active" (click)="panelClose(panel1, panel2)" *ngIf="
               user_role === 'Club Admin' ||
               user_role === 'Platform Admin' ||
               user_role === 'Super Admin'
-            "
-          >
+            ">
             <i class="material-icons">shopping_basket</i>&nbsp;&nbsp;
             <span>Event with Fees</span>
           </a>
@@ -483,57 +386,35 @@
           "
         ></mat-divider> -->
 
-        <a
-          mat-list-item
-          routerLink="/mail"
-          routerLinkActive="active"
-          (click)="panelClose(panel1, panel2)"
-          *ngIf="
+        <a mat-list-item routerLink="/mail" routerLinkActive="active" (click)="panelClose(panel1, panel2)" *ngIf="
             user_role === 'Coach' ||
             user_role === 'Club Admin' ||
             user_role === 'Super Admin' ||
             user_role === 'Platform Admin'
-          "
-        >
+          ">
           <i class="material-icons">contact_mail</i>&nbsp;&nbsp;
           <span>Mail</span>
         </a>
 
-        <mat-divider
-          *ngIf="
+        <mat-divider *ngIf="
             user_role === 'Club Admin' ||
             user_role === 'Platform Admin' ||
             user_role === 'Super Admin'
-          "
-        >
+          ">
         </mat-divider>
-        <mat-expansion-panel
-          #panel2
-          class="sidenavPanel"
-          (opened)="panelOpenState = true"
-          (click)="panel1.close()"
-          (closed)="panelOpenState = false"
-          routerLinkActive="active"
-        >
+        <mat-expansion-panel #panel2 class="sidenavPanel" (opened)="panelOpenState = true" (click)="panel1.close()"
+          (closed)="panelOpenState = false" routerLinkActive="active">
           <!-- <mat-panel-tite> -->
-          <mat-expansion-panel-header
-            class="insidePanel"
-            routerLink="/reports/successtrans"
-            *ngIf="
+          <mat-expansion-panel-header class="insidePanel" routerLink="/reports/successtrans" *ngIf="
               user_role === 'Club Admin' ||
               user_role === 'Platform Admin' ||
               user_role === 'Super Admin'
-            "
-          >
-            <a
-              mat-list-item
-              class="matPanel"
-              *ngIf="
+            ">
+            <a mat-list-item class="matPanel" *ngIf="
                 user_role === 'Club Admin' ||
                 user_role === 'Super Admin' ||
                 user_role === 'Platform Admin'
-              "
-            >
+              ">
               <i class="material-icons">chrome_reader_mode</i>&nbsp;&nbsp;
               <span>Reports</span>
             </a>
@@ -548,84 +429,58 @@
           >
           </mat-divider> -->
 
-          <a
-            mat-list-item
-            routerLink="/reports/successtrans"
-            routerLinkActive="active"
-            *ngIf="
+          <a mat-list-item routerLink="/reports/successtrans" routerLinkActive="active" *ngIf="
               user_role === 'Club Admin' ||
               user_role === 'Platform Admin' ||
               user_role === 'Super Admin'
-            "
-          >
+            ">
             <i class="material-icons">payment</i>&nbsp;&nbsp;
             <span class="subPanelText">Successful Transction Details</span>
           </a>
-          <mat-divider
-            *ngIf="
+          <mat-divider *ngIf="
               user_role === 'Club Admin' ||
               user_role === 'Super Admin' ||
               user_role === 'Platform Admin'
-            "
-          >
+            ">
           </mat-divider>
           <!-- </mat-panel-tite> -->
 
-          <a
-            mat-list-item
-            routerLink="/reports/ageing"
-            routerLinkActive="active"
-            *ngIf="
+          <a mat-list-item routerLink="/reports/ageing" routerLinkActive="active" *ngIf="
               user_role === 'Club Admin' ||
               user_role === 'Platform Admin' ||
               user_role === 'Super Admin'
-            "
-          >
+            ">
             <i class="material-icons">featured_play_list</i>&nbsp;&nbsp;
             <span class="subPanelText">Aging Reports</span>
           </a>
 
-          <mat-divider
-            *ngIf="
+          <mat-divider *ngIf="
               user_role === 'Club Admin' ||
               user_role === 'Super Admin' ||
               user_role === 'Platform Admin'
-            "
-          >
+            ">
           </mat-divider>
 
-          <a
-            mat-list-item
-            routerLink="/reports/unpaid"
-            routerLinkActive="active"
-            *ngIf="
+          <a mat-list-item routerLink="/reports/unpaid" routerLinkActive="active" *ngIf="
               user_role === 'Club Admin' ||
               user_role === 'Platform Admin' ||
               user_role === 'Super Admin'
-            "
-          >
+            ">
             <i class="material-icons">warning</i>&nbsp;&nbsp;
             <span class="subPanelText">Athletes Not Paid</span>
           </a>
-          <mat-divider
-            *ngIf="
+          <mat-divider *ngIf="
               user_role === 'Club Admin' ||
               user_role === 'Super Admin' ||
               user_role === 'Platform Admin'
-            "
-          >
+            ">
           </mat-divider>
 
-          <a
-            mat-list-item
-            routerLink="/reports/declined"
-            routerLinkActive="active"
-            *ngIf="
+          <a mat-list-item routerLink="/reports/declined" routerLinkActive="active" *ngIf="
               user_role === 'Club Admin' ||
               user_role === 'Platform Admin' ||
               user_role === 'Super Admin'
-            "
-          >
+            ">
             <i class="material-icons">payment</i>&nbsp;&nbsp;
             <span class="subPanelText">Card Declined Details</span>
           </a>
@@ -641,80 +496,50 @@
         <!-- <mat-divider
           *ngIf="user_role === 'Super Admin' || user_role === 'Platform Admin'"
         ></mat-divider> -->
-        <a
-          mat-list-item
-          routerLink="/seasons"
-          routerLinkActive="active"
-          *ngIf="user_role === 'Platform Admin' || user_role === 'Super Admin'"
-        >
+        <a mat-list-item routerLink="/seasons" routerLinkActive="active"
+          *ngIf="user_role === 'Platform Admin' || user_role === 'Super Admin'">
           <i class="material-icons">class</i>&nbsp;&nbsp;
           <span>Seasons</span>
         </a>
-        <mat-divider
-          *ngIf="user_role === 'Super Admin' || user_role === 'Platform Admin'"
-        ></mat-divider>
-        <a
-          mat-list-item
-          routerLink="/subscriptions"
-          routerLinkActive="active"
-          *ngIf="user_role === 'Platform Admin' || user_role === 'Super Admin'"
-        >
+        <mat-divider *ngIf="user_role === 'Super Admin' || user_role === 'Platform Admin'"></mat-divider>
+        <a mat-list-item routerLink="/subscriptions" routerLinkActive="active"
+          *ngIf="user_role === 'Platform Admin' || user_role === 'Super Admin'">
           <i class="material-icons">attach_money</i>
           <span>Subscriptions</span>
         </a>
 
-        <mat-divider
-          *ngIf="
+        <mat-divider *ngIf="
             user_role === 'Super Admin' ||
             user_role === 'Platform Admin'
-          "
-        ></mat-divider>
-        <a
-          mat-list-item
-          routerLink="/fees-collection"
-          routerLinkActive="active"
-          *ngIf="
+          "></mat-divider>
+        <a mat-list-item routerLink="/fees-collection" routerLinkActive="active" *ngIf="
             user_role === 'Platform Admin' ||
             user_role === 'Super Admin'
-          "
-        >
+          ">
           <i class="material-icons">attach_money</i>
           <span>Fees Collection</span>
         </a>
 
-        <mat-divider
-          *ngIf="
+        <mat-divider *ngIf="
             user_role === 'Club Admin' ||
             user_role === 'Super Admin' ||
             user_role === 'Platform Admin'
-          "
-        >
+          ">
         </mat-divider>
 
-        <mat-expansion-panel
-          #panel2
-          class="sidenavPanel"
-          (opened)="panelOpenState = true"
-          (click)="panel1.close()"
-          (closed)="panelOpenState = false"
-          routerLinkActive="active"
-          *ngIf="
+        <mat-expansion-panel #panel2 class="sidenavPanel" (opened)="panelOpenState = true" (click)="panel1.close()"
+          (closed)="panelOpenState = false" routerLinkActive="active" *ngIf="
             user_role === 'Club Admin' ||
             user_role === 'Platform Admin' ||
             user_role === 'Super Admin'
-          "
-        >
+          ">
           <!-- <mat-panel-tite> -->
           <mat-expansion-panel-header class="insidePanel" routerLink="/estore">
-            <a
-              mat-list-item
-              class="matPanel"
-              *ngIf="
+            <a mat-list-item class="matPanel" *ngIf="
                 user_role === 'Club Admin' ||
                 user_role === 'Super Admin' ||
                 user_role === 'Platform Admin'
-              "
-            >
+              ">
               <i class="material-icons">shopping_cart</i>&nbsp;&nbsp;
               <span>E-store</span>
             </a>
@@ -729,9 +554,7 @@
           </mat-divider> -->
           <!-- </mat-panel-tite> -->
           <a mat-list-item routerLink="/estore" routerLinkActive="active">
-            &nbsp;&nbsp;<i class="material-icons" style="font-size: 15px"
-              >fiber_manual_record</i
-            >&nbsp;&nbsp;
+            &nbsp;&nbsp;<i class="material-icons" style="font-size: 15px">fiber_manual_record</i>&nbsp;&nbsp;
             <span class="subPanelText">Colors</span>
           </a>
           <!-- <mat-divider
@@ -744,9 +567,7 @@
           </mat-divider> -->
 
           <a mat-list-item routerLink="/brand" routerLinkActive="active">
-            &nbsp;&nbsp;<i class="material-icons" style="font-size: 15px"
-              >fiber_manual_record</i
-            >&nbsp;&nbsp;
+            &nbsp;&nbsp;<i class="material-icons" style="font-size: 15px">fiber_manual_record</i>&nbsp;&nbsp;
             <span class="subPanelText">Brands</span>
           </a>
           <!-- <mat-divider
@@ -759,9 +580,7 @@
           </mat-divider> -->
 
           <a mat-list-item routerLink="/category" routerLinkActive="active">
-            &nbsp;&nbsp;<i class="material-icons" style="font-size: 15px"
-              >fiber_manual_record</i
-            >&nbsp;&nbsp;
+            &nbsp;&nbsp;<i class="material-icons" style="font-size: 15px">fiber_manual_record</i>&nbsp;&nbsp;
             <span class="subPanelText">Categories</span>
           </a>
 
@@ -775,9 +594,7 @@
           </mat-divider> -->
 
           <a mat-list-item routerLink="/products" routerLinkActive="active">
-            &nbsp;&nbsp;<i class="material-icons" style="font-size: 15px"
-              >fiber_manual_record</i
-            >&nbsp;&nbsp;
+            &nbsp;&nbsp;<i class="material-icons" style="font-size: 15px">fiber_manual_record</i>&nbsp;&nbsp;
             <span class="subPanelText">Products</span>
           </a>
 
@@ -791,9 +608,7 @@
           </mat-divider> -->
 
           <a mat-list-item routerLink="/transaction" routerLinkActive="active">
-            &nbsp;&nbsp;<i class="material-icons" style="font-size: 15px"
-              >fiber_manual_record</i
-            >&nbsp;&nbsp;
+            &nbsp;&nbsp;<i class="material-icons" style="font-size: 15px">fiber_manual_record</i>&nbsp;&nbsp;
             <span class="subPanelText">Purchase Transaction</span>
           </a>
 
@@ -807,9 +622,7 @@
           </mat-divider> -->
 
           <a mat-list-item routerLink="/order" routerLinkActive="active">
-            &nbsp;&nbsp;<i class="material-icons" style="font-size: 15px"
-              >fiber_manual_record</i
-            >&nbsp;&nbsp;
+            &nbsp;&nbsp;<i class="material-icons" style="font-size: 15px">fiber_manual_record</i>&nbsp;&nbsp;
             <span class="subPanelText">Customer Orders</span>
           </a>
         </mat-expansion-panel>
@@ -817,61 +630,37 @@
         <!-- <mat-divider
           *ngIf="user_role === 'Super Admin' || user_role === 'Platform Admin'"
         ></mat-divider> -->
-        <a
-          mat-list-item
-          routerLink="/offlinePayment"
-          routerLinkActive="active"
-          *ngIf="
+        <a mat-list-item routerLink="/offlinePayment" routerLinkActive="active" *ngIf="
             user_role === 'Club Admin' ||
             user_role === 'Platform Admin' ||
             user_role === 'Super Admin'
-          "
-        >
+          ">
           <i class="material-icons">class</i>&nbsp;&nbsp;
           <span>Payment</span>
         </a>
 
-        <mat-divider
-          *ngIf="user_role === 'Super Admin' || user_role === 'Platform Admin'"
-        ></mat-divider>
-        <a
-          mat-list-item
-          routerLink="/feeds"
-          routerLinkActive="active"
-          *ngIf="
+        <mat-divider *ngIf="user_role === 'Super Admin' || user_role === 'Platform Admin'"></mat-divider>
+        <a mat-list-item routerLink="/feeds" routerLinkActive="active" *ngIf="
             user_role === 'Club Admin' ||
             user_role === 'Platform Admin' ||
             user_role === 'Super Admin'
-          "
-        >
+          ">
           <i class="material-icons">class</i>&nbsp;&nbsp;
           <span> Feeds</span>
         </a>
 
-        <mat-divider
-          *ngIf="user_role === 'Super Admin' || user_role === 'Platform Admin'"
-        ></mat-divider>
-        <a
-          mat-list-item
-          routerLink="/cms-pages"
-          routerLinkActive="active"
-          *ngIf="          
+        <mat-divider *ngIf="user_role === 'Super Admin' || user_role === 'Platform Admin'"></mat-divider>
+        <a mat-list-item routerLink="/cms-pages" routerLinkActive="active" *ngIf="          
             user_role === 'Platform Admin' ||
             user_role === 'Super Admin'
-          "
-        >
+          ">
           <i class="material-icons">class</i>&nbsp;&nbsp;
           <span> CMS Pages</span>
         </a>
       </mat-list>
     </nav>
   </div>
-  <div
-    class="content"
-    fxFlex="85"
-    fxLayout="column"
-    style="background: #ebebeb"
-  >
+  <div class="content" fxFlex="85" fxLayout="column" style="background: #ebebeb">
     <div style="margin: 6px 0">
       <app-header></app-header>
     </div>
@@ -879,18 +668,9 @@
     <div style="overflow: auto" #topb>
       <router-outlet></router-outlet>
     </div>
-    <div
-      fxLayout="row"
-      fxLayoutAlign="end"
-      style="padding-right: 10%; padding-top: 1%"
-    >
+    <div fxLayout="row" fxLayoutAlign="end" style="padding-right: 10%; padding-top: 1%">
       <div>
-        <button
-          mat-raised-button
-          class="m-button m-pointer"
-          (click)="top(topb)"
-          style="height: 40px"
-        >
+        <button mat-raised-button class="m-button m-pointer" (click)="top(topb)" style="height: 40px">
           Top
         </button>
       </div>

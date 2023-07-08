@@ -155,7 +155,7 @@ export class ClubsComponent implements OnInit, AfterViewInit {
         // next page
         this.limit = event.pageSize;
         this.skip = event.pageIndex * this.limit;
-        this.getActiveClubs();        
+        this.getAllClubs();        
       }
     }
   }

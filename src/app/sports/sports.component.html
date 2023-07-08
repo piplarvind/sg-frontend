@@ -115,7 +115,7 @@
               >
                 <i class="fas fa-pencil-alt"></i>
               </span>
-              <span
+              <span *ngIf="!element.active"
                 class="table-icon m-pointer"
                 (click)="deleteSport(element)"
                 title="delete Sport"

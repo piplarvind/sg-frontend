@@ -4,6 +4,9 @@ import { ClubsService } from '@app/clubs/clubs.service';
 import { SharedService } from '@app/shared/shared.service';
 import { ProfilesService } from '@app/profiles/profiles.service';
 import { Routes, RouterModule, ActivatedRoute, Router } from '@angular/router';
+import { SearchCountryField, CountryISO, PhoneNumberFormat } from 'ngx-intl-tel-input';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
+
 import { DomSanitizer } from '@angular/platform-browser';
 import { environment } from '../../../environments/environment';
 import { ResourceService } from '@app/resource/resource.service';
@@ -23,6 +26,16 @@ import {
 })
   
 export class AddProfileComponent implements OnInit {
+
+  separateDialCode = false;
+	SearchCountryField = SearchCountryField;
+	CountryISO = CountryISO;
+  PhoneNumberFormat = PhoneNumberFormat;
+	preferredCountries: CountryISO[] = [CountryISO.UnitedStates, CountryISO.India, CountryISO.UnitedKingdom];
+  phoneForm = new FormGroup({
+		phone: new FormControl(undefined, [Validators.required])
+	});
+
   username_pattern: boolean = true;
   GenderList: any = [];
   rolesList: any = [];
@@ -105,8 +118,13 @@ export class AddProfileComponent implements OnInit {
     profile_fields: []
   };
   selectedFruitValues = '';
+  phone = {
+    number:''
+  };
   name: any = [];
   school_img: any;
+  groupedRoles: { [key: string]: any[] };
+
   constructor(
     private router: Router,
     public ProfilesService: ProfilesService,
@@ -117,7 +135,9 @@ export class AddProfileComponent implements OnInit {
     public _DomSanitizationService: DomSanitizer,
     public athletesService: AthletesService,
     public clubProfileService: ClubProfileService
-  ) {}
+  ) {
+    
+  }
 
   ngOnInit() {
     this.getAllRoles();
@@ -132,6 +152,8 @@ export class AddProfileComponent implements OnInit {
     this.getStatus();
     this.getAllClubRole();
 
+    
+
     if (this.router.url !== '/profiles/add') {
       // this.coach = JSON.parse(sessionStorage.curCoach);
       // console.log('edit coach', this.coach);
@@ -144,6 +166,27 @@ export class AddProfileComponent implements OnInit {
       );
     }
   }
+
+  changePreferredCountries() {
+		this.preferredCountries = [CountryISO.UnitedStates, CountryISO.India];
+  }
+  
+  groupBy(array: any[], property: string): { [key: string]: any[] } {
+    const groupedData: { [key: string]: any[] } = {};
+    //console.log('array', array);
+    array.forEach((item) => {
+      const key = item[property];
+      if (!groupedData[key]) {
+        groupedData[key] = [];
+      }
+      groupedData[key].push(item);
+    });
+    
+    return groupedData;
+  }
+
+  
+
   checkbox1(e) {
     this.marked = e.checked;
   }
@@ -809,7 +852,7 @@ export class AddProfileComponent implements OnInit {
     }
 
     var arr2 = Object.values(this.form.value);
-
+    console.log('arr2', this.form);
     if (this.getIsEdit) {
       for (let i = 0; i < this.fields.length; i++) {
         if (this.fields[i].name === 'first_name') {
@@ -831,7 +874,8 @@ export class AddProfileComponent implements OnInit {
         if (this.fields[i].name === 'mobile_phone') {
           this.createfield.push({
             field: this.fields[i]._id,
-            value: this.extraxtNo(this.mobile)
+            //value: this.extraxtNo(this.mobile)
+            value: this.extraxtNo(this.phone.number)
           });
         }
         if (this.fields[i].name === 'home_phone') {
@@ -1180,7 +1224,7 @@ export class AddProfileComponent implements OnInit {
       this.rolesList = prop;
       this.gernarlRolelist = prop;
       this.categoriesSelected = prop;
-
+      this.groupedRoles = this.groupBy(this.rolesList, 'group_role');
       // this.sharedService.showLoader prop
     });
   }
@@ -1296,13 +1340,22 @@ export class AddProfileComponent implements OnInit {
   }
 
   stopUncheck(event, item) {
+    console.log('event', event);
+    console.log('item', item);
     if (this.finalData.length === 1 && this.finalData[0] === item._id) {
       event.preventDefault();
       return;
     }
   }
 
+  
+
+  
   toggleVisibility(e, user) {
+    
+    console.log('event', e);
+    console.log('item', user);
+
     if (this.isEdit) {
       this.getIsEdit = true;
     }
@@ -1369,6 +1422,7 @@ export class AddProfileComponent implements OnInit {
 
     this.selectUser(this.finalData);
   }
+
   gender(gen: string) {
     this.getAllAge(gen);
   }

@@ -39,6 +39,7 @@ export class AddSportComponent implements OnInit {
   sport: any = {
     sport_name: '',
     description: '',
+    'color':'',
     order: ''
   };
   

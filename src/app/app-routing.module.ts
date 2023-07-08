@@ -27,6 +27,7 @@ const routes: Routes = [
       loadChildren: () => import('app/athletes/athletes.module').then(m => m.AthletesModule)
     },
     { path: 'parent', loadChildren: () => import('app/parent/parent.module').then(m => m.ParentModule) },
+    { path: 'friends-family-fans', loadChildren: () => import('app/friends-family-fans/fff.module').then(m => m.FFFModule) },
     {
       path: 'recruiter',
       loadChildren: () => import('app/recruiter/recruiter.module').then(m => m.RecruiterModule)
