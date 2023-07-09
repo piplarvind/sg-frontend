@@ -32,8 +32,10 @@ export class HeaderComponent implements OnInit, AfterViewInit {
   isSuperAdmin = false;
   sportsList: Array<any>;
   clubsList: Array<any>;
+  seasonsList: Array<any>;
   selectedClub = "";
   selectedSport = "";
+  selectedSeason = "";
   // selectedClub = localStorage.super_cur_clubName ? localStorage.super_cur_clubName : '';
 
   constructor(
@@ -50,18 +52,12 @@ export class HeaderComponent implements OnInit, AfterViewInit {
 
   ngOnInit() {
     const obj = JSON.parse(localStorage.userDetails);
-    
-  //  console.log('obj', obj);
+
+    //  console.log('obj', obj);
     this.id = obj._id;
     ref = this;
-    this.selectedClub = localStorage.super_cur_clubId
-      ? localStorage.super_cur_clubId
-      : "";
-    this.clubLogo =
-      localStorage.getItem("super_cur_clubLogo") ||
-      localStorage.getItem("updatedLogo") ||
-      "assets/no_logo.png";
-    
+
+    //Sport data
     this.selectedSport = localStorage.super_cur_sportId
       ? localStorage.super_cur_sportId
       : "";
@@ -69,19 +65,33 @@ export class HeaderComponent implements OnInit, AfterViewInit {
       localStorage.getItem("super_cur_sportLogo") ||
       localStorage.getItem("updatedLogo") ||
       "assets/no_logo.png";
-    
-    if (this.clubLogo === "assets/no_logo.png") {
-      this.clubLogo = `${this.clubLogo}`;
-    } else {
-      this.clubLogo = `${environment.imageUrl}${this.clubLogo}`;
-    }
 
     if (this.sportLogo === "assets/no_logo.png") {
       this.sportLogo = `${this.sportLogo}`;
     } else {
       this.sportLogo = `${environment.imageUrl}${this.sportLogo}`;
     }
-    
+
+    //Club data
+    this.selectedClub = localStorage.super_cur_clubId
+      ? localStorage.super_cur_clubId
+      : "";
+    this.clubLogo =
+      localStorage.getItem("super_cur_clubLogo") ||
+      localStorage.getItem("updatedLogo") ||
+      "assets/no_logo.png";
+
+    if (this.clubLogo === "assets/no_logo.png") {
+      this.clubLogo = `${this.clubLogo}`;
+    } else {
+      this.clubLogo = `${environment.imageUrl}${this.clubLogo}`;
+    }
+
+    //Season data
+    this.selectedSeason = localStorage.super_cur_seasonId
+    ? localStorage.super_cur_seasonId
+    : "";
+
 
     this.user_role = localStorage.user_role;
     this.storedVal = localStorage;
@@ -89,6 +99,7 @@ export class HeaderComponent implements OnInit, AfterViewInit {
     this.sharedService.clubStatus.subscribe((res: any) => {
       this.getAllSports();
       this.getAllCLubs();
+      this.getAllSeasons();
     });
 
     // this.sharedService.clubUpdateLogo.subscribe((res: any) => {
@@ -101,6 +112,7 @@ export class HeaderComponent implements OnInit, AfterViewInit {
       this.isSuperAdmin = true;
       this.getAllSports();
       this.getAllCLubs();
+      this.getAllSeasons();
     }
 
     if (localStorage.user_role === "Club Admin") {
@@ -121,24 +133,24 @@ export class HeaderComponent implements OnInit, AfterViewInit {
       }
       //this.storedVal.super_cur_sportName = obj.sport.sport_name;
       this.sportService
-      .getSportList()
-      .then((e: any) => {
-        if (
-          localStorage.user_role === "Coach" ||
-          localStorage.user_role === "Club Admin"
-        ) {
-          const sportDetails = e.data.filter((sport) => sport._id === obj.club.sport);
-          this.sportLogo = `${environment.imageUrl}${sportDetails[0].logo}`;
-        }
-      })
-      .catch((err) => {});
+        .getSportList()
+        .then((e: any) => {
+          if (
+            localStorage.user_role === "Coach" ||
+            localStorage.user_role === "Club Admin"
+          ) {
+            const sportDetails = e.data.filter((sport) => sport._id === obj.club.sport);
+            this.sportLogo = `${environment.imageUrl}${sportDetails[0].logo}`;
+          }
+        })
+        .catch((err) => { });
 
       // club
-      this.getAllCLubs();    
+      this.getAllCLubs();
       this.storedVal.super_cur_clubName = obj.club.club_name;
       const clubId = obj.club._id;
       this.clubService
-        .getClubList()
+        .getClubList(this.selectedSport)
         .then((e: any) => {
           if (
             localStorage.user_role === "Coach" ||
@@ -149,37 +161,37 @@ export class HeaderComponent implements OnInit, AfterViewInit {
             this.clubLogo = `${environment.imageUrl}${clubDetails[0].logo}`;
           }
         })
-        .catch((err) => {});
+        .catch((err) => { });
     }
     //console.log('header sportLogo', this.sportLogo);
     // this.getSportList();
     this.getClubList();
-    
-    
+
+
   }
 
   ngAfterViewInit() {
     //   this.getClubLogo();
   }
 
-  selectClub() {}
+  selectClub() { }
 
   getSportList() {
     this.sportService
-      .getSportList()
+      .getActiveSportList()
       .then((e: any) => {
         this.sportsList = e.data;
       })
-      .catch((err) => {});
+      .catch((err) => { });
   }
 
   getClubList() {
     this.clubService
-      .getClubList()
+      .getClubList(this.selectedSport)
       .then((e: any) => {
         this.clubsList = e.data;
       })
-      .catch((err) => {});
+      .catch((err) => { });
   }
 
   getAllSports() {
@@ -188,16 +200,25 @@ export class HeaderComponent implements OnInit, AfterViewInit {
       .then((e: any) => {
         this.sportsList = e.data;
       })
-      .catch((err) => {});
+      .catch((err) => { });
   }
 
   getAllCLubs() {
     this.clubService
-      .getClubList()
+      .getClubList(this.selectedSport)
       .then((e: any) => {
         this.clubsList = e.data;
       })
-      .catch((err) => {});
+      .catch((err) => { });
+  }
+
+  getAllSeasons() {
+    this.clubService
+      .getClubSeasonList(this.selectedClub)
+      .then((e: any) => {
+        this.seasonsList = e.data;
+      })
+      .catch((err) => { });
   }
 
   clubSelected(club: any) {
@@ -231,7 +252,7 @@ export class HeaderComponent implements OnInit, AfterViewInit {
   }
 
   dropdownChange(id: any) {
-    localStorage.curentSelectedClub = id;
+    localStorage.setItem('curentSelectedClub', id);
     const clubData = this.clubsList.filter((f) => f._id === id)[0];
     switch (this.router.url) {
       case "/clubs/add":
@@ -259,20 +280,23 @@ export class HeaderComponent implements OnInit, AfterViewInit {
       default:
         this.router.navigate(["/clubs"]);
     }
-
-    localStorage.super_cur_clubId = clubData._id;
-    localStorage.super_cur_club = clubData.db_name;
-    localStorage.super_cur_clubName = clubData.club_name;
-    localStorage.super_cur_clubLogo = clubData.logo;
+    this.selectedClub = id;
+    localStorage.setItem('super_cur_clubId', clubData._id);
+    localStorage.setItem('super_cur_club', clubData.db_name);
+    localStorage.setItem('super_cur_clubName', clubData.club_name);
+    localStorage.setItem('super_cur_clubLogo', clubData.logo);
     // this.clubLogo = clubData.logo;
     this.clubLogo = `${environment.imageUrl}${clubData.logo}`;
     this.getClubLogo();
+    this.getAllSeasons();
   }
 
   dropdownSportChange(id: any) {
-    localStorage.curentSelectedSport = id;
+    this.clubsList = [];
+    this.selectedClub = "";
+    localStorage.setItem('curentSelectedSport', id);
     const sportData = this.sportsList.filter((f) => f._id === id)[0];
-    console.log('sportData', sportData);
+    //console.log('sportData', sportData);
     switch (this.router.url) {
       case "/clubs/add":
       case "/clubs/edit":
@@ -299,12 +323,22 @@ export class HeaderComponent implements OnInit, AfterViewInit {
       default:
         this.router.navigate(["/sports"]);
     }
-
-    localStorage.super_cur_sportId = sportData._id;
-    localStorage.super_cur_sport = sportData.db_name;
-    localStorage.super_cur_sportName = sportData.sport_name;
+    this.selectedSport = id;
+    localStorage.setItem('super_cur_sportId', sportData._id);
+    localStorage.setItem('super_cur_sport', sportData.db_name);
+    localStorage.setItem('super_cur_sportName', sportData.sport_name);
     localStorage.setItem('super_cur_sportLogo', sportData.logo);
     this.sportLogo = `${environment.imageUrl}${sportData.logo}`;
+
+    //Rest the club data
+    localStorage.setItem('curentSelectedClub', "");
+    localStorage.setItem('super_cur_clubId', "");
+    localStorage.setItem('super_cur_club', "");
+    localStorage.setItem('super_cur_clubName', "");
+    localStorage.setItem('super_cur_clubLogo', "");
+
+    this.clubLogo = 'assets/no_logo.png';
+    this.getClubList();
     this.getSportLogo();
   }
 

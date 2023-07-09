@@ -6,6 +6,7 @@ export class ClubsService {
   curClub: any = {};
   createClub = "clubs/";
   getClubs = "clubs/";
+  getClubSeasons = "seasons/";
   editClub = "clubs/";
   deleteClub = "clubs/";
   fetchOneClub = "clubs/";
@@ -76,9 +77,22 @@ export class ClubsService {
       );
     });
   }
-  getClubList() {
+  getClubList(sport=null) {
     return new Promise((resolve, reject) => {
-      this.http.get(this.getClubs).subscribe(
+      this.http.get(this.getClubs + "?sport=" + sport).subscribe(
+        (res: any) => {
+          resolve(res);
+        },
+        (err) => {
+          reject(err);
+        }
+      );
+    });
+  }
+
+  getClubSeasonList(club=null) {
+    return new Promise((resolve, reject) => {
+      this.http.get(this.getClubSeasons + "?club=" + club+"&yts=0").subscribe(
         (res: any) => {
           resolve(res);
         },

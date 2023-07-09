@@ -6,6 +6,7 @@ export class SportsService {
   curSport: any = {};
   createSport = "sports/";
   getSports = "sports/";
+  getActiveSports = "sports/active";
   editSport = "sports/";
   deleteSport = "sports/";
   fetchOneSport = "sports/";
@@ -89,11 +90,24 @@ export class SportsService {
     });
   }
 
+  getActiveSportList() {
+    return new Promise((resolve, reject) => {
+      this.http.get(this.getActiveSports).subscribe(
+        (res: any) => {
+          resolve(res);
+        },
+        (err) => {
+          reject(err);
+        }
+      );
+    });
+  }
+
   getAllSportList(skip, limit) {
     return new Promise((resolve, reject) => {
       this.http
         .get(
-          this.getSports + "?" + "active=false&skip=" + skip + "&limit=" + limit
+          this.getSports + "?active=false&skip=" + skip + "&limit=" + limit
         )
         .subscribe(
           (res: any) => {

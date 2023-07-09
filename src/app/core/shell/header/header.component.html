@@ -95,6 +95,39 @@
         </div>
       </div>
 
+      <div fxLayout="row" fxFlex="40" fxLayoutAlign="space-between">
+        <div
+          fxFlex=""
+          class="m-sub-title"
+          *ngIf="isSuperAdmin"
+          style="text-align: right; width: 70px; "
+        >
+          Select Season
+        </div>
+        <div
+          fxFlex=""
+          class="m-sub-title"
+          *ngIf="isSuperAdmin"
+          style="text-align: left; padding-left: 10px"
+        >
+          <mat-select
+            [value]="selectedSeason"
+            style="width:100%"
+            placeholder="Select season here"
+            (click)="getSeasonList()"
+            (selectionChange)="dropdownSeasonChange($event.value)"
+            required
+          >
+            <mat-option
+              *ngFor="let season of seasonsList"
+              [value]="season._id"
+              (click)="seasonSelected(season)"
+              >{{ season.season_name }}</mat-option
+            >
+          </mat-select>
+        </div>
+      </div>
+
       <div>
         <span class="m-pointer m-icon">
           <i class="fas fa-bell"></i>
