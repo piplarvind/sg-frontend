@@ -530,7 +530,8 @@ export class AddProfileComponent implements OnInit {
           }
           if (prop === 'mobile_phone' && this.fields[i].value.length > 5) {
             // this.fields[i].value = this.inputChanged(this.fields[i].value);
-            this.mobile = this.inputChanged(this.fields[i].value);
+            // this.mobile = this.inputChanged(this.fields[i].value);
+            this.mobile = this.fields[i].value;
           }
           if (prop === 'grad_year' && this.fields[i].value.length < 3) {
             nullgrad_year = true;
