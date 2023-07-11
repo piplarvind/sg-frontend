@@ -1,6 +1,21 @@
 <div class="m-container">
-  <mat-card class="m-title" fxLayout="row" fxLayoutAlign="space-between">
+  <!-- <mat-card class="m-title" fxLayout="row" fxLayoutGap="10" fxLayoutAlign="space-between">
+    <div fxFlex="50%">
         <h3>Dashboard</h3>
+      </div>
+      <div fxFlex="50%">
+          <p>Current Season: Winter</p> (<p>12 Days Remaining</p>)
+        </div>
+  </mat-card> -->
+  <mat-card class="m-title">
+    <div fxLayout="row">
+      <div fxFlex="50%">
+        <h3>Dashboard</h3>
+      </div>
+      <div fxFlex="50%" style="justify-content: flex-end; display: flex;">
+        <p>Current Season: Winter (12 Days Remaining)</p>
+      </div>
+    </div>
   </mat-card>
   <mat-card>
     <mat-card-content>
