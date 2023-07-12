@@ -15,6 +15,7 @@ import { MatPaginatorModule } from '@angular/material/paginator';
 import { take } from 'rxjs/operators';
 import { SportsService } from '@app/sports/sports.service';
 import { SharedService } from '@app/shared/shared.service';
+import { MatSlideToggleChange } from '@angular/material/slide-toggle';
 @Component({
   selector: 'app-sports',
   templateUrl: './sports.component.html',
@@ -183,14 +184,18 @@ export class SportsComponent implements OnInit, AfterViewInit {
     });
   }
   
-  chnageSportStatus(row: any) {
+  chnageSportStatus(event: MatSlideToggleChange, row: any) {
+    const originalValue = row.active;
     this.sharedService
       .showDialog('Are you sure you want to change this sport status?')
       .subscribe(response => {
         if (response !== '') {
           this.sharedService.showLoader = true;
-          const reqObj = {
-            active: !row.active
+          // const reqObj = {
+          //   active: !row.active
+          // };
+          let reqObj = {
+            active: row.active
           };
           this.sportService.updateSport(row._id, reqObj).then((e: any) => {
             this.sharedService.showLoader = false;
