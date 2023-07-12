@@ -1,10 +1,10 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, ViewChild } from '@angular/core';
 import { UntypedFormGroup, UntypedFormControl, FormBuilder } from '@angular/forms';
 import { ClubsService } from '@app/clubs/clubs.service';
 import { SharedService } from '@app/shared/shared.service';
 import { ProfilesService } from '@app/profiles/profiles.service';
 import { Routes, RouterModule, ActivatedRoute, Router } from '@angular/router';
-import { SearchCountryField, CountryISO, PhoneNumberFormat } from 'ngx-intl-tel-input';
+import { SearchCountryField, CountryISO, PhoneNumberFormat, NgxIntlTelInputComponent } from 'ngx-intl-tel-input';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 
 import { DomSanitizer } from '@angular/platform-browser';
@@ -27,7 +27,8 @@ import {
   
 export class AddProfileComponent implements OnInit {
 
-  separateDialCode = false;
+  // separateDialCode = false;
+  separateDialCode = true;
 	SearchCountryField = SearchCountryField;
 	CountryISO = CountryISO;
   PhoneNumberFormat = PhoneNumberFormat;
@@ -48,6 +49,7 @@ export class AddProfileComponent implements OnInit {
   rolechangeWithisEdit: boolean = false;
   ageList: any;
   clubRoleList: any;
+  phone_code: string = '';
   mobile: string = '';
   home: String = '';
   invalidNumber: boolean;
@@ -134,10 +136,11 @@ export class AddProfileComponent implements OnInit {
     public resourceService: ResourceService,
     public _DomSanitizationService: DomSanitizer,
     public athletesService: AthletesService,
-    public clubProfileService: ClubProfileService
+    public clubProfileService: ClubProfileService,
   ) {
     
   }
+  @ViewChild('ngxIntlTelInput') ngxIntlTelInput: NgxIntlTelInputComponent;
 
   ngOnInit() {
     this.getAllRoles();
@@ -528,10 +531,14 @@ export class AddProfileComponent implements OnInit {
           if (prop === 'gender' && this.fields[i].value) {
             this.gender(this.fields[i].value);
           }
+          if (prop === 'phone_code' && this.fields[i].value) {
+            this.phone_code = this.fields[i].value;
+          }
           if (prop === 'mobile_phone' && this.fields[i].value.length > 5) {
             // this.fields[i].value = this.inputChanged(this.fields[i].value);
             // this.mobile = this.inputChanged(this.fields[i].value);
             this.mobile = this.fields[i].value;
+            // console.log('this.phone_code', this.phone_code);
           }
           if (prop === 'grad_year' && this.fields[i].value.length < 3) {
             nullgrad_year = true;
@@ -853,7 +860,8 @@ export class AddProfileComponent implements OnInit {
     }
 
     var arr2 = Object.values(this.form.value);
-    console.log('arr2', this.form);
+    // console.log('this.fields[i].name', this.fields);
+    console.log('arr2', this.form); 
     if (this.getIsEdit) {
       for (let i = 0; i < this.fields.length; i++) {
         if (this.fields[i].name === 'first_name') {
@@ -875,8 +883,8 @@ export class AddProfileComponent implements OnInit {
         if (this.fields[i].name === 'mobile_phone') {
           this.createfield.push({
             field: this.fields[i]._id,
-            //value: this.extraxtNo(this.mobile)
-            value: this.extraxtNo(this.phone.number)
+            value: this.extraxtNo(this.mobile)
+            // value: this.extraxtNo(this.fields[i].value.number)
           });
         }
         if (this.fields[i].name === 'home_phone') {
@@ -1427,4 +1435,16 @@ export class AddProfileComponent implements OnInit {
   gender(gen: string) {
     this.getAllAge(gen);
   }
+
+  ngAfterViewInit() {
+    this.getCountryISO(this.phone_code);
+  }
+
+  getCountryISO(phoneNumber: string) {
+    const selectedCountry = this.ngxIntlTelInput.selectedCountry;
+    const countryCallingCode = selectedCountry.dialCode || this.ngxIntlTelInput.getDefaultCountry().countryCode;
+    const countryISO = this.ngxIntlTelInput.allCountries.find(country => country.dialCode === countryCallingCode)?.iso2;
+    console.log('Country ISO:', countryISO);
+  }
+
 }

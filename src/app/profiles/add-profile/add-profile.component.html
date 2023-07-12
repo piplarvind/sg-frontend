@@ -146,30 +146,38 @@
                           maxlength="14"
                           [formControlName]="field.field.name"
                         /> -->
-                        
+
                         <ngx-intl-tel-input
-                                [cssClass]="'custom'"
-                                [preferredCountries]="preferredCountries"
-                                [enableAutoCountrySelect]="true"
-                                [enablePlaceholder]="true"
-                                [searchCountryFlag]="true"
-                                [searchCountryField]="[
-                                  SearchCountryField.Iso2,
-                                  SearchCountryField.Name
-                                ]"
-                                [selectFirstCountry]="false"
-                                [selectedCountryISO]="CountryISO.UnitedStates"
-                                [maxLength]="15"
-                                [phoneValidation]="true"
-                                [separateDialCode]="separateDialCode"
-                                [numberFormat]="PhoneNumberFormat.International"
-                                name="mobile_phone"
-                                formControlName="mobile_phone"
-                              >
-                              <input matInput [value]="mobile"
-                          type="tel" [required]="field.field.validation.required?true:false" maxlength="14"
-                          [formControlName]="field.field.name">
-                              </ngx-intl-tel-input>
+                          [cssClass]="'custom'"
+                          [preferredCountries]="preferredCountries"
+                          [enableAutoCountrySelect]="true"
+                          [enablePlaceholder]="true"
+                          [searchCountryFlag]="true"
+                          [searchCountryField]="[
+                            SearchCountryField.Iso2,
+                            SearchCountryField.Name
+                          ]"
+                          [selectFirstCountry]="false"
+                          [selectedCountryISO]="CountryISO.UnitedStates"
+                          [maxLength]="15"
+                          [phoneValidation]="true"
+                          [separateDialCode]="separateDialCode"
+                          [numberFormat]="PhoneNumberFormat.International"
+                          name="mobile_phone"
+                          formControlName="mobile_phone"
+                          #ngxIntlTelInput
+                        >
+                          <input
+                            matInput
+                            [value]="mobile"
+                            type="tel"
+                            [required]="
+                              field.field.validation.required ? true : false
+                            "
+                            maxlength="14"
+                            [formControlName]="field.field.name"
+                          />
+                        </ngx-intl-tel-input>
                       </div>
                       <div *ngIf="field.field.name === 'home_phone'">
                         <input

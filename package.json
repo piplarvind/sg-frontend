@@ -43,6 +43,7 @@
     "google-libphonenumber": "^3.2.32",
     "intl-tel-input": "^17.0.3",
     "jquery": "^3.3.1",
+    "libphonenumber-js": "^1.10.37",
     "lodash": "^4.17.11",
     "material-design-icons-iconfont": "^3.0.3",
     "moment": "^2.22.2",
