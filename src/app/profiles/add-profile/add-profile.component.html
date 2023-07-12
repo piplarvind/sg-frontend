@@ -147,7 +147,7 @@
                           [formControlName]="field.field.name"
                         /> -->
 
-                        <ngx-intl-tel-input
+                        <!-- <ngx-intl-tel-input
                           [cssClass]="'custom'"
                           [preferredCountries]="preferredCountries"
                           [enableAutoCountrySelect]="true"
@@ -165,7 +165,6 @@
                           [numberFormat]="PhoneNumberFormat.International"
                           name="mobile_phone"
                           formControlName="mobile_phone"
-                          #ngxIntlTelInput
                         >
                           <input
                             matInput
@@ -176,9 +175,28 @@
                             "
                             maxlength="14"
                             [formControlName]="field.field.name"
+                            (keyup)="testInput($event)"
                           />
-                        </ngx-intl-tel-input>
+                        </ngx-intl-tel-input> -->
+                        <input
+                          #ng2TelInput
+                          type="text"
+                          matInput
+                          ng2TelInput
+                          [ng2TelInputOptions]="{
+                            initialCountry: initialCountry,
+                            autoHideDialCode: false,
+                            separateDialCode: true,
+                            formatOnDisplay: true,
+                            excludeCountries: true
+                          }"
+                          (hasError)="hasTelError($event)"
+                          (ng2TelOutput)="getNumber($event)"
+                          (countryChange)="telCountryChange($event)"
+                          [value]="mobile"
+                        />
                       </div>
+
                       <div *ngIf="field.field.name === 'home_phone'">
                         <input
                           matInput
@@ -1162,6 +1180,7 @@
                         </mat-select>
                       </mat-form-field>
                     </div>
+                    <div *ngIf="field.field.name === 'phone_code'"></div>
                     <div *ngSwitchDefault>
                       <mat-form-field [floatLabel]="'never'">
                         <input

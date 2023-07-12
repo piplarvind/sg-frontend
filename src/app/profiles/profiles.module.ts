@@ -12,7 +12,8 @@ import { FormsModule } from '@angular/forms';
 import { SearchSelectModule } from '@app/search-select/search-select.module';
 // import { PhoneMaskDirective } from './phone-mask.directive';
 import { AddProfileComponent } from './add-profile/add-profile.component';
-import { NgxIntlTelInputModule } from 'ngx-intl-tel-input';
+// import { NgxIntlTelInputModule } from 'ngx-intl-tel-input';
+import {Ng2TelInputModule} from 'ng2-tel-input';
 
 @NgModule({
   imports: [
@@ -23,7 +24,8 @@ import { NgxIntlTelInputModule } from 'ngx-intl-tel-input';
     FormsModule,
     ReactiveFormsModule,
     ProfilesRoutingModule,
-    NgxIntlTelInputModule
+    // NgxIntlTelInputModule
+    Ng2TelInputModule
   ],
   declarations: [ProfilesComponent, AddProfileComponent],
   exports: [],

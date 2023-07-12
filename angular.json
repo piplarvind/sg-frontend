@@ -24,10 +24,12 @@
             ],
             "styles": [
               "src/main.scss",
-              "./node_modules/intl-tel-input/build/css/intlTelInput.css",
+              "node_modules/intl-tel-input/build/css/intlTelInput.css",
               "node_modules/font-awesome/scss/font-awesome.scss"
             ],
             "scripts": [
+              "node_modules/intl-tel-input/build/js/intlTelInput.min.js",
+              "node_modules/intl-tel-input/build/js/utils.js"
             ],
             "allowedCommonJsDependencies": ["lodash", "rxjs"],
             "aot": false,

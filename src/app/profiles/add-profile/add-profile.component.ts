@@ -1,41 +1,52 @@
-import { Component, OnInit, Input, ViewChild } from '@angular/core';
-import { UntypedFormGroup, UntypedFormControl, FormBuilder } from '@angular/forms';
-import { ClubsService } from '@app/clubs/clubs.service';
-import { SharedService } from '@app/shared/shared.service';
-import { ProfilesService } from '@app/profiles/profiles.service';
-import { Routes, RouterModule, ActivatedRoute, Router } from '@angular/router';
-import { SearchCountryField, CountryISO, PhoneNumberFormat, NgxIntlTelInputComponent } from 'ngx-intl-tel-input';
-import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { Component, OnInit, Input, ViewChild, ElementRef } from "@angular/core";
+import {
+  UntypedFormGroup,
+  UntypedFormControl,
+  FormBuilder,
+} from "@angular/forms";
+import { ClubsService } from "@app/clubs/clubs.service";
+import { SharedService } from "@app/shared/shared.service";
+import { ProfilesService } from "@app/profiles/profiles.service";
+import { Routes, RouterModule, ActivatedRoute, Router } from "@angular/router";
+import {
+  SearchCountryField,
+  CountryISO,
+  PhoneNumberFormat,
+} from "ngx-intl-tel-input";
+import cbp from 'country_by_phone';
+import { FormGroup, FormControl, Validators } from "@angular/forms";
 
-import { DomSanitizer } from '@angular/platform-browser';
-import { environment } from '../../../environments/environment';
-import { ResourceService } from '@app/resource/resource.service';
-import { AthletesService } from '@app/athletes/athletes.service';
-import { ClubProfileService } from '@app/club-profile/club-profile.service';
+import { DomSanitizer } from "@angular/platform-browser";
+import { environment } from "../../../environments/environment";
+import { ResourceService } from "@app/resource/resource.service";
+import { AthletesService } from "@app/athletes/athletes.service";
+import { ClubProfileService } from "@app/club-profile/club-profile.service";
 import {
   HttpClient,
   HttpHeaders,
   HttpEvent,
   HttpErrorResponse,
-  HttpEventType
-} from '@angular/common/http';
+  HttpEventType,
+} from "@angular/common/http";
 @Component({
-  selector: 'app-add-profile',
-  templateUrl: './add-profile.component.html',
-  styleUrls: ['./add-profile.component.scss']
+  selector: "app-add-profile",
+  templateUrl: "./add-profile.component.html",
+  styleUrls: ["./add-profile.component.scss"],
 })
-  
 export class AddProfileComponent implements OnInit {
-
-  // separateDialCode = false;
-  separateDialCode = true;
-	SearchCountryField = SearchCountryField;
-	CountryISO = CountryISO;
+  separateDialCode = false;
+  // separateDialCode = true;
+  SearchCountryField = SearchCountryField;
+  CountryISO = CountryISO;
   PhoneNumberFormat = PhoneNumberFormat;
-	preferredCountries: CountryISO[] = [CountryISO.UnitedStates, CountryISO.India, CountryISO.UnitedKingdom];
+  preferredCountries: CountryISO[] = [
+    CountryISO.UnitedStates,
+    CountryISO.India,
+    CountryISO.UnitedKingdom,
+  ];
   phoneForm = new FormGroup({
-		phone: new FormControl(undefined, [Validators.required])
-	});
+    phone: new FormControl(undefined, [Validators.required]),
+  });
 
   username_pattern: boolean = true;
   GenderList: any = [];
@@ -49,9 +60,10 @@ export class AddProfileComponent implements OnInit {
   rolechangeWithisEdit: boolean = false;
   ageList: any;
   clubRoleList: any;
-  phone_code: string = '';
-  mobile: string = '';
-  home: String = '';
+  initialCountry: string = "us";
+  phone_code: string = "+1";
+  mobile: string = "";
+  home: String = "";
   invalidNumber: boolean;
   length: number;
   date: any;
@@ -62,24 +74,24 @@ export class AddProfileComponent implements OnInit {
   seletected_parent: boolean = false;
   matcard_height: number = 700;
   approach_touch: any;
-  height_inch: String = '';
-  height_feets: String = '';
-  reach_inch: String = '';
-  reach_feets: String = '';
-  approch_inch: String = '';
-  approch_feets: String = '';
+  height_inch: String = "";
+  height_feets: String = "";
+  reach_inch: String = "";
+  reach_feets: String = "";
+  approch_inch: String = "";
+  approch_feets: String = "";
   check: boolean;
-  college_image: any = '';
+  college_image: any = "";
   college_img: any;
   positionList: any = [];
   athleteList: any = [];
   countryList: any = [];
   stateList: any = [];
   cityList: any = [];
-  logo: any = '';
-  school_image_logo: any = '';
+  logo: any = "";
+  school_image_logo: any = "";
   regionsList: Array<any> = [];
-  countryId: any = '';
+  countryId: any = "";
   districtList: any;
   selectedregion: any;
   selectedregionId: any;
@@ -109,7 +121,7 @@ export class AddProfileComponent implements OnInit {
   checkIfOthersAreSelected: boolean = false;
   isEdit: boolean = false;
   SeletedRole: any = [];
-  title: string = 'Add User';
+  title: string = "Add User";
   fields: any = [];
   createfield: any = [];
   type: any = [];
@@ -117,11 +129,11 @@ export class AddProfileComponent implements OnInit {
   data: any = {
     child: [],
     types: [],
-    profile_fields: []
+    profile_fields: [],
   };
-  selectedFruitValues = '';
+  selectedFruitValues = "";
   phone = {
-    number:''
+    number: "",
   };
   name: any = [];
   school_img: any;
@@ -136,16 +148,15 @@ export class AddProfileComponent implements OnInit {
     public resourceService: ResourceService,
     public _DomSanitizationService: DomSanitizer,
     public athletesService: AthletesService,
-    public clubProfileService: ClubProfileService,
-  ) {
-    
-  }
-  @ViewChild('ngxIntlTelInput') ngxIntlTelInput: NgxIntlTelInputComponent;
+    public clubProfileService: ClubProfileService
+  ) {}
+
+  @ViewChild('ng2TelInput', { static: true }) ng2TelInput: ElementRef<HTMLInputElement>;
 
   ngOnInit() {
     this.getAllRoles();
     this.getGender();
-    if (this.router.url === '/clubs/add') {
+    if (this.router.url === "/clubs/add") {
     }
     this.getCountries();
     this.getDistricts();
@@ -155,25 +166,23 @@ export class AddProfileComponent implements OnInit {
     this.getStatus();
     this.getAllClubRole();
 
-    
-
-    if (this.router.url !== '/profiles/add') {
+    if (this.router.url !== "/profiles/add") {
       // this.coach = JSON.parse(sessionStorage.curCoach);
       // console.log('edit coach', this.coach);
       this.activeRouteSubscriber = this.activatedRoute.queryParams.subscribe(
-        param => {
+        (param) => {
           this.editProfilesId = param.profileId;
           this.usertype = param.type;
           this.getOneProfile(this.editProfilesId);
         }
       );
-    }
+    }    
   }
 
   changePreferredCountries() {
-		this.preferredCountries = [CountryISO.UnitedStates, CountryISO.India];
+    this.preferredCountries = [CountryISO.UnitedStates, CountryISO.India];
   }
-  
+
   groupBy(array: any[], property: string): { [key: string]: any[] } {
     const groupedData: { [key: string]: any[] } = {};
     //console.log('array', array);
@@ -184,11 +193,9 @@ export class AddProfileComponent implements OnInit {
       }
       groupedData[key].push(item);
     });
-    
+
     return groupedData;
   }
-
-  
 
   checkbox1(e) {
     this.marked = e.checked;
@@ -199,15 +206,14 @@ export class AddProfileComponent implements OnInit {
     });
   }
 
-  getAllAge(Id:any) {
+  getAllAge(Id: any) {
     this.ProfilesService.getAgeListfilterGender(Id).then((res: any) => {
       this.ageList = [...res.data];
-
     });
   }
 
   getAllClubRole() {
-    this.clubProfileService.getClubProfileTitleList('?').then((res: any) => {
+    this.clubProfileService.getClubProfileTitleList("?").then((res: any) => {
       this.clubRoleList = [...res.data];
     });
   }
@@ -219,20 +225,20 @@ export class AddProfileComponent implements OnInit {
         this.StatusList = e.data;
       })
       .catch((err: any) => {
-        console.log('error while fetching handed', err);
+        console.log("error while fetching handed", err);
       });
   }
-  
+
   fetchPosition() {
     this.athletesService
       .fetchPosition()
       .then((e: any) => {
-        this.positionList = e.data.filter(element => {
-          return element.name !== ' ';
+        this.positionList = e.data.filter((element) => {
+          return element.name !== " ";
         });
       })
       .catch((err: any) => {
-        console.log('error while fetching position', err);
+        console.log("error while fetching position", err);
       });
   }
   stateData(state: any) {
@@ -313,16 +319,16 @@ export class AddProfileComponent implements OnInit {
   getClubImage(e: any) {
     let image = e.target.files[0];
     if (image.name) {
-      const imageType = image.name.split('.')[1];
+      const imageType = image.name.split(".")[1];
       // if (imageType === 'png' || imageType === 'jpeg' || imageType === 'jpg') {
       const that = this;
       const reader = new FileReader();
       reader.readAsDataURL(image);
-      reader.onload = function(event: any) {
+      reader.onload = function (event: any) {
         image = event.target.result;
-        const msg = 'Upload  User Photo';
+        const msg = "Upload  User Photo";
         that.sharedService.showImageDialog(msg, e).subscribe(
-          result => {
+          (result) => {
             let objectURL1 = URL.createObjectURL(result);
             that.club_img = objectURL1;
 
@@ -330,7 +336,7 @@ export class AddProfileComponent implements OnInit {
             that.tempFile = result;
 
             const formData = new FormData();
-            formData.append('image', that.tempFile);
+            formData.append("image", that.tempFile);
             // formData.append('description', 'new Image');
             // if (
             //   localStorage.user_role === 'Super Admin' ||
@@ -341,7 +347,7 @@ export class AddProfileComponent implements OnInit {
             that.sharedService.showLoader = true;
             that.resourceService
               .uploadProfileImage(formData)
-              .subscribe(event => {
+              .subscribe((event) => {
                 if (event.type === HttpEventType.Response) {
                   let a: any = event.body;
 
@@ -350,7 +356,7 @@ export class AddProfileComponent implements OnInit {
                 }
               });
           },
-          err => {
+          (err) => {
             console.log(err);
           }
         );
@@ -360,16 +366,16 @@ export class AddProfileComponent implements OnInit {
   getcollegeImage(e: any) {
     let image = e.target.files[0];
     if (image.name) {
-      const imageType = image.name.split('.')[1];
+      const imageType = image.name.split(".")[1];
       // if (imageType === 'png' || imageType === 'jpeg' || imageType === 'jpg') {
       const that = this;
       const reader = new FileReader();
       reader.readAsDataURL(image);
-      reader.onload = function(event: any) {
+      reader.onload = function (event: any) {
         image = event.target.result;
-        const msg = 'Upload College Logo';
+        const msg = "Upload College Logo";
         that.sharedService.showImageDialog(msg, e).subscribe(
-          result => {
+          (result) => {
             let objectURL1 = URL.createObjectURL(result);
             that.college_img = objectURL1;
 
@@ -377,16 +383,16 @@ export class AddProfileComponent implements OnInit {
             that.tempFile = result;
 
             const formData = new FormData();
-            formData.append('rl_image', that.tempFile);
-            formData.append('description', 'new Image');
+            formData.append("rl_image", that.tempFile);
+            formData.append("description", "new Image");
             if (
-              localStorage.user_role === 'Super Admin' ||
-              localStorage.user_role === 'Platform Admin'
+              localStorage.user_role === "Super Admin" ||
+              localStorage.user_role === "Platform Admin"
             ) {
-              formData.append('clubId', localStorage.super_cur_clubId);
+              formData.append("clubId", localStorage.super_cur_clubId);
             }
 
-            that.ProfilesService.uploadImage(formData).subscribe(event => {
+            that.ProfilesService.uploadImage(formData).subscribe((event) => {
               if (event.type === HttpEventType.Response) {
                 let a: any = event.body;
 
@@ -394,7 +400,7 @@ export class AddProfileComponent implements OnInit {
               }
             });
           },
-          err => {
+          (err) => {
             console.log(err);
           }
         );
@@ -405,16 +411,16 @@ export class AddProfileComponent implements OnInit {
   school_image(e: any) {
     let image = e.target.files[0];
     if (image.name) {
-      const imageType = image.name.split('.')[1];
+      const imageType = image.name.split(".")[1];
       // if (imageType === 'png' || imageType === 'jpeg' || imageType === 'jpg') {
       const that = this;
       const reader = new FileReader();
       reader.readAsDataURL(image);
-      reader.onload = function(event: any) {
+      reader.onload = function (event: any) {
         image = event.target.result;
-        const msg = 'Upload School Logo';
+        const msg = "Upload School Logo";
         that.sharedService.showImageDialog(msg, e).subscribe(
-          result => {
+          (result) => {
             let objectURL1 = URL.createObjectURL(result);
             that.school_img = objectURL1;
 
@@ -422,16 +428,16 @@ export class AddProfileComponent implements OnInit {
             that.tempFile = result;
 
             const formData = new FormData();
-            formData.append('rl_image', that.tempFile);
-            formData.append('description', 'new Image');
+            formData.append("rl_image", that.tempFile);
+            formData.append("description", "new Image");
             if (
-              localStorage.user_role === 'Super Admin' ||
-              localStorage.user_role === 'Platform Admin'
+              localStorage.user_role === "Super Admin" ||
+              localStorage.user_role === "Platform Admin"
             ) {
-              formData.append('clubId', localStorage.super_cur_clubId);
+              formData.append("clubId", localStorage.super_cur_clubId);
             }
 
-            that.ProfilesService.uploadImage(formData).subscribe(event => {
+            that.ProfilesService.uploadImage(formData).subscribe((event) => {
               if (event.type === HttpEventType.Response) {
                 let a: any = event.body;
 
@@ -439,7 +445,7 @@ export class AddProfileComponent implements OnInit {
               }
             });
           },
-          err => {
+          (err) => {
             console.log(err);
           }
         );
@@ -447,55 +453,55 @@ export class AddProfileComponent implements OnInit {
     }
   }
   inputChanged(e: any) {
-    let s = '';
+    let s = "";
     if (e.length <= 10 && e.length > 0) {
       const first = e.substring(0, 3);
       const mid = e.substring(3, 6);
       const last = e.substring(6, 10);
-      s = '(' + first + ') ' + mid + '-' + last;
+      s = "(" + first + ") " + mid + "-" + last;
       return s;
     }
   }
 
   formatMobile(event: any) {
     if (event) {
-      let new_value = event.replace(/\D/g, '');
+      let new_value = event.replace(/\D/g, "");
 
       if (new_value.length <= 10 && new_value) {
         this.mobile = new_value;
         this.mobile = this.inputChanged(this.mobile);
       }
       if (new_value.length === 0) {
-        this.mobile = '';
+        this.mobile = "";
       }
     }
   }
 
   formatHome(event?: any) {
     if (event) {
-      let new_value = event.replace(/\D/g, '');
+      let new_value = event.replace(/\D/g, "");
 
       if (new_value.length <= 10 && new_value) {
         this.home = new_value;
         this.home = this.inputChanged(this.home);
       }
       if (new_value.length === 0) {
-        this.home = '';
+        this.home = "";
       }
     }
   }
   extraxtNo(e: any) {
-    let s = '';
-    if (e && e !== '') {
-      s = e.replace(/[^A-Z0-9]+/gi, '');
+    let s = "";
+    if (e && e !== "") {
+      s = e.replace(/[^A-Z0-9]+/gi, "");
     }
     return s;
   }
-  getOneProfile(id:any) {
+  getOneProfile(id: any) {
     this.sharedService.showLoader = true;
     this.isEdit = true;
-    this.title = 'Edit User Type';
-    this.ProfilesService.fetchOneUser(id, 'cms_profile', this.usertype).then(
+    this.title = "Edit User Type";
+    this.ProfilesService.fetchOneUser(id, "cms_profile", this.usertype).then(
       (e: any) => {
         this.sharedService.showLoader = false;
 
@@ -516,83 +522,84 @@ export class AddProfileComponent implements OnInit {
 
         this.length = this.fields.length;
 
-        this.name = this.fields.map(n => n.field.name);
+        this.name = this.fields.map((n) => n.field.name);
 
         const formGroup = {};
 
         let i = 0;
         let nullgrad_year: boolean = false;
         for (let prop of this.name) {
-          formGroup[prop] = new UntypedFormControl(this.fields[i].value || '');
-          if (prop === 'country') {
+          formGroup[prop] = new UntypedFormControl(this.fields[i].value || "");
+          if (prop === "country") {
             const countryId = this.fields[i].value;
             this.getStates(countryId);
           }
-          if (prop === 'gender' && this.fields[i].value) {
+          if (prop === "gender" && this.fields[i].value) {
             this.gender(this.fields[i].value);
           }
-          if (prop === 'phone_code' && this.fields[i].value) {
+          if (prop === "phone_code" && this.fields[i].value) {
             this.phone_code = this.fields[i].value;
+            this.initialCountry = this.getCountryIso2();
           }
-          if (prop === 'mobile_phone' && this.fields[i].value.length > 5) {
+          if (prop === "mobile_phone" && this.fields[i].value.length > 5) {
             // this.fields[i].value = this.inputChanged(this.fields[i].value);
             // this.mobile = this.inputChanged(this.fields[i].value);
             this.mobile = this.fields[i].value;
             // console.log('this.phone_code', this.phone_code);
           }
-          if (prop === 'grad_year' && this.fields[i].value.length < 3) {
+          if (prop === "grad_year" && this.fields[i].value.length < 3) {
             nullgrad_year = true;
           }
-          if (prop === 'home_phone' && this.fields[i].value.length > 5) {
+          if (prop === "home_phone" && this.fields[i].value.length > 5) {
             this.home = this.inputChanged(this.fields[i].value);
             this.fields[i].value = this.home;
           }
-          if (prop === 'user_name' && this.fields[i].value) {
+          if (prop === "user_name" && this.fields[i].value) {
             this.username = this.fields[i].value;
           }
-          if (prop === 'profile_image' && this.fields[i].value.length > 4) {
+          if (prop === "profile_image" && this.fields[i].value.length > 4) {
             this.logo = this.fields[i].value;
             this.club_img = `${environment.imageUrl}${this.fields[i].value}`;
           }
-          if (prop === 'school_logo' && this.fields[i].value.length > 4) {
+          if (prop === "school_logo" && this.fields[i].value.length > 4) {
             this.school_image_logo = this.fields[i].value;
             this.school_img = `${environment.imageUrl}${this.fields[i].value}`;
           }
-          if (prop === 'college_logo' && this.fields[i].value.length > 4) {
+          if (prop === "college_logo" && this.fields[i].value.length > 4) {
             this.college_image = this.fields[i].value;
             this.college_img = `${environment.imageUrl}${this.fields[i].value}`;
           }
-          if (prop === 'approach_touch' && this.fields[i].value) {
+          if (prop === "approach_touch" && this.fields[i].value) {
             if (this.fields[i].value) {
-              let a = this.fields[i].value.split(':');
+              let a = this.fields[i].value.split(":");
 
               this.approch_feets = a[0];
               this.approch_inch = a[1];
             }
           }
-          if (prop === 'height' && this.fields[i].value) {
+          if (prop === "height" && this.fields[i].value) {
             if (this.fields[i].value) {
-              let a = this.fields[i].value.split(':');
+              let a = this.fields[i].value.split(":");
 
               this.height_feets = a[0];
               this.height_inch = a[1];
             }
           }
-          if (prop === 'reach' && this.fields[i].value) {
+          if (prop === "reach" && this.fields[i].value) {
             if (this.fields[i].value) {
-              let a = this.fields[i].value.split(':');
+              let a = this.fields[i].value.split(":");
 
               this.reach_feets = a[0];
               this.reach_inch = a[1];
             }
           }
-          if (prop === 'captain' && this.fields[i].value === 'true') {
+          if (prop === "captain" && this.fields[i].value === "true") {
             this.marked = true;
           }
 
-          if (prop === 'athlete_of_interest' && this.fields[i].value) {
+          if (prop === "athlete_of_interest" && this.fields[i].value) {
             let value = this.fields[i].value;
-            let a = value.split(',');
+            let a = value.split(",");
             this.selectedAthleteId = a;
           }
 
@@ -601,58 +608,67 @@ export class AddProfileComponent implements OnInit {
 
         this.form = new UntypedFormGroup(formGroup);
 
-        if (this.form.get('mobile_phone')) {
+        if (this.form.get("mobile_phone")) {
           this.form.get('mobile_phone').setValue(this.mobile);
+          // this.form
+          //   .get("mobile_phone")
+          //   .setValue(`${this.phone_code}${this.mobile}`);
+
+            this.initialCountry = this.getCountryIso2();
         }
-        if (this.form.get('home_phone')) {
-          this.form.get('home_phone').setValue(this.home);
+        if (this.form.get("home_phone")) {
+          this.form.get("home_phone").setValue(this.home);
         }
 
         if (nullgrad_year) {
-          this.form.get('grad_year').setValue('');
+          this.form.get("grad_year").setValue("");
         }
         this.rolesList = this.rolesList.map((element, index) => {
           let obj = Object.assign({}, element);
-          if (e.data.types.map(ele => ele._id).indexOf(element._id) > -1) {
+          if (e.data.types.map((ele) => ele._id).indexOf(element._id) > -1) {
             obj.checked = true;
           }
           return obj;
         });
 
-        if (e.data.types[0].name === 'Athlete') {
+        if (e.data.types[0].name === "Athlete") {
           this.is_parents = true;
-          let ath = this.rolesList.filter(t => t._id === e.data.types[0]._id);
-          let gr = this.rolesList.filter(t => t.name === 'Family-Friends-Fans');
+          let ath = this.rolesList.filter((t) => t._id === e.data.types[0]._id);
+          let gr = this.rolesList.filter(
+            (t) => t.name === "Family-Friends-Fans"
+          );
           this.rolesList = ath.concat(gr);
           this.matcard_height = 1100;
           if (e.data.parents) {
             for (let i = 0; i < e.data.parents.length; i++) {
-              let fname = '',
-                lname = '';
+              let fname = "",
+                lname = "";
               for (
                 let j = 0;
                 j < e.data.parents[i].profile_fields.length;
                 j++
               ) {
-                if (e.data.parents[i].profile_fields[j].name === 'first_name') {
+                if (e.data.parents[i].profile_fields[j].name === "first_name") {
                   fname = e.data.parents[i].profile_fields[j].value;
                 }
-                if (e.data.parents[i].profile_fields[j].name === 'last_name') {
+                if (e.data.parents[i].profile_fields[j].name === "last_name") {
                   lname = e.data.parents[i].profile_fields[j].value;
                 }
               }
-              this.ParentName.push(fname + ' ' + lname);
+              this.ParentName.push(fname + " " + lname);
             }
           }
         }
 
-        if (e.data.types[0].name === 'Recruiter') {
-          let rec = this.rolesList.filter(t => t._id === e.data.types[0]._id);
-          let grn = this.rolesList.filter(t => t.name === 'Family-Friends-Fans');
+        if (e.data.types[0].name === "Recruiter") {
+          let rec = this.rolesList.filter((t) => t._id === e.data.types[0]._id);
+          let grn = this.rolesList.filter(
+            (t) => t.name === "Family-Friends-Fans"
+          );
           this.rolesList = rec.concat(grn);
         }
         for (let k = 0; k < e.data.types.length; k++) {
-          if (e.data.types[k].name === 'Parent') {
+          if (e.data.types[k].name === "Parent") {
             this.seletected_parent = true;
             if (e.data.child) {
               for (let j = 0; j < e.data.child.length; j++) {
@@ -665,23 +681,23 @@ export class AddProfileComponent implements OnInit {
             this.seletected_parent = false;
           }
         }
-        this.SeletedRole = e.data.types.map(t => t._id);
+        this.SeletedRole = e.data.types.map((t) => t._id);
         this.finalData = this.SeletedRole;
         this.isEdit = true;
       }
     );
   }
 
-  onUpload(e) { }
-  
+  onUpload(e) {}
+
   ProfileSubmit() {
     this.sharedService
       .showDialog(
-        'Fields cannot be empty, enter data in all the fields and then click on submit.'
+        "Fields cannot be empty, enter data in all the fields and then click on submit."
       )
-      .subscribe(response => {
-        if (response === '') {
-          this.router.navigateByUrl('/profiles');
+      .subscribe((response) => {
+        if (response === "") {
+          this.router.navigateByUrl("/profiles");
         }
       });
   }
@@ -692,9 +708,9 @@ export class AddProfileComponent implements OnInit {
         `Fields cannot be empty,
     enter data in all the fields and then click on update.`
       )
-      .subscribe(response => {
-        if (response === '') {
-          this.router.navigateByUrl('/profiles');
+      .subscribe((response) => {
+        if (response === "") {
+          this.router.navigateByUrl("/profiles");
         }
       });
   }
@@ -817,7 +833,7 @@ export class AddProfileComponent implements OnInit {
     var arr2 = Object.values(this.form.value);
     for (let i = 0; i < this.fields.length; i++) {
       this.fields[i].value = arr2[i];
-      if (this.fields[i].field.name === 'user_name') {
+      if (this.fields[i].field.name === "user_name") {
         value1 = this.fields[i].value;
       }
     }
@@ -826,22 +842,22 @@ export class AddProfileComponent implements OnInit {
     } else if (this.username !== value1) {
       let vaule = {
         value: value1,
-        check_by: 'user_name'
+        check_by: "user_name",
       };
       this.sharedService.showLoader = true;
       this.ProfilesService.checkusername(vaule)
         .then((e: any) => {
           this.sharedService.showLoader = false;
 
-          if (e.status === 'Success') {
+          if (e.status === "Success") {
             this.editProfiles();
           } else {
-            this.sharedService.showMessage('user name already exist');
+            this.sharedService.showMessage("user name already exist");
           }
         })
         .catch((err: any) => {
           // this.sharedService.showLoader = false;
-          console.log('err in profile creation', err);
+          console.log("err in profile creation", err);
         });
     }
   }
@@ -861,223 +877,236 @@ export class AddProfileComponent implements OnInit {
 
     var arr2 = Object.values(this.form.value);
     // console.log('this.fields[i].name', this.fields);
-    console.log('arr2', this.form); 
+    // console.log("arr2", this.form); return;
     if (this.getIsEdit) {
       for (let i = 0; i < this.fields.length; i++) {
-        if (this.fields[i].name === 'first_name') {
+        if (this.fields[i].name === "first_name") {
           this.createfield.push({
             field: this.fields[i]._id,
             value:
               this.fields[i].value.charAt(0).toUpperCase() +
-              this.fields[i].value.slice(1)
+              this.fields[i].value.slice(1),
           });
         }
-        if (this.fields[i].name === 'last_name') {
+        if (this.fields[i].name === "last_name") {
           this.createfield.push({
             field: this.fields[i]._id,
             value:
               this.fields[i].value.charAt(0).toUpperCase() +
-              this.fields[i].value.slice(1)
+              this.fields[i].value.slice(1),
           });
         }
-        if (this.fields[i].name === 'mobile_phone') {
+        if (this.fields[i].name === "phone_code") {
           this.createfield.push({
             field: this.fields[i]._id,
-            value: this.extraxtNo(this.mobile)
+            value: this.extraxtNo(this.phone_code),
             // value: this.extraxtNo(this.fields[i].value.number)
           });
         }
-        if (this.fields[i].name === 'home_phone') {
+        if (this.fields[i].name === "mobile_phone") {
           this.createfield.push({
             field: this.fields[i]._id,
-            value: this.selectedFruitValues
+            value: this.extraxtNo(this.mobile),
+            // value: this.extraxtNo(this.fields[i].value.number)
           });
         }
-        if (this.fields[i].name === 'profile_image') {
+        if (this.fields[i].name === "home_phone") {
           this.createfield.push({
             field: this.fields[i]._id,
-            value: this.logo
+            value: this.selectedFruitValues,
           });
         }
-        if (this.fields[i].field.name === 'college_logo') {
+        if (this.fields[i].name === "profile_image") {
+          this.createfield.push({
+            field: this.fields[i]._id,
+            value: this.logo,
+          });
+        }
+        if (this.fields[i].field.name === "college_logo") {
           this.createfield.push({
             field: this.fields[i].field._id,
-            value: this.college_image
+            value: this.college_image,
           });
         }
-        if (this.fields[i].field.name === 'school_logo') {
+        if (this.fields[i].field.name === "school_logo") {
           this.createfield.push({
             field: this.fields[i].field._id,
-            value: this.school_image_logo
+            value: this.school_image_logo,
           });
         }
-        if (this.fields[i].field.name === 'approach_touch') {
+        if (this.fields[i].field.name === "approach_touch") {
           if (this.approch_feets && this.approch_inch) {
             this.createfield.push({
               field: this.fields[i].field._id,
-              value: this.approch_feets + ':' + this.approch_inch
+              value: this.approch_feets + ":" + this.approch_inch,
             });
           }
         }
 
-        if (this.fields[i].field.name === 'reach') {
+        if (this.fields[i].field.name === "reach") {
           if (this.reach_feets && this.reach_inch) {
             this.createfield.push({
               field: this.fields[i].field._id,
-              value: this.reach_feets + ':' + this.reach_inch
+              value: this.reach_feets + ":" + this.reach_inch,
             });
           }
         }
-        if (this.fields[i].field.name === 'height') {
+        if (this.fields[i].field.name === "height") {
           if (this.height_feets && this.height_inch) {
             this.createfield.push({
               field: this.fields[i].field._id,
-              value: this.height_feets + ':' + this.height_inch
+              value: this.height_feets + ":" + this.height_inch,
             });
           }
         }
-        if (this.fields[i].field.name === 'captain') {
+        if (this.fields[i].field.name === "captain") {
           this.createfield.push({
             field: this.fields[i].field._id,
-            value: this.marked
+            value: this.marked,
           });
         }
-        if (this.fields[i].name === 'athlete_of_interest') {
+        if (this.fields[i].name === "athlete_of_interest") {
           this.createfield.push({
             field: this.fields[i]._id,
-            value: this.selectedAthleteId
+            value: this.selectedAthleteId,
           });
         }
 
         this.createfield.push({
           field: this.fields[i]._id,
-          value: arr2[i]
+          value: arr2[i],
         });
       }
     }
     if (this.isEdit) {
       for (let i = 0; i < this.fields.length; i++) {
-        if (this.fields[i].field.name === 'first_name') {
+        if (this.fields[i].field.name === "first_name") {
           this.createfield.push({
             field: this.fields[i].field._id,
             value:
               this.fields[i].value.charAt(0).toUpperCase() +
-              this.fields[i].value.slice(1)
+              this.fields[i].value.slice(1),
           });
         }
-        if (this.fields[i].field.name === 'last_name') {
+        if (this.fields[i].field.name === "last_name") {
           this.createfield.push({
             field: this.fields[i].field._id,
             value:
               this.fields[i].value.charAt(0).toUpperCase() +
-              this.fields[i].value.slice(1)
+              this.fields[i].value.slice(1),
           });
         }
-        if (this.fields[i].field.name === 'mobile_phone') {
+        if (this.fields[i].field.name === "phone_code") {
           this.createfield.push({
             field: this.fields[i].field._id,
-            value: this.extraxtNo(this.mobile)
+            value: this.extraxtNo(this.phone_code),
           });
         }
-        if (this.fields[i].field.name === 'home_phone') {
+        if (this.fields[i].field.name === "mobile_phone") {
           this.createfield.push({
             field: this.fields[i].field._id,
-            value: this.selectedFruitValues
+            value: this.extraxtNo(this.mobile),
           });
         }
-        if (this.fields[i].field.name === 'profile_image') {
+        if (this.fields[i].field.name === "home_phone") {
           this.createfield.push({
             field: this.fields[i].field._id,
-            value: this.logo
+            value: this.selectedFruitValues,
           });
         }
-        if (this.fields[i].field.name === 'college_logo') {
+        if (this.fields[i].field.name === "profile_image") {
           this.createfield.push({
             field: this.fields[i].field._id,
-            value: this.college_image
+            value: this.logo,
           });
         }
-        if (this.fields[i].field.name === 'school_logo') {
+        if (this.fields[i].field.name === "college_logo") {
           this.createfield.push({
             field: this.fields[i].field._id,
-            value: this.school_image_logo
+            value: this.college_image,
           });
         }
-        if (this.fields[i].field.name === 'approach_touch') {
+        if (this.fields[i].field.name === "school_logo") {
+          this.createfield.push({
+            field: this.fields[i].field._id,
+            value: this.school_image_logo,
+          });
+        }
+        if (this.fields[i].field.name === "approach_touch") {
           if (this.approch_feets && this.approch_inch) {
             this.createfield.push({
               field: this.fields[i].field._id,
-              value: this.approch_feets + ':' + this.approch_inch
+              value: this.approch_feets + ":" + this.approch_inch,
             });
           }
         }
 
-        if (this.fields[i].field.name === 'reach') {
+        if (this.fields[i].field.name === "reach") {
           if (this.reach_feets && this.reach_inch) {
             this.createfield.push({
               field: this.fields[i].field._id,
-              value: this.reach_feets + ':' + this.reach_inch
+              value: this.reach_feets + ":" + this.reach_inch,
             });
           }
         }
-        if (this.fields[i].field.name === 'height') {
+        if (this.fields[i].field.name === "height") {
           if (this.height_feets && this.height_inch) {
             this.createfield.push({
               field: this.fields[i].field._id,
-              value: this.height_feets + ':' + this.height_inch
+              value: this.height_feets + ":" + this.height_inch,
             });
           }
         }
-        if (this.fields[i].field.name === 'captain') {
+        if (this.fields[i].field.name === "captain") {
           this.createfield.push({
             field: this.fields[i].field._id,
-            value: this.marked
+            value: this.marked,
           });
         }
-        if (this.fields[i].field.name === 'athlete_of_interest') {
+        if (this.fields[i].field.name === "athlete_of_interest") {
           this.createfield.push({
             field: this.fields[i].field._id,
-            value: this.selectedAthleteId
+            value: this.selectedAthleteId,
           });
         }
 
         this.createfield.push({
           field: this.fields[i].field._id,
-          value: arr2[i]
+          value: arr2[i],
         });
       }
     }
 
     function getUnique(arr, comp) {
       const unique = arr
-        .map(e => e[comp])
+        .map((e) => e[comp])
 
         // store the keys of the unique objects
         .map((e, i, final) => final.indexOf(e) === i && i)
 
         // eliminate the dead keys & store unique objects
-        .filter(e => arr[e])
-        .map(e => arr[e]);
+        .filter((e) => arr[e])
+        .map((e) => arr[e]);
 
       return unique;
     }
 
     // this.data.profile_fields = this.createfield;
 
-    this.createfield = getUnique(this.createfield, 'field');
+    this.createfield = getUnique(this.createfield, "field");
     this.data.profile_fields = this.createfield;
-
+    // console.log('this.createfield', this.createfield); return;
     this.sharedService.showLoader = true;
     this.ProfilesService.editProfile(this.editProfilesId, this.data)
       .then((e: any) => {
         this.sharedService.showLoader = false;
-        this.sharedService.showMessage('User Updated Successfully');
+        this.sharedService.showMessage("User Updated Successfully");
 
-        this.router.navigateByUrl('/profiles');
+        this.router.navigateByUrl("/profiles");
       })
       .catch((err: any) => {
         this.sharedService.showLoader = false;
-        console.log('err in profile creation', err);
+        console.log("err in profile creation", err);
       });
   }
 
@@ -1087,9 +1116,9 @@ export class AddProfileComponent implements OnInit {
         `Unsaved data, if any will be lost if you cancel this action.
   Confirm if you want to leave this page?`
       )
-      .subscribe(response => {
+      .subscribe((response) => {
         if (response === true) {
-          this.router.navigate(['/profiles']);
+          this.router.navigate(["/profiles"]);
         }
       });
   }
@@ -1113,96 +1142,96 @@ export class AddProfileComponent implements OnInit {
     var arr2 = Object.values(this.form.value);
 
     for (let i = 0; i < this.fields.length; i++) {
-      if (this.fields[i].field.name === 'profile_image') {
+      if (this.fields[i].field.name === "profile_image") {
         this.createfield.push({
           field: this.fields[i].field._id,
-          value: this.logo
+          value: this.logo,
         });
       }
-      if (this.fields[i].field.name === 'college_logo') {
+      if (this.fields[i].field.name === "college_logo") {
         this.createfield.push({
           field: this.fields[i].field._id,
-          value: this.logo
+          value: this.logo,
         });
       }
-      if (this.fields[i].field.name === 'school_logo') {
+      if (this.fields[i].field.name === "school_logo") {
         this.createfield.push({
           field: this.fields[i].field._id,
-          value: this.logo
+          value: this.logo,
         });
       }
-      if (this.fields[i].field.name === 'approach_touch') {
+      if (this.fields[i].field.name === "approach_touch") {
         if (this.approch_feets && this.approch_inch) {
           this.createfield[i]?.push({
             field: this.fields[i].field._id,
-            value: this.logo
+            value: this.logo,
           });
         }
       }
-      if (this.fields[i].field.name === 'reach') {
+      if (this.fields[i].field.name === "reach") {
         if (this.reach_feets && this.reach_inch) {
           this.createfield.push({
             field: this.fields[i].field._id,
-            value: this.reach_feets + ':' + this.reach_inch
+            value: this.reach_feets + ":" + this.reach_inch,
           });
         }
       }
-      if (this.fields[i].field.name === 'height') {
+      if (this.fields[i].field.name === "height") {
         if (this.height_feets && this.height_inch) {
           this.createfield.push({
             field: this.fields[i].field._id,
-            value: this.height_feets + ':' + this.height_inch
+            value: this.height_feets + ":" + this.height_inch,
           });
         }
       }
-      if (this.fields[i].field.name === 'captain') {
+      if (this.fields[i].field.name === "captain") {
         this.createfield.push({
           field: this.fields[i].field._id,
-          value: this.marked
+          value: this.marked,
         });
       }
-      if (this.fields[i].field.name === 'athlete_of_interest') {
+      if (this.fields[i].field.name === "athlete_of_interest") {
         this.createfield.push({
           field: this.fields[i].field._id,
-          value: this.selectedAthleteId
+          value: this.selectedAthleteId,
         });
       }
-      if (this.fields[i].field.name === 'mobile_phone') {
+      if (this.fields[i].field.name === "mobile_phone") {
         this.createfield.push({
           field: this.fields[i].field._id,
-          value: this.extraxtNo(this.mobile)
+          value: this.extraxtNo(this.mobile),
         });
       }
-      if (this.fields[i].field.name === 'home_phone') {
+      if (this.fields[i].field.name === "home_phone") {
         this.createfield.push({
           field: this.fields[i].field._id,
-          value: this.selectedFruitValues
+          value: this.selectedFruitValues,
         });
       }
 
       this.createfield.push({
         field: this.fields[i].field._id,
-        value: arr2[i]
+        value: arr2[i],
       });
     }
 
     function getUnique(arr, comp) {
       const unique = arr
-        .map(e => e[comp])
+        .map((e) => e[comp])
 
         // store the keys of the unique objects
         .map((e, i, final) => final.indexOf(e) === i && i)
 
         // eliminate the dead keys & store unique objects
-        .filter(e => arr[e])
-        .map(e => arr[e]);
+        .filter((e) => arr[e])
+        .map((e) => arr[e]);
 
       return unique;
     }
 
     // this.data.profile_fields = this.createfield;
 
-    this.createfield = getUnique(this.createfield, 'field');
+    this.createfield = getUnique(this.createfield, "field");
     this.data.profile_fields = this.createfield;
 
     this.sharedService.showLoader = true;
@@ -1210,19 +1239,19 @@ export class AddProfileComponent implements OnInit {
       .then((e: any) => {
         this.sharedService.showLoader = false;
 
-        if (e.status === 'Failure') {
+        if (e.status === "Failure") {
           this.sharedService.showMessage(e.message);
           this.createfield = [];
         } else {
-          this.router.navigateByUrl('/profiles');
-          this.sharedService.showMessage('User created successfully');
+          this.router.navigateByUrl("/profiles");
+          this.sharedService.showMessage("User created successfully");
         }
       })
       .catch((err: any) => {
         this.sharedService.showLoader = false;
-        console.log('err in profile creation', err);
+        console.log("err in profile creation", err);
       });
-  }
+  };
 
   getAllRoles() {
     // this.sharedService.showLoader = true;
@@ -1233,7 +1262,7 @@ export class AddProfileComponent implements OnInit {
       this.rolesList = prop;
       this.gernarlRolelist = prop;
       this.categoriesSelected = prop;
-      this.groupedRoles = this.groupBy(this.rolesList, 'group_role');
+      this.groupedRoles = this.groupBy(this.rolesList, "group_role");
       // this.sharedService.showLoader prop
     });
   }
@@ -1249,22 +1278,22 @@ export class AddProfileComponent implements OnInit {
     } else {
       tempValue = localStorage.club_id;
     }
-    this.ProfilesService.getRoleList(tempValue, 'Athlete', 0, '').then(
+    this.ProfilesService.getRoleList(tempValue, "Athlete", 0, "").then(
       (res: any) => {
         this.sharedService.showLoader = false;
         this.athleteList = res.data;
-        
-        const newres = res.data.map((prop:any) => {
+
+        const newres = res.data.map((prop: any) => {
           let name: any = {
-            fname: '',
-            lname: ''
+            fname: "",
+            lname: "",
           };
           for (let i = 0; i < prop.profile_fields.length; i++) {
             if (prop.profile_fields[i].field) {
-              if (prop.profile_fields[i].field.name === 'first_name') {
+              if (prop.profile_fields[i].field.name === "first_name") {
                 name.fname = prop.profile_fields[i].value;
               }
-              if (prop.profile_fields[i].field.name === 'last_name') {
+              if (prop.profile_fields[i].field.name === "last_name") {
                 name.lname = prop.profile_fields[i].value;
               }
             }
@@ -1272,7 +1301,7 @@ export class AddProfileComponent implements OnInit {
 
           return {
             ...prop,
-            name: name.fname + ' ' + name.lname
+            name: name.fname + " " + name.lname,
           };
         });
       }
@@ -1283,10 +1312,10 @@ export class AddProfileComponent implements OnInit {
     this.finalData = user;
     this.type = this.finalData;
     this.SeletedRole = this.finalData;
-    let path: string = '';
+    let path: string = "";
     this.fields = [];
     for (let i = 0; i < this.finalData.length; i++) {
-      path = path.concat('&types=' + this.finalData[i]);
+      path = path.concat("&types=" + this.finalData[i]);
     }
     this.ProfilesService.getfields(path).then((res: any) => {
       // this.fields = res.data;
@@ -1304,11 +1333,11 @@ export class AddProfileComponent implements OnInit {
       }
 
       for (let i = 0; i < this.fields.length; i++) {
-        if (this.fields[i].field.name === 'country') {
+        if (this.fields[i].field.name === "country") {
           const ref_id = this.fields[i].field.lookupDetails.default_value;
           this.clubService.getAllCountries().subscribe((res: any) => {
             this.countryList = [...res.data];
-            const defaultCountry = res.data.find(item => {
+            const defaultCountry = res.data.find((item) => {
               return item.ref_id === ref_id;
             });
             const countryId = defaultCountry._id;
@@ -1320,22 +1349,24 @@ export class AddProfileComponent implements OnInit {
               this.storePreviousData = this.form.value;
               let formControl = {};
               for (let x in this.storePreviousData) {
-                formControl[x] = new UntypedFormControl(this.storePreviousData[x]);
+                formControl[x] = new UntypedFormControl(
+                  this.storePreviousData[x]
+                );
               }
               this.form = new UntypedFormGroup(formControl);
             }
 
             this.length = this.fields.length;
-            this.name = this.fields.map(n => n.field.name);
+            this.name = this.fields.map((n) => n.field.name);
             const formGroup = {};
             let i = 0;
             for (let prop of this.name) {
               formGroup[prop] = new UntypedFormControl(
                 this.storePreviousData
                   ? this.storePreviousData[prop]
-                  : prop === 'country'
+                  : prop === "country"
                   ? this.selectedCountryId
-                  : ''
+                  : ""
               );
 
               i++;
@@ -1349,58 +1380,58 @@ export class AddProfileComponent implements OnInit {
   }
 
   stopUncheck(event, item) {
-    console.log('event', event);
-    console.log('item', item);
+    console.log("event", event);
+    console.log("item", item);
     if (this.finalData.length === 1 && this.finalData[0] === item._id) {
       event.preventDefault();
       return;
     }
   }
 
-  
-
-  
   toggleVisibility(e, user) {
-    
-    console.log('event', e);
-    console.log('item', user);
+    console.log("event", e);
+    console.log("item", user);
 
     if (this.isEdit) {
       this.getIsEdit = true;
     }
 
-    let gen: any = this.rolesList.filter(t => t.name === 'Family-Friends-Fans');
+    let gen: any = this.rolesList.filter(
+      (t) => t.name === "Family-Friends-Fans"
+    );
     let is_parent: any;
     if (e.checked) {
-      if (user.name === 'Athlete') {
-        let ath = this.rolesList.filter(t => t._id === user._id);
-        let gr = this.rolesList.filter(t => t.name === 'Family-Friends-Fans');
+      if (user.name === "Athlete") {
+        let ath = this.rolesList.filter((t) => t._id === user._id);
+        let gr = this.rolesList.filter((t) => t.name === "Family-Friends-Fans");
         this.rolesList = ath.concat(gr);
         this.seletected_parent = false;
         this.is_parents = true;
         this.matcard_height = 1100;
         this.finalData = [];
       }
-      if (user.name === 'Family-Friends-Fans') {
+      if (user.name === "Family-Friends-Fans") {
         this.rolesList = this.gernarlRolelist;
         this.finalData = [];
         this.finalData.push(user._id);
         this.seletected_parent = false;
         this.is_parents = false;
       }
-      if (user.name === 'Parent') {
+      if (user.name === "Parent") {
         this.seletected_parent = true;
         this.role_parent = user._id;
       }
-      
-      if (user.name === 'Recruiter') {
-        let rec = this.rolesList.filter(t => t._id === user._id);
-        let grn = this.rolesList.filter(t => t.name === 'Family-Friends-Fans');
+
+      if (user.name === "Recruiter") {
+        let rec = this.rolesList.filter((t) => t._id === user._id);
+        let grn = this.rolesList.filter(
+          (t) => t.name === "Family-Friends-Fans"
+        );
         this.rolesList = rec.concat(grn);
 
         this.finalData = [];
       }
-      if (user.name !== 'Family-Friends-Fans') {
+      if (user.name !== "Family-Friends-Fans") {
         for (let i = 0; i < this.finalData.length; i++) {
           if (this.finalData[i] === gen[0]._id) {
             this.finalData.splice(i, 1);
@@ -1410,10 +1441,10 @@ export class AddProfileComponent implements OnInit {
         this.finalData.push(user._id);
       }
     } else {
-      if (user.name === 'Parent') {
+      if (user.name === "Parent") {
         this.seletected_parent = false;
       }
-      if (user.name === 'Athlete') {
+      if (user.name === "Athlete") {
         this.is_parents = false;
       }
       let index = this.finalData.indexOf(user._id);
@@ -1436,15 +1467,41 @@ export class AddProfileComponent implements OnInit {
     this.getAllAge(gen);
   }
 
-  ngAfterViewInit() {
-    this.getCountryISO(this.phone_code);
+  telCountryChange(country: any) {
+    // this.phone_code = country.dialCode;
+    this.phone_code = country.dialCode;
+    // this.initialCountry = country.iso2
+    this.mobile = "";
   }
 
-  getCountryISO(phoneNumber: string) {
-    const selectedCountry = this.ngxIntlTelInput.selectedCountry;
-    const countryCallingCode = selectedCountry.dialCode || this.ngxIntlTelInput.getDefaultCountry().countryCode;
-    const countryISO = this.ngxIntlTelInput.allCountries.find(country => country.dialCode === countryCallingCode)?.iso2;
-    console.log('Country ISO:', countryISO);
+  getNumber(e: any) {
+    // this.mobile = e
+    const dialCode = this.phone_code;
+    const numberWithoutDialCode = e.startsWith(dialCode) ? e.slice(dialCode.length) : e;
+    this.mobile = numberWithoutDialCode;
+    console.log("e", e);
+    console.log('this.mobile', this.mobile);
   }
 
+  hasTelError(obj) {
+    console.log("hasError: ", obj);
+  }
+
+  getCountryIso2() {
+    return cbp.getIso2(this.phone_code).toLowerCase();
+  }
+
+  getFormattedNumberAndCountry() {
+    const intlTelInput = (this.ng2TelInput.nativeElement as any).intlTelInput;
+    const number = intlTelInput.getNumber();
+    const countryData = intlTelInput.getSelectedCountryData();
+
+    if (number && countryData) {
+      const dialCode = countryData.dialCode;
+      const numberWithoutDialCode = number.startsWith(dialCode) ? number.slice(dialCode.length) : number;
+      this.mobile = numberWithoutDialCode;
+      this.phone_code = dialCode;
+    }
+  }
+  
 }
