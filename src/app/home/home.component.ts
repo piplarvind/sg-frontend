@@ -4,6 +4,7 @@ import { ClubsService } from "@app/clubs/clubs.service";
 import { SharedService } from "@app/shared/shared.service";
 import { QuoteService } from "@app/home/quote.service";
 import { DashboardService } from "./dashboard.service";
+import { Router } from "@angular/router";
 
 @Component({
   selector: "app-home",
@@ -28,8 +29,9 @@ export class HomeComponent implements OnInit {
     private dashboardService: DashboardService,
     private quoteService: QuoteService,
     private clubService: ClubsService,
-    public sharedService: SharedService
-  ) {}
+    public sharedService: SharedService,
+    private router: Router
+  ) { }
 
   ngOnInit() {
     this.dashboardService
@@ -63,5 +65,32 @@ export class HomeComponent implements OnInit {
     localStorage.super_cur_clubId = e.value._id;
     localStorage.super_cur_club = e.value.db_name;
     localStorage.super_cur_clubName = e.value.club_name;
+  }
+
+  navigateToPage(page: string) {
+    console.log('page', page);
+    let pageUrl = 'athletes';
+    switch (page) {
+      case 'Patent':
+        pageUrl = 'parent';
+        break;
+      case 'Family-Friends-Fans':
+        pageUrl = 'friends-family-fans';
+        break;
+      case 'Coach':
+        pageUrl = 'coach';
+        break;
+      case 'Club Admin':
+        pageUrl = 'club-admin';
+        break;
+      case 'Recruiter':
+        pageUrl = 'recruiter';
+        break;
+      default:
+        pageUrl = 'athletes';
+        break;
+
+    }
+    this.router.navigateByUrl('/' + pageUrl);
   }
 }

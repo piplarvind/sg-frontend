@@ -2,7 +2,9 @@
   text-align: center;
   padding: 1em;
 }
-
+.mat-card{
+  padding: 10px;
+}
 .logo {
   width: 150px;
   margin: 0 auto;
@@ -19,23 +21,34 @@ q {
   flex-wrap: wrap;
   justify-content: normal;
 }
-.column{
+
+.column {
   padding: 0 10px;
 }
+
 .card-item {
   width: calc(25% - 20px);
   margin: 10px;
+  cursor: pointer;
+  background: linear-gradient(to left, #303437, #b7172b);
+  color: #ffffff;
+  border-radius: 10px;
 }
 
 .card-label {
- 
+
   text-align: center;
   width: 100%;
-  font-size: 18px; /* Adjust the font size as needed */
+  font-size: 18px;
+  /* Adjust the font size as needed */
 }
 
 .user-count {
   font-size: 18px;
   text-align: center;
   font-weight: bold;
+}
+
+.card-item:hover {
+  background: linear-gradient(to left, #b7172b, #303437);
 }

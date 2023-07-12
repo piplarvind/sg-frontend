@@ -60,7 +60,7 @@ export class FeesCollectionComponent implements OnInit {
       .then((e: any) => {
         this.eventTypes = e.data;
         // this.activeEventType = e?.data[0]?._id;
-        console.log("e.data", e.data);
+        //console.log("e.data", e.data);
         // let dataUrl = `?club=${localStorage.curentSelectedClub}&type=${this.planType}&event_type=${e?.data[0]?._id}`;
         let dataUrl = `?club=${localStorage.curentSelectedClub}&event_type=${e?.data[0]?._id}`;
         // Fetch fee collections

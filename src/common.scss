@@ -50,7 +50,8 @@
 .m-table-container {
   margin-top: 20px;
   mat-header-row {
-    background: $primary;
+    // background: $primary;
+    background: linear-gradient(to left, #303437, #b7172b);
     mat-header-cell {
       color: $white;
       font-weight: bold;
@@ -245,3 +246,4 @@ mat-header-row{
 mar-raw{
   padding-left: 5px !important;
 }
+

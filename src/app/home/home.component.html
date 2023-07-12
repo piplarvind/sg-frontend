@@ -1,16 +1,8 @@
 <div class="m-container">
-  <!-- <mat-card class="m-title" fxLayout="row" fxLayoutGap="10" fxLayoutAlign="space-between">
-    <div fxFlex="50%">
-        <h3>Dashboard</h3>
-      </div>
-      <div fxFlex="50%">
-          <p>Current Season: Winter</p> (<p>12 Days Remaining</p>)
-        </div>
-  </mat-card> -->
   <mat-card class="m-title">
     <div fxLayout="row">
-      <div fxFlex="50%">
-        <h3>Dashboard</h3>
+      <div fxFlex="50%" style="justify-content: flex-start; display: flex;">
+        <p>Dashboard</p>
       </div>
       <div fxFlex="50%" style="justify-content: flex-end; display: flex;">
         <p>Current Season: Winter (12 Days Remaining)</p>
@@ -21,7 +13,7 @@
     <mat-card-content>
       <div class="card-container">
         <mat-card *ngFor="let state of dashboardStates" class="card-item">
-          <mat-card-content>
+          <mat-card-content (click)="navigateToPage(state.name)">
             <div class="card-label">{{ state.name }}</div>
             <div class="user-count">{{ state.userCount }}</div>
           </mat-card-content>
