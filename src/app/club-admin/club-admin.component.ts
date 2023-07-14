@@ -18,11 +18,11 @@ import { environment } from 'environments/environment';
 import { SeasonsService } from '@app/seasons/seasons.service';
 // import { anyTypeAnnotation } from 'babel-types';
 @Component({
-  selector: 'app-recruiter',
-  templateUrl: './recruiter.component.html',
-  styleUrls: ['./recruiter.component.scss']
+  selector: 'app-club-admin',
+  templateUrl: './club-admin.component.html',
+  styleUrls: ['./club-admin.component.scss']
 })
-export class RecruiterComponent implements OnInit {
+export class ClubAdminComponent implements OnInit {
   keyup: boolean = false;
   dataSource = new MatTableDataSource();
   isSuperAdmin = false;
@@ -43,7 +43,7 @@ export class RecruiterComponent implements OnInit {
     // 'club_name',
     'Actions'
   ];
-  roleRecruiter: any;
+  roleClubAdmin: any;
 
   limit: number = 100;
   skip: number = 0;
@@ -139,7 +139,7 @@ export class RecruiterComponent implements OnInit {
           if (e.data[i].status === 1) {
             localStorage.curRunningSeason = JSON.stringify(e.data[i]);
             if (this.athleteList) {
-              this.getAllRecruiter();
+              this.getAllClubAdmin();
             }
             if (
               !localStorage.curRunningSeason ||
@@ -178,7 +178,7 @@ export class RecruiterComponent implements OnInit {
       let data;
       this.ProfilesService.getFilterProfilesRole(
         this.curSelectClub,
-        `${environment.Recruiter}`,
+        `${environment.Club_Admin}`,
         '&searchBy=first_name&values=' + value
       ).then((res: any) => {
         const newres = res.data.map(prop => {
@@ -274,7 +274,7 @@ export class RecruiterComponent implements OnInit {
         // next page
         this.limit = event.pageSize;
         this.skip = event.pageIndex * this.limit;
-        this.getAllRecruiter();
+        this.getAllClubAdmin();
       }
     }
   }
@@ -290,7 +290,7 @@ export class RecruiterComponent implements OnInit {
 
       this.ProfilesService.getSortedProfilesbyRole(
         this.curSelectClub,
-        `${environment.Recruiter}`,
+        `${environment.Club_Admin}`,
         this.skip,
         this.limit,
         value
@@ -378,7 +378,7 @@ export class RecruiterComponent implements OnInit {
       });
     }
   }
-  getAllRecruiter() {
+  getAllClubAdmin() {
     this.sharedService.showLoader = true;
     let tempValue: any;
     if (
@@ -391,7 +391,7 @@ export class RecruiterComponent implements OnInit {
     }
     this.ProfilesService.getRoleList(
       tempValue,
-      `${environment.Recruiter}`,
+      `${environment.Club_Admin}`,
       this.skip,
       this.limit
     ).then((res: any) => {
@@ -479,9 +479,9 @@ export class RecruiterComponent implements OnInit {
       this.sharedService.showLoader = false;
     });
   }
-  editRecruiter(ele: any) {
-    this.router.navigate(['recruiter/edit/{{ele._id}}'], {
-      queryParams: { recruiterId: ele._id, type: ele.types[0]._id }
+  editClubAdmin(ele: any) {
+    this.router.navigate(['club-admins/edit/{{ele._id}}'], {
+      queryParams: { profileId: ele._id, type: ele.types[0]._id }
     });
   }
   inputChanged(e: any) {

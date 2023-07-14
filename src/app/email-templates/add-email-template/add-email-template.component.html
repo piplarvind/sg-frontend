@@ -1,0 +1,108 @@
+<div class="m-container">
+  <mat-card class="m-title">
+    <h3>{{title}}</h3>
+  </mat-card>
+  <form #sportForm=ngForm>
+    <mat-card>
+      <!-- <div *ngIf="isLoading">Loading</div> *ngIf="!isLoading" -->
+      <mat-card-content>
+        <div fxLayout="row" fxLayoutAlign="space-between">
+          <div fxFlex="49">
+            <mat-card class="childContainer">             
+              <div class="input-container">
+                <div class="errortxt" [hidden]="sportName.valid || sportName.pristine">
+                  EmailTemplate name is required
+                </div>
+                <div class="label-container">
+                  <span class="label-icon">
+                  </span>
+                  <span class="label">EmailTemplate Name</span>
+                </div>
+                <div class="field-container">
+                  <mat-form-field [floatLabel]="'never'">
+                    <input matInput [(ngModel)]="sport.sport_name" name="sportName" #sportName="ngModel" maxlength="40"
+                      placeholder="EmailTemplate name" required>
+                  </mat-form-field>
+                </div>
+              </div>
+            
+              <div class="input-container">
+                <div class="label-container">
+                  <span class="label-icon">
+                  </span>
+                  <span class="label">Upload Logo</span>
+                </div>
+                <div class="field-container">
+                  <input type="file" style="display: none" #logoInput (change)="getEmailTemplateImage($event)" id="logo">
+                  <mat-form-field [floatLabel]="'never'" (click)="logoInput.click()">
+                    <input matInput placeholder="Upload the Image" class="m-pointer" [value]="sport.logo" disabled>                   
+                    <img *ngIf="sport.logo" [src]="_DomSanitizationService.bypassSecurityTrustUrl(sport_img)" height="100" />
+                    <span matSuffix class="m-pointer">
+                      <i class="fas fa-upload"></i>
+                    </span>
+                  </mat-form-field>
+                </div>
+              </div>
+            </mat-card>
+          </div>
+          <!-- right card -->
+          <div fxFlex="49">
+            <mat-card class="childContainer">
+              <div class="input-container">
+                <div class="errortxt" [hidden]="sportOrder.valid || sportOrder.pristine">
+                  Order is required
+                </div>
+                <div class="label-container">
+                  <span class="label-icon">
+                  </span>
+                  <span class="label">Order#</span>
+                </div>
+                <div class="field-container">
+                  <mat-form-field [floatLabel]="'never'">
+                    <input matInput [(ngModel)]="sport.order" name="sportOrder" #sportOrder="ngModel" 
+                      placeholder="Order No" required>
+                  </mat-form-field>
+                </div>
+              </div>
+              <div class="input-container">                
+                <div class="label-container">
+                  <span class="label-icon">
+                  </span>
+                  <span class="label">Description</span>
+                </div>
+                <div class="field-container">
+                  <mat-form-field [floatLabel]="'never'">
+                      <textarea matInput [(ngModel)]="sport.description" name="sportDescription" #sportDescription="ngModel"></textarea>
+                  </mat-form-field>
+                </div>
+              </div>
+              <div class="input-container" style="padding: 16px 0">
+                <div class="label-container">
+                  <span class="label-icon">
+                  </span>
+                  <span class="label">Set Theme Color</span>
+                </div>
+                <div class="field-container">
+                  <input type="color" [(ngModel)]="sport.color" name="clubTheme" style="width: 35%;">
+                </div>
+              </div>
+            </mat-card>
+          </div>
+        </div>
+        <mat-card>
+          <div fxLayout="row" fxLayoutAlign="center center" style="margin: 5px">
+            <div *ngIf="!isEdit">
+              <button mat-raised-button class="m-jumbo-button m-pointer" *ngIf="sportForm.form.valid" (click)="createEmailTemplate()">Submit</button>
+              <button mat-raised-button class="m-jumbo-button m-pointer" *ngIf="!sportForm.form.valid" (click)="sportSubmit()">Submit</button>
+            </div>
+            <div *ngIf="isEdit">
+              <button mat-raised-button class="m-jumbo-button m-pointer" (click)="updateEmailTemplate()" *ngIf="sportForm.form.valid">Update</button>
+              <button mat-raised-button class="m-jumbo-button m-pointer" (click)="updateEdit()" *ngIf="!sportForm.form.valid">Update</button>
+            </div>
+            <button mat-raised-button class="m-jumbo-button m-pointer" (click)="cancelEmailTemplate()">Cancel</button>
+          </div>
+        </mat-card>
+      </mat-card-content>
+    </mat-card>
+  </form>
+</div>

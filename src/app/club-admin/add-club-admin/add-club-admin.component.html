@@ -1,0 +1,776 @@
+<div class="m-container">
+  <mat-card class="m-title">
+    <h3>{{ title }}</h3>
+  </mat-card>
+
+  <form *ngIf="isEdit" [formGroup]="form" class="form-horizontal">
+    <mat-card>
+      <mat-card-content>
+        <div fxLayout="row" fxLayoutAlign="space-between">
+          <div fxFlex="49">
+            <mat-card class="childContainer">
+              <div *ngFor="let field of fields | slice : 0 : this.length / 2">
+                <div class="input-container">
+                  <div class="label-container">
+                    <span class="label" [attr.for]="field.field.name">
+                      {{ field.field.label }}</span
+                    >
+                  </div>
+
+                  <div class="field-container" [ngSwitch]="field.field.type">
+                    <mat-form-field
+                      [floatLabel]="'never'"
+                      *ngSwitchCase="'textarea'"
+                    >
+                      <textarea
+                        matInput
+                        placeholder="info"
+                        class="form-control"
+                        [formControlName]="field.field.name"
+                      ></textarea>
+                    </mat-form-field>
+                    <div *ngSwitchCase="'dropdownChecked'">
+                      <!-- <mat-option *ngFor="let athlete of athleteList" [value]="athlete._id" multiple>{{ athlete.name }}</mat-option> -->
+                      <app-search-select
+                        [isDefault]="true"
+                        [dropdownList]="athleteList"
+                        placeHolder="Select Athlete"
+                        [alreadySel]="selectedAthleteId"
+                        [isRequired]="field.required ? true : false"
+                        [isMultiple]="true"
+                        (valueUpdated)="getAthlete($event)"
+                      >
+                      </app-search-select>
+                    </div>
+                    <mat-form-field
+                      [floatLabel]="'never'"
+                      *ngSwitchCase="'text'"
+                    >
+                      <div *ngIf="field.field.name === 'email'">
+                        <input
+                          matInput
+                          type="email"
+                          pattern="^[^\s@]+@[^\s@]+\.[^\s@]{2,}$"
+                          [placeholder]="field.field.label"
+                          class="form-control"
+                          [required]="
+                            field.field.validation.required ? true : false
+                          "
+                          [formControlName]="field.field.name"
+                        />
+                      </div>
+                      <div *ngIf="field.field.name === 'user_name'">
+                        <input
+                          matInput
+                          type="text"
+                          (keydown.space)="$event.preventDefault()"
+                          [placeholder]="field.label"
+                          class="form-control"
+                          [required]="
+                            field.field.validation.required ? true : false
+                          "
+                          [formControlName]="field.field.name"
+                        />
+                      </div>
+                      <div
+                        *ngIf="
+                          field.field.name != 'email' &&
+                          field.field.name !== 'mobile_phone' &&
+                          field.field.name !== 'home_phone' &&
+                          field.field.name !== 'user_name'
+                        "
+                      >
+                        <input
+                          matInput
+                          type="text"
+                          [placeholder]="field.label"
+                          class="form-control"
+                          [required]="
+                            field.field.validation.required ? true : false
+                          "
+                          [formControlName]="field.field.name"
+                        />
+                      </div>
+                      <div *ngIf="field.field.name === 'mobile_phone'">
+                        <!-- <input
+                          matInput
+                          [value]="mobile"
+                          (keyup)="formatMobile($event.target.value)"
+                          [placeholder]="field.field.label"
+                          pattern="^(\([0-9]{3}\) |[0-9]{3}-)[0-9]{3}-[0-9]{4}$"
+                          type="tel"
+                          [required]="
+                            field.field.validation.required ? true : false
+                          "
+                          maxlength="14"
+                          [formControlName]="field.field.name"
+                        /> -->
+                        <input
+                          #ng2TelInput
+                          type="text"
+                          matInput
+                          ng2TelInput
+                          [ng2TelInputOptions]="{
+                            initialCountry: initialCountry,
+                            autoHideDialCode: false,
+                            separateDialCode: true,
+                            formatOnDisplay: true,
+                            excludeCountries: true
+                          }"
+                          (hasError)="hasTelError($event)"
+                          (ng2TelOutput)="getNumber($event)"
+                          (countryChange)="telCountryChange($event)"
+                          [value]="mobile"
+                        />
+                      </div>
+                      <div *ngIf="field.field.name === 'home_phone'">
+                        <input
+                          matInput
+                          [value]="home"
+                          [placeholder]="field.field.label"
+                          type="tel"
+                          pattern="^(\([0-9]{3}\) |[0-9]{3}-)[0-9]{3}-[0-9]{4}$"
+                          (keyup)="formatHome($event.target.value)"
+                          [required]="
+                            field.field.validation.required ? true : false
+                          "
+                          maxlength="14"
+                          [formControlName]="field.field.name"
+                        />
+                      </div>
+                    </mat-form-field>
+                    <mat-form-field
+                      [floatLabel]="'never'"
+                      *ngSwitchCase="'number'"
+                    >
+                      <input
+                        matInput
+                        type="Number"
+                        min="0"
+                        class="form-control"
+                        [required]="
+                          field.field.validation.required ? true : false
+                        "
+                        [formControlName]="field.field.name"
+                      />
+                    </mat-form-field>
+                    <mat-form-field
+                      [floatLabel]="'never'"
+                      *ngSwitchCase="'age'"
+                    >
+                      <input
+                        matInput
+                        (keyup)="validateamount($event.target.value)"
+                        type="text"
+                        min="0"
+                        class="form-control"
+                        [(ngModel)]="age"
+                        [placeholder]="field.field.label"
+                        [ngModelOptions]="{ standalone: true }"
+                        [required]="
+                          field.field.validation.required ? true : false
+                        "
+                      />
+                    </mat-form-field>
+                    <mat-form-field
+                      [floatLabel]="'never'"
+                      *ngSwitchCase="'Tel'"
+                    >
+                    </mat-form-field>
+
+                    <div *ngSwitchCase="'file'">
+                      <div *ngIf="field.field.name === 'profile_image'">
+                        <input
+                          type="file"
+                          style="display: none"
+                          #logoInput
+                          (change)="getClubImage($event)"
+                          #logoprofileInput
+                        />
+                        <mat-form-field
+                          [floatLabel]="'never'"
+                          (click)="logoInput.click()"
+                        >
+                          <input
+                            matInput
+                            placeholder="Upload the Image"
+                            class="m-pointer"
+                            [value]="logo"
+                            disabled
+                          />
+
+                          <img
+                            *ngIf="logo"
+                            [src]="
+                              _DomSanitizationService.bypassSecurityTrustUrl(
+                                club_img
+                              )
+                            "
+                            height="100"
+                          />
+                          <span matSuffix class="m-pointer">
+                            <i class="fas fa-upload"></i>
+                          </span>
+                        </mat-form-field>
+                      </div>
+
+                      <div *ngIf="field.field.name === 'school_logo'">
+                        <input
+                          type="file"
+                          style="display: none"
+                          #logoschoolInput
+                          (change)="school_image($event)"
+                        />
+                        <mat-form-field
+                          [floatLabel]="'never'"
+                          (click)="logoschoolInput.click()"
+                        >
+                          <input
+                            matInput
+                            placeholder="Upload the Image"
+                            class="m-pointer"
+                            [value]="school_image_logo"
+                            disabled
+                          />
+
+                          <img
+                            *ngIf="school_image_logo"
+                            [src]="
+                              _DomSanitizationService.bypassSecurityTrustUrl(
+                                school_img
+                              )
+                            "
+                            height="100"
+                          />
+                          <span matSuffix class="m-pointer">
+                            <i class="fas fa-upload"></i>
+                          </span>
+                        </mat-form-field>
+                      </div>
+                      <div *ngIf="field.field.name === 'college_logo'">
+                        <input
+                          type="file"
+                          style="display: none"
+                          #colloge_logoInput
+                          (change)="getcollegeImage($event)"
+                        />
+                        <mat-form-field
+                          [floatLabel]="'never'"
+                          (click)="colloge_logoInput.click()"
+                        >
+                          <input
+                            matInput
+                            placeholder="Upload the Image"
+                            class="m-pointer"
+                            [value]="college_image"
+                            disabled
+                          />
+
+                          <img
+                            *ngIf="college_image"
+                            [src]="
+                              _DomSanitizationService.bypassSecurityTrustUrl(
+                                college_img
+                              )
+                            "
+                            height="100"
+                          />
+                          <span matSuffix class="m-pointer">
+                            <i class="fas fa-upload"></i>
+                          </span>
+                        </mat-form-field>
+                      </div>
+                    </div>
+
+                    <!-- <div *ngSwitchCase="'boolean'">
+                <div class="field-container">
+                  <mat-checkbox (change)="checkbox1($event)" [checked]="marked" name="isCaptain"></mat-checkbox>
+                </div>
+              </div> -->
+
+                    <div *ngSwitchCase="'dropdown'">
+                      <div *ngIf="field.field.name === 'athlete_of_interest'">
+                        <app-search-select
+                          [isDefault]="true"
+                          [dropdownList]="athleteList"
+                          placeHolder="Select Athlete"
+                          [alreadySel]="selectedAthleteId"
+                          [isMultiple]="true"
+                          [isRequired]=""
+                          (valueUpdated)="getAthlete($event)"
+                        >
+                        </app-search-select>
+                      </div>
+                      <mat-form-field
+                        [floatLabel]="'never'"
+                        *ngIf="field.field.name !== 'athlete_of_interest'"
+                      >
+                        <mat-select
+                          matInput
+                          class="form-control"
+                          [formControlName]="field.field.name"
+                          [required]="
+                            field.field.validation.required ? true : false
+                          "
+                        >
+                          <div *ngIf="field.field.name === 'country'">
+                            <mat-option
+                              *ngFor="let country of countryList"
+                              [value]="country._id"
+                              >{{ country.name }}</mat-option
+                            >
+                          </div>
+
+                          <div *ngIf="field.field.name === 'region'">
+                            <mat-option
+                              *ngFor="let region of regionsList"
+                              [value]="region._id"
+                              >{{ region.name }}</mat-option
+                            >
+                          </div>
+                          <div *ngIf="field.field.name === 'district'">
+                            <mat-option
+                              *ngFor="let district of districtList"
+                              [value]="district._id"
+                              >{{ district.name }}</mat-option
+                            >
+                          </div>
+                          <div *ngIf="field.field.name === 'state'">
+                            <mat-option
+                              *ngFor="let state of stateList"
+                              [value]="state._id"
+                              >{{ state.name }}</mat-option
+                            >
+                          </div>
+                        </mat-select>
+                      </mat-form-field>
+                    </div>
+                  </div>
+                  <div
+                    class="error"
+                    *ngIf="
+                      form.get(field.field.name).invalid &&
+                      (form.get(field.field.name).dirty ||
+                        form.get(field.field.name).touched)
+                    "
+                  >
+                    <div class="error1" *ngIf="field.field.name == 'user_name'">
+                      User name should not contain white Space or special
+                      characters
+                    </div>
+                    <div
+                      class="error1"
+                      *ngIf="field.field.name !== 'user_name'"
+                    >
+                      invalid input
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </mat-card>
+          </div>
+          <div fxFlex="49">
+            <mat-card class="childContainer">
+              <div *ngFor="let field of fields | slice : this.length / 2">
+                <div class="input-container">
+                  <div class="label-container">
+                    <span class="label" [attr.for]="field.field.name">
+                      {{ field.field.label }}</span
+                    >
+                  </div>
+
+                  <div class="field-container" [ngSwitch]="field.field.type">
+                    <mat-form-field
+                      [floatLabel]="'never'"
+                      *ngSwitchCase="'textarea'"
+                    >
+                      <textarea
+                        matInput
+                        placeholder="info"
+                        class="form-control"
+                        [formControlName]="field.field.name"
+                      ></textarea>
+                    </mat-form-field>
+                    <div *ngSwitchCase="'dropdownChecked'">
+                      <!-- <mat-option *ngFor="let athlete of athleteList" [value]="athlete._id" multiple>{{ athlete.name }}</mat-option> -->
+                      <app-search-select
+                        [isDefault]="true"
+                        [dropdownList]="athleteList"
+                        placeHolder="Select Athlete"
+                        [alreadySel]="selectedAthleteId"
+                        [isRequired]="field.required ? true : false"
+                        [isMultiple]="true"
+                        (valueUpdated)="getAthlete($event)"
+                      >
+                      </app-search-select>
+                    </div>
+                    <mat-form-field
+                      [floatLabel]="'never'"
+                      *ngSwitchCase="'text'"
+                    >
+                      <div *ngIf="field.field.name === 'email'">
+                        <input
+                          matInput
+                          type="email"
+                          pattern="^[^\s@]+@[^\s@]+\.[^\s@]{2,}$"
+                          [placeholder]="field.field.label"
+                          class="form-control"
+                          [required]="
+                            field.field.validation.required ? true : false
+                          "
+                          [formControlName]="field.field.name"
+                        />
+                      </div>
+                      <div *ngIf="field.field.name === 'user_name'">
+                        <input
+                          matInput
+                          type="text"
+                          (keydown.space)="$event.preventDefault()"
+                          [placeholder]="field.label"
+                          class="form-control"
+                          [required]="
+                            field.field.validation.required ? true : false
+                          "
+                          [formControlName]="field.field.name"
+                        />
+                      </div>
+                      <div
+                        *ngIf="
+                          field.field.name != 'email' &&
+                          field.field.name !== 'mobile_phone' &&
+                          field.field.name !== 'home_phone' &&
+                          field.field.name !== 'user_name'
+                        "
+                      >
+                        <input
+                          matInput
+                          type="text"
+                          [placeholder]="field.label"
+                          class="form-control"
+                          [required]="
+                            field.field.validation.required ? true : false
+                          "
+                          [formControlName]="field.field.name"
+                        />
+                      </div>
+                      <div *ngIf="field.field.name === 'mobile_phone'">
+                        <!-- <input
+                          matInput
+                          [value]="mobile"
+                          (keyup)="formatMobile($event.target.value)"
+                          [placeholder]="field.field.label"
+                          pattern="^(\([0-9]{3}\) |[0-9]{3}-)[0-9]{3}-[0-9]{4}$"
+                          type="tel"
+                          [required]="
+                            field.field.validation.required ? true : false
+                          "
+                          maxlength="14"
+                          [formControlName]="field.field.name"
+                        /> -->
+                        <input
+                          #ng2TelInput
+                          type="text"
+                          matInput
+                          ng2TelInput
+                          [ng2TelInputOptions]="{
+                            initialCountry: initialCountry,
+                            autoHideDialCode: false,
+                            separateDialCode: true,
+                            formatOnDisplay: true,
+                            excludeCountries: true
+                          }"
+                          (hasError)="hasTelError($event)"
+                          (ng2TelOutput)="getNumber($event)"
+                          (countryChange)="telCountryChange($event)"
+                          [value]="mobile"
+                        />
+                      </div>
+                      <div *ngIf="field.field.name === 'home_phone'">
+                        <input
+                          matInput
+                          [value]="home"
+                          [placeholder]="field.field.label"
+                          type="tel"
+                          pattern="^(\([0-9]{3}\) |[0-9]{3}-)[0-9]{3}-[0-9]{4}$"
+                          (keyup)="formatHome($event.target.value)"
+                          [required]="
+                            field.field.validation.required ? true : false
+                          "
+                          maxlength="14"
+                          [formControlName]="field.field.name"
+                        />
+                      </div>
+                    </mat-form-field>
+                    <mat-form-field
+                      [floatLabel]="'never'"
+                      *ngSwitchCase="'age'"
+                    >
+                      <input
+                        matInput
+                        (keyup)="validateamount($event.target.value)"
+                        type="text"
+                        min="0"
+                        class="form-control"
+                        [(ngModel)]="age"
+                        [placeholder]="field.field.label"
+                        [ngModelOptions]="{ standalone: true }"
+                        [required]="
+                          field.field.validation.required ? true : false
+                        "
+                      />
+                    </mat-form-field>
+                    <mat-form-field
+                      [floatLabel]="'never'"
+                      *ngSwitchCase="'number'"
+                    >
+                      <input
+                        matInput
+                        type="Number"
+                        min="0"
+                        class="form-control"
+                        [required]="
+                          field.field.validation.required ? true : false
+                        "
+                        [formControlName]="field.field.name"
+                      />
+                    </mat-form-field>
+
+                    <mat-form-field
+                      [floatLabel]="'never'"
+                      *ngSwitchCase="'Tel'"
+                    >
+                    </mat-form-field>
+
+                    <div *ngSwitchCase="'file'">
+                      <div *ngIf="field.field.name === 'profile_image'">
+                        <input
+                          type="file"
+                          style="display: none"
+                          #logoInput
+                          (change)="getClubImage($event)"
+                          #logoprofileInput
+                        />
+                        <mat-form-field
+                          [floatLabel]="'never'"
+                          (click)="logoInput.click()"
+                        >
+                          <input
+                            matInput
+                            placeholder="Upload the Image"
+                            class="m-pointer"
+                            [value]="logo"
+                            disabled
+                          />
+
+                          <img
+                            *ngIf="logo"
+                            [src]="
+                              _DomSanitizationService.bypassSecurityTrustUrl(
+                                club_img
+                              )
+                            "
+                            height="100"
+                          />
+                          <span matSuffix class="m-pointer">
+                            <i class="fas fa-upload"></i>
+                          </span>
+                        </mat-form-field>
+                      </div>
+
+                      <div *ngIf="field.field.name === 'school_logo'">
+                        <input
+                          type="file"
+                          style="display: none"
+                          #logoschoolInput
+                          (change)="school_image($event)"
+                        />
+                        <mat-form-field
+                          [floatLabel]="'never'"
+                          (click)="logoschoolInput.click()"
+                        >
+                          <input
+                            matInput
+                            placeholder="Upload the Image"
+                            class="m-pointer"
+                            [value]="school_image_logo"
+                            disabled
+                          />
+
+                          <img
+                            *ngIf="school_image_logo"
+                            [src]="
+                              _DomSanitizationService.bypassSecurityTrustUrl(
+                                school_img
+                              )
+                            "
+                            height="100"
+                          />
+                          <span matSuffix class="m-pointer">
+                            <i class="fas fa-upload"></i>
+                          </span>
+                        </mat-form-field>
+                      </div>
+                      <div *ngIf="field.field.name === 'college_logo'">
+                        <input
+                          type="file"
+                          style="display: none"
+                          #colloge_logoInput
+                          (change)="getcollegeImage($event)"
+                        />
+                        <mat-form-field
+                          [floatLabel]="'never'"
+                          (click)="colloge_logoInput.click()"
+                        >
+                          <input
+                            matInput
+                            placeholder="Upload the Image"
+                            class="m-pointer"
+                            [value]="college_image"
+                            disabled
+                          />
+
+                          <img
+                            *ngIf="college_image"
+                            [src]="
+                              _DomSanitizationService.bypassSecurityTrustUrl(
+                                college_img
+                              )
+                            "
+                            height="100"
+                          />
+                          <span matSuffix class="m-pointer">
+                            <i class="fas fa-upload"></i>
+                          </span>
+                        </mat-form-field>
+                      </div>
+                    </div>
+
+                    <!-- <div *ngSwitchCase="'boolean'">
+                        <div class="field-container">
+                          <mat-checkbox (change)="checkbox1($event)" [checked]="marked" name="isCaptain"></mat-checkbox>
+                        </div>
+                      </div> -->
+
+                    <div *ngSwitchCase="'dropdown'">
+                      <div *ngIf="field.field.name === 'athlete_of_interest'">
+                        <app-search-select
+                          [isDefault]="true"
+                          [dropdownList]="athleteList"
+                          placeHolder="Select Athlete"
+                          [alreadySel]="selectedAthleteId"
+                          [isMultiple]="true"
+                          (valueUpdated)="getAthlete($event)"
+                        >
+                        </app-search-select>
+                      </div>
+                      <mat-form-field
+                        [floatLabel]="'never'"
+                        *ngIf="field.field.name !== 'athlete_of_interest'"
+                      >
+                        <mat-select
+                          matInput
+                          class="form-control"
+                          [formControlName]="field.field.name"
+                          [required]="
+                            field.field.validation.required ? true : false
+                          "
+                        >
+                          <div *ngIf="field.field.name === 'country'">
+                            <mat-option
+                              *ngFor="let country of countryList"
+                              [value]="country._id"
+                              >{{ country.name }}</mat-option
+                            >
+                          </div>
+
+                          <div *ngIf="field.field.name === 'region'">
+                            <mat-option
+                              *ngFor="let region of regionsList"
+                              [value]="region._id"
+                              >{{ region.name }}</mat-option
+                            >
+                          </div>
+                          <div *ngIf="field.field.name === 'district'">
+                            <mat-option
+                              *ngFor="let district of districtList"
+                              [value]="district._id"
+                              >{{ district.name }}</mat-option
+                            >
+                          </div>
+                          <div *ngIf="field.field.name === 'state'">
+                            <mat-option
+                              *ngFor="let state of stateList"
+                              [value]="state._id"
+                              >{{ state.name }}</mat-option
+                            >
+                          </div>
+                        </mat-select>
+                      </mat-form-field>
+                    </div>
+                  </div>
+                  <div
+                    class="error"
+                    *ngIf="
+                      form.get(field.field.name).invalid &&
+                      (form.get(field.field.name).dirty ||
+                        form.get(field.field.name).touched)
+                    "
+                  >
+                    <div class="error1" *ngIf="field.field.name == 'user_name'">
+                      User name should not contain white Space or special
+                      characters
+                    </div>
+                    <div
+                      class="error1"
+                      *ngIf="field.field.name !== 'user_name'"
+                    >
+                      invalid input
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <mat-card>
+                <h3>Athlete Name</h3>
+                <div
+                  *ngFor="let i of this.showAthlete"
+                  style="display: inline-flex; flex-wrap: wrap"
+                >
+                  {{ i.name }}, &nbsp;
+                </div>
+              </mat-card>
+            </mat-card>
+          </div>
+        </div>
+        <mat-card>
+          <div fxLayout="row" fxLayoutAlign="center center" style="margin: 5px">
+            <div *ngIf="isEdit">
+              <button
+                mat-raised-button
+                class="m-jumbo-button m-pointer"
+                (click)="checkUNvalid()"
+                *ngIf="form.valid"
+              >
+                Update
+              </button>
+              <button
+                mat-raised-button
+                class="m-jumbo-button m-pointer"
+                (click)="updateEdit()"
+                *ngIf="!form.valid"
+              >
+                Update
+              </button>
+            </div>
+            <button
+              mat-raised-button
+              class="m-jumbo-button m-pointer"
+              (click)="cancelChanges()"
+            >
+              Cancel
+            </button>
+          </div>
+        </mat-card>
+      </mat-card-content>
+    </mat-card>
+  </form>
+</div>

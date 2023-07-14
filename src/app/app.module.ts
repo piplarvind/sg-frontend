@@ -50,6 +50,7 @@ import { ProfileTypeModule } from '@app/profile-type/profile-type.module';
 import { SubscriptionsModule } from '@app/subscriptions/subscriptions.module';
 import { FeesCollectionModule } from './fees-collection/fees-collection.module';
 import { SettingsModule } from '@app/settings/settings.module';
+import { ClubAdminModule } from '@app/club-admin/club-admin.module';
 
 import { JwtInterceptor } from './core/http/jwt.interceptor';
 import { CmsPageModule } from './cms-page/cms-page.module';
@@ -94,6 +95,7 @@ import { CmsPageModule } from './cms-page/cms-page.module';
     FeedsModule,
     FeesCollectionModule,
     SettingsModule,
+    ClubAdminModule,
     // AngularFireModule.initializeApp(environment.firebase),
     // AngularFireDatabaseModule,
     // AngularFireAuthModule,

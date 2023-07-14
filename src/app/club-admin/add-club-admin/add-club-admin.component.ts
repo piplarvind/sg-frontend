@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { TeamsService } from '@app/teams/teams.service';
 import { ClubsService } from '@app/clubs/clubs.service';
 import { UsersService } from '@app/users/users.service';
@@ -9,6 +9,7 @@ import { ResourceService } from '@app/resource/resource.service';
 import { DomSanitizer } from '@angular/platform-browser';
 import { environment } from '../../../environments/environment';
 import { UntypedFormGroup, UntypedFormControl, FormBuilder } from '@angular/forms';
+import cbp from 'country_by_phone';
 import { ProfilesService } from '@app/profiles/profiles.service';
 import {
   HttpClient,
@@ -18,16 +19,18 @@ import {
   HttpEventType
 } from '@angular/common/http';
 @Component({
-  selector: 'app-addrecruiter',
-  templateUrl: './addrecruiter.component.html',
-  styleUrls: ['./addrecruiter.component.scss']
+  selector: 'app-add-club-admin',
+  templateUrl: './add-club-admin.component.html',
+  styleUrls: ['./add-club-admin.component.scss']
 })
-export class AddrecruiterComponent implements OnInit {
+export class AddClubAdminComponent implements OnInit {
   showAthlete: any = [];
   age: any = '';
-  title = 'Create Recruiter';
+  title = 'Create Club Admin';
   length: any;
-  mobile: string = '';
+  initialCountry: string = "us";
+  phone_code: string = "+1";
+  mobile: string = "";
   college_image: any = '';
   college_img: any;
   school_image_logo: any = '';
@@ -55,7 +58,7 @@ export class AddrecruiterComponent implements OnInit {
     profile_fields: []
   };
   athleteList: Array<any>;
-  editRecruiterId: any;
+  profileId: any;
   constructor(
     private teamService: TeamsService,
     private clubService: ClubsService,
@@ -69,11 +72,13 @@ export class AddrecruiterComponent implements OnInit {
     public ProfilesService: ProfilesService
   ) {}
 
+  @ViewChild('ng2TelInput', { static: true }) ng2TelInput: ElementRef<HTMLInputElement>;
+
   ngOnInit() {
     if (this.router.url !== '/recruiter/add') {
       this.activeRouteSubscriber = this.activatedRoute.queryParams.subscribe(
         param => {
-          this.editRecruiterId = param.recruiterId;
+          this.profileId = param.profileId;
           this.type = param.type;
         }
       );
@@ -82,16 +87,16 @@ export class AddrecruiterComponent implements OnInit {
       this.getDistricts();
       this.getAllRegions();
       this.getAllAthletes();
-      this.getOneRecruiter(this.editRecruiterId);
+      this.getOneClubAdmin(this.profileId);
     }
   }
 
-  getOneRecruiter(id: any) {
+  getOneClubAdmin(id: any) {
     this.sharedService.showLoader = true;
 
-    this.title = 'Edit Recruiter';
+    this.title = 'Edit Club Admin';
 
-    this.ProfilesService.fetchOneUser(id, 'cms_recruiter', this.type)
+    this.ProfilesService.fetchOneUser(id, 'cms_profile', this.type)
       .then((e: any) => {
         this.sharedService.showLoader = false;
 
@@ -121,8 +126,13 @@ export class AddrecruiterComponent implements OnInit {
             const countryId = this.fields[i].value;
             this.getStates(countryId);
           }
+          if (prop === "phone_code" && this.fields[i].value) {
+            this.phone_code = this.fields[i].value;
+            this.initialCountry = this.getCountryIso2();
+          }
           if (prop === 'mobile_phone' && this.fields[i].value.length > 5) {
-            this.mobile = this.inputChanged(this.fields[i].value);
+            // this.mobile = this.inputChanged(this.fields[i].value);
+            this.mobile = this.fields[i].value;
           }
           if (prop === 'home_phone' && this.fields[i].value.length > 5) {
             this.home = this.inputChanged(this.fields[i].value);
@@ -157,6 +167,7 @@ export class AddrecruiterComponent implements OnInit {
 
         if (this.form.get('mobile_phone')) {
           this.form.get('mobile_phone').setValue(this.mobile);
+          this.initialCountry = this.getCountryIso2();
         }
         if (this.form.get('home_phone')) {
           this.form.get('home_phone').setValue(this.home);
@@ -237,6 +248,13 @@ export class AddrecruiterComponent implements OnInit {
     var arr2 = Object.values(this.form.value);
 
     for (let i = 0; i < this.fields.length; i++) {
+      if (this.fields[i].name === "phone_code") {
+        this.createfield.push({
+          field: this.fields[i]._id,
+          value: this.extraxtNo(this.phone_code),
+          // value: this.extraxtNo(this.fields[i].value.number)
+        });
+      }
       if (this.fields[i].field.name === 'mobile_phone') {
         this.createfield.push({
           field: this.fields[i].field._id,
@@ -303,12 +321,12 @@ export class AddrecruiterComponent implements OnInit {
     this.data.profile_fields = this.createfield;
 
     this.sharedService.showLoader = true;
-    this.ProfilesService.editProfile(this.editRecruiterId, this.data)
+    this.ProfilesService.editProfile(this.profileId, this.data)
       .then((e: any) => {
         this.sharedService.showLoader = false;
-        this.sharedService.showMessage('Recruiter successfully Updated');
+        this.sharedService.showMessage('Club admin successfully updated');
 
-        this.router.navigateByUrl('/recruiter');
+        this.router.navigateByUrl('/club-admins');
       })
       .catch((err: any) => {
         this.sharedService.showLoader = false;
@@ -353,7 +371,7 @@ export class AddrecruiterComponent implements OnInit {
         });
         this.athleteList = newres;
 
-        if (this.selectedAthleteId.length >= 0 && this.isEdit) {
+        if (this.selectedAthleteId?.length >= 0 && this.isEdit) {
           const arr = [];
           for (let i = 0; i < newres.length; i++) {
             for (let j = 0; j < this.selectedAthleteId.length; j++) {
@@ -603,4 +621,42 @@ export class AddrecruiterComponent implements OnInit {
       this.age = phoneNo;
     }, 0);
   }
+
+  telCountryChange(country: any) {
+    // this.phone_code = country.dialCode;
+    this.phone_code = country.dialCode;
+    // this.initialCountry = country.iso2
+    this.mobile = "";
+  }
+
+  getNumber(e: any) {
+    // this.mobile = e
+    const dialCode = this.phone_code;
+    const numberWithoutDialCode = e.startsWith(dialCode) ? e.slice(dialCode.length) : e;
+    this.mobile = numberWithoutDialCode;
+    console.log("e", e);
+    console.log('this.mobile', this.mobile);
+  }
+
+  hasTelError(obj) {
+    console.log("hasError: ", obj);
+  }
+
+  getCountryIso2() {
+    return cbp.getIso2(this.phone_code).toLowerCase();
+  }
+
+  getFormattedNumberAndCountry() {
+    const intlTelInput = (this.ng2TelInput.nativeElement as any).intlTelInput;
+    const number = intlTelInput.getNumber();
+    const countryData = intlTelInput.getSelectedCountryData();
+
+    if (number && countryData) {
+      const dialCode = countryData.dialCode;
+      const numberWithoutDialCode = number.startsWith(dialCode) ? number.slice(dialCode.length) : number;
+      this.mobile = numberWithoutDialCode;
+      this.phone_code = dialCode;
+    }
+  }
+
 }

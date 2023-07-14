@@ -1,20 +1,20 @@
 import { ComponentFixture, TestBed, waitForAsync   } from '@angular/core/testing';
 
-import { AddrecruiterComponent } from './addrecruiter.component';
+import { EmailTemplatesComponent } from '@app/email-templates/sports.component';
 
-describe('AddrecruiterComponent', () => {
-  let component: AddrecruiterComponent;
-  let fixture: ComponentFixture<AddrecruiterComponent>;
+describe('EmailTemplatesComponent', () => {
+  let component: EmailTemplatesComponent;
+  let fixture: ComponentFixture<EmailTemplatesComponent>;
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      declarations: [ AddrecruiterComponent ]
+      declarations: [ EmailTemplatesComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(AddrecruiterComponent);
+    fixture = TestBed.createComponent(EmailTemplatesComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

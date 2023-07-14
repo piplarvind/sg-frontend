@@ -33,6 +33,10 @@ const routes: Routes = [
       loadChildren: () => import('app/recruiter/recruiter.module').then(m => m.RecruiterModule)
     },
     {
+      path: 'club-admins',
+      loadChildren: () => import('app/club-admin/club-admin.module').then(m => m.ClubAdminModule)
+    },
+    {
       path: 'training',
       loadChildren: () => import('app/training/training.module').then(m => m.TrainingModule)
     },
