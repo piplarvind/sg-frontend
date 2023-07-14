@@ -153,7 +153,7 @@
               <span class="m-table-header "> Status </span>
             </mat-header-cell>
             <mat-cell *matCellDef="let element; let i = index">
-              <button
+              <!-- <button
                 (click)="deleteClub(element)"
                 [class]="element.active ? 'inactive' : 'active'"
                 ng-hide="element.active=false"
@@ -161,7 +161,12 @@
                 <div ng-hide="element.active">
                   {{ getStatus(element.active) }}
                 </div>
-              </button>
+              </button> -->
+              <mat-slide-toggle
+                [(ngModel)]="element.active"
+                [checked]="element.active ? 'true' : 'false'"
+                (click)="changeStatus($event, element)"
+              ></mat-slide-toggle>
             </mat-cell>
           </ng-container>
 

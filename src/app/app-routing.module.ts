@@ -13,6 +13,10 @@ const routes: Routes = [
       path: 'profile_type',
       loadChildren: () => import('app/profile-type/profile-type.module').then(m => m.ProfileTypeModule)
     },
+    {
+      path: 'email-templates',
+      loadChildren: () => import('app/email-templates/email-templates.module').then(m => m.EmailTemplateModule)
+    },
     { path: 'about', loadChildren: () => import('app/about/about.module').then(m => m.AboutModule) },
     { path: 'users', loadChildren: () => import('app/users/users.module').then(m => m.UsersModule) },
     { path: 'clubs', loadChildren: () => import('app/clubs/clubs.module').then(m => m.ClubsModule) },

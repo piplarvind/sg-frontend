@@ -14,6 +14,7 @@ import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { take } from 'rxjs/operators';
 import { ClubsService } from '@app/clubs/clubs.service';
 import { SharedService } from '@app/shared/shared.service';
+import { MatSlideToggleChange } from '@angular/material/slide-toggle';
 @Component({
   selector: 'app-clubs',
   templateUrl: './clubs.component.html',
@@ -218,4 +219,23 @@ export class ClubsComponent implements OnInit, AfterViewInit {
       this.buttontext = 'Show Inactive';
     }
   }
+
+  changeStatus(event: MatSlideToggleChange, row:any) {
+    this.sharedService
+      .showDialog('Are you sure you want to change this status?')
+      .subscribe(response => {
+        if (response !== '') {
+          this.sharedService.showLoader = true;
+          const reqObj = {
+            active: row.active
+          };
+          this.clubService.changeClubStatus(row._id, reqObj).then((e: any) => {
+            this.sharedService.showLoader = false;
+            this.getAllClubs();
+            this.sharedService.showMessage(e.message);
+          });
+        }
+      });
+  }
+
 }

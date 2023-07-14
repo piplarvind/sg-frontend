@@ -25,6 +25,16 @@
         </a>
         <mat-divider *ngIf="user_role === 'Super Admin' || user_role === 'Platform Admin'">
         </mat-divider>
+        
+        <mat-divider *ngIf="user_role !== 'Coach'"></mat-divider>
+
+        <a mat-list-item routerLink="/email-templates" routerLinkActive="active" (click)="panelClose(panel1, panel2)"
+          *ngIf="user_role === 'Super Admin' || user_role === 'Platform Admin'">
+          <i class="material-icons">email</i>&nbsp;&nbsp;
+          <span>Email Templates</span>
+        </a>
+        <mat-divider *ngIf="user_role === 'Super Admin' || user_role === 'Platform Admin'">
+        </mat-divider>
 
         <a mat-list-item routerLink="/sports" routerLinkActive="active" (click)="panelClose(panel1, panel2)"
           *ngIf="user_role === 'Super Admin' || user_role === 'Platform Admin'">
@@ -236,6 +246,15 @@
             user_role === 'Platform Admin' ||
             user_role === 'Super Admin'
           "></mat-divider>
+
+          <a mat-list-item routerLink="/supper-admins" routerLinkActive="active" *ngIf="
+            user_role === 'Super Admin' ||
+            user_role === 'Platform Admin'
+          ">
+            <i class="material-icons">portrait</i>&nbsp;&nbsp;
+            <span>Super Admins</span>
+          </a>
+
         </mat-expansion-panel>
 
         <a mat-list-item routerLink="/resources" routerLinkActive="active" (click)="panelClose(panel1, panel2)" *ngIf="

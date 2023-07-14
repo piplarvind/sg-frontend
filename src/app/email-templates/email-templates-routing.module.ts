@@ -1,19 +1,18 @@
 import { NgModule } from '@angular/core';
-import { Routes, RouterModule } from '@angular/router';
+import { RouterModule, Routes } from '@angular/router';
+import { EmailTemplateComponent } from './email-templates.component';
 import { extract } from '@app/core';
-
-import { EmailTemplatesComponent } from '@app/email-templates/sports.component';
-import { AddEmailTemplateComponent } from '@app/email-templates/add-email-template/add-email-template.component';
+import { AddEmailTemplateComponent } from './add-email-template/add-email-template.component';
 
 const routes: Routes = [
-  { path: '', component: EmailTemplatesComponent, data: { title: extract('EmailTemplates') } },
-  { path: 'add', component: AddEmailTemplateComponent, data: { title: extract('Add EmailTemplate') } },
-  { path: 'edit/:id', component: AddEmailTemplateComponent, data: { title: extract('Edit EmailTemplate') } }
+  {
+    path: '', component: EmailTemplateComponent, data: { title: extract('Email Templates') }
+  },
+  { path: 'edit', component: AddEmailTemplateComponent, data: { title: extract('Edit Email Template') } }
 ];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule],
-  providers: []
+  exports: [RouterModule]
 })
-export class EmailTemplatesRoutingModule { }
+export class EmailTemplateRoutingModule { }

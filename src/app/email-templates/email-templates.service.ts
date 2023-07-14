@@ -1,113 +1,80 @@
-import { Injectable } from "@angular/core";
-import { HttpClient, HttpHeaders } from "@angular/common/http";
+import { HttpClient } from '@angular/common/http';
+import { Injectable } from '@angular/core';
 
-@Injectable()
-export class EmailTemplatesService {
-  curEmailTemplate: any = {};
-  createEmailTemplate = "sports/";
-  getEmailTemplates = "sports/";
-  getActiveEmailTemplates = "sports/active";
-  editEmailTemplate = "sports/";
-  deleteEmailTemplate = "sports/";
-  fetchOneEmailTemplate = "sports/";
-  getCountries = "lookup/country";
-  getAllState = "lookup/state?filter=";
-  allregions = "lookup/region";
-  getDistrictsList = "lookup/district";
-  clubadminRoles = "profiles/?club=5";
-  getAllAthleteEmailTemplateFees = "sports/athleteclubfee/";
-  // headers = new HttpHeaders({
-  //   'Content-Type': 'application/json',
-  //   Authorization: localStorage.token
-  // });
+@Injectable({
+  providedIn: 'root'
+})
+export class EmailTemplateService {
 
-  constructor(public http: HttpClient) {}
+  getEmailTemplates = 'email-templates/';
+  editEmailTemplate = 'email-templates/';
+  fetchOneEmailTemplate = 'email-templates/';
+  changeStatus = 'email-templates/';
 
-  getOneEmailTemplate(id: any) {
+  constructor(public http: HttpClient) { }
+  
+  allPEmailTemplates(skip, limit) {
+    return this.http.get(
+      this.getEmailTemplates +
+        '?skip=' +
+        skip +
+        '&limit=' +
+        limit
+    );
+  }
+
+  getEmailTemplate(credentials: any) {
+    return this.http.get(this.getEmailTemplates + credentials._id);
+  }
+
+  updatingEmailTemplate(credentials: any) {
+    return this.http.put(this.editEmailTemplate + credentials._id, credentials);
+  }
+
+  getOneEmailTemplate(subscribersID: any) {
     return new Promise((resolve, reject) => {
-      this.http.get(this.fetchOneEmailTemplate + id).subscribe(
+      this.http.get(this.fetchOneEmailTemplate + subscribersID).subscribe(
         (res: any) => {
           resolve(res);
         },
-        (err) => {
+        err => {
           reject(err);
         }
       );
     });
   }
 
-  newEmailTemplate(credentials: any) {
+  getSortedEmailTemplate(skip, limit, sort) {
+    return this.http.get(
+      this.getEmailTemplates +
+        '?skip=' +
+        skip +
+        '&limit=' +
+        limit +
+        '&sort=' +
+        sort
+    );
+  }
+
+  chnageStatusEmailTemplate(credentials: any, obj: any) {
+    //console.log('obj', obj);
     return new Promise((resolve, reject) => {
-      console.log(credentials);
-      const newFormData = this.transformRequest(credentials);
-      // this.http.post(this.createEmailTemplate, credentials).subscribe(
-      this.http.post(this.createEmailTemplate, newFormData).subscribe(
+      this.http.patch(this.changeStatus + credentials, obj).subscribe(
         (res: any) => {
           resolve(res);
         },
-        (err) => {
-          reject(err);
-        }
-      );
-    });
-  }
-  getEmailTemplateList1(skip, limit) {
-    return new Promise((resolve, reject) => {
-      this.http
-        .get(this.getEmailTemplates + "?skip=" + skip + "&limit=" + limit)
-        .subscribe(
-          (res: any) => {
-            resolve(res);
-          },
-          (err) => {
-            reject(err);
-          }
-        );
-    });
-  }
-  getSortedEmailTemplate(url) {
-    return new Promise((resolve, reject) => {
-      this.http.get(this.getEmailTemplates + url).subscribe(
-        (res: any) => {
-          resolve(res);
-        },
-        (err) => {
-          reject(err);
-        }
-      );
-    });
-  }
-  getEmailTemplateList() {
-    return new Promise((resolve, reject) => {
-      this.http.get(this.getEmailTemplates).subscribe(
-        (res: any) => {
-          resolve(res);
-        },
-        (err) => {
+        err => {
           reject(err);
         }
       );
     });
   }
 
-  getActiveEmailTemplateList() {
-    return new Promise((resolve, reject) => {
-      this.http.get(this.getActiveEmailTemplates).subscribe(
-        (res: any) => {
-          resolve(res);
-        },
-        (err) => {
-          reject(err);
-        }
-      );
-    });
-  }
-
-  getAllEmailTemplateList(skip, limit) {
+  getInactiveEmailTemplateList(skip, limit) {
     return new Promise((resolve, reject) => {
       this.http
         .get(
-          this.getEmailTemplates + "?active=false&skip=" + skip + "&limit=" + limit
+          this.getEmailTemplates + "?" + "active=false&skip=" + skip + "&limit=" + limit
         )
         .subscribe(
           (res: any) => {
@@ -120,101 +87,5 @@ export class EmailTemplatesService {
     });
   }
 
-  transformRequest(j: any) {
-    const formDataTemp = new FormData();
-    for (const p in j) {
-      if (p) {
-        formDataTemp.append(p, j[p]);
-      }
-    }
-    return formDataTemp;
-  }
-
-  updateEmailTemplate(sport, credentials: any) {
-    const tempHeaders = {
-      Authorization: localStorage.getItem("token"),
-    };
-    const newFormData = this.transformRequest(credentials);
-    return new Promise((resolve, reject) => {
-      this.http
-        .put(this.editEmailTemplate + sport, newFormData, {
-          headers: tempHeaders,
-        })
-        .subscribe(
-          (res: any) => {
-            resolve(res);
-          },
-          (err) => {
-            reject(err);
-          }
-        );
-    });
-  }
-
-  removeEmailTemplate(credentials: any, obj: any) {
-    //console.log('obj', obj);
-    return new Promise((resolve, reject) => {
-      this.http.delete(this.deleteEmailTemplate + credentials, obj).subscribe(
-        (res: any) => {
-          resolve(res);
-        },
-        (err) => {
-          reject(err);
-        }
-      );
-    });
-  }
-
-  extraxtNo(e: any) {
-    if (e !== "") {
-      e = e.replace(/[^A-Z0-9]+/gi, "");
-      return e;
-    }
-  }
-
-  getAllCountries() {
-    return this.http.get(this.getCountries);
-  }
-  getStates(countryId: any) {
-    return this.http.get(this.getAllState + countryId);
-  }
-
-  getDistricts() {
-    return this.http.get(this.getDistrictsList);
-  }
-
-  getRegions() {
-    return this.http.get(this.allregions);
-  }
-  getClubadmin(club_id) {
-    return new Promise((resolve, reject) => {
-      this.http
-        .post(this.clubadminRoles + club_id + "&type=Club_Admin", {})
-        .subscribe(
-          (res: any) => {
-            resolve(res);
-          },
-          (err) => {
-            reject(err);
-          }
-        );
-    });
-  }
-
-  getfilterEmailTemplate(value) {
-    return new Promise((resolve, reject) => {
-      this.http.get(this.getEmailTemplates + value).subscribe(
-        (res: any) => {
-          resolve(res);
-        },
-        (err) => {
-          reject(err);
-        }
-      );
-    });
-  }
-
-  getAthleteEmailTemplateFeeList(athleteId: any, type: any) {
-    return this.http.get(this.getAllAthleteEmailTemplateFees + athleteId);
-  }
+  
 }

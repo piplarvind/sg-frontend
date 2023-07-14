@@ -17,6 +17,7 @@ export class ClubsService {
   getSportsList = "sports/active";
   clubadminRoles = "profiles/?club=5";
   getAllAthleteClubFees = "clubs/athleteclubfee/";
+  changeStatus = 'clubs/';
   headers = new HttpHeaders({
     'Content-Type': 'application/json',
     Authorization: localStorage.token
@@ -154,7 +155,7 @@ export class ClubsService {
   removeClub(credentials: any, obj: any) {
     //console.log("obj", obj);
     return new Promise((resolve, reject) => {
-      this.http.patch(this.deleteClub + credentials, obj).subscribe(
+      this.http.delete(this.deleteClub + credentials, obj).subscribe(
         (res: any) => {
           resolve(res);
         },
@@ -220,4 +221,19 @@ export class ClubsService {
   getAthleteClubFeeList(athleteId: any, type: any) {
     return this.http.get(this.getAllAthleteClubFees + athleteId);
   }
+
+  changeClubStatus(credentials: any, obj: any) {
+    //console.log('obj', obj);
+    return new Promise((resolve, reject) => {
+      this.http.patch(this.changeStatus + credentials, obj).subscribe(
+        (res: any) => {
+          resolve(res);
+        },
+        err => {
+          reject(err);
+        }
+      );
+    });
+  }
+
 }

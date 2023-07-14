@@ -7,6 +7,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
+import { MatSlideToggleChange } from '@angular/material/slide-toggle';
 
 @Component({
   selector: 'app-cms-page',
@@ -215,19 +216,20 @@ export class CmsPageComponent implements OnInit {
     this.router.navigate(['/cms-pages/edit']);
   }
 
-  changeStatus(row:any) {
+  changeStatus(event: MatSlideToggleChange, row:any) {
+    const originalValue = row.active;
     this.sharedService
       .showDialog('Are you sure you want to change this status?')
       .subscribe(response => {
         if (response !== '') {
           this.sharedService.showLoader = true;
           const reqObj = {
-            active: !row.active
+            active: row.active
           };
           this.cmsPageService.chnageStatusCMSPage(row._id, reqObj).then((e: any) => {
             this.sharedService.showLoader = false;
             this.getAllCMSPages();
-            this.buttontext = 'Show Inactive';
+            // this.buttontext = 'Show Inactive';
             this.sharedService.showMessage(e.message);
           });
         }

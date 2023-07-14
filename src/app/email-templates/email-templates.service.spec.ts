@@ -1,15 +1,16 @@
-import { TestBed, inject } from '@angular/core/testing';
+import { TestBed } from '@angular/core/testing';
 
-import { EmailTemplatesService } from '@app/email-templates/sports.service';
+import { EmailTemplateService } from './email-templates.service';
 
-describe('EmailTemplatesService', () => {
+describe('EmailTemplateService', () => {
+  let service: EmailTemplateService;
+
   beforeEach(() => {
-    TestBed.configureTestingModule({
-      providers: [EmailTemplatesService]
-    });
+    TestBed.configureTestingModule({});
+    service = TestBed.inject(EmailTemplateService);
   });
 
-  it('should be created', inject([EmailTemplatesService], (service: EmailTemplatesService) => {
+  it('should be created', () => {
     expect(service).toBeTruthy();
-  }));
+  });
 });

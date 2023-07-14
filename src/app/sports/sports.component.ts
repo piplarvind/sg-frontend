@@ -199,13 +199,13 @@ export class SportsComponent implements OnInit, AfterViewInit {
           };
           this.sportService.updateSport(row._id, reqObj).then((e: any) => {
             this.sharedService.showLoader = false;
-            if (row.active) {
-              this.getAllSports();
-              this.buttontext = 'Show Inactive';
-            } else {
-              this.getActiveSports();
-              this.buttontext = 'Show Active';
-            }
+            // if (row.active) {
+            //   this.getAllSports();
+            //   this.buttontext = 'Show Inactive';
+            // } else {
+            //   this.getActiveSports();
+            //   this.buttontext = 'Show Active';
+            // }
             this.sharedService.showMessage(e.message);
           });
         }

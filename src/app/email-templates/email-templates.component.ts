@@ -1,36 +1,27 @@
-import {
-  Component,
-  OnInit,
-  ViewChild,
-  AfterViewInit,
-  ViewContainerRef
-} from '@angular/core';
-import { Routes, RouterModule, ActivatedRoute, Router } from '@angular/router';
-import { environment } from 'environments/environment';
-import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
+import { EmailTemplateService } from './email-templates.service';
+import { Router } from '@angular/router';
+import { SharedService } from '../shared/shared.service';
+import { SeasonsService } from '@app/seasons/seasons.service';
+import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
-import { MatTableDataSource, MatTableModule } from '@angular/material/table';
-import { MatPaginatorModule } from '@angular/material/paginator';
-import { take } from 'rxjs/operators';
-import { EmailTemplatesService } from '@app/email-templates/sports.service';
-import { SharedService } from '@app/shared/shared.service';
+import { MatTableDataSource } from '@angular/material/table';
 import { MatSlideToggleChange } from '@angular/material/slide-toggle';
+
 @Component({
-  selector: 'app-sports',
-  templateUrl: './sports.component.html',
-  styleUrls: ['./sports.component.scss']
+  selector: 'app-email-template',
+  templateUrl: './email-templates.component.html',
+  styleUrls: ['./email-templates.component.scss']
 })
-export class EmailTemplatesComponent implements OnInit, AfterViewInit {
-  keyup: boolean = false;
-  editEmailTemplateData: any = {};
-  buttontext: any;
-  active: any = false;
-  fetchAll: Boolean;
-  sportId: any;
-  activeRouteSubscriber: any;
-  // status: Boolean;
-  tabledataloaded: boolean = false;
+export class EmailTemplateComponent implements OnInit {
+
+  dataSource = new MatTableDataSource();
+  displayedColumns: any = [
+    'subject',
+    'active',
+    'Actions'
+  ];
   limit: number = 100;
   skip: number = 0;
   totalLength: number = 0;
@@ -38,110 +29,171 @@ export class EmailTemplatesComponent implements OnInit, AfterViewInit {
   pageIndex: number = 0;
   pageLimit: number[] = [5, 10, 25, 50, 100];
   tabledata: any = [];
-  dataSource = new MatTableDataSource();
-  displayedColumns: any = [
-    'sport_name',
-    'order',
-    'created_at',
-    'createdBy',
-    'active',
-    'Actions'
-  ];
-  user_role: any;
-  @ViewChild(MatPaginatorModule)
-  paginator: MatPaginatorModule;
+  buttontext:any;
+
+  @ViewChild(MatPaginator)
+  paginator: MatPaginator;
   @ViewChild(MatSort)
   sort: MatSort;
+
   constructor(
+    private emailTemplateService: EmailTemplateService,
     private router: Router,
     public dialog: MatDialog,
-    vcr: ViewContainerRef,
-    public sportService: EmailTemplatesService,
-    public sharedService: SharedService,
-    public activateRoute: ActivatedRoute
-  ) {}
-  ngOnInit() {
-    this.buttontext = 'Show Inactive';
-    this.user_role = localStorage.user_role;
-    this.getActiveEmailTemplates();
-    // this.getAllEmailTemplates();
+    private sharedService: SharedService,
+    public seasonService: SeasonsService
+  ) { }
 
-    if (
-      localStorage.user_role === `${environment.Super_Admin}` ||
-      localStorage.user_role === `${environment.Platform_Admin}`
-    ) {
-      this.sportId = localStorage.super_cur_sport;
-      const season = localStorage.curRunningSeason;
+  ngOnInit(): void {
+    this.buttontext = 'Show Inactive';
+    this.getAllEmailTemplates();
+  }
+
+  getAllEmailTemplates() {
+    this.sharedService.showLoader = true;
+    let data;
+    this.emailTemplateService.allPEmailTemplates(this.skip, this.limit).subscribe(
+      (result: any) => {
+        this.sharedService.showLoader = false;
+        console.log('result', result);
+        const newres = result.data.map(prop => {
+          let created = {
+              fname: '',
+              lname: ''
+            },
+            subscriptions_name: any = '';
+
+          if (prop.createdBy) {
+            if (prop.createdBy.profile_fields) {
+              for (let i = 0; i < prop.createdBy.profile_fields.length; i++) {
+                if (prop.createdBy.profile_fields[i].field) {
+                  if (
+                    prop.createdBy.profile_fields[i].field.name === 'first_name'
+                  ) {
+                    created.fname = prop.createdBy.profile_fields[i].value;
+                  }
+                  if (
+                    prop.createdBy.profile_fields[i].field.name === 'last_name'
+                  ) {
+                    created.lname = prop.createdBy.profile_fields[i].value;
+                  }
+                }
+              }
+            }
+          }
+          
+          return {
+            ...prop,
+            name: prop.name,
+            createdBy: created.fname + ' ' + created.lname
+          };
+        });
+        this.tabledata = newres;
+
+        result.data = this.tabledata;
+
+        data = result;
+
+        this.dataSource.data = data['data'];
+        if (this.totalLength === 0 || this.totalLength !== data['pagination']) {
+          this.totalLength = data['pagination'];
+        }
+      },
+      (err: any) => {
+        console.log(err);
+      }
+    );
+  }
+
+  getStatus(status: boolean) {
+    if (status) {
+      return 'ACTIVE';
     } else {
-      this.sportId = localStorage.dbName;
+      return 'INACTIVE';
     }
   }
 
-  namesort(event) {
+  ShowAll(event: any) {
+    if (this.buttontext === 'Show Inactive') {
+      this.buttontext = 'Show Active';
+
+      this.getInactiveEmailTemplates();
+    } else {
+      this.getAllEmailTemplates();
+      this.buttontext = 'Show Inactive';
+    }
+  }
+
+  getInactiveEmailTemplates() {
+    this.sharedService.showLoader = true;
+    const hashedId = localStorage.dbName;
+
+    this.emailTemplateService
+      .getInactiveEmailTemplateList(this.skip, this.limit)
+      .then((res: any) => {
+        this.dataSource.data = res['data'];
+        if (this.totalLength === 0 || this.totalLength !== res['pagination']) {
+          this.totalLength = res['pagination'];
+        }
+
+        this.sharedService.showLoader = false;
+      })
+      .catch((err: any) => {});
+  }
+
+  titleSort(event) {
     let value;
     if (event.direction === 'desc') {
       value = '-' + event.active;
     } else {
       value = event.active;
     }
-
-    let url = '?skip=' + this.skip + '&limit=' + this.limit + '&sort=' + value;
-    if (this.buttontext === 'Show Active') {
-      url =
-        '?active=false&skip=' +
-        this.skip +
-        '&limit=' +
-        this.limit +
-        '&sort=' +
-        value;
-    }
     let data;
-    this.sportService.getSortedEmailTemplate(url).then((res: any) => {
-      data = res;
-      this.dataSource.data = data['data'];
-      this.tabledataloaded = true;
-    });
-  }
+    this.emailTemplateService
+      .getSortedEmailTemplate(this.skip, this.limit, value)
+      .subscribe((res: any) => {
+        const newres = res.data.map(prop => {
+          let created = {
+              fname: '',
+              lname: ''
+            },
+            subscriptions_name: any = '';
+          if (prop.createdBy) {
+            if (prop.createdBy.profile_fields) {
+              for (let i = 0; i < prop.createdBy.profile_fields.length; i++) {
+                if (prop.createdBy.profile_fields[i].field) {
+                  if (
+                    prop.createdBy.profile_fields[i].field.name === 'first_name'
+                  ) {
+                    created.fname = prop.createdBy.profile_fields[i].value;
+                  }
+                  if (
+                    prop.createdBy.profile_fields[i].field.name === 'last_name'
+                  ) {
+                    created.lname = prop.createdBy.profile_fields[i].value;
+                  }
+                }
+              }
+            }
+          }
+    
+          return {
+            ...prop,
+            name: prop.name,
+            createdBy: created.fname + ' ' + created.lname
+          };
+        });
+        this.tabledata = newres;
 
-  ngAfterViewInit() { }
-  
-  public doFilter = (event: Event) => {
-    if (event['keyCode'] === 13) {
-      //  value can't be send with white space in url
-      let value = event.target['value'];
-      value = value.split(' ').join('_');
-      let url = '?searchBy=sport_name&values=';
-      if (this.buttontext === 'Show Active') {
-        url = '?active=false&searchBy=sport_name&values=';
-      }
+        // this.tabledata.length = res.pagination;
+        // this.paginator.length = res.pagination;
+        // this.tabledata = newres;
+        res.data = this.tabledata;
 
-      let data;
-      this.sportService.getfilterEmailTemplate(url + value).then((res: any) => {
         data = res;
 
         this.dataSource.data = data['data'];
-
-        this.tabledataloaded = true;
       });
-    } else {
-      this.keyup = true;
-    }
-  };
-  
-  getActiveEmailTemplates() {
-    this.sharedService.showLoader = true;
-    const hashedId = localStorage.dbName;
-
-    this.sportService
-      .getEmailTemplateList1(this.skip, this.limit)
-      .then((res: any) => {
-        this.dataSource.data = res['data'];
-        if (this.totalLength === 0 || this.totalLength !== res['pagination']) {
-          this.totalLength = res['pagination'];
-        }
-        this.sharedService.showLoader = false;
-      })
-      .catch((err: any) => {});
   }
 
   changePage(event:any) {
@@ -154,99 +206,32 @@ export class EmailTemplatesComponent implements OnInit, AfterViewInit {
         this.limit = event.pageSize;
         this.skip = event.pageIndex * this.limit;
 
-        if (this.buttontext === 'Show Inactive') {
-          this.getActiveEmailTemplates();
-        } else {
-          this.getAllEmailTemplates();
-        }
+        this.getAllEmailTemplates();
       }
     }
   }
-  getAllEmailTemplates() {
-    this.sharedService.showLoader = true;
-    const hashedId = localStorage.dbName;
 
-    this.sportService
-      .getAllEmailTemplateList(this.skip, this.limit)
-      .then((res: any) => {
-        this.dataSource.data = res['data'];
-        if (this.totalLength === 0 || this.totalLength !== res['pagination']) {
-          this.totalLength = res['pagination'];
-        }
+  editEmailTemplate(element: any) {
+    sessionStorage.selected_etemplate = JSON.stringify(element);
+    this.router.navigate(['/email-templates/edit']);
+  }
 
-        this.sharedService.showLoader = false;
-      })
-      .catch((err: any) => {});
-  }
-  editEmailTemplate(row: any) {
-    this.router.navigate(['sports/edit/{{row._id}}'], {
-      queryParams: { editEmailTemplateId: row._id }
-    });
-  }
-  
-  chnageEmailTemplateStatus(event: MatSlideToggleChange, row: any) {
-    const originalValue = row.active;
+  changeStatus(event: MatSlideToggleChange, row:any) {
     this.sharedService
-      .showDialog('Are you sure you want to change this sport status?')
-      .subscribe(response => {
-        if (response !== '') {
-          this.sharedService.showLoader = true;
-          // const reqObj = {
-          //   active: !row.active
-          // };
-          let reqObj = {
-            active: row.active
-          };
-          this.sportService.updateEmailTemplate(row._id, reqObj).then((e: any) => {
-            this.sharedService.showLoader = false;
-            if (row.active) {
-              this.getAllEmailTemplates();
-              this.buttontext = 'Show Inactive';
-            } else {
-              this.getActiveEmailTemplates();
-              this.buttontext = 'Show Active';
-            }
-            this.sharedService.showMessage(e.message);
-          });
-        }
-      });
-  }
-
-  deleteEmailTemplate(row: any) {
-    this.sharedService
-      .showDialog('Are you sure you want to delete this sport?')
+      .showDialog('Are you sure you want to change this status?')
       .subscribe(response => {
         if (response !== '') {
           this.sharedService.showLoader = true;
           const reqObj = {
-            active: !row.active
+            active: row.active
           };
-          this.sportService.removeEmailTemplate(row._id, reqObj).then((e: any) => {
+          this.emailTemplateService.chnageStatusEmailTemplate(row._id, reqObj).then((e: any) => {
             this.sharedService.showLoader = false;
             this.getAllEmailTemplates();
-            this.buttontext = 'Show Inactive';
+            // this.buttontext = 'Show Inactive';
             this.sharedService.showMessage(e.message);
           });
         }
       });
-  }
-
-  openDialog() {}
-
-  getStatus(status: boolean) {
-    if (status) {
-      return 'ACTIVE';
-    } else {
-      return 'INACTIVE';
-    }
-  }
-  ShowAll(event: any) {
-    if (this.buttontext === 'Show Inactive') {
-      this.buttontext = 'Show Active';
-      this.getAllEmailTemplates();
-    } else {
-      this.getActiveEmailTemplates();
-      this.buttontext = 'Show Inactive';
-    }
   }
 }
